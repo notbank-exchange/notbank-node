@@ -22,16 +22,18 @@ await serviceFactory.authenticateUser({
   UserId: userId,
 });
 ```
+
 Sample Success Response:
+```json
 {
   "Authenticated": true,
   "SessionToken": "b7b5aad9-6b2d-0127-dc01-a81e4326822b",
   "User": {
-      "UserId": yourUserid,
+      "UserId": "yourUserid",
       "UserName": "yourName",
       "Email": "yourEmail",
       "EmailVerified": true,
-      "AccountId": yourAccountId,
+      "AccountId": "yourAccountId",
       "OMSId": 1,
       "Use2FA": false
   },
@@ -42,16 +44,18 @@ Sample Success Response:
   "TwoFAToken": null,
   "errormsg": null
 }
-
+```
 Sample Bad Response:
+```json
 {
     "Authenticated": false,
     "Locked": false,
     "errormsg": "Invalid username or password"
 }
+```
 
+#### Get your balances
 ```typescript
-//Get your balances
 const accountService = serviceFactory.newAccountService();
 const accountId = 55 //Use desire accountId
 const includePending = false //Optional, default = false
@@ -62,7 +66,7 @@ accountService.getAccountPositions({
 })
 ```
 Success Response Example (a list of balance objects), on this case USDT balance:
-
+```json
 [
   {
     "OMSId": 1,
@@ -104,18 +108,19 @@ Success Response Example (a list of balance objects), on this case USDT balance:
   },
   ....
 ]
-
+```
 Bad Response example:
-
+```json
 {
     "result": false,
     "errormsg": "Invalid Request",
     "errorcode": 100,
     "detail": "OMSId and AccountId must be Integers"
 }
+```
 
+#### Open a Buy Order Limit on BTCUSDT market of 0.00045.
 ```typescript
-//Open a Buy Order Limit on BTCUSDT market of 0.00045.
 const tradingService = serviceFactory.newTradingService();
 
 const params = {
@@ -131,21 +136,25 @@ const params = {
 await tradingService.sendOrder(params)
 ```
 Success Response Example
+```json
 {
     "status": "Accepted",
     "errormsg": "",
     "OrderId": 193
 }
-
+```
 Bad Response Example:
+```json
 {
     "status": "Rejected",
     "errormsg": "Not_Enough_Funds",
     "errorcode": 101
 }
+```
+
+#### Get your balance again
 
 ```typescript
-//Get your balance again
 const accountService = serviceFactory.newAccountService();
 const accountId = 55 //Use desire accountId
 
@@ -154,7 +163,7 @@ accountService.getAccountPositions({
 })
 ```
 Success Response Example for USDT balance:
-
+```json
 [
   {
         "OMSId": 1,
@@ -196,9 +205,10 @@ Success Response Example for USDT balance:
   },
   ....
 ]
+```
 
+#### Cancel previous order for 0.00045 BTCUSDT.
 ```typescript
-//Cancel previous order for 0.00045 BTCUSDT.
 const tradingService = serviceFactory.newTradingService();
 
 const params = {
@@ -209,20 +219,24 @@ const params = {
 await tradingService.cancelOrder(params)
 ```
 Good Response Example:
+```json
 {
     "result": true,
     "errormsg": null,
     "errorcode": 0,
     "detail": null
 }
+```
 
 Bad Response Example (Incorrect OrderId):
+```json
 {
     "result": false,
     "errormsg": "Resource Not Found",
     "errorcode": 104,
     "detail": null
 }
+```
 
 ### Browser
 
