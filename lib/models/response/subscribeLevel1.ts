@@ -1,0 +1,23 @@
+export interface Level1Ticker {
+  OMSId: number;
+  InstrumentId: number;
+  BestBid: number;
+  BestOffer: number;
+  LastTradedPx: number;
+  LastTradedQty: number;
+  LastTradeTime: number;
+  SessionOpen: number;
+  SessionHigh: number;
+  SessionLow: number;
+  SessionClose: number;
+  Volume: number;
+  CurrentDayVolume: number;
+  CurrentDayNumTrades: number;
+  CurrentDayPxChange: number;
+  CurrentNotional: number;
+  Rolling24HrNotional: number;
+  Rolling24HrVolume: number;
+  Rolling24NumTrades: number; // Podría ser number o integer, según API
+  Rolling24HrPxChange: number;
+  TimeStamp: string; // POSIX timestamp stringified
+}

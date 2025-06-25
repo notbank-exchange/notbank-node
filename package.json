@@ -11,7 +11,8 @@
     "build": "npm run build:clean && npm run build:node && npm run build:bundle",
     "build:node": "tsc && tsc-alias",
     "build:bundle": "node build-bundle.js",
-    "build:clean": "rm -rf ./dist"
+    "build:clean": "rm -rf ./dist",
+    "generate-index": "ts-node lib/scripts/generateIndex.ts"
   },
   "mocha": {
     "timeout": "10000"
