@@ -1,7 +1,8 @@
 {
-  "name": "notbank-node-sdk",
+  "name": "notbank",
   "version": "1.0.0",
-  "description": "notbank node sdk",
+  "description": "The Notbank for Node.js",
+  "homepage": "https://notbank.exchange",
   "main": "dist/index.js",
   "engines": {
     "node": ">=14.21.3"
@@ -17,6 +18,20 @@
   "mocha": {
     "timeout": "10000"
   },
+  "keywords": [
+    "api",
+    "notbank",
+    "cryptomarket",
+    "cryptomkt",
+    "exchange",
+    "ethereum",
+    "ether",
+    "bitcoin",
+    "btc",
+    "eos",
+    "stellar",
+    "xlm"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/notbank-exchange/notbank-node.git"
@@ -38,6 +53,5 @@
   },
   "bugs": {
     "url": "https://github.com/notbank-exchange/notbank-node/issues"
-  },
-  "homepage": "https://github.com/notbank-exchange/notbank-node#readme"
+  }
 }
