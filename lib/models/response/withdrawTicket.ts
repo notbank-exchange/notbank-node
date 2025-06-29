@@ -1,0 +1,33 @@
+export interface WithdrawTicket {
+  AssetManagerId: number;
+  AccountProviderId: number;
+  AccountId: number;
+  AccountName: string;
+  AssetId: number;
+  AssetName: string;
+  Amount: number;
+  NotionalValue: number;
+  NotionalProductId: number;
+  TemplateForm: string;
+  TemplateFormType?: string;
+  OMSId: number;
+  RequestCode: string;
+  RequestIP?: string;
+  RequestUserId: number;
+  RequestUserName: string;
+  OperatorId: number;
+  Status: string;
+  FeeAmt: number;
+  UpdatedByUser: number;
+  UpdatedByUserName?: string;
+  TicketNumber: number;
+  WithdrawTransactionDetails: string;
+  RejectReason?: string;
+  CreatedTimestamp: string;
+  LastUpdateTimestamp: string;
+  CreatedTimestampTick: number;
+  LastUpdateTimestampTick: number;
+  Comments: any[];
+  Attachments: any[];
+  AuditLog: any[];
+}

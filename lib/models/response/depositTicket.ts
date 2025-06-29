@@ -1,0 +1,31 @@
+export interface DepositTicket {
+  AssetManagerId: number;
+  AccountProviderId: number;
+  AccountId: number;
+  AssetId: number;
+  AccountName: string;
+  AssetName: string;
+  Amount: number;
+  NotionalValue: number;
+  NotionalProductId: number;
+  OMSId: number;
+  RequestCode: string;
+  ReferenceId: string;
+  RequestIP: string;
+  RequestUser: number;
+  RequestUserName: string;
+  OperatorId: number;
+  Status: string;
+  FeeAmt: number;
+  UpdatedByUser: number;
+  UpdatedByUserName: string;
+  TicketNumber: number;
+  DepositInfo: string;
+  RejectReason?: string;
+  CreatedTimestamp: string;
+  LastUpdateTimeStamp: string;
+  CreatedTimestampTick: string;
+  LastUpdateTimeStampTick: string;
+  Comments: any[];
+  Attachments: any[];
+}
