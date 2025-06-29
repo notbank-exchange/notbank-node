@@ -4,5 +4,5 @@ export enum SessionStatus {
   PAUSED = "Paused",
   STOPPED = "Stopped",
   STARTING = "Starting",
-  RUNNING_POST_ONLY = "RunningPostOnly",
+  RUNNING_POST_ONLY = "RunningPostOnly"
 }

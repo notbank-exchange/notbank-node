@@ -3,7 +3,7 @@ import {
   AuthenticateUserRequest,
   AuthenticateUserResponse,
   StandardError,
-  StandardResponse,
+  StandardResponse
 } from "../../models";
 import { RequestType, ServiceClient } from "../serviceClient";
 import { MessageFrame } from "../websocket/messageFrame";
@@ -22,7 +22,7 @@ export class HttpClient implements ServiceClient {
   async request<T1, T2>(
     endpoint: string,
     requestType: RequestType,
-    params?: T1,
+    params?: T1
   ): Promise<T2> {
     if (requestType === RequestType.GET) {
       return this.requestGet(endpoint, { params: params });
@@ -37,21 +37,21 @@ export class HttpClient implements ServiceClient {
     var response = await fetch(this.getUrl(endpoint), {
       method: "POST",
       body: message ? JSON.stringify(message) : null,
-      headers: this.getHeaders(),
+      headers: this.getHeaders()
     });
     return this.handleResponse<T2>(response);
   }
 
   async requestGet<T1, T2>(
     endpoint: string,
-    config: { params?: T1; extraHeaders?: any } = {},
+    config: { params?: T1; extraHeaders?: any } = {}
   ): Promise<T2> {
     var response = await fetch(
       this.getUrlWithSearchParams(endpoint, config.params),
       {
         method: "GET",
-        headers: this.getHeaders(config.extraHeaders),
-      },
+        headers: this.getHeaders(config.extraHeaders)
+      }
     );
     return await this.handleResponse<T2>(response);
   }
@@ -61,7 +61,7 @@ export class HttpClient implements ServiceClient {
       throw new Error(
         `http error (${
           response.status
-        }) not a successfull response. ${response.text()}`,
+        }) not a successfull response. ${response.text()}`
       );
     }
     var jsonResponse = await response.json();
@@ -78,7 +78,7 @@ export class HttpClient implements ServiceClient {
   getHeaders(extraHeaders?: any): any {
     var headers = {
       "Content-type": "application/json",
-      charset: "UTF-8",
+      charset: "UTF-8"
     };
     if (this.#aptoken != null) {
       headers["aptoken"] = this.#aptoken;
@@ -98,14 +98,14 @@ export class HttpClient implements ServiceClient {
 
   async authenticate(params: AuthenticateUserRequest): Promise<void> {
     var response = (await this.requestGet(Endpoint.AUTHENTICATE, {
-      extraHeaders: params,
+      extraHeaders: params
     })) as AuthenticateUserResponse;
     this.#aptoken = response.SessionToken;
   }
 
   async authenticateUser(params: AuthenticateUserRequest): Promise<void> {
     var response = (await this.requestGet(Endpoint.AUTHENTICATE_USER, {
-      extraHeaders: params,
+      extraHeaders: params
     })) as AuthenticateUserResponse;
     this.#aptoken = response.SessionToken;
   }
@@ -115,7 +115,7 @@ export class HttpClient implements ServiceClient {
     firstIdentifier: number | null,
     secondIdentifier: number | null,
     message: T,
-    subscriptionCallbacks: SubscriptionHandler<MessageFrame>[],
+    subscriptionCallbacks: SubscriptionHandler<MessageFrame>[]
   ): Promise<void> {
     throw new Error("Method not implemented.");
   }
@@ -125,7 +125,7 @@ export class HttpClient implements ServiceClient {
     firstIdentifier: number | null,
     secondIdentifier: number | null,
     message: T,
-    callback_ids: string[],
+    callback_ids: string[]
   ): Promise<void> {
     throw new Error("Method not implemented.");
   }

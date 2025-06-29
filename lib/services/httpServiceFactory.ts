@@ -30,13 +30,13 @@ export class HttpServiceFactory {
       params.ApiPublicKey,
       params.ApiSecretKey,
       params.UserId,
-      nonce,
+      nonce
     );
     await this.#httpCore.authenticate({
       ApiKey: params.ApiPublicKey,
       Signature: signature,
       UserId: params.UserId,
-      Nonce: nonce,
+      Nonce: nonce
     });
   }
 
@@ -50,13 +50,13 @@ export class HttpServiceFactory {
       params.ApiPublicKey,
       params.ApiSecretKey,
       params.UserId,
-      nonce,
+      nonce
     );
     await this.#httpCore.authenticateUser({
       ApiKey: params.ApiPublicKey,
       Signature: signature,
       UserId: params.UserId,
-      Nonce: nonce,
+      Nonce: nonce
     });
   }
 

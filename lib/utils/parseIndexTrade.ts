@@ -1,6 +1,8 @@
 import { IndexTrade } from "../models/enums/indexTrade";
 
-export function parseIndexTrade(jsonTrade: number[] | { [key: number]: number }): IndexTrade {
+export function parseIndexTrade(
+  jsonTrade: number[] | { [key: number]: number }
+): IndexTrade {
   return {
     TradeId: jsonTrade[0],
     InstrumentId: jsonTrade[1],
@@ -12,6 +14,6 @@ export function parseIndexTrade(jsonTrade: number[] | { [key: number]: number })
     Direction: jsonTrade[7],
     TakerSide: jsonTrade[8],
     BlockTrade: jsonTrade[9] == 1,
-    OrderClientId: jsonTrade[10],
+    OrderClientId: jsonTrade[10]
   };
 }

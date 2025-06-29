@@ -28,7 +28,7 @@ export class WebsocketServiceFactory {
     this.#websocketClient = new WebsocketClient({
       domain: finalDomain,
       peekMessageIn: params?.peekMessageIn,
-      peekMessageOut: params?.peekMessageOut,
+      peekMessageOut: params?.peekMessageOut
     });
   }
 
@@ -66,19 +66,19 @@ export class WebsocketServiceFactory {
       params.ApiPublicKey,
       params.ApiSecretKey,
       params.UserId,
-      nonce,
+      nonce
     );
     await this.#websocketClient.authenticateUser({
       ApiKey: params.ApiPublicKey,
       Signature: signature,
       UserId: params.UserId,
-      Nonce: nonce,
+      Nonce: nonce
     });
   }
 
   newAccountService(): AccountService {
-      return new AccountService(this.#websocketClient);
-    }
+    return new AccountService(this.#websocketClient);
+  }
 
   newAuthService(): AuthService {
     return new AuthService(this.#websocketClient);

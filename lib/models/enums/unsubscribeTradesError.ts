@@ -3,5 +3,5 @@ export enum UnsubscribeTradesError {
   InvalidRequest = 100,
   OperationFailed = 101,
   ServerError = 102,
-  ResourceNotFound = 104,
+  ResourceNotFound = 104
 }

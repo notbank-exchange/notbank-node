@@ -7,7 +7,7 @@ export enum OrderTypeInt {
   StopLimit = 4,
   TrailingStopMarket = 5,
   TrailingStopLimit = 6,
-  BlockTrade = 7,
+  BlockTrade = 7
 }
 
 export enum OrderTypeStr {
@@ -18,5 +18,5 @@ export enum OrderTypeStr {
   StopLimit = "StopLimit",
   TrailingStopMarket = "TrailingStopMarket",
   TrailingStopLimit = "TrailingStopLimit",
-  BlockTrade = "BlockTrade",
+  BlockTrade = "BlockTrade"
 }

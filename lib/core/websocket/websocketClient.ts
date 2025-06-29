@@ -25,25 +25,25 @@ export class WebsocketClient implements ServiceClient {
   }) {
     this.#domain = params.domain;
     this.#callbackManager = new CallbackManager();
-    this.#peekMessageIn = params.peekMessageIn || ((_) => {});
-    this.#peekMessageOut = params.peekMessageOut || ((_) => {});
+    this.#peekMessageIn = params.peekMessageIn || (_ => {});
+    this.#peekMessageOut = params.peekMessageOut || (_ => {});
   }
   // TODO: maybe use better names than hook: websockethooks
   async connect(hooks: WebsocketHooks = {}) {
     this.#websocket = new WebSocket("wss://" + this.#domain + "/wsgateway");
-    this.#websocket.onopen = (event) => hooks.onOpen?.(event);
-    this.#websocket.onclose = (event) => hooks.onClose?.(event);
-    this.#websocket.onerror = (event) => hooks.onError?.(event);
-    this.#websocket.addEventListener("message", (event) => {
+    this.#websocket.onopen = event => hooks.onOpen?.(event);
+    this.#websocket.onclose = event => hooks.onClose?.(event);
+    this.#websocket.onerror = event => hooks.onError?.(event);
+    this.#websocket.addEventListener("message", event => {
       // TODO: handle conversion exception
       const messageFrame = JSON.parse(event.data) as MessageFrame;
       this.#handleMessage(messageFrame);
     });
-    this.#websocket.addEventListener("message", (event) =>
-      hooks.onMessage?.(event),
+    this.#websocket.addEventListener("message", event =>
+      hooks.onMessage?.(event)
     );
     return new Promise<void>((resolve, _) =>
-      this.#websocket.addEventListener("open", (_) => resolve()),
+      this.#websocket.addEventListener("open", _ => resolve())
     );
   }
 
@@ -81,7 +81,7 @@ export class WebsocketClient implements ServiceClient {
   request<T1, T2>(
     endpoint: string,
     requestType: RequestType,
-    message?: T1,
+    message?: T1
   ): Promise<T2> {
     return this.#request(endpoint, message, MessageType.REQUEST);
   }
@@ -89,21 +89,21 @@ export class WebsocketClient implements ServiceClient {
   #request<T1, T2>(
     endpoint: string,
     message?: T1,
-    messageType: MessageType = MessageType.REQUEST,
+    messageType: MessageType = MessageType.REQUEST
   ): Promise<T2> {
     return new Promise((resolve, reject) => {
       this.#requestToCallback(
         endpoint,
         JSON.stringify(message) || "{}",
         messageType,
-        this.#handleRequestResponse<T2>(reject, resolve),
+        this.#handleRequestResponse<T2>(reject, resolve)
       );
     });
   }
 
   #handleRequestResponse<T>(
     reject: (reason?: any) => void,
-    resolve: (value: T | PromiseLike<T>) => void,
+    resolve: (value: T | PromiseLike<T>) => void
   ): (o: MessageFrame) => void {
     return (response: MessageFrame) => {
       try {
@@ -133,17 +133,17 @@ export class WebsocketClient implements ServiceClient {
     firstIdentifier: number | null,
     secondIdentifier: number | null,
     message: T,
-    subscriptionCallbacks: SubscriptionHandler<MessageFrame>[],
+    subscriptionCallbacks: SubscriptionHandler<MessageFrame>[]
   ): Promise<void> {
-    subscriptionCallbacks.map((handler) =>
+    subscriptionCallbacks.map(handler =>
       this.#callbackManager.addSubscriptionCallback(
         SubscriptionIdentifier.get(
           handler.eventName,
           firstIdentifier,
-          secondIdentifier,
+          secondIdentifier
         ),
-        handler.eventHandler,
-      ),
+        handler.eventHandler
+      )
     );
     return this.#request<T, void>(endpoint, message, MessageType.REQUEST);
   }
@@ -153,16 +153,16 @@ export class WebsocketClient implements ServiceClient {
     firstIdentifier: number | null,
     secondIdentifier: number | null,
     message: T,
-    callbackIds: string[],
+    callbackIds: string[]
   ): Promise<void> {
     this.#callbackManager.removeSubscriptionCallback(
-      callbackIds.map((callbackId) =>
+      callbackIds.map(callbackId =>
         SubscriptionIdentifier.get(
           callbackId,
           firstIdentifier,
-          secondIdentifier,
-        ),
-      ),
+          secondIdentifier
+        )
+      )
     );
     return await this.#request(endpoint, message, MessageType.REQUEST);
   }
@@ -171,14 +171,14 @@ export class WebsocketClient implements ServiceClient {
     endpoint: string,
     message: any,
     messageType: MessageType,
-    callback = emptyFn,
+    callback = emptyFn
   ) {
     const sequenceNumber = this.#callbackManager.putCallback(callback);
     const frame = {
       m: messageType,
       i: sequenceNumber,
       n: endpoint,
-      o: message,
+      o: message
     };
     this.#peekMessageOut(frame);
     this.#websocket.send(JSON.stringify(frame));
@@ -204,7 +204,7 @@ function newStandardErrorFromString(errorStr: string): any {
     errormsg: errorStr,
     errorcode: ErrorCode.UNDEFINED,
     statusCode: -1,
-    detail: "",
+    detail: ""
   });
 }
 

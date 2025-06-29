@@ -1,7 +1,10 @@
 import { WebSocketEndpoint } from "../constants/endpoints";
 import { ServiceClient } from "../core/serviceClient";
 import { SubscriptionIdentifier } from "../core/websocket/SubscriptionIdentifier";
-import { CancelOrderRejectEvent, DepositEvent } from "../models/enums/accountEvent";
+import {
+  CancelOrderRejectEvent,
+  DepositEvent
+} from "../models/enums/accountEvent";
 import { IndexTrade } from "../models/enums/indexTrade";
 import { Level2Ticker } from "../models/enums/level2Item";
 import { Ticker } from "../models/enums/ticker";
@@ -27,7 +30,10 @@ import { Transaction } from "../models/response/transaction";
 import { WithdrawTicket } from "../models/response/withdrawTicket";
 import { completeParams } from "../utils/completeParams";
 import { parseIndexTrade } from "../utils/parseIndexTrade";
-import { newHandler, newMaybeHandler } from "../utils/subscriptionCallbacksHandler";
+import {
+  newHandler,
+  newMaybeHandler
+} from "../utils/subscriptionCallbacksHandler";
 
 export class SubscriptionService {
   #serviceCore: ServiceClient;
@@ -40,11 +46,11 @@ export class SubscriptionService {
   async subscribeLevel1(
     request: SubscribeLevel1Request,
     snapshotHandler: (ticker: Level1Ticker) => void,
-    updateHandler: (ticker: Level1Ticker) => void,
+    updateHandler: (ticker: Level1Ticker) => void
   ): Promise<void> {
     if (!request.InstrumentId && !request.Symbol)
       throw new Error(
-        "Either InstrumentId or Symbol must be specified for Level1 subscription.",
+        "Either InstrumentId or Symbol must be specified for Level1 subscription."
       );
     const requestWithOMSId = completeParams(request, this.OMS_ID);
     return await this.#serviceCore.subscribe(
@@ -54,15 +60,15 @@ export class SubscriptionService {
       requestWithOMSId,
       [
         newHandler(WebSocketEndpoint.SUBSCRIBE_LEVEL1, snapshotHandler),
-        newHandler(WebSocketEndpoint.UPDATE_LEVEL1, updateHandler),
-      ],
+        newHandler(WebSocketEndpoint.UPDATE_LEVEL1, updateHandler)
+      ]
     );
   }
 
   async unsubscribeLevel1(request: UnsubscribeLevel1Request): Promise<void> {
     if (!request.InstrumentId && !request.Symbol)
       throw new Error(
-        "Either InstrumentId or Symbol must be specified for Level1 unsubscription.",
+        "Either InstrumentId or Symbol must be specified for Level1 unsubscription."
       );
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
@@ -72,22 +78,19 @@ export class SubscriptionService {
       request.InstrumentId || null,
       null,
       requestWithOMSId,
-      [
-        WebSocketEndpoint.SUBSCRIBE_LEVEL1,
-        WebSocketEndpoint.UNSUBSCRIBE_LEVEL1,
-      ],
+      [WebSocketEndpoint.SUBSCRIBE_LEVEL1, WebSocketEndpoint.UNSUBSCRIBE_LEVEL1]
     );
   }
 
   async subscribeLevel2(
     request: SubscribeLevel2Request,
     snapshotHandler: (ticker: Level2Ticker) => void,
-    updateHandler: (ticker: Level2Ticker) => void,
+    updateHandler: (ticker: Level2Ticker) => void
   ): Promise<void> {
     if (!request.InstrumentId && !request.Symbol)
       throw new Error(
-        "Either InstrumentId or Symbol must be specified for Level2 subscription.",
-    )
+        "Either InstrumentId or Symbol must be specified for Level2 subscription."
+      );
     const requestWithOMSId = completeParams(request, this.OMS_ID);
     return await this.#serviceCore.subscribe(
       WebSocketEndpoint.SUBSCRIBE_LEVEL2,
@@ -96,8 +99,8 @@ export class SubscriptionService {
       requestWithOMSId,
       [
         newHandler(WebSocketEndpoint.SUBSCRIBE_LEVEL2, snapshotHandler),
-        newHandler(WebSocketEndpoint.UPDATE_LEVEL2, updateHandler),
-      ],
+        newHandler(WebSocketEndpoint.UPDATE_LEVEL2, updateHandler)
+      ]
     );
   }
 
@@ -112,7 +115,7 @@ export class SubscriptionService {
   async unsubscribeLevel2(request: UnsubscribeLevel2Request): Promise<void> {
     if (!request.InstrumentId && !request.Symbol)
       throw new Error(
-        "Either InstrumentId or Symbol must be specified for Level2 unsubscription.",
+        "Either InstrumentId or Symbol must be specified for Level2 unsubscription."
       );
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
@@ -125,9 +128,9 @@ export class SubscriptionService {
       [
         SubscriptionIdentifier.get(
           WebSocketEndpoint.SUBSCRIBE_LEVEL2,
-          request.InstrumentId,
-        ),
-      ],
+          request.InstrumentId
+        )
+      ]
     );
   }
 
@@ -138,7 +141,7 @@ export class SubscriptionService {
    */
   async subscribeTrades(
     request: SubscribeTradesRequest,
-    subcriptionHandler: (trade: IndexTrade) => void,
+    subcriptionHandler: (trade: IndexTrade) => void
   ): Promise<void> {
     if (!request.InstrumentId) {
       throw new Error("InstrumentId is required for subscribing to trades.");
@@ -157,9 +160,9 @@ export class SubscriptionService {
       [
         newHandler<{ [key: number]: number }>(
           WebSocketEndpoint.SUBSCRIBE_TRADES,
-          (mapTrade) => subcriptionHandler(parseIndexTrade(mapTrade)),
-        ),
-      ],
+          mapTrade => subcriptionHandler(parseIndexTrade(mapTrade))
+        )
+      ]
     );
   }
 
@@ -171,7 +174,7 @@ export class SubscriptionService {
   async unsubscribeTrades(request: UnsubscribeTradesRequest): Promise<void> {
     if (!request.InstrumentId) {
       throw new Error(
-        "InstrumentId is required for unsubscribing from trades.",
+        "InstrumentId is required for unsubscribing from trades."
       );
     }
 
@@ -182,14 +185,14 @@ export class SubscriptionService {
       request.InstrumentId,
       null,
       requestWithOMSId,
-      [WebSocketEndpoint.SUBSCRIBE_TRADES],
+      [WebSocketEndpoint.SUBSCRIBE_TRADES]
     );
   }
 
   async subscribeTicker(
     request: SubscribeTickerRequest,
     snapshotHandler: (tickers: Ticker[]) => void,
-    updateHandler: (tickers: Ticker[]) => void,
+    updateHandler: (tickers: Ticker[]) => void
   ): Promise<void> {
     if (!request.InstrumentId) {
       throw new Error("InstrumentId is required for subscribing from ticker.");
@@ -199,7 +202,7 @@ export class SubscriptionService {
     }
     if (!request.IncludeLastCount) {
       throw new Error(
-        "IncludeLastCount is required for subscribing from ticker.",
+        "IncludeLastCount is required for subscribing from ticker."
       );
     }
 
@@ -214,9 +217,9 @@ export class SubscriptionService {
         newHandler(WebSocketEndpoint.SUBSCRIBE_TICKER, snapshotHandler),
         newHandler(
           WebSocketEndpoint.UPDATE_TICKER + "_" + request.InstrumentId,
-          updateHandler,
-        ),
-      ],
+          updateHandler
+        )
+      ]
     );
   }
 
@@ -228,7 +231,7 @@ export class SubscriptionService {
   async unsubscribeTicker(request: UnsubscribeTickerRequest): Promise<void> {
     if (!request.InstrumentId) {
       throw new Error(
-        "InstrumentId is required for unsubscribing from ticker.",
+        "InstrumentId is required for unsubscribing from ticker."
       );
     }
 
@@ -239,7 +242,7 @@ export class SubscriptionService {
       request.InstrumentId || null,
       null,
       requestWithOMSId,
-      [WebSocketEndpoint.SUBSCRIBE_TICKER],
+      [WebSocketEndpoint.SUBSCRIBE_TICKER]
     );
   }
 
@@ -255,11 +258,11 @@ export class SubscriptionService {
       cancelOrderRejectEventHandler?: (event: CancelOrderRejectEvent) => void;
       depositEventHandler?: (event: DepositEvent) => void;
       transactionEventHandler?: (event: Transaction) => void;
-    },
+    }
   ): Promise<void> {
     if (!request.AccountId)
       throw new Error(
-        "AccountId is required for subscribing to account events.",
+        "AccountId is required for subscribing to account events."
       );
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
@@ -272,41 +275,41 @@ export class SubscriptionService {
       [
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_WITHDRAW_TICKET_UPDATE,
-          eventHandlers.withdrawTicketUpdateEventHandler || null,
+          eventHandlers.withdrawTicketUpdateEventHandler || null
         ),
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_ORDER_TRADE,
-          eventHandlers.orderTradeEventHandler || null,
+          eventHandlers.orderTradeEventHandler || null
         ),
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_ORDER_STATE,
-          eventHandlers.orderStateEventHandler || null,
+          eventHandlers.orderStateEventHandler || null
         ),
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_DEPOSIT_TICKET_UPDATE,
-          eventHandlers.depositTicketUpdateEventHandler || null,
+          eventHandlers.depositTicketUpdateEventHandler || null
         ),
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_ACCOUNT_POSITION,
-          eventHandlers.accountPositionEventHandler || null,
+          eventHandlers.accountPositionEventHandler || null
         ),
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_ACCOUNT_INFO_UPDATE,
-          eventHandlers.accountInfoUpdateEventHandler || null,
+          eventHandlers.accountInfoUpdateEventHandler || null
         ),
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_CANCEL_ORDER_REJECT,
-          eventHandlers.cancelOrderRejectEventHandler || null,
+          eventHandlers.cancelOrderRejectEventHandler || null
         ),
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_DEPOSIT,
-          eventHandlers.depositEventHandler || null,
+          eventHandlers.depositEventHandler || null
         ),
         newMaybeHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_TRANSACTION,
-          eventHandlers.transactionEventHandler || null,
-        ),
-      ].filter((handler) => handler != null),
+          eventHandlers.transactionEventHandler || null
+        )
+      ].filter(handler => handler != null)
     );
   }
 
@@ -316,11 +319,11 @@ export class SubscriptionService {
    * @returns Respuesta de la desuscripción.
    */
   async unsubscribeAccountEvents(
-    request: UnsubscribeAccountEventsRequest,
+    request: UnsubscribeAccountEventsRequest
   ): Promise<void> {
     if (!request.AccountId) {
       throw new Error(
-        "AccountId is required for unsubscribing from account events.",
+        "AccountId is required for unsubscribing from account events."
       );
     }
 
@@ -340,18 +343,18 @@ export class SubscriptionService {
         WebSocketEndpoint.ACCOUNT_EVENT_ACCOUNT_INFO_UPDATE,
         WebSocketEndpoint.ACCOUNT_EVENT_CANCEL_ORDER_REJECT,
         WebSocketEndpoint.ACCOUNT_EVENT_DEPOSIT,
-        WebSocketEndpoint.ACCOUNT_EVENT_TRANSACTION,
-      ],
+        WebSocketEndpoint.ACCOUNT_EVENT_TRANSACTION
+      ]
     );
   }
 
   async subscribeOrderStateEvents(
     request: SubscribeOrderStateEventsRequest,
-    subscriptionHandler: (event: Order) => void,
+    subscriptionHandler: (event: Order) => void
   ): Promise<void> {
     if (!request.AccountId) {
       throw new Error(
-        "AccountId is required for subscribing to order state events.",
+        "AccountId is required for subscribing to order state events."
       );
     }
 
@@ -365,9 +368,9 @@ export class SubscriptionService {
       [
         newHandler(
           WebSocketEndpoint.ACCOUNT_EVENT_ORDER_STATE,
-          subscriptionHandler,
-        ),
-      ],
+          subscriptionHandler
+        )
+      ]
     );
   }
 
@@ -377,11 +380,11 @@ export class SubscriptionService {
    * @returns Respuesta de la desuscripción.
    */
   async unsubscribeOrderStateEvents(
-    request: UnsubscribeOrderStateEventsRequest,
+    request: UnsubscribeOrderStateEventsRequest
   ): Promise<void> {
     if (!request.AccountId) {
       throw new Error(
-        "AccountId is required for unsubscribing from order state events.",
+        "AccountId is required for unsubscribing from order state events."
       );
     }
 
@@ -392,7 +395,7 @@ export class SubscriptionService {
       request.AccountId,
       request.InstrumentId || null,
       requestWithOMSId,
-      [WebSocketEndpoint.SUBSCRIBE_ORDER_STATE_EVENTS],
+      [WebSocketEndpoint.SUBSCRIBE_ORDER_STATE_EVENTS]
     );
   }
 }

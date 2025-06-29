@@ -2,5 +2,5 @@
 export enum WithdrawTemplateType {
   ToExternalBitcoinAddress = "ToExternalBitcoinAddress",
   ToInternalAccount = "ToInternalAccount",
-  ToBankAccount = "ToBankAccount",
+  ToBankAccount = "ToBankAccount"
 }

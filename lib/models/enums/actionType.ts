@@ -7,5 +7,5 @@
 export enum ActionType {
   NEW = 0,
   UPDATE = 1,
-  DELETION = 2,
+  DELETION = 2
 }

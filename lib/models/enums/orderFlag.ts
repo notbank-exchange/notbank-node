@@ -5,5 +5,5 @@ export enum OrderFlag {
   RemovedFromBook = "RemovedFromBook",
   PostOnly = "PostOnly",
   Liquidation = "Liquidation",
-  ReverseMarginPosition = "ReverseMarginPosition",
+  ReverseMarginPosition = "ReverseMarginPosition"
 }

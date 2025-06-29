@@ -3,7 +3,7 @@ import { SubscriptionHandler } from "../core/websocket/subscriptionHandler";
 
 export function newMaybeHandler<T>(
   eventName: string,
-  recordHandler: ((record: T) => void) | null,
+  recordHandler: ((record: T) => void) | null
 ): SubscriptionHandler<MessageFrame> | null {
   if (recordHandler == null) {
     return null;
@@ -13,11 +13,11 @@ export function newMaybeHandler<T>(
 
 export function newHandler<T>(
   eventName: string,
-  recordHandler: (record: T) => void,
+  recordHandler: (record: T) => void
 ): SubscriptionHandler<MessageFrame> {
   return {
     eventName: eventName,
-    eventHandler: (messageFrame) => recordHandler(parseRecord(messageFrame.o)),
+    eventHandler: messageFrame => recordHandler(parseRecord(messageFrame.o))
   };
 }
 

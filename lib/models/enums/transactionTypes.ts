@@ -19,5 +19,5 @@ export enum TransactionTypes {
   OperatorReceived = "OperatorReceived",
   Rebalance = "Rebalance",
   Commission = "Commission",
-  AirDrop = "AirDrop",
+  AirDrop = "AirDrop"
 }

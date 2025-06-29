@@ -9,5 +9,5 @@ export enum ChangeReason {
   SYSTEMCANCELED_BELOWMINIMUM = "SystemCanceled_BelowMinimum",
   SYSTEMCANCELED_PRICECOLLAR = "SystemCanceled_PriceCollar",
   SYSTEMCANCELED_MARGINFAILED = "SystemCanceled_MarginFailed",
-  USERMODIFIED = "UserModified",
+  USERMODIFIED = "UserModified"
 }

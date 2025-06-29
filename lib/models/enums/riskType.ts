@@ -4,5 +4,5 @@ export enum RiskType {
   NORMAL = "Normal", // Riesgo estándar
   NO_RISK_CHECK = "NoRiskCheck", // Sin chequeo de riesgo
   NO_TRADING = "NoTrading", // El usuario no puede operar
-  CREDIT = "Credit", // Riesgo basado en crédito
+  CREDIT = "Credit" // Riesgo basado en crédito
 }

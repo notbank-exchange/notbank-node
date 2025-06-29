@@ -4,5 +4,5 @@ export enum UnsubscribeLevel2ErrorCode {
   INVALID_REQUEST = 100,
   OPERATION_FAILED = 101,
   SERVER_ERROR = 102,
-  RESOURCE_NOT_FOUND = 104,
+  RESOURCE_NOT_FOUND = 104
 }

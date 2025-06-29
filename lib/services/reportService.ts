@@ -10,5 +10,4 @@ export class ReportService {
   constructor(serviceCore: ServiceClient) {
     this.#serviceCore = serviceCore;
   }
-
 }

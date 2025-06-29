@@ -6,5 +6,5 @@ export enum TimeInForce {
   IOC = 3, // Immediate or canceled
   FOK = 4, // Fill or kill
   GTX = 5, // Good 'til executed
-  GTD = 6, // Good 'til date
+  GTD = 6 // Good 'til date
 }

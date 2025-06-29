@@ -14,12 +14,12 @@ export class AuthService {
    * https://apidoc.notbank.exchange/?http#webauthenticateuser
    */
   async webAuthenticateUser(
-    params: WebAuthenticateUserRequest,
+    params: WebAuthenticateUserRequest
   ): Promise<WebAuthenticateUserResponse> {
     return await this.#serviceCore.request(
       Endpoint.WEB_AUTHENTICATE_USER,
       RequestType.NONE,
-      params,
+      params
     );
   }
 
@@ -31,4 +31,3 @@ export class AuthService {
     return await this.#serviceCore.request(Endpoint.LOGOUT, RequestType.POST);
   }
 }
-  

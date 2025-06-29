@@ -8,5 +8,5 @@ export type Ticker = [
   Bid: number,
   Ask: number,
   InstrumentId: number,
-  BeginDateTime: number,
+  BeginDateTime: number
 ];

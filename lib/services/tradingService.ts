@@ -6,7 +6,6 @@ import { CancelAllOrdersRequest } from "../models/request/cancelAllOrders";
 import { CancelOrderRequest } from "../models/request/cancelOrder";
 import { CancelReplaceOrderRequest } from "../models/request/cancelReplaceOrder";
 import { GetAccountTradesRequest } from "../models/request/getAccountTrades";
-import { GetEarliestTickTimeRequest } from "../models/request/getEarliestTickTime";
 import { GetL2SnapshotRequest } from "../models/request/getL2Snapshot";
 import { GetLastTradesRequest } from "../models/request/getLastTrades";
 import { GetLevel1Request } from "../models/request/getLevel1";
@@ -29,7 +28,6 @@ import { SendOrderListRequest } from "../models/request/sendOrderList";
 import { TradesRequest } from "../models/request/trades";
 import { CancelReplaceOrderResponse } from "../models/response/cancelReplaceOrder";
 import { GetAccountTradesResponse } from "../models/response/getAccountTrades";
-import { GetEarliestTickTimeResponse } from "../models/response/getEarliestTickTime";
 import { GetEnumsResponse } from "../models/response/getEnums";
 import { GetL2SnapshotResponse, L2Snapshot } from "../models/response/getL2Snapshot";
 import { GetLevel1Response } from "../models/response/getLevel1";
@@ -432,28 +430,6 @@ export class TradingService {
       RequestType.POST,
       params,
     )) as TradesResponse[];
-
-    return response;
-  }
-
-  public async getEarliestTickTime(
-    request: GetEarliestTickTimeRequest,
-  ): Promise<GetEarliestTickTimeResponse> {
-    // Validate required fields
-    if (!request.InstrumentId)
-      throw new Error(
-        "InstrumentId is required for retrieving earliest tick time.",
-      );
-
-    const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    // Make the HTTP request
-    const response: GetEarliestTickTimeResponse =
-      (await this.#serviceCore.request(
-        Endpoint.GET_EARLIEST_TICK_TIME,
-        RequestType.POST,
-        paramsWithOMSId,
-      )) as GetEarliestTickTimeResponse;
 
     return response;
   }

@@ -5,7 +5,7 @@ export enum ErrorCode {
   INVALID_RESPONSE = 100,
   OPERATION_FAILED = 101,
   SERVER_ERROR = 102,
-  RESOURCE_NOT_FOUND = 104,
+  RESOURCE_NOT_FOUND = 104
 }
 
 export default ErrorCode;

@@ -9,7 +9,6 @@ export * from "./getAccountSettlementPositions";
 export * from "./getAccountTrades";
 export * from "./getAccountTransactions";
 export * from "./getDepositFee";
-export * from "./getEarliestTickTime";
 export * from "./getEnums";
 export * from "./getInstrumentVerificationLevelConfig";
 export * from "./getL2Snapshot";

@@ -1,4 +1,4 @@
 export enum InstrumentStateArgument {
   BOTH = "BOTH",
-  INACTIVE = "INACTIVE",
+  INACTIVE = "INACTIVE"
 }

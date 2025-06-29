@@ -1,10 +1,24 @@
 # Notbank Node SDK
 
-## Example
+[main page](https://notbank.exchange)
 
-### Node
+[sign up in Notbank](https://www.cryptomkt.com/account/register).
 
-#### Rest client
+## Installation
+
+To install Notbank use npm
+
+```bash
+npm install notbank
+```
+
+## Documentation
+
+This sdk makes use of the [api](https://apidoc.notbank.exchange) of Notbank.
+
+## Quick start
+
+### Rest client
 
 ```typescript
 const publicKey = "...";
@@ -19,23 +33,24 @@ const serviceFactory = new HttpServiceFactory();
 await serviceFactory.authenticateUser({
   ApiPublicKey: publicKey,
   ApiSecretKey: secretKey,
-  UserId: userId,
+  UserId: userId
 });
 ```
 
 Sample Success Response:
+
 ```json
 {
   "Authenticated": true,
   "SessionToken": "b7b5aad9-6b2d-0127-dc01-a81e4326822b",
   "User": {
-      "UserId": "yourUserid",
-      "UserName": "yourName",
-      "Email": "yourEmail",
-      "EmailVerified": true,
-      "AccountId": "yourAccountId",
-      "OMSId": 1,
-      "Use2FA": false
+    "UserId": "yourUserid",
+    "UserName": "yourName",
+    "Email": "yourEmail",
+    "EmailVerified": true,
+    "AccountId": "yourAccountId",
+    "OMSId": 1,
+    "Use2FA": false
   },
   "Locked": false,
   "Requires2FA": false,
@@ -45,16 +60,19 @@ Sample Success Response:
   "errormsg": null
 }
 ```
+
 Sample Bad Response:
+
 ```json
 {
-    "Authenticated": false,
-    "Locked": false,
-    "errormsg": "Invalid username or password"
+  "Authenticated": false,
+  "Locked": false,
+  "errormsg": "Invalid username or password"
 }
 ```
 
 #### Get your balances
+
 ```typescript
 const accountService = serviceFactory.newAccountService();
 const accountId = 55 //Use desire accountId
@@ -65,7 +83,9 @@ accountService.getAccountPositions({
   IncludePending: includePending;
 })
 ```
+
 Success Response Example (a list of balance objects), on this case USDT balance:
+
 ```json
 [
   {
@@ -109,17 +129,20 @@ Success Response Example (a list of balance objects), on this case USDT balance:
   ....
 ]
 ```
+
 Bad Response example:
+
 ```json
 {
-    "result": false,
-    "errormsg": "Invalid Request",
-    "errorcode": 100,
-    "detail": "OMSId and AccountId must be Integers"
+  "result": false,
+  "errormsg": "Invalid Request",
+  "errorcode": 100,
+  "detail": "OMSId and AccountId must be Integers"
 }
 ```
 
-#### Open a Buy Order Limit on BTCUSDT market of 0.00045.
+#### Open a Buy Order Limit on BTCUSDT market of 0.00045
+
 ```typescript
 const tradingService = serviceFactory.newTradingService();
 
@@ -135,20 +158,24 @@ const params = {
 
 await tradingService.sendOrder(params)
 ```
+
 Success Response Example
+
 ```json
 {
-    "status": "Accepted",
-    "errormsg": "",
-    "OrderId": 193
+  "status": "Accepted",
+  "errormsg": "",
+  "OrderId": 193
 }
 ```
+
 Bad Response Example:
+
 ```json
 {
-    "status": "Rejected",
-    "errormsg": "Not_Enough_Funds",
-    "errorcode": 101
+  "status": "Rejected",
+  "errormsg": "Not_Enough_Funds",
+  "errorcode": 101
 }
 ```
 
@@ -162,7 +189,9 @@ accountService.getAccountPositions({
   AccountId: accountId;
 })
 ```
+
 Success Response Example for USDT balance:
+
 ```json
 [
   {
@@ -207,7 +236,8 @@ Success Response Example for USDT balance:
 ]
 ```
 
-#### Cancel previous order for 0.00045 BTCUSDT.
+#### Cancel previous order for 0.00045 BTCUSDT
+
 ```typescript
 const tradingService = serviceFactory.newTradingService();
 
@@ -216,51 +246,29 @@ const params = {
   OrderId: 193 //Previous open order ID
 };
 
-await tradingService.cancelOrder(params)
+await tradingService.cancelOrder(params);
 ```
+
 Good Response Example:
+
 ```json
 {
-    "result": true,
-    "errormsg": null,
-    "errorcode": 0,
-    "detail": null
+  "result": true,
+  "errormsg": null,
+  "errorcode": 0,
+  "detail": null
 }
 ```
 
 Bad Response Example (Incorrect OrderId):
+
 ```json
 {
-    "result": false,
-    "errormsg": "Resource Not Found",
-    "errorcode": 104,
-    "detail": null
+  "result": false,
+  "errormsg": "Resource Not Found",
+  "errorcode": 104,
+  "detail": null
 }
-```
-
-### Browser
-
-Add the bundle file at `./dist/bundle.js` or `./dist/bundle.min.js`, as script tag.
-
-```html
-<script src="./dist/bundle.min.js"></script>
-```
-
-After this, you can add a new script and use the library through the global variable `NotbankSdk` .
-
-```html
-<script>
-  const websocket = new NotbankSdk.WebsocketClient();
-  const productService = websocket.newProductService();
-  let products = [];
-
-  websocket.connect().then(() => {
-    productService
-      .getProducts()
-      .then((p) => (products = p))
-      .catch((e) => console.error(e));
-  });
-</script>
 ```
 
 ## DevOps
@@ -269,8 +277,8 @@ After this, you can add a new script and use the library through the global vari
 
 Run the following npm script
 
-```cli
+```bash
 npm run build
 ```
 
-This command will compile the library's code from Typescript to Javascript including its type declarations to be used in NodeJS and a bundle version for Browser
+This command will compile the library's code from Typescript to Javascript including its type declarations to be used in NodeJS and a bundle version for Browser.

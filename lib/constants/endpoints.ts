@@ -1,10 +1,10 @@
 export enum Endpoint {
   //Account
+  GET_ACCOUNT_TRANSACTIONS = "GetAccountTransactions",
   GET_ACCOUNT_POSITIONS = "GetAccountPositions",
   GET_ACCOUNT_INSTRUMENT_STATISTICS = "GetAccountInstrumentStatistics",
   GET_ACCOUNT_SETTLEMENT_POSITIONS = "GetAccountSettlementPositions",
   GET_ACCOUNT_INFO = "GetAccountInfo",
-  GET_ACCOUNT_TRANSACTIONS = "GetAccountTransactions",
 
   //Authentication
   AUTHENTICATE = "Authenticate",
@@ -21,13 +21,13 @@ export enum Endpoint {
   GET_ORDER_FEE = "GetOrderFee",
 
   //Instrument
-  GET_INSTRUMENTS = "GetInstruments",
   GET_INSTRUMENT = "GetInstrument",
+  GET_INSTRUMENTS = "GetInstruments",
   GET_INSTRUMENT_VERIFICATION_LEVEL_CONFIG = "GetInstrumentVerificationLevelConfig",
 
   //Product
-  GET_PRODUCTS = "GetProducts",
   GET_PRODUCT = "GetProduct",
+  GET_PRODUCTS = "GetProducts",
   GET_VERIFICATION_LEVEL_CONFIG = "GetVerificationLevelConfig",
 
   //Report (Faltan todos)
@@ -48,8 +48,8 @@ export enum Endpoint {
   DOWNLOAD_DOCUMENT_SLICE = "DownloadDocumentSlice",
 
   //System
-  HEALTH_CHECK = "HealthCheck",
   PING = "Ping",
+  HEALTH_CHECK = "HealthCheck",
 
   //Trading
   SEND_ORDER_LIST = "SendOrderList",
@@ -77,7 +77,6 @@ export enum Endpoint {
   TICKER = "Ticker",
   ORDER_BOOK = "OrderBook",
   TRADES = "Trades",
-  GET_EARLIEST_TICK_TIME = "GetEarliestTickTime",
   GET_L2_SNAPSHOT = "GetL2Snapshot",
   GET_LEVEL1 = "GetLevel1",
   GET_ENUMS = "GetEnums",
@@ -86,22 +85,22 @@ export enum Endpoint {
   GET_USER_ACCOUNTS = "GetUserAccounts",
   GET_USER_DEVICES = "GetUserDevices",
   GET_USER_INFO = "GetUserInfo",
-  GET_USER_PERMISSIONS = "GetUserPermissions",
+  GET_USER_PERMISSIONS = "GetUserPermissions"
 }
 
 export enum WebSocketEndpoint {
   //SUBSCRIPTION
   SUBSCRIBE_LEVEL1 = "SubscribeLevel1",
-  UNSUBSCRIBE_LEVEL1 = "UnsubscribeLevel1",
   UPDATE_LEVEL1 = "Level1UpdateEvent",
+  UNSUBSCRIBE_LEVEL1 = "UnsubscribeLevel1",
   SUBSCRIBE_LEVEL2 = "SubscribeLevel2",
-  UNSUBSCRIBE_LEVEL2 = "UnsubscribeLevel2",
   UPDATE_LEVEL2 = "Level2UpdateEvent",
+  UNSUBSCRIBE_LEVEL2 = "UnsubscribeLevel2",
   SUBSCRIBE_TRADES = "SubscribeTrades",
   UNSUBSCRIBE_TRADES = "UnsubscribeTrades",
   SUBSCRIBE_TICKER = "SubscribeTicker",
-  UNSUBSCRIBE_TICKER = "UnsubscribeTicker",
   UPDATE_TICKER = "TickerDataUpdateEvent",
+  UNSUBSCRIBE_TICKER = "UnsubscribeTicker",
   SUBSCRIBE_ACCOUNT_EVENTS = "SubscribeAccountEvents",
   UNSUBSCRIBE_ACCOUNT_EVENTS = "UnsubscribeAccountEvents",
   SUBSCRIBE_ORDER_STATE_EVENTS = "SubscribeOrderStateEvents",
@@ -116,5 +115,5 @@ export enum WebSocketEndpoint {
   ACCOUNT_EVENT_DEPOSIT_TICKET_UPDATE = "DepositTicketUpdateEvent",
   ACCOUNT_EVENT_ACCOUNT_INFO_UPDATE = "AccountInfoUpdateEvent",
   ACCOUNT_EVENT_CANCEL_ORDER_REJECT = "CancelOrderRejectEvent",
-  ACCOUNT_EVENT_DEPOSIT = "DepositEvent",
+  ACCOUNT_EVENT_DEPOSIT = "DepositEvent"
 }

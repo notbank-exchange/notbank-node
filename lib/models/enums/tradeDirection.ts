@@ -2,5 +2,5 @@
 export enum TradeDirection {
   NoChange = 0,
   Uptick = 1,
-  DownTick = 2,
+  DownTick = 2
 }

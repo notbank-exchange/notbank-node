@@ -12,7 +12,7 @@ export function sign(
   apiPublicKey: string,
   apiSecretKey: string,
   userId: string,
-  nonce: string,
+  nonce: string
 ): string {
   var message = nonce + userId + apiPublicKey;
   const hmac256 = crypto.createHmac("sha256", apiSecretKey);

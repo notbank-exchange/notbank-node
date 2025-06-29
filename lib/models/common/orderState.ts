@@ -4,5 +4,5 @@ export enum OrderState {
   Rejected = "Rejected",
   Canceled = "Canceled",
   Expired = "Expired",
-  FullyExecuted = "Fully Executed",
+  FullyExecuted = "Fully Executed"
 }

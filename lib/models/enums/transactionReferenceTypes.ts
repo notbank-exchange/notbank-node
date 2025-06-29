@@ -19,5 +19,5 @@ export enum TransactionReferenceTypes {
   AffiliateRebate = "AffiliateRebate",
   DistributionEntry = "DistributionEntry",
   TransferHold = "TransferHold",
-  AirDrop = "AirDrop",
+  AirDrop = "AirDrop"
 }

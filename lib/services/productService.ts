@@ -20,7 +20,7 @@ export class ProductService {
     const response = (await this.#serviceCore.request(
       Endpoint.GET_PRODUCT,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     )) as GetProductResponse;
 
     return response;
@@ -31,19 +31,19 @@ export class ProductService {
     return (await this.#serviceCore.request(
       Endpoint.GET_PRODUCTS,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     )) as GetProductResponse[];
   }
 
   async getVerificationLevelConfig(
-    params: GetVerificationLevelConfigRequest,
+    params: GetVerificationLevelConfigRequest
   ): Promise<GetVerificationLevelConfigResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     // Call the service endpoint
     const response = await this.#serviceCore.request(
       Endpoint.GET_VERIFICATION_LEVEL_CONFIG,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     );
 
     return response as GetVerificationLevelConfigResponse;

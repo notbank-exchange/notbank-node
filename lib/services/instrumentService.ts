@@ -15,29 +15,32 @@ export class InstrumentService {
     this.#serviceCore = serviceCore;
   }
 
-  async getInstruments(params: GetInstrumentsRequest): Promise<InstrumentResponse[]> {
+  async getInstruments(
+    params: GetInstrumentsRequest
+  ): Promise<InstrumentResponse[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return (await this.#serviceCore.request(
       Endpoint.GET_INSTRUMENTS,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     )) as InstrumentResponse[];
   }
 
-  public async getInstrument(params: GetInstrumentRequest): Promise<InstrumentResponse> {
+  public async getInstrument(
+    params: GetInstrumentRequest
+  ): Promise<InstrumentResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     const response = (await this.#serviceCore.request(
       Endpoint.GET_INSTRUMENT,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     )) as InstrumentResponse;
 
     return response;
   }
 
-
   async getInstrumentVerificationLevelConfigs(
-    params: GetInstrumentVerificationLevelConfigRequest,
+    params: GetInstrumentVerificationLevelConfigRequest
   ): Promise<GetInstrumentVerificationLevelConfigResponse[]> {
     // Validate required parameters
     if (!params.AccountId) {
@@ -50,7 +53,7 @@ export class InstrumentService {
     const response = await this.#serviceCore.request(
       Endpoint.GET_INSTRUMENT_VERIFICATION_LEVEL_CONFIG,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     );
 
     return response as GetInstrumentVerificationLevelConfigResponse[];

@@ -14,7 +14,6 @@ import { GetUserAccountsResponse } from "../models/response/getUserAccounts";
 import { GetUserInfoResponse } from "../models/response/getUserInfo";
 import { GetUserPermissionsResponse } from "../models/response/getUserPermissions";
 
-
 export class UserService {
   #serviceCore: ServiceClient;
   private readonly OMS_ID = 1;
@@ -24,70 +23,71 @@ export class UserService {
   }
 
   public async getUserAccounts(
-      request: GetUserAccountsRequest,
-    ): Promise<GetUserAccountsResponse> {
-      // Validate optional fields
-      if (request.UserId && typeof request.UserId !== "number")
-        throw new Error("UserId must be a number.");
+    request: GetUserAccountsRequest
+  ): Promise<GetUserAccountsResponse> {
+    // Validate optional fields
+    if (request.UserId && typeof request.UserId !== "number")
+      throw new Error("UserId must be a number.");
 
-      const params = completeParams(request, this.OMS_ID);
+    const params = completeParams(request, this.OMS_ID);
 
-      // Make the HTTP request
-      const response: GetUserAccountsResponse = (await this.#serviceCore.request(
-        Endpoint.GET_USER_ACCOUNTS,
-        RequestType.POST,
-        params,
-      )) as GetUserAccountsResponse;
+    // Make the HTTP request
+    const response: GetUserAccountsResponse = (await this.#serviceCore.request(
+      Endpoint.GET_USER_ACCOUNTS,
+      RequestType.POST,
+      params
+    )) as GetUserAccountsResponse;
 
-      return response;
-    }
+    return response;
+  }
 
-    public async getUserDevices(
-      request: GetUserDevicesRequest,
-    ): Promise<GetUserDevicesResponse> {
-      // Validate optional fields
-      if (request.UserId && typeof request.UserId !== "number")
-        throw new Error("UserId must be a number.");
+  public async getUserDevices(
+    request: GetUserDevicesRequest
+  ): Promise<GetUserDevicesResponse> {
+    // Validate optional fields
+    if (request.UserId && typeof request.UserId !== "number")
+      throw new Error("UserId must be a number.");
 
-      // Make the HTTP request
-      const response: GetUserDevicesResponse = (await this.#serviceCore.request(
-        Endpoint.GET_USER_DEVICES,
-        RequestType.POST,
-        request,
-      )) as GetUserDevicesResponse;
+    // Make the HTTP request
+    const response: GetUserDevicesResponse = (await this.#serviceCore.request(
+      Endpoint.GET_USER_DEVICES,
+      RequestType.POST,
+      request
+    )) as GetUserDevicesResponse;
 
-      return response;
-    }
+    return response;
+  }
 
-    public async getUserInfo(
-      request: GetUserInfoRequest,
-    ): Promise<GetUserInfoResponse> {
-      // Validate optional fields
-      if (request.UserId && typeof request.UserId !== "number")
-        throw new Error("UserId must be a number.");
+  public async getUserInfo(
+    request: GetUserInfoRequest
+  ): Promise<GetUserInfoResponse> {
+    // Validate optional fields
+    if (request.UserId && typeof request.UserId !== "number")
+      throw new Error("UserId must be a number.");
 
-      // Make the HTTP request
-      const response: GetUserInfoResponse = (await this.#serviceCore.request(
-        Endpoint.GET_USER_INFO,
-        RequestType.POST,
-        request,
-      )) as GetUserInfoResponse;
+    // Make the HTTP request
+    const response: GetUserInfoResponse = (await this.#serviceCore.request(
+      Endpoint.GET_USER_INFO,
+      RequestType.POST,
+      request
+    )) as GetUserInfoResponse;
 
-      return response;
-    }
+    return response;
+  }
 
-    public async getUserPermissions(
-      request: GetUserPermissionsRequest,
-    ): Promise<GetUserPermissionsResponse> {
-      if (request.UserId == null || typeof request.UserId !== "number")
-        throw new Error("UserId is required and must be a number.");
+  public async getUserPermissions(
+    request: GetUserPermissionsRequest
+  ): Promise<GetUserPermissionsResponse> {
+    if (request.UserId == null || typeof request.UserId !== "number")
+      throw new Error("UserId is required and must be a number.");
 
-      const response: GetUserPermissionsResponse = (await this.#serviceCore.request(
+    const response: GetUserPermissionsResponse =
+      (await this.#serviceCore.request(
         Endpoint.GET_USER_PERMISSIONS,
         RequestType.POST,
-        request,
+        request
       )) as GetUserPermissionsResponse;
 
-      return response;
-    }
+    return response;
+  }
 }

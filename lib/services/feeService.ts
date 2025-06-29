@@ -23,29 +23,29 @@ export class FeeService {
   }
 
   async getDepositFee(
-    params: GetDepositFeeRequest,
+    params: GetDepositFeeRequest
   ): Promise<GetDepositFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return (await this.#serviceCore.request(
       Endpoint.GET_DEPOSIT_FEE,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     )) as GetDepositFeeResponse;
   }
 
   async getWithdrawFee(
-    params: GetWithdrawFeeRequest,
+    params: GetWithdrawFeeRequest
   ): Promise<GetWithdrawFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return (await this.#serviceCore.request(
-        Endpoint.GET_WITHDRAW_FEE,
-        RequestType.POST,
-        paramsWithOMSId,
+      Endpoint.GET_WITHDRAW_FEE,
+      RequestType.POST,
+      paramsWithOMSId
     )) as GetWithdrawFeeResponse;
   }
 
   async getOMSWithdrawFees(
-    params: GetOMSWithdrawFeesRequest,
+    params: GetOMSWithdrawFeesRequest
   ): Promise<GetOMSWithdrawFeesResponse[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
@@ -53,14 +53,14 @@ export class FeeService {
     const response = await this.#serviceCore.request(
       Endpoint.GET_OMS_WITHDRAW_FEES,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     );
 
     return response as GetOMSWithdrawFeesResponse[];
   }
 
   async getOMSDepositFees(
-    params: GetOMSDepositFeesRequest,
+    params: GetOMSDepositFeesRequest
   ): Promise<GetOMSDepositFeesResponse[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
@@ -68,14 +68,14 @@ export class FeeService {
     const response = await this.#serviceCore.request(
       Endpoint.GET_OMS_DEPOSIT_FEES,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     );
 
     return response as GetOMSDepositFeesResponse[];
   }
 
   async getAccountFees(
-    params: GetAccountFeesRequest,
+    params: GetAccountFeesRequest
   ): Promise<GetAccountFeesResponse[]> {
     // Validate required parameters
     if (!params.AccountId) {
@@ -88,20 +88,18 @@ export class FeeService {
     const response = await this.#serviceCore.request(
       Endpoint.GET_ACCOUNT_FEES,
       RequestType.POST,
-      paramsWithOMSId,
+      paramsWithOMSId
     );
 
     return response as GetAccountFeesResponse[];
   }
 
-  async getOrderFee(
-    params: GetOrderFeeRequest,
-  ): Promise<GetOrderFeeResponse> {
+  async getOrderFee(params: GetOrderFeeRequest): Promise<GetOrderFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return (await this.#serviceCore.request(
-        Endpoint.GET_ORDER_FEE,
-        RequestType.POST,
-        paramsWithOMSId,
+      Endpoint.GET_ORDER_FEE,
+      RequestType.POST,
+      paramsWithOMSId
     )) as GetOrderFeeResponse;
   }
 }
