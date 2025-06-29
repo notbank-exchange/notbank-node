@@ -1,0 +1,24 @@
+export var TransactionReferenceTypes;
+(function (TransactionReferenceTypes) {
+    TransactionReferenceTypes["Trade"] = "Trade";
+    TransactionReferenceTypes["Deposit"] = "Deposit";
+    TransactionReferenceTypes["Withdraw"] = "Withdraw";
+    TransactionReferenceTypes["Transfer"] = "Transfer";
+    TransactionReferenceTypes["OrderHold"] = "OrderHold";
+    TransactionReferenceTypes["WithdrawHold"] = "WithdrawHold";
+    TransactionReferenceTypes["DepositHold"] = "DepositHold";
+    TransactionReferenceTypes["MarginHold"] = "MarginHold";
+    TransactionReferenceTypes["ManualHold"] = "ManualHold";
+    TransactionReferenceTypes["ManualEntry"] = "ManualEntry";
+    TransactionReferenceTypes["MarginAcquisition"] = "MarginAcquisition";
+    TransactionReferenceTypes["MarginRelinquish"] = "MarginRelinquish";
+    TransactionReferenceTypes["MarginInterestNetting"] = "MarginInterestNetting";
+    TransactionReferenceTypes["MarginOperatorTransferToMarginAccount"] = "MarginOperatorTransferToMarginAccount";
+    TransactionReferenceTypes["MarginOperatorTransferToAssetAccount"] = "MarginOperatorTransferToAssetAccount";
+    TransactionReferenceTypes["MarginUserTransfer"] = "MarginUserTransfer";
+    TransactionReferenceTypes["MarginPositionReverseTrade"] = "MarginPositionReverseTrade";
+    TransactionReferenceTypes["AffiliateRebate"] = "AffiliateRebate";
+    TransactionReferenceTypes["DistributionEntry"] = "DistributionEntry";
+    TransactionReferenceTypes["TransferHold"] = "TransferHold";
+    TransactionReferenceTypes["AirDrop"] = "AirDrop";
+})(TransactionReferenceTypes || (TransactionReferenceTypes = {}));
