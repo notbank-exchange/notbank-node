@@ -30,7 +30,7 @@ export enum Endpoint {
   GET_PRODUCTS = "GetProducts",
   GET_VERIFICATION_LEVEL_CONFIG = "GetVerificationLevelConfig",
 
-  //Report (Faltan todos)
+  //Report
   GENERATE_TRADE_ACTIVITY_REPORT = "GenerateTradeActivityReport",
   GENERATE_TRANSACTION_ACTIVITY_REPORT = "GenerateTransactionActivityReport",
   GENERATE_PRODUCT_DELTA_ACTIVITY_REPORT = "GenerateProductDeltaActivityReport",
@@ -43,7 +43,7 @@ export enum Endpoint {
   GET_USER_REPORT_WRITER_RESULT_RECORDS = "GetUserReportWriterResultRecords",
   GET_USER_REPORT_TICKETS = "GetUserReportTickets",
   REMOVE_USER_REPORT_TICKET = "RemoveUserReportTicket",
-  GET_USERT_REPORT_TICKETS_BY_STATUS = "GetUserReportTicketsByStatus",
+  GET_USER_REPORT_TICKETS_BY_STATUS = "GetUserReportTicketsByStatus",
   DOWNLOAD_DOCUMENT = "DownloadDocument",
   DOWNLOAD_DOCUMENT_SLICE = "DownloadDocumentSlice",
 
