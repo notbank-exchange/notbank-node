@@ -1,0 +1,45 @@
+import { MakerTaker } from "../common/makerTaker";
+import { OrderTypeInt } from "../common/orderType";
+import { TradeDirection } from "../enums/tradeDirection";
+import { TradeSide } from "../enums/tradeSide";
+
+export interface OrderTrade {
+  OMSId: number;
+  ExecutionId: number;
+  TradeId: number;
+  OrderId: number;
+  AccountId: number;
+  AccountName: string;
+  SubAccountId: number;
+  ClientOrderId: number;
+  InstrumentId: number;
+  Side: TradeSide;
+  OrderType: OrderTypeInt;
+  Quantity: number;
+  RemainingQuantity: number;
+  Price: number;
+  Value: number;
+  CounterParty: string;
+  OrderTradeRevision: number;
+  Direction: TradeDirection;
+  IsBlockTrade: boolean;
+  Fee: number;
+  FeeProductId: number;
+  OrderOriginator: number;
+  UserName: string;
+  TradeTimeMS: number;
+  MakerTaker: MakerTaker;
+  InsideBid: number;
+  InsideBidSize: number;
+  InsideAsk: number;
+  InsideAskSize: number;
+  NotionalProductId: number;
+  NotionalRate: number;
+  NotionalValue: number;
+  TradeTime: number;
+  AdapterTradeId: number;
+  IsQuote: boolean;
+  CounterPartyClientUserId: number;
+  NotionalHoldAmount: number;
+  TradeFlag: string;
+}

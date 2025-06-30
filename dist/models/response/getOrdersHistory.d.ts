@@ -1,0 +1,31 @@
+import { ChangeReason } from "../common/changeReason.js";
+import { OrderState } from "../common/orderState.js";
+import { OrderTypeStr } from "../common/orderType.js";
+import { OrderSide } from "../common/orderSide.js";
+export interface GetOrdersHistoryResponse {
+    Side: OrderSide;
+    OrderId: number;
+    Price: number;
+    Quantity: number;
+    DisplayQuantity: number;
+    Instrument: number;
+    Account: number;
+    AccountName: string;
+    OrderType: OrderTypeStr;
+    ClientOrderId: number;
+    OrderState: OrderState;
+    ReceiveTime: number;
+    ReceiveTimeTicks: number;
+    LastUpdatedTime: number;
+    LastUpdatedTimeTicks: number;
+    OrigQuantity: number;
+    QuantityExecuted: number;
+    GrossValueExecuted: number;
+    AvgPrice: number;
+    ChangeReason: ChangeReason;
+    OrigOrderId?: number;
+    EnteredBy: number;
+    UserName: string;
+    IsQuote: boolean;
+    LastTradePrice: number;
+}

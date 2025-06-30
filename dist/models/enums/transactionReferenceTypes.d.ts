@@ -1,0 +1,23 @@
+export declare enum TransactionReferenceTypes {
+    Trade = "Trade",
+    Deposit = "Deposit",
+    Withdraw = "Withdraw",
+    Transfer = "Transfer",
+    OrderHold = "OrderHold",
+    WithdrawHold = "WithdrawHold",
+    DepositHold = "DepositHold",
+    MarginHold = "MarginHold",
+    ManualHold = "ManualHold",
+    ManualEntry = "ManualEntry",
+    MarginAcquisition = "MarginAcquisition",
+    MarginRelinquish = "MarginRelinquish",
+    MarginInterestNetting = "MarginInterestNetting",
+    MarginOperatorTransferToMarginAccount = "MarginOperatorTransferToMarginAccount",
+    MarginOperatorTransferToAssetAccount = "MarginOperatorTransferToAssetAccount",
+    MarginUserTransfer = "MarginUserTransfer",
+    MarginPositionReverseTrade = "MarginPositionReverseTrade",
+    AffiliateRebate = "AffiliateRebate",
+    DistributionEntry = "DistributionEntry",
+    TransferHold = "TransferHold",
+    AirDrop = "AirDrop"
+}
