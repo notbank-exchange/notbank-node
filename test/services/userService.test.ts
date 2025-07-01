@@ -44,7 +44,6 @@ describe("http user service 2", () => {
   });
 
   const userService = serviceFactory.newUserService();
-  const authService = serviceFactory.newAuthService();
 
   describe("getUserAccounts", () => {
     it("should obtain the user accounts for a valid UserId", async function () {
