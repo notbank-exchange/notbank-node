@@ -19,7 +19,7 @@ export class InstrumentService {
     params: GetInstrumentsRequest
   ): Promise<InstrumentResponse[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_INSTRUMENTS,
       RequestType.POST,
       paramsWithOMSId
@@ -30,7 +30,7 @@ export class InstrumentService {
     params: GetInstrumentRequest
   ): Promise<InstrumentResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_INSTRUMENT,
       RequestType.POST,
       paramsWithOMSId
@@ -50,7 +50,7 @@ export class InstrumentService {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
     // Call the service endpoint
-    const response = await this.#serviceCore.request(
+    const response = await this.#serviceCore.apRequest(
       Endpoint.GET_INSTRUMENT_VERIFICATION_LEVEL_CONFIG,
       RequestType.POST,
       paramsWithOMSId

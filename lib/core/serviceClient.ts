@@ -2,7 +2,12 @@ import { MessageFrame } from "./websocket/messageFrame";
 import { SubscriptionHandler } from "./websocket/subscriptionHandler";
 
 export interface ServiceClient {
-  request<T1, T2>(
+  apRequest<T1, T2>(
+    endpoint: string,
+    requestType: RequestType,
+    message?: T1
+  ): Promise<T2>;
+  nbRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
     message?: T1
@@ -30,7 +35,8 @@ export interface ServiceClient {
 }
 
 export enum RequestType {
-  POST = 0,
-  GET = 1,
-  NONE = 2
+  NONE = 0,
+  POST = 1,
+  GET = 2,
+  DELETE = 3,
 }

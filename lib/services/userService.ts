@@ -32,7 +32,7 @@ export class UserService {
     const params = completeParams(request, this.OMS_ID);
 
     // Make the HTTP request
-    const response: GetUserAccountsResponse = (await this.#serviceCore.request(
+    const response: GetUserAccountsResponse = (await this.#serviceCore.apRequest(
       Endpoint.GET_USER_ACCOUNTS,
       RequestType.POST,
       params
@@ -49,7 +49,7 @@ export class UserService {
       throw new Error("UserId must be a number.");
 
     // Make the HTTP request
-    const response: GetUserDevicesResponse = (await this.#serviceCore.request(
+    const response: GetUserDevicesResponse = (await this.#serviceCore.apRequest(
       Endpoint.GET_USER_DEVICES,
       RequestType.POST,
       request
@@ -66,7 +66,7 @@ export class UserService {
       throw new Error("UserId must be a number.");
 
     // Make the HTTP request
-    const response: GetUserInfoResponse = (await this.#serviceCore.request(
+    const response: GetUserInfoResponse = (await this.#serviceCore.apRequest(
       Endpoint.GET_USER_INFO,
       RequestType.POST,
       request
@@ -82,7 +82,7 @@ export class UserService {
       throw new Error("UserId is required and must be a number.");
 
     const response: GetUserPermissionsResponse =
-      (await this.#serviceCore.request(
+      (await this.#serviceCore.apRequest(
         Endpoint.GET_USER_PERMISSIONS,
         RequestType.POST,
         request

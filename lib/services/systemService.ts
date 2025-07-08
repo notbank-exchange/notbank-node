@@ -11,14 +11,14 @@ export class SystemService {
   }
 
   async ping(): Promise<PingResponse> {
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.PING,
       RequestType.POST
     )) as PingResponse;
   }
 
   async healthCheck(): Promise<HealthCheckResponse> {
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.HEALTH_CHECK,
       RequestType.POST
     )) as HealthCheckResponse;

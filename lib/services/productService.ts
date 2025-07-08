@@ -17,7 +17,7 @@ export class ProductService {
 
   async getProduct(params: GetProductRequest): Promise<GetProductResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_PRODUCT,
       RequestType.POST,
       paramsWithOMSId
@@ -28,7 +28,7 @@ export class ProductService {
 
   async getProducts(params: GetProductsRequest): Promise<GetProductResponse[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_PRODUCTS,
       RequestType.POST,
       paramsWithOMSId
@@ -40,7 +40,7 @@ export class ProductService {
   ): Promise<GetVerificationLevelConfigResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     // Call the service endpoint
-    const response = await this.#serviceCore.request(
+    const response = await this.#serviceCore.apRequest(
       Endpoint.GET_VERIFICATION_LEVEL_CONFIG,
       RequestType.POST,
       paramsWithOMSId

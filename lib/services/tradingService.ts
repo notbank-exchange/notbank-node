@@ -59,7 +59,7 @@ export class TradingService {
 
   async sendOrderList(params: SendOrderListRequest): Promise<void> {
     const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return await this.#serviceCore.apRequest(
       Endpoint.SEND_ORDER_LIST,
       RequestType.POST,
       paramsWithOMSId,
@@ -68,7 +68,7 @@ export class TradingService {
 
   async sendCancelList(params: SendCancelListRequest): Promise<void> {
     const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return await this.#serviceCore.apRequest(
       Endpoint.SEND_CANCEL_LIST,
       RequestType.POST,
       paramsWithOMSId,
@@ -79,7 +79,7 @@ export class TradingService {
     params: SendCancelReplaceListRequest,
   ): Promise<void> {
     const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return await this.#serviceCore.apRequest(
       Endpoint.SEND_CANCEL_REPLACE_LIST,
       RequestType.POST,
       paramsWithOMSId,
@@ -97,7 +97,7 @@ export class TradingService {
     }
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
-    return await this.#serviceCore.request(
+    return await this.#serviceCore.apRequest(
       Endpoint.MODIFY_ORDER,
       RequestType.POST,
       paramsWithOMSId,
@@ -106,7 +106,7 @@ export class TradingService {
 
   async cancelAllOrders(params: CancelAllOrdersRequest): Promise<void> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return await this.#serviceCore.apRequest(
       Endpoint.CANCEL_ALL_ORDERS,
       RequestType.POST,
       paramsWithOMSId,
@@ -122,7 +122,7 @@ export class TradingService {
 
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
-    const response = await this.#serviceCore.request(
+    const response = await this.#serviceCore.apRequest(
       Endpoint.GET_ORDER_STATUS,
       RequestType.POST,
       paramsWithOMSId,
@@ -133,7 +133,7 @@ export class TradingService {
 
   async getOrdersHistory(params: GetOrdersHistoryRequest): Promise<Order[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_ORDERS_HISTORY,
       RequestType.POST,
       paramsWithOMSId,
@@ -144,7 +144,7 @@ export class TradingService {
     params: GetTradesHistoryRequest,
   ): Promise<OrderTrade[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_TRADES_HISTORY,
       RequestType.POST,
       paramsWithOMSId,
@@ -155,7 +155,7 @@ export class TradingService {
     params: GetOrderHistoryByOrderIdRequest,
   ): Promise<GetOrderHistoryByOrderIdResponse[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_ORDER_HISTORY_BY_ORDER_ID,
       RequestType.POST,
       paramsWithOMSId,
@@ -166,7 +166,7 @@ export class TradingService {
     params: GetTickerHistoryRequest,
   ): Promise<GetTickerHistoryResponse[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_TICKER_HISTORY,
       RequestType.POST,
       paramsWithOMSId,
@@ -196,7 +196,7 @@ export class TradingService {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
     // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_LAST_TRADES,
       RequestType.POST,
       paramsWithOMSId,
@@ -210,7 +210,7 @@ export class TradingService {
   ): Promise<GetLevel1SummaryResponse[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
     // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_LEVEL1_SUMMARY,
       RequestType.POST,
       paramsWithOMSId,
@@ -224,7 +224,7 @@ export class TradingService {
   ): Promise<GetLevel1SummaryMinResponse> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
     // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_LEVEL1_SUMMARY_MIN,
       RequestType.POST,
       paramsWithOMSId,
@@ -254,7 +254,7 @@ export class TradingService {
 
     // Make the HTTP request
     const response: GetOpenTradeReportsResponse =
-      (await this.#serviceCore.request(
+      (await this.#serviceCore.apRequest(
         Endpoint.GET_OPEN_TRADE_REPORTS,
         RequestType.POST,
         paramsWithOMSId,
@@ -272,7 +272,7 @@ export class TradingService {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
     // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_ORDERS,
       RequestType.POST,
       paramsWithOMSId,
@@ -293,7 +293,7 @@ export class TradingService {
 
 
     // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_ORDER_HISTORY,
       RequestType.POST,
       paramsWithOMSId,
@@ -328,7 +328,7 @@ export class TradingService {
 
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
-    const response = await this.#serviceCore.request(
+    const response = await this.#serviceCore.apRequest(
       Endpoint.SEND_ORDER,
       RequestType.POST,
       paramsWithOMSId,
@@ -341,7 +341,7 @@ export class TradingService {
     params: CancelReplaceOrderRequest,
   ): Promise<CancelReplaceOrderResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.CANCEL_REPLACE_ORDER,
       RequestType.POST,
       paramsWithOMSId,
@@ -350,7 +350,7 @@ export class TradingService {
 
   async cancelOrder(params: CancelOrderRequest): Promise<void> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return await this.#serviceCore.apRequest(
       Endpoint.CANCEL_ORDER,
       RequestType.POST,
       paramsWithOMSId,
@@ -381,7 +381,7 @@ export class TradingService {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
     // Make the HTTP request
-    const response: GetAccountTradesResponse = (await this.#serviceCore.request(
+    const response: GetAccountTradesResponse = (await this.#serviceCore.apRequest(
       Endpoint.GET_ACCOUNT_TRADES,
       RequestType.POST,
       paramsWithOMSId,
@@ -391,7 +391,7 @@ export class TradingService {
   }
 
   public async getSummary(): Promise<SummaryResponse> {
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.SUMMARY,
       RequestType.POST,
     )) as SummaryResponse;
@@ -400,7 +400,7 @@ export class TradingService {
   }
 
   public async getTicker(): Promise<TickerResponse> {
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.TICKER,
       RequestType.POST,
     )) as TickerResponse;
@@ -415,7 +415,7 @@ export class TradingService {
       throw new Error("Market_Pair is required.");
     }
 
-    const response = await this.#serviceCore.request(
+    const response = await this.#serviceCore.apRequest(
       Endpoint.ORDER_BOOK,
       RequestType.POST,
       request,
@@ -425,7 +425,7 @@ export class TradingService {
   }
 
   public async getTrades(params: TradesRequest): Promise<TradesResponse[]> {
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.TRADES,
       RequestType.POST,
       params,
@@ -447,7 +447,7 @@ export class TradingService {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
     // Make the HTTP request
-    const response: number[][] = (await this.#serviceCore.request(
+    const response: number[][] = (await this.#serviceCore.apRequest(
       Endpoint.GET_L2_SNAPSHOT,
       RequestType.POST,
       paramsWithOMSId,
@@ -479,7 +479,7 @@ export class TradingService {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
     // Make the HTTP request
-    const response: GetLevel1Response = (await this.#serviceCore.request(
+    const response: GetLevel1Response = (await this.#serviceCore.apRequest(
       Endpoint.GET_LEVEL1,
       RequestType.POST,
       paramsWithOMSId,
@@ -490,7 +490,7 @@ export class TradingService {
 
   public async getEnums(): Promise<GetEnumsResponse> {
     // Make the HTTP request
-    const response: GetEnumsResponse = (await this.#serviceCore.request(
+    const response: GetEnumsResponse = (await this.#serviceCore.apRequest(
       Endpoint.GET_ENUMS,
       RequestType.POST,
     )) as GetEnumsResponse;

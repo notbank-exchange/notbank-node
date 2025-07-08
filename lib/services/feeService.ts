@@ -26,7 +26,7 @@ export class FeeService {
     params: GetDepositFeeRequest
   ): Promise<GetDepositFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_DEPOSIT_FEE,
       RequestType.POST,
       paramsWithOMSId
@@ -37,7 +37,7 @@ export class FeeService {
     params: GetWithdrawFeeRequest
   ): Promise<GetWithdrawFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_WITHDRAW_FEE,
       RequestType.POST,
       paramsWithOMSId
@@ -50,7 +50,7 @@ export class FeeService {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
     // Call the service endpoint
-    const response = await this.#serviceCore.request(
+    const response = await this.#serviceCore.apRequest(
       Endpoint.GET_OMS_WITHDRAW_FEES,
       RequestType.POST,
       paramsWithOMSId
@@ -65,7 +65,7 @@ export class FeeService {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
     // Call the service endpoint
-    const response = await this.#serviceCore.request(
+    const response = await this.#serviceCore.apRequest(
       Endpoint.GET_OMS_DEPOSIT_FEES,
       RequestType.POST,
       paramsWithOMSId
@@ -85,7 +85,7 @@ export class FeeService {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
     // Call the service endpoint
-    const response = await this.#serviceCore.request(
+    const response = await this.#serviceCore.apRequest(
       Endpoint.GET_ACCOUNT_FEES,
       RequestType.POST,
       paramsWithOMSId
@@ -96,7 +96,7 @@ export class FeeService {
 
   async getOrderFee(params: GetOrderFeeRequest): Promise<GetOrderFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_ORDER_FEE,
       RequestType.POST,
       paramsWithOMSId

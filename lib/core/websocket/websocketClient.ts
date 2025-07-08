@@ -3,7 +3,7 @@ import { Endpoint } from "../../constants/endpoints";
 import { MessageFrame, MessageType } from "./messageFrame";
 import { SubscriptionHandler } from "./subscriptionHandler";
 import { RequestType, ServiceClient } from "../serviceClient";
-import { StandardError, StandardResponse } from "../../models";
+import { NotbankError, StandardResponse } from "../../models";
 import { WebsocketHooks } from "./websocketHooks";
 import { CallbackManager } from "./callbackManager";
 import ErrorCode from "../../constants/errorCode";
@@ -28,6 +28,11 @@ export class WebsocketClient implements ServiceClient {
     this.#peekMessageIn = params.peekMessageIn || (_ => {});
     this.#peekMessageOut = params.peekMessageOut || (_ => {});
   }
+  
+  nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2> {
+    throw new Error("websocket client does not support nb methods.");
+  }
+
   // TODO: maybe use better names than hook: websockethooks
   async connect(hooks: WebsocketHooks = {}) {
     this.#websocket = new WebSocket("wss://" + this.#domain + "/wsgateway");
@@ -78,7 +83,7 @@ export class WebsocketClient implements ServiceClient {
     return this.#websocket.readyState;
   }
 
-  request<T1, T2>(
+  apRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
     message?: T1
@@ -113,7 +118,7 @@ export class WebsocketClient implements ServiceClient {
         return;
       }
       if (response.m === MessageType.ERROR) {
-        reject(new StandardError(payload));
+        reject(NotbankError.create(payload));
         return;
       }
       var standardResponse = payload as StandardResponse;
@@ -121,7 +126,7 @@ export class WebsocketClient implements ServiceClient {
         standardResponse?.result === false &&
         standardResponse?.errormsg != null
       ) {
-        reject(new StandardError(payload));
+        reject(NotbankError.create(payload));
         return;
       }
       resolve(payload as T);
@@ -194,12 +199,12 @@ export class WebsocketClient implements ServiceClient {
     UserId: string;
     Nonce: string;
   }): Promise<void> {
-    await this.request(Endpoint.AUTHENTICATE_USER, RequestType.NONE, params);
+    await this.apRequest(Endpoint.AUTHENTICATE_USER, RequestType.NONE, params);
   }
 }
 
 function newStandardErrorFromString(errorStr: string): any {
-  return new StandardError({
+  return NotbankError.create({
     result: false,
     errormsg: errorStr,
     errorcode: ErrorCode.UNDEFINED,

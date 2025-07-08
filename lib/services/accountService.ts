@@ -34,7 +34,7 @@ export class AccountService {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
     const response: GetAccountTransactionsResponse =
-      (await this.#serviceCore.request(
+      (await this.#serviceCore.apRequest(
         Endpoint.GET_ACCOUNT_TRANSACTIONS,
         RequestType.POST,
         paramsWithOMSId
@@ -48,7 +48,7 @@ export class AccountService {
   ): Promise<AccountPositions[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     // Llamada al endpoint
-    const response = (await this.#serviceCore.request(
+    const response = (await this.#serviceCore.apRequest(
       Endpoint.GET_ACCOUNT_POSITIONS,
       RequestType.POST,
       paramsWithOMSId
@@ -65,7 +65,7 @@ export class AccountService {
     }
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_ACCOUNT_INSTRUMENT_STATISTICS,
       RequestType.POST,
       paramsWithOMSId
@@ -80,7 +80,7 @@ export class AccountService {
     }
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_ACCOUNT_SETTLEMENT_POSITIONS,
       RequestType.POST,
       paramsWithOMSId
@@ -93,7 +93,7 @@ export class AccountService {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
     // Llamamos al método request con POST y casteamos la respuesta
-    return (await this.#serviceCore.request(
+    return (await this.#serviceCore.apRequest(
       Endpoint.GET_ACCOUNT_INFO,
       RequestType.POST,
       paramsWithOMSId

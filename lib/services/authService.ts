@@ -16,7 +16,7 @@ export class AuthService {
   async webAuthenticateUser(
     params: WebAuthenticateUserRequest
   ): Promise<WebAuthenticateUserResponse> {
-    return await this.#serviceCore.request(
+    return await this.#serviceCore.apRequest(
       Endpoint.WEB_AUTHENTICATE_USER,
       RequestType.NONE,
       params
@@ -28,6 +28,6 @@ export class AuthService {
    */
   async logOut(): Promise<void> {
     // Realiza la solicitud al endpoint utilizando el método POST.
-    return await this.#serviceCore.request(Endpoint.LOGOUT, RequestType.POST);
+    return await this.#serviceCore.apRequest(Endpoint.LOGOUT, RequestType.POST);
   }
 }
