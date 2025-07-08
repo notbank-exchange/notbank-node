@@ -17,10 +17,13 @@ export class Requester {
     params?: T1
   ): Promise<Response> {
     if (requestType === RequestType.GET) {
-      return await this.requestGet(endpoint, { params: params });
+      return await this.requestByMethod(endpoint, "GET", { params: params });
     }
     if (requestType === RequestType.POST) {
       return await this.requestPost(endpoint, params);
+    }
+    if (requestType === RequestType.DELETE) {
+      return await this.requestByMethod(endpoint, "DELETE", { params: params });
     }
     throw new Error(`Request type not implemented. ${requestType}`);
   }
@@ -33,14 +36,15 @@ export class Requester {
     });
   }
 
-  async requestGet<T1>(
+  async requestByMethod<T1>(
     endpoint: string,
+    method: string,
     config: { params?: T1; extraHeaders?: any } = {}
   ): Promise<Response> {
     return await fetch(
       this.getUrlWithSearchParams(endpoint, config.params),
       {
-        method: "GET",
+        method: method,
         headers: this.getHeaders(config.extraHeaders)
       }
     );
