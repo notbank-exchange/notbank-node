@@ -85,7 +85,9 @@ export enum Endpoint {
   GET_USER_ACCOUNTS = "GetUserAccounts",
   GET_USER_DEVICES = "GetUserDevices",
   GET_USER_INFO = "GetUserInfo",
-  GET_USER_PERMISSIONS = "GetUserPermissions"
+  GET_USER_PERMISSIONS = "GetUserPermissions",
+
+  BANKS = "banks",
 }
 
 export enum WebSocketEndpoint {
