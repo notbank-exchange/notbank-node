@@ -43,7 +43,7 @@ export enum Endpoint {
   GET_USER_REPORT_WRITER_RESULT_RECORDS = "GetUserReportWriterResultRecords",
   GET_USER_REPORT_TICKETS = "GetUserReportTickets",
   REMOVE_USER_REPORT_TICKET = "RemoveUserReportTicket",
-  GET_USERT_REPORT_TICKETS_BY_STATUS = "GetUserReportTicketsByStatus",
+  GET_USER_REPORT_TICKETS_BY_STATUS = "GetUserReportTicketsByStatus",
   DOWNLOAD_DOCUMENT = "DownloadDocument",
   DOWNLOAD_DOCUMENT_SLICE = "DownloadDocumentSlice",
 
