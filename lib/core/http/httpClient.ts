@@ -87,6 +87,6 @@ export class HttpClient implements ServiceClient {
     return this.#HOST + "/ap/" + endpoint;
   }
   getNbUrl(endpoint: string): string {
-    return this.#HOST + "/nb/" + endpoint;
+    return this.#HOST + "/api/nb/" + endpoint;
   }
 }
