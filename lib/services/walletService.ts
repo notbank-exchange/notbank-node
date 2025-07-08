@@ -148,6 +148,7 @@ export class WalletService {
     return await this.#serviceCore.nbRequest(
       Endpoint.WHITELIST_ADDRESSES + "/" + request.whitelistedAddressId,
       RequestType.POST,
+      { "code": request.code }
     );
   }
 
@@ -158,6 +159,10 @@ export class WalletService {
     return await this.#serviceCore.nbRequest(
       Endpoint.WHITELIST_ADDRESSES + "/" + request.whitelistedAddressId,
       RequestType.DELETE,
+      {
+        "account_id": request.account_id,
+        "otp": request.otp
+      }
     );
   }
 
