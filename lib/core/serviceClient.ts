@@ -10,7 +10,8 @@ export interface ServiceClient {
   nbRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
-    message?: T1
+    message?: T1,
+    paged?: boolean,
   ): Promise<T2>;
   authenticateUser(params: {
     ApiKey: string;
