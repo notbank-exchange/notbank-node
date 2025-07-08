@@ -28,7 +28,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#getbanks
+   * https://apidoc.notbank.exchange/#getbanks
    */
   async getBanks(request: GetBankRequest): Promise<Banks> {
     return await this.#serviceCore.nbRequest(
@@ -40,7 +40,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#createbankaccount
+   * https://apidoc.notbank.exchange/#createbankaccount
    */
   async createBankAccount(request: CreateBankAccountRequest): Promise<BankAccount> {
     return await this.#serviceCore.nbRequest(
@@ -51,7 +51,7 @@ export class WalletService {
   }
 
   /**
-   * notbank-apidoc.pages.dev/#getbankaccount
+   * https://apidoc.notbank.exchange/#getbankaccount
    */
   async getBankAccount(request: GetBankAccountRequest): Promise<BankAccount> {
     return await this.#serviceCore.nbRequest(
@@ -61,7 +61,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#getbankaccounts
+   * https://apidoc.notbank.exchange/#getbankaccounts
    */
   async getBankAccounts(request: GetBankAccountsRequest): Promise<BankAccounts> {
     return await this.#serviceCore.nbRequest(
@@ -74,7 +74,7 @@ export class WalletService {
 
 
   /**
-   * https://notbank-apidoc.pages.dev/#deletebankaccount
+   * https://apidoc.notbank.exchange/#deletebankaccount
    */
   async deleteBankAccount(request: DeleteBankAccountRequest): Promise<void> {
     return await this.#serviceCore.nbRequest(
@@ -84,7 +84,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#getnetworkstemplates
+   * https://apidoc.notbank.exchange/#getnetworkstemplates
    */
   async getNetworksTemplates(request: GetNetworksTemplatesRequest): Promise<CurrencyNetworkTemplates[]> {
     return await this.#serviceCore.nbRequest(
@@ -95,7 +95,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#getdepositaddresses
+   * https://apidoc.notbank.exchange/#getdepositaddresses
    */
   async getDepositAddresses(request: GetDepositAddressesRequest): Promise<string[]> {
     return await this.#serviceCore.nbRequest(
@@ -106,7 +106,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#createdepositaddress
+   * https://apidoc.notbank.exchange/#createdepositaddress
    */
   async createDepositAddress(request: CreateDepositAddressesRequest): Promise<string> {
     var addressList = await this.#serviceCore.nbRequest<CreateDepositAddressesRequest, string[]>(
@@ -121,7 +121,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#getwhitelistedaddresses
+   * https://apidoc.notbank.exchange/#getwhitelistedaddresses
    */
   async getWhitelistedAddresses(request: GetWhitelistedAddressesRequest): Promise<WhiteListedAddress[]> {
     return await this.#serviceCore.nbRequest(
@@ -132,7 +132,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#addwhitelistedaddress
+   * https://apidoc.notbank.exchange/#addwhitelistedaddress
    */
   async addWhitelistedAddress(request: AddWhitelistedAddressRequest): Promise<string> {
     return await this.#serviceCore.nbRequest(
@@ -142,7 +142,7 @@ export class WalletService {
     );
   }
   /**
-   * https://notbank-apidoc.pages.dev/#confirmwhitelistedaddress
+   * https://apidoc.notbank.exchange/#confirmwhitelistedaddress
    */
   async confirmWhitelistedAddress(request: ConfirmWhitelistedAddressRequest): Promise<void> {
     return await this.#serviceCore.nbRequest(
@@ -152,7 +152,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#deletewhitelistedaddress
+   * https://apidoc.notbank.exchange/#deletewhitelistedaddress
    */
   async deleteWhitelistedAddress(request: DeleteWhitelistedAddressRequest): Promise<void> {
     return await this.#serviceCore.nbRequest(
@@ -162,7 +162,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#updateonestepwithdraw
+   * https://apidoc.notbank.exchange/#updateonestepwithdraw
    */
   async updateOneStepWithdraw(request: UpdateOneStepWithdrawRequest): Promise<void> {
     return await this.#serviceCore.nbRequest(
@@ -173,7 +173,7 @@ export class WalletService {
   }
 
   /**
-   * https://notbank-apidoc.pages.dev/#createcryptowithdraw
+   * https://apidoc.notbank.exchange/#createcryptowithdraw
    */
   async createCryptoWithdraw(request: CreateCryptoWithdrawRequest): Promise<string> {
     return await this.#serviceCore.nbRequest(
