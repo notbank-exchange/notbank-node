@@ -12,7 +12,7 @@ import { GetBankAccountRequest } from "../models/request/getBankAccount";
 import { GetBankAccountsRequest } from "../models/request/getBankAccounts";
 import { GetBankRequest } from "../models/request/getBanks";
 import { GetNetworksTemplatesRequest } from "../models/request/getCurrencyNetworkTemplates";
-import { GetDepositAddressesRequest } from "../models/request/GetDepositAddress";
+import { GetDepositAddressesRequest } from "../models/request/GetDepositAddresses";
 import { GetWhitelistedAddressesRequest } from "../models/request/getWhitelistedAddresses";
 import { UpdateOneStepWithdrawRequest } from "../models/request/updateOneStepWithdraw";
 import { Banks } from "../models/response/bank";
