@@ -1,5 +1,5 @@
 export interface GetDepositAddressesRequest {
-  accountId: number
+  account_id: number
   currency: string
   network: string
 }

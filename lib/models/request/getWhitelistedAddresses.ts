@@ -1,4 +1,4 @@
 export interface GetWhitelistedAddressesRequest {
-  accountId: number
+  account_id: number
   search?: string
 }

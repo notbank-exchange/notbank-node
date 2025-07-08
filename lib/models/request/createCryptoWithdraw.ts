@@ -1,9 +1,9 @@
 export interface CreateCryptoWithdrawRequest {
-  accountId: number
+  account_id: number
   currency: string
   network: string
   address: string
   amount: string
-  memoOrTag: string
+  memo_or_tag: string
   otp: string
 }

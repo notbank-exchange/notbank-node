@@ -1,4 +1,4 @@
 export interface GetBankAccountsRequest {
   page: string
-  pageSize: string
+  page_size: string
 }
