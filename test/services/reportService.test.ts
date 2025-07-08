@@ -16,8 +16,9 @@ describe("http report service", () => {
   before(async () => {
     await serviceFactory.authenticateUser({
       ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
-      ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
-      UserId: "64",
+      ApiSecretKey:
+        "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
+      UserId: "64"
     });
   });
 
@@ -26,82 +27,101 @@ describe("http report service", () => {
   const validGenerateRequest = {
     accountIdList: [1, 2, 3],
     startTime: "2023-03-01T16:00:00.000Z",
-    endTime: "2025-06-02T16:00:00.000Z",
+    endTime: "2025-06-02T16:00:00.000Z"
   };
 
   const validScheduleRequest = {
     accountIdList: [1, 2],
     beginTime: "2023-03-30T16:00:00.000Z",
-    frequency: "Weekly",
+    frequency: "Weekly"
   };
 
   const invalidGenerateRequest = {
     accountIdList: "not-an-array",
     startTime: 123,
-    endTime: 456,
+    endTime: 456
   };
 
   const invalidGenerateRequestStartTime = {
     accountIdList: [1, 2],
     startTime: 12345,
-    endTime: "2025-06-02T16:00:00.000Z",
+    endTime: "2025-06-02T16:00:00.000Z"
   };
 
   const invalidScheduleRequest = {
     accountIdList: [1, "invalid-id"],
     beginTime: 123,
-    frequency: "OnDemand",
+    frequency: "OnDemand"
   };
 
   const invalidScheduleRequestFrequency = {
     accountIdList: [1],
     beginTime: "2023-03-30T16:00:00.000Z",
-    frequency: true,
+    frequency: true
   };
 
   describe("generateTradeActivityReport", () => {
     it("successfully generates trade activity report", async () => {
-      const response = await reportService.generateTradeActivityReport(validGenerateRequest as any);
+      const response = await reportService.generateTradeActivityReport(
+        validGenerateRequest as any
+      );
       assert.ok(response.RequestId, "Should return RequestId");
     });
 
     it("throws error on invalid request", async () => {
       try {
-        await reportService.generateTradeActivityReport(invalidGenerateRequest as any);
+        await reportService.generateTradeActivityReport(
+          invalidGenerateRequest as any
+        );
         assert.fail("Should have thrown error");
       } catch (error: any) {
-        assert.match(error.message, /accountIdList must be an array of numbers/);
+        assert.match(
+          error.message,
+          /accountIdList must be an array of numbers/
+        );
       }
     });
 
     it("should throw error for invalid startTime in generateTradeActivityReport", async () => {
       try {
         // @ts-expect-error
-        await reportService.generateTradeActivityReport(invalidGenerateRequestStartTime);
+        await reportService.generateTradeActivityReport(
+          invalidGenerateRequestStartTime
+        );
         assert.fail("Expected error for invalid startTime");
       } catch (error: any) {
-        assert.match(error.message, /startTime and endTime must be strings/, "Expected validation error");
+        assert.match(
+          error.message,
+          /startTime and endTime must be strings/,
+          "Expected validation error"
+        );
       }
     });
   });
 
   describe("generateTransactionActivityReport", () => {
     it("successfully generates transaction activity report", async () => {
-      const response = await reportService.generateTransactionActivityReport(validGenerateRequest as any);
+      const response = await reportService.generateTransactionActivityReport(
+        validGenerateRequest as any
+      );
       assert.ok(response.RequestId);
     });
   });
 
   describe("generateProductDeltaActivityReport", () => {
     it("successfully generates product delta report", async () => {
-      const response = await reportService.generateProductDeltaActivityReport(validGenerateRequest as any);
+      const response = await reportService.generateProductDeltaActivityReport(
+        validGenerateRequest as any
+      );
       assert.ok(response.RequestId);
     });
   });
 
   describe("generatePnLActivityReport", () => {
     it("successfully generates PnL report", async () => {
-      const response = await reportService.generatePnLActivityReport(validGenerateRequest as any);
+      const response = await reportService.generatePnLActivityReport(
+        validGenerateRequest as any
+      );
       assert.ok(response.RequestId);
     });
   });
@@ -109,47 +129,66 @@ describe("http report service", () => {
   // --- Schedule reports ---
   describe("scheduleTradeActivityReport", () => {
     it("successfully schedules trade report", async () => {
-      const response = await reportService.scheduleTradeActivityReport(validScheduleRequest as any);
+      const response = await reportService.scheduleTradeActivityReport(
+        validScheduleRequest as any
+      );
       assert.ok(response.RequestId);
     });
 
     it("throws error on invalid request", async () => {
       try {
-        await reportService.scheduleTradeActivityReport(invalidScheduleRequest as any);
+        await reportService.scheduleTradeActivityReport(
+          invalidScheduleRequest as any
+        );
         assert.fail("Should have thrown error");
       } catch (error: any) {
-        assert.match(error.message, /accountIdList must be an array of numbers/);
+        assert.match(
+          error.message,
+          /accountIdList must be an array of numbers/
+        );
       }
     });
 
     it("should throw error for invalid frequency in scheduleTradeActivityReport", async () => {
       try {
         // @ts-expect-error
-        await reportService.scheduleTradeActivityReport(invalidScheduleRequestFrequency);
+        await reportService.scheduleTradeActivityReport(
+          invalidScheduleRequestFrequency
+        );
         assert.fail("Expected error for invalid frequency");
       } catch (error: any) {
-        assert.match(error.message, /frequency must be a string or number/, "Expected validation error");
+        assert.match(
+          error.message,
+          /frequency must be a string or number/,
+          "Expected validation error"
+        );
       }
     });
   });
 
   describe("scheduleTransactionActivityReport", () => {
     it("successfully schedules transaction report", async () => {
-      const response = await reportService.scheduleTransactionActivityReport(validScheduleRequest as any);
+      const response = await reportService.scheduleTransactionActivityReport(
+        validScheduleRequest as any
+      );
       assert.ok(response.RequestId);
     });
   });
 
   describe("scheduleProductDeltaActivityReport", () => {
     it("successfully schedules product delta report", async () => {
-      const response = await reportService.scheduleProductDeltaActivityReport(validScheduleRequest as any);
+      const response = await reportService.scheduleProductDeltaActivityReport(
+        validScheduleRequest as any
+      );
       assert.ok(response.RequestId);
     });
   });
 
   describe("scheduleProfitAndLossActivityReport", () => {
     it("successfully schedules PnL report", async () => {
-      const response = await reportService.scheduleProfitAndLossActivityReport(validScheduleRequest as any);
+      const response = await reportService.scheduleProfitAndLossActivityReport(
+        validScheduleRequest as any
+      );
       assert.ok(response.RequestId);
     });
   });
@@ -160,7 +199,10 @@ describe("http report service", () => {
         await reportService.cancelUserReport({} as CancelUserReportRequest);
         assert.fail("Should throw an error");
       } catch (error: any) {
-        assert.match(error.message, /UserReportId is required and must be a string/);
+        assert.match(
+          error.message,
+          /UserReportId is required and must be a string/
+        );
       }
     });
   });
@@ -178,7 +220,7 @@ describe("http report service", () => {
     it("throws error for invalid Depth", async () => {
       const req: GetUserReportWriterResultRecordsRequest = {
         UserId: 64,
-        Depth: -1,
+        Depth: -1
       };
 
       try {
@@ -192,7 +234,7 @@ describe("http report service", () => {
     it("throws error for invalid StartIndex", async () => {
       const req: GetUserReportWriterResultRecordsRequest = {
         UserId: 64,
-        StartIndex: -1,
+        StartIndex: -1
       };
 
       try {
@@ -205,7 +247,7 @@ describe("http report service", () => {
 
     it("successfully gets report writer result records", async () => {
       const response = await reportService.getUserReportWriterResultRecords({
-        UserId: 64,
+        UserId: 64
       });
 
       assert.ok(Array.isArray(response));
@@ -215,7 +257,9 @@ describe("http report service", () => {
   describe("getUserReportTickets", () => {
     it("throws error when UserId is missing", async () => {
       try {
-        await reportService.getUserReportTickets({} as GetUserReportTicketsRequest);
+        await reportService.getUserReportTickets(
+          {} as GetUserReportTicketsRequest
+        );
         assert.fail("Should throw error");
       } catch (error: any) {
         assert.match(error.message, /UserId is required and must be a number/);
@@ -252,7 +296,7 @@ describe("http report service", () => {
     it("throws error for invalid RequestStatus", async () => {
       try {
         await reportService.getUserReportTicketsByStatus([
-          { RequestStatus: "InvalidStatus" } as any,
+          { RequestStatus: "InvalidStatus" } as any
         ]);
         assert.fail("Should throw error");
       } catch (error: any) {
@@ -262,7 +306,7 @@ describe("http report service", () => {
 
     it("works with valid RequestStatus", async () => {
       const req: GetUserReportTicketsByStatusRequest[] = [
-        { RequestStatus: ReportRequestStatus.Completed },
+        { RequestStatus: ReportRequestStatus.Completed }
       ];
 
       const res = await reportService.getUserReportTicketsByStatus(req);
@@ -276,7 +320,10 @@ describe("http report service", () => {
         await reportService.downloadDocument({} as DownloadDocumentRequest);
         assert.fail("Should throw error");
       } catch (error: any) {
-        assert.match(error.message, /DescriptorId is required and must be a string/);
+        assert.match(
+          error.message,
+          /DescriptorId is required and must be a string/
+        );
       }
     });
   });
@@ -284,10 +331,15 @@ describe("http report service", () => {
   describe("downloadDocumentSlice", () => {
     it("throws error when DescriptorId is missing", async () => {
       try {
-        await reportService.downloadDocumentSlice({} as DownloadDocumentSliceRequest);
+        await reportService.downloadDocumentSlice(
+          {} as DownloadDocumentSliceRequest
+        );
         assert.fail("Should throw error");
       } catch (error: any) {
-        assert.match(error.message, /DescriptorId is required and must be a string/);
+        assert.match(
+          error.message,
+          /DescriptorId is required and must be a string/
+        );
       }
     });
 
@@ -295,7 +347,7 @@ describe("http report service", () => {
       try {
         await reportService.downloadDocumentSlice({
           DescriptorId: "valid-guid",
-          sliceNum: -1,
+          sliceNum: -1
         });
         assert.fail("Should throw error");
       } catch (error: any) {
