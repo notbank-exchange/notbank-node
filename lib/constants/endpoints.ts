@@ -1,18 +1,18 @@
 export enum Endpoint {
-  //Account
+  // Account
   GET_ACCOUNT_TRANSACTIONS = "GetAccountTransactions",
   GET_ACCOUNT_POSITIONS = "GetAccountPositions",
   GET_ACCOUNT_INSTRUMENT_STATISTICS = "GetAccountInstrumentStatistics",
   GET_ACCOUNT_SETTLEMENT_POSITIONS = "GetAccountSettlementPositions",
   GET_ACCOUNT_INFO = "GetAccountInfo",
 
-  //Authentication
+  // Authentication
   AUTHENTICATE = "Authenticate",
   AUTHENTICATE_USER = "AuthenticateUser",
   WEB_AUTHENTICATE_USER = "WebAuthenticateUser",
   LOGOUT = "LogOut",
 
-  //FEE
+  // FEE
   GET_WITHDRAW_FEE = "GetWithdrawFee",
   GET_DEPOSIT_FEE = "GetDepositFee",
   GET_OMS_WITHDRAW_FEES = "GetOMSWithdrawFees",
@@ -20,17 +20,17 @@ export enum Endpoint {
   GET_ACCOUNT_FEES = "GetAccountFees",
   GET_ORDER_FEE = "GetOrderFee",
 
-  //Instrument
+  // Instrument
   GET_INSTRUMENT = "GetInstrument",
   GET_INSTRUMENTS = "GetInstruments",
   GET_INSTRUMENT_VERIFICATION_LEVEL_CONFIG = "GetInstrumentVerificationLevelConfig",
 
-  //Product
+  // Product
   GET_PRODUCT = "GetProduct",
   GET_PRODUCTS = "GetProducts",
   GET_VERIFICATION_LEVEL_CONFIG = "GetVerificationLevelConfig",
 
-  //Report (Faltan todos)
+  // Report (Faltan todos)
   GENERATE_TRADE_ACTIVITY_REPORT = "GenerateTradeActivityReport",
   GENERATE_TRANSACTION_ACTIVITY_REPORT = "GenerateTransactionActivityReport",
   GENERATE_PRODUCT_DELTA_ACTIVITY_REPORT = "GenerateProductDeltaActivityReport",
@@ -47,11 +47,11 @@ export enum Endpoint {
   DOWNLOAD_DOCUMENT = "DownloadDocument",
   DOWNLOAD_DOCUMENT_SLICE = "DownloadDocumentSlice",
 
-  //System
+  // System
   PING = "Ping",
   HEALTH_CHECK = "HealthCheck",
 
-  //Trading
+  // Trading
   SEND_ORDER_LIST = "SendOrderList",
   SEND_CANCEL_LIST = "SendCancelList",
   SEND_CANCEL_REPLACE_LIST = "SendCancelReplaceList",
@@ -81,13 +81,23 @@ export enum Endpoint {
   GET_LEVEL1 = "GetLevel1",
   GET_ENUMS = "GetEnums",
 
-  //User
+  // User
   GET_USER_ACCOUNTS = "GetUserAccounts",
   GET_USER_DEVICES = "GetUserDevices",
   GET_USER_INFO = "GetUserInfo",
   GET_USER_PERMISSIONS = "GetUserPermissions",
 
+  // Wallet
   BANKS = "banks",
+  BANK_ACCOUNTS = "bank-accounts",
+  GET_NETWORKS_TEMPLATES = "crypto/withdrawal/templates",
+  GET_DEPOSIT_ADDRESSES = "wallet/crypto",
+  CREATE_DEPOSIT_ADDRESS = "crypto",
+  WHITELIST_ADDRESSES = "whitelist-addresses",
+  UPDATE_ONE_STEP_WITHDRAW = "whitelist-addresses/one-step/status",
+  CREATE_CRYPTO_WITHDRAW = "wallet/crypto/withdrawal"
+
+
 }
 
 export enum WebSocketEndpoint {
