@@ -6,10 +6,10 @@ export interface ScheduleActivityReportResponse {
   RequestingUser: number;
   OMSId: number;
   reportFlavor: ReportFlavor;
-  createTime: string;           // format ISO 8601
-  initialRunTime: string;       // format ISO 8601
-  intervalStartTime: string;    // format ISO 8601
-  intervalEndTime: string;      // format ISO 8601
+  createTime: string; // format ISO 8601
+  initialRunTime: string; // format ISO 8601
+  intervalStartTime: string; // format ISO 8601
+  intervalEndTime: string; // format ISO 8601
   RequestStatus: ReportRequestStatus;
   ReportFrequency: ReportFrequency;
   intervalDuration: number;

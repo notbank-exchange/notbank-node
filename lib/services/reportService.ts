@@ -242,7 +242,7 @@ export class ReportService {
       !Array.isArray(request) ||
       request.length === 0 ||
       request.some(
-        (item) =>
+        item =>
           typeof item?.RequestStatus !== "string" ||
           !(item.RequestStatus in ReportRequestStatus)
       )
@@ -303,20 +303,25 @@ export class ReportService {
   private validateReportRequest(request: GenerateActivityReportRequest): void {
     if (
       !Array.isArray(request.accountIdList) ||
-      request.accountIdList.some((id) => typeof id !== "number")
+      request.accountIdList.some(id => typeof id !== "number")
     ) {
       throw new Error("accountIdList must be an array of numbers.");
     }
 
-    if (typeof request.startTime !== "string" || typeof request.endTime !== "string") {
+    if (
+      typeof request.startTime !== "string" ||
+      typeof request.endTime !== "string"
+    ) {
       throw new Error("startTime and endTime must be strings.");
     }
   }
 
-  private validateScheduleReportRequest(request: ScheduleActivityReportRequest): void {
+  private validateScheduleReportRequest(
+    request: ScheduleActivityReportRequest
+  ): void {
     if (
       !Array.isArray(request.accountIdList) ||
-      request.accountIdList.some((id:number) => typeof id !== "number")
+      request.accountIdList.some((id: number) => typeof id !== "number")
     ) {
       throw new Error("accountIdList must be an array of numbers.");
     }
