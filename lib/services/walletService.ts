@@ -110,7 +110,7 @@ export class WalletService {
    */
   async createDepositAddress(request: CreateDepositAddressesRequest): Promise<string> {
     var addressList = await this.#serviceCore.nbRequest<CreateDepositAddressesRequest, string[]>(
-      Endpoint.CREATE_DEPOSIT_ADDRESS,
+      Endpoint.DEPOSIT_ADDRESS,
       RequestType.POST,
       request
     );

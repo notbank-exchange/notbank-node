@@ -90,11 +90,10 @@ export enum Endpoint {
   // Wallet
   BANKS = "banks",
   BANK_ACCOUNTS = "bank-accounts",
-  GET_NETWORKS_TEMPLATES = "crypto/withdrawal/templates",
-  GET_DEPOSIT_ADDRESSES = "wallet/crypto",
-  CREATE_DEPOSIT_ADDRESS = "crypto",
-  WHITELIST_ADDRESSES = "whitelist-addresses",
-  UPDATE_ONE_STEP_WITHDRAW = "whitelist-addresses/one-step/status",
+  GET_NETWORKS_TEMPLATES = "wallet/crypto/withdrawal/templates",
+  DEPOSIT_ADDRESS = "wallet/crypto",
+  WHITELIST_ADDRESSES = "wallet/crypto/whitelist-addresses",
+  UPDATE_ONE_STEP_WITHDRAW = "wallet/crypto/whitelist-addresses/one-step/status",
   CREATE_CRYPTO_WITHDRAW = "wallet/crypto/withdrawal"
 
 
