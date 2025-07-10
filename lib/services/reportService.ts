@@ -36,7 +36,7 @@ export class ReportService {
 
     const params = completeParams(request, this.OMS_ID);
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.GENERATE_TRADE_ACTIVITY_REPORT,
       RequestType.POST,
       params
@@ -52,7 +52,7 @@ export class ReportService {
 
     const params = completeParams(request, this.OMS_ID);
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.GENERATE_TRANSACTION_ACTIVITY_REPORT,
       RequestType.POST,
       params
@@ -68,7 +68,7 @@ export class ReportService {
 
     const params = completeParams(request, this.OMS_ID);
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.GENERATE_PRODUCT_DELTA_ACTIVITY_REPORT,
       RequestType.POST,
       params
@@ -84,7 +84,7 @@ export class ReportService {
 
     const params = completeParams(request, this.OMS_ID);
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.GENERATE_PNL_ACTIVITY_REPORT,
       RequestType.POST,
       params
@@ -100,7 +100,7 @@ export class ReportService {
 
     const params = completeParams(request, this.OMS_ID);
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.SCHEDULE_TRADE_ACTIVITY_REPORT,
       RequestType.POST,
       params
@@ -116,7 +116,7 @@ export class ReportService {
 
     const params = completeParams(request, this.OMS_ID);
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.SCHEDULE_TRANSACTION_ACTIVITY_REPORT,
       RequestType.POST,
       params
@@ -132,7 +132,7 @@ export class ReportService {
 
     const params = completeParams(request, this.OMS_ID);
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.SCHEDULE_PRODUCT_DELTA_ACTIVITY_REPORT,
       RequestType.POST,
       params
@@ -148,7 +148,7 @@ export class ReportService {
 
     const params = completeParams(request, this.OMS_ID);
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.SCHEDULE_PROFIT_AND_LOSS_ACTIVITY_REPORT,
       RequestType.POST,
       params
@@ -164,7 +164,7 @@ export class ReportService {
       throw new Error("UserReportId is required and must be a string.");
     }
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.CANCEL_USER_REPORT,
       RequestType.POST,
       request
@@ -194,7 +194,7 @@ export class ReportService {
       throw new Error("StartIndex must be a non-negative number.");
     }
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.GET_USER_REPORT_WRITER_RESULT_RECORDS,
       RequestType.POST,
       request
@@ -210,7 +210,7 @@ export class ReportService {
       throw new Error("UserId is required and must be a number.");
     }
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.GET_USER_REPORT_TICKETS,
       RequestType.POST,
       request
@@ -226,7 +226,7 @@ export class ReportService {
       throw new Error("userReportTicketId must be a string.");
     }
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.REMOVE_USER_REPORT_TICKET,
       RequestType.POST,
       userReportTicketId
@@ -252,7 +252,7 @@ export class ReportService {
       );
     }
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.GET_USER_REPORT_TICKETS_BY_STATUS,
       RequestType.POST,
       request
@@ -268,7 +268,7 @@ export class ReportService {
       throw new Error("DescriptorId is required and must be a string.");
     }
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.DOWNLOAD_DOCUMENT,
       RequestType.POST,
       request
@@ -291,7 +291,7 @@ export class ReportService {
       throw new Error("sliceNum must be a non-negative number if provided.");
     }
 
-    const response = await this.connection.request(
+    const response = await this.connection.apRequest(
       Endpoint.DOWNLOAD_DOCUMENT_SLICE,
       RequestType.POST,
       request
