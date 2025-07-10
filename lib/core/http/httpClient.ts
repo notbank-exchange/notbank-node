@@ -3,7 +3,7 @@ import {
   AuthenticateUserRequest,
   AuthenticateUserResponse
 } from "../../models";
-import { RequestType, ServiceClient } from "../serviceClient";
+import { RequestType, ServiceConnection } from "../serviceClient";
 import { MessageFrame } from "../websocket/messageFrame";
 import { ResponseHandler } from "../websocket/responseHandler";
 import { SubscriptionHandler } from "../websocket/subscriptionHandler";
@@ -11,7 +11,7 @@ import { ApResponseHandler } from "./apResponseHandler";
 import { NbResponseHandler } from "./nbResponseHandler";
 import { Requester } from "./requester";
 
-export class HttpClient implements ServiceClient {
+export class HttpConnection implements ServiceConnection {
   #requester: Requester
   #HOST: string;
 

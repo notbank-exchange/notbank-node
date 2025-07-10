@@ -1,25 +1,25 @@
 import assert from "assert";
 import "mocha";
 
-import { HttpServiceFactory } from "../../lib/services/httpServiceFactory";
+import { NotbankClient } from "../../lib/services/NotbankClient";
 import { GetAccountTransactionsRequest } from "../../lib/models/request/getAccountTransactions";
 
 describe("http account service", () => {
-  const serviceFactory = new HttpServiceFactory("stgapi.notbank.exchange");
+  const client = NotbankClient.Factory.createRestClient();
 
 
   before(async () => {
     // Autenticación previa a todas las pruebas en este bloque, http only
-    await serviceFactory.authenticate({
+    await client.authenticateUser({
       ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
       ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
       UserId: "64",
     });
   });
 
-  const accountService = serviceFactory.newAccountService();
+  const accountService = client.getAccountService();
 
-    describe("getAccountTransactions", () => {
+  describe("getAccountTransactions", () => {
     it("should return transactions with valid AccountId", async () => {
       const params: GetAccountTransactionsRequest = {
         AccountId: 99,

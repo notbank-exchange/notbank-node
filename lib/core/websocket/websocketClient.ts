@@ -2,16 +2,16 @@ import WebSocket from "universal-websocket-client";
 import { Endpoint } from "../../constants/endpoints";
 import { MessageFrame, MessageType } from "./messageFrame";
 import { SubscriptionHandler } from "./subscriptionHandler";
-import { RequestType, ServiceClient } from "../serviceClient";
+import { RequestType, ServiceConnection } from "../serviceClient";
 import { NotbankError, StandardResponse } from "../../models";
 import { WebsocketHooks } from "./websocketHooks";
 import { CallbackManager } from "./callbackManager";
 import ErrorCode from "../../constants/errorCode";
 import { SubscriptionIdentifier } from "./SubscriptionIdentifier";
 
-const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => {};
+const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => { };
 
-export class WebsocketClient implements ServiceClient {
+export class WebsocketConnection implements ServiceConnection {
   #domain: string;
   #callbackManager: CallbackManager;
   #websocket: WebSocket;
@@ -25,10 +25,10 @@ export class WebsocketClient implements ServiceClient {
   }) {
     this.#domain = params.domain;
     this.#callbackManager = new CallbackManager();
-    this.#peekMessageIn = params.peekMessageIn || (_ => {});
-    this.#peekMessageOut = params.peekMessageOut || (_ => {});
+    this.#peekMessageIn = params.peekMessageIn || (_ => { });
+    this.#peekMessageOut = params.peekMessageOut || (_ => { });
   }
-  
+
   nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2> {
     throw new Error("websocket client does not support nb methods.");
   }

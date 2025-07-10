@@ -1,5 +1,5 @@
 import { WebSocketEndpoint } from "../constants/endpoints";
-import { ServiceClient } from "../core/serviceClient";
+import { ServiceConnection } from "../core/serviceClient";
 import { SubscriptionIdentifier } from "../core/websocket/SubscriptionIdentifier";
 import {
   CancelOrderRejectEvent,
@@ -36,11 +36,11 @@ import {
 } from "../utils/subscriptionCallbacksHandler";
 
 export class SubscriptionService {
-  #serviceCore: ServiceClient;
+  connection: ServiceConnection;
   private readonly OMS_ID = 1;
 
-  constructor(serviceCore: ServiceClient) {
-    this.#serviceCore = serviceCore;
+  constructor(connection: ServiceConnection) {
+    this.connection = connection;
   }
 
   async subscribeLevel1(
@@ -53,7 +53,7 @@ export class SubscriptionService {
         "Either InstrumentId or Symbol must be specified for Level1 subscription."
       );
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-    return await this.#serviceCore.subscribe(
+    return await this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_LEVEL1,
       request.InstrumentId || null,
       null,
@@ -73,7 +73,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    await this.#serviceCore.unsubscribe(
+    await this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_LEVEL1,
       request.InstrumentId || null,
       null,
@@ -92,7 +92,7 @@ export class SubscriptionService {
         "Either InstrumentId or Symbol must be specified for Level2 subscription."
       );
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-    return await this.#serviceCore.subscribe(
+    return await this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_LEVEL2,
       request.InstrumentId,
       null,
@@ -120,7 +120,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    await this.#serviceCore.unsubscribe(
+    await this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_LEVEL2,
       request.InstrumentId || null,
       null,
@@ -152,7 +152,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    return await this.#serviceCore.subscribe(
+    return await this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_TRADES,
       request.InstrumentId,
       null,
@@ -180,7 +180,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    await this.#serviceCore.unsubscribe(
+    await this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_TRADES,
       request.InstrumentId,
       null,
@@ -208,7 +208,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    return await this.#serviceCore.subscribe(
+    return await this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_TICKER,
       request.InstrumentId || null,
       null,
@@ -237,7 +237,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    await this.#serviceCore.unsubscribe(
+    await this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_TICKER,
       request.InstrumentId || null,
       null,
@@ -267,7 +267,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    return await this.#serviceCore.subscribe(
+    return await this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_ACCOUNT_EVENTS,
       request.AccountId,
       null,
@@ -329,7 +329,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    await this.#serviceCore.unsubscribe(
+    await this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_ACCOUNT_EVENTS,
       request.AccountId,
       null,
@@ -360,7 +360,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    return await this.#serviceCore.subscribe(
+    return await this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_ORDER_STATE_EVENTS,
       request.AccountId,
       request.InstrumentId || null,
@@ -390,7 +390,7 @@ export class SubscriptionService {
 
     const requestWithOMSId = completeParams(request, this.OMS_ID);
 
-    await this.#serviceCore.unsubscribe(
+    await this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_ORDER_STATE_EVENTS,
       request.AccountId,
       request.InstrumentId || null,

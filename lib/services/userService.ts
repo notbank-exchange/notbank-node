@@ -1,5 +1,5 @@
 import { Endpoint } from "../constants/endpoints";
-import { RequestType, ServiceClient } from "../core/serviceClient";
+import { RequestType, ServiceConnection } from "../core/serviceClient";
 import { completeParams } from "../utils/completeParams";
 
 // *************************************REQUEST*************************************
@@ -15,11 +15,11 @@ import { GetUserInfoResponse } from "../models/response/getUserInfo";
 import { GetUserPermissionsResponse } from "../models/response/getUserPermissions";
 
 export class UserService {
-  #serviceCore: ServiceClient;
+  connection: ServiceConnection;
   private readonly OMS_ID = 1;
 
-  constructor(serviceCore: ServiceClient) {
-    this.#serviceCore = serviceCore;
+  constructor(connection: ServiceConnection) {
+    this.connection = connection;
   }
 
   public async getUserAccounts(
@@ -32,7 +32,7 @@ export class UserService {
     const params = completeParams(request, this.OMS_ID);
 
     // Make the HTTP request
-    const response: GetUserAccountsResponse = (await this.#serviceCore.apRequest(
+    const response: GetUserAccountsResponse = (await this.connection.apRequest(
       Endpoint.GET_USER_ACCOUNTS,
       RequestType.POST,
       params
@@ -49,7 +49,7 @@ export class UserService {
       throw new Error("UserId must be a number.");
 
     // Make the HTTP request
-    const response: GetUserDevicesResponse = (await this.#serviceCore.apRequest(
+    const response: GetUserDevicesResponse = (await this.connection.apRequest(
       Endpoint.GET_USER_DEVICES,
       RequestType.POST,
       request
@@ -66,7 +66,7 @@ export class UserService {
       throw new Error("UserId must be a number.");
 
     // Make the HTTP request
-    const response: GetUserInfoResponse = (await this.#serviceCore.apRequest(
+    const response: GetUserInfoResponse = (await this.connection.apRequest(
       Endpoint.GET_USER_INFO,
       RequestType.POST,
       request
@@ -82,7 +82,7 @@ export class UserService {
       throw new Error("UserId is required and must be a number.");
 
     const response: GetUserPermissionsResponse =
-      (await this.#serviceCore.apRequest(
+      (await this.connection.apRequest(
         Endpoint.GET_USER_PERMISSIONS,
         RequestType.POST,
         request

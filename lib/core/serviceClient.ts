@@ -1,7 +1,7 @@
 import { MessageFrame } from "./websocket/messageFrame";
 import { SubscriptionHandler } from "./websocket/subscriptionHandler";
 
-export interface ServiceClient {
+export interface ServiceConnection {
   apRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,

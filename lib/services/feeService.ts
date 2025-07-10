@@ -1,5 +1,5 @@
 import { Endpoint } from "../constants/endpoints";
-import { RequestType, ServiceClient } from "../core/serviceClient";
+import { RequestType, ServiceConnection } from "../core/serviceClient";
 import { GetAccountFeesRequest } from "../models/request/getAccountFees";
 import { GetDepositFeeRequest } from "../models/request/getDepositFee";
 import { GetOMSDepositFeesRequest } from "../models/request/getOMSDepositFees";
@@ -15,18 +15,18 @@ import { GetWithdrawFeeResponse } from "../models/response/getWithdrawFee";
 import { completeParams } from "../utils/completeParams";
 
 export class FeeService {
-  #serviceCore: ServiceClient;
+  connection: ServiceConnection;
   private readonly OMS_ID = 1;
 
-  constructor(serviceCore: ServiceClient) {
-    this.#serviceCore = serviceCore;
+  constructor(connection: ServiceConnection) {
+    this.connection = connection;
   }
 
   async getDepositFee(
     params: GetDepositFeeRequest
   ): Promise<GetDepositFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.apRequest(
+    return (await this.connection.apRequest(
       Endpoint.GET_DEPOSIT_FEE,
       RequestType.POST,
       paramsWithOMSId
@@ -37,7 +37,7 @@ export class FeeService {
     params: GetWithdrawFeeRequest
   ): Promise<GetWithdrawFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.apRequest(
+    return (await this.connection.apRequest(
       Endpoint.GET_WITHDRAW_FEE,
       RequestType.POST,
       paramsWithOMSId
@@ -50,7 +50,7 @@ export class FeeService {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
     // Call the service endpoint
-    const response = await this.#serviceCore.apRequest(
+    const response = await this.connection.apRequest(
       Endpoint.GET_OMS_WITHDRAW_FEES,
       RequestType.POST,
       paramsWithOMSId
@@ -65,7 +65,7 @@ export class FeeService {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
     // Call the service endpoint
-    const response = await this.#serviceCore.apRequest(
+    const response = await this.connection.apRequest(
       Endpoint.GET_OMS_DEPOSIT_FEES,
       RequestType.POST,
       paramsWithOMSId
@@ -85,7 +85,7 @@ export class FeeService {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
 
     // Call the service endpoint
-    const response = await this.#serviceCore.apRequest(
+    const response = await this.connection.apRequest(
       Endpoint.GET_ACCOUNT_FEES,
       RequestType.POST,
       paramsWithOMSId
@@ -96,7 +96,7 @@ export class FeeService {
 
   async getOrderFee(params: GetOrderFeeRequest): Promise<GetOrderFeeResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.apRequest(
+    return (await this.connection.apRequest(
       Endpoint.GET_ORDER_FEE,
       RequestType.POST,
       paramsWithOMSId

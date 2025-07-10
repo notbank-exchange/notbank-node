@@ -14,25 +14,24 @@ import { UnsubscribeTradesRequest } from "../../lib/models/request/unsubscribeTr
 import { WebsocketServiceFactory } from "../../lib/services/websocketServicesFactory";
 import { SubscribeTickerRequest } from "../../lib/models/request/subscribeTicker";
 import { SubscriptionService } from "../../lib/services/subscriptionService";
+import { NotbankClient } from "../../lib/services/NotbankClient";
 
 describe("Subscription Service websocket", () => {
-  const wsServiceFactory = new WebsocketServiceFactory({
-    domain: "stgapi.notbank.exchange",
-  });
+  const client = NotbankClient.Factory.createWebsocketClient();
   let subscriptionService: SubscriptionService;
 
   before(async () => {
-    await wsServiceFactory.connect();
-    await wsServiceFactory.authenticateUser({
+    await client.connect();
+    await client.authenticateUser({
       ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
       ApiSecretKey: "507d3d06095d51037b159637e6042561",
       UserId: "9",
     });
-    subscriptionService = wsServiceFactory.newSubscriptionService();
+    subscriptionService = client.getSubscriptionService();
   });
 
   after(async () => {
-    await wsServiceFactory.close();
+    await client.close();
   });
 
   // Manejador de eventos común para todas las pruebas
@@ -104,7 +103,7 @@ describe("Subscription Service websocket", () => {
     it("debería lanzar un error si falta InstrumentId o Symbol", () => {
       const request: SubscribeLevel2Request = {
         Depth: 2
-        };
+      };
       assert.rejects(() =>
         subscriptionService.subscribeLevel2(request, mockCallback, mockCallback),
       );
@@ -187,7 +186,7 @@ describe("subscriptionService - SubscribeAccountEvents", () => {
       ApiSecretKey: "507d3d06095d51037b159637e6042561",
       UserId: "9",
     });
-    subscriptionService = wsServiceFactory.newSubscriptionService();
+    subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
   after(async () => {
@@ -242,7 +241,7 @@ describe("subscriptionService - UnsubscribeAccountEvents", () => {
       ApiSecretKey: "507d3d06095d51037b159637e6042561",
       UserId: "9",
     });
-    subscriptionService = wsServiceFactory.newSubscriptionService();
+    subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
   after(async () => {
@@ -293,7 +292,7 @@ describe("SubscriptionService - SubscribeOrderStateEvents", () => {
       ApiSecretKey: "507d3d06095d51037b159637e6042561",
       UserId: "9",
     });
-    subscriptionService = wsServiceFactory.newSubscriptionService();
+    subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
   after(async () => {
@@ -366,7 +365,7 @@ describe("subscriptionService - UnsubscribeOrderStateEvents", () => {
       ApiSecretKey: "507d3d06095d51037b159637e6042561",
       UserId: "9",
     });
-    subscriptionService = wsServiceFactory.newSubscriptionService();
+    subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
   describe("unsubscribeOrderStateEvents", () => {
@@ -424,7 +423,7 @@ describe("SubscribeTicker", () => {
       ApiSecretKey: "507d3d06095d51037b159637e6042561",
       UserId: "9",
     });
-    subscriptionService = wsServiceFactory.newSubscriptionService();
+    subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
   after(async () => {
@@ -432,30 +431,30 @@ describe("SubscribeTicker", () => {
   });
 
   it("debería suscribirse correctamente a SubscribeTicker 1", async function () {
-  this.timeout(70_000);
-  const request: SubscribeTickerRequest = {
-    InstrumentId: 1,
-    Interval: 60,
-    IncludeLastCount: 2,
-  };
+    this.timeout(70_000);
+    const request: SubscribeTickerRequest = {
+      InstrumentId: 1,
+      Interval: 60,
+      IncludeLastCount: 2,
+    };
 
-  let snapshotResolved = false;
+    let snapshotResolved = false;
 
-  await new Promise<void>((resolve, reject) => {
-    subscriptionService.subscribeTicker(
-      request,
-      (snapshot) => {
-        console.debug("Snapshot", snapshot);
-        snapshotResolved = true;
-      },
-      (update) => {
-        console.debug("Update", update);
-        if (snapshotResolved) resolve();
-      },
-    );
+    await new Promise<void>((resolve, reject) => {
+      subscriptionService.subscribeTicker(
+        request,
+        (snapshot) => {
+          console.debug("Snapshot", snapshot);
+          snapshotResolved = true;
+        },
+        (update) => {
+          console.debug("Update", update);
+          if (snapshotResolved) resolve();
+        },
+      );
 
-    // Safety timeout in case no data arrives
-    setTimeout(() => reject(new Error("Timeout: no data received")), 60000);
+      // Safety timeout in case no data arrives
+      setTimeout(() => reject(new Error("Timeout: no data received")), 60000);
     });
   });
 });
@@ -473,7 +472,7 @@ describe("subscriptionService - UnsubscribeTicker", () => {
       ApiSecretKey: "507d3d06095d51037b159637e6042561",
       UserId: "9",
     });
-    subscriptionService = wsServiceFactory.newSubscriptionService();
+    subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
   describe("unsubscribeTicker", () => {

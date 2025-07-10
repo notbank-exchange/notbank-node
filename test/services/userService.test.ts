@@ -11,13 +11,14 @@ import { GetUserPermissionsRequest } from "../../lib/models/request/getUserPermi
 import { GetUserPermissionsResponse } from "../../lib/models/response/getUserPermissions";
 import { GetUserInfoRequest } from "../../lib/models/request/getUserInfo";
 import { GetUserInfoResponse } from "../../lib/models/response/getUserInfo";
+import { NotbankClient } from "../../lib/services/NotbankClient";
 
 describe("http user service 1", () => {
-  const serviceFactory = new HttpServiceFactory("stgapi.notbank.exchange");
+  const client = NotbankClient.Factory.createRestClient();
 
   before(async () => {
     // Autenticación previa a todas las pruebas en este bloque, http only
-    await serviceFactory.authenticate({
+    await client.authenticateUser({
       ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
       ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
       UserId: "64",
@@ -25,8 +26,8 @@ describe("http user service 1", () => {
   });
 
   it("should complete authentication setup", () => {
-    assert.notEqual(serviceFactory, null);
-    assert.ok(serviceFactory instanceof HttpServiceFactory);
+    assert.notEqual(client, null);
+    assert.ok(client instanceof HttpServiceFactory);
   });
 
 });
@@ -233,7 +234,7 @@ describe("http user service 2", () => {
     });
   });
 
-    describe("getUserInfo", () => {
+  describe("getUserInfo", () => {
     it("should return user info for a valid UserId", async function () {
       const params: GetUserInfoRequest = { UserId: 64 };
 

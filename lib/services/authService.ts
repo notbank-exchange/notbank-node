@@ -1,13 +1,13 @@
 import { Endpoint } from "../constants/endpoints";
-import { RequestType, ServiceClient } from "../core/serviceClient";
+import { RequestType, ServiceConnection } from "../core/serviceClient";
 import { WebAuthenticateUserRequest } from "../models/request/webAuthenticateUser";
 import { WebAuthenticateUserResponse } from "../models/response/webAuthenticateUser";
 
 export class AuthService {
-  #serviceCore: ServiceClient;
+  connection: ServiceConnection;
 
-  constructor(serviceCore: ServiceClient) {
-    this.#serviceCore = serviceCore;
+  constructor(connection: ServiceConnection) {
+    this.connection = connection;
   }
 
   /**
@@ -16,7 +16,7 @@ export class AuthService {
   async webAuthenticateUser(
     params: WebAuthenticateUserRequest
   ): Promise<WebAuthenticateUserResponse> {
-    return await this.#serviceCore.apRequest(
+    return await this.connection.apRequest(
       Endpoint.WEB_AUTHENTICATE_USER,
       RequestType.NONE,
       params
@@ -28,6 +28,6 @@ export class AuthService {
    */
   async logOut(): Promise<void> {
     // Realiza la solicitud al endpoint utilizando el método POST.
-    return await this.#serviceCore.apRequest(Endpoint.LOGOUT, RequestType.POST);
+    return await this.connection.apRequest(Endpoint.LOGOUT, RequestType.POST);
   }
 }

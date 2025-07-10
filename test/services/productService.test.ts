@@ -2,20 +2,21 @@ import assert from "assert";
 import "mocha";
 
 import { HttpServiceFactory } from "../../lib/services/httpServiceFactory";
+import { NotbankClient } from "../../lib/services/NotbankClient";
 
 describe("http user service", () => {
-  const serviceFactory = new HttpServiceFactory("api.notbank.exchange");
+  const client = NotbankClient.Factory.createRestClient();
 
   before(async () => {
     // Autenticación previa a todas las pruebas en este bloque, http only
-    await serviceFactory.authenticate({
+    await client.authenticateUser({
       ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
       ApiSecretKey: "507d3d06095d51037b159637e6042561",
       UserId: "9",
     });
   });
 
-  const productService = serviceFactory.newProductService();
+  const productService = client.getProductService();
 
   describe("get product", () => {
     it("fetches product details successfully", async function () {
