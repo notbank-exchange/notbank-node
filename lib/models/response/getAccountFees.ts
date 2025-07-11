@@ -1,4 +1,4 @@
-import { OrderTypeStr } from "../common";
+import { OrderTypeStr } from "../enums/orderType";
 
 export interface AccountFee {
   FeeId: number;

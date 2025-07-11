@@ -7,7 +7,7 @@ import {
 } from "../models/enums/accountEvent";
 import { TradeSummary } from "../models/enums/indexTrade";
 import { Level2Ticker } from "../models/enums/level2Item";
-import { Ticker } from "../models/enums/ticker";
+import { TickerFeed } from "../models/enums/ticker";
 import { SubscribeAccountEventsRequest } from "../models/request/subscribeAccountEvents";
 import { SubscribeLevel1Request } from "../models/request/subscribeLevel1";
 import { SubscribeLevel2Request } from "../models/request/subscribeLevel2";
@@ -159,8 +159,8 @@ export class SubscriptionService {
    */
   subscribeTicker(
     request: SubscribeTickerRequest,
-    snapshotHandler: (tickers: Ticker[]) => void,
-    updateHandler: (tickers: Ticker[]) => void
+    snapshotHandler: (tickers: TickerFeed[]) => void,
+    updateHandler: (tickers: TickerFeed[]) => void
   ): Promise<void> {
     const requestWithOMSId = completeParams(request, this.OMS_ID);
     return this.connection.subscribe(
