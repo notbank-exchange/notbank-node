@@ -9,7 +9,7 @@ import { GetUserReportTicketsByStatusRequest } from "../../lib/models/request/ge
 import { DownloadDocumentRequest } from "../../lib/models/request/downloadDocument";
 import { DownloadDocumentSliceRequest } from "../../lib/models/request/downloadDocumentSlice";
 import { ReportRequestStatus } from "../../lib/models/enums/reportRequestStatus";
-import { NotbankClient } from "../../lib/services/NotbankClient";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("http report service", () => {
   const client = NotbankClient.Factory.createRestClient();

@@ -1,7 +1,7 @@
 import assert from "assert";
 import "mocha";
 
-import { NotbankClient } from "../../lib/services/NotbankClient"
+import { NotbankClient } from "../../lib/services/notbankClient"
 import { OrderTypeInt } from "../../lib/models/common/orderType";
 import { OrderSide } from "../../lib/models/common/orderSide";
 import { TimeInForce } from "../../lib/models/enums/timeInForce";

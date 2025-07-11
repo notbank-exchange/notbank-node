@@ -14,7 +14,7 @@ import { UnsubscribeTradesRequest } from "../../lib/models/request/unsubscribeTr
 import { WebsocketServiceFactory } from "../../lib/services/websocketServicesFactory";
 import { SubscribeTickerRequest } from "../../lib/models/request/subscribeTicker";
 import { SubscriptionService } from "../../lib/services/subscriptionService";
-import { NotbankClient } from "../../lib/services/NotbankClient";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("Subscription Service websocket", () => {
   const client = NotbankClient.Factory.createWebsocketClient();

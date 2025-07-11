@@ -2,7 +2,7 @@ import assert from "assert";
 import "mocha";
 
 import { HttpServiceFactory } from "../../lib/services/httpServiceFactory";
-import { NotbankClient } from "../../lib/services/NotbankClient";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("http user service", () => {
   const client = NotbankClient.Factory.createRestClient();

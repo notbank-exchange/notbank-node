@@ -11,7 +11,7 @@ import { GetUserPermissionsRequest } from "../../lib/models/request/getUserPermi
 import { GetUserPermissionsResponse } from "../../lib/models/response/getUserPermissions";
 import { GetUserInfoRequest } from "../../lib/models/request/getUserInfo";
 import { GetUserInfoResponse } from "../../lib/models/response/getUserInfo";
-import { NotbankClient } from "../../lib/services/NotbankClient";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("http user service 1", () => {
   const client = NotbankClient.Factory.createRestClient();

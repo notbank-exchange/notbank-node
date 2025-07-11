@@ -1,7 +1,7 @@
 import assert from "assert";
 import "mocha";
 
-import { NotbankClient } from "../../lib/services/NotbankClient";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("wallet service", () => {
   const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");

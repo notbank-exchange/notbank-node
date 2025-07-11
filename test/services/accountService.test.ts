@@ -1,7 +1,7 @@
 import assert from "assert";
 import "mocha";
 
-import { NotbankClient } from "../../lib/services/NotbankClient";
+import { NotbankClient } from "../../lib/services/notbankClient";
 import { GetAccountTransactionsRequest } from "../../lib/models/request/getAccountTransactions";
 
 describe("http account service", () => {
