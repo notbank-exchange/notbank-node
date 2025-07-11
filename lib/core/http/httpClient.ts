@@ -1,113 +1,51 @@
 import { Endpoint } from "../../constants/endpoints";
 import {
   AuthenticateUserRequest,
-  AuthenticateUserResponse,
-  StandardError,
-  StandardResponse
+  AuthenticateUserResponse
 } from "../../models";
-import { RequestType, ServiceClient } from "../serviceClient";
+import { RequestType, ServiceConnection } from "../serviceClient";
 import { MessageFrame } from "../websocket/messageFrame";
 import { ResponseHandler } from "../websocket/responseHandler";
 import { SubscriptionHandler } from "../websocket/subscriptionHandler";
+import { ApResponseHandler } from "./apResponseHandler";
+import { NbResponseHandler } from "./nbResponseHandler";
+import { Requester } from "./requester";
 
-export class HttpClient implements ServiceClient {
-  #aptoken: string | null;
-  #HOST: string;
+export class HttpConnection implements ServiceConnection {
+  #requester: Requester
+  #host: string;
 
   constructor(domain: string) {
-    this.#aptoken = null;
-    this.#HOST = "https://" + domain + "/ap/";
+    this.#requester = new Requester();
+    this.#host = "https://" + domain;
   }
 
-  async request<T1, T2>(
+  async nbRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
-    params?: T1
+    params?: T1,
+    paged: boolean = false
   ): Promise<T2> {
-    if (requestType === RequestType.GET) {
-      return this.requestGet(endpoint, { params: params });
-    }
-    if (requestType === RequestType.POST) {
-      return this.requestPost(endpoint, params);
-    }
-    throw new Error(`Request type not implemented. ${requestType}`);
+    const url = this.getNbUrl(endpoint);
+    var response = await this.#requester.request({ url, requestType, params })
+    return await NbResponseHandler.handle<T2>(response, paged);
   }
 
-  async requestPost<T1, T2>(endpoint: string, message?: T1): Promise<T2> {
-    var response = await fetch(this.getUrl(endpoint), {
-      method: "POST",
-      body: message ? JSON.stringify(message) : null,
-      headers: this.getHeaders()
-    });
-    return this.handleResponse<T2>(response);
-  }
-
-  async requestGet<T1, T2>(
+  async apRequest<T1, T2>(
     endpoint: string,
-    config: { params?: T1; extraHeaders?: any } = {}
+    requestType: RequestType,
+    params?: T1,
+    extraHeaders?: any
   ): Promise<T2> {
-    var response = await fetch(
-      this.getUrlWithSearchParams(endpoint, config.params),
-      {
-        method: "GET",
-        headers: this.getHeaders(config.extraHeaders)
-      }
-    );
-    return await this.handleResponse<T2>(response);
-  }
-
-  private async handleResponse<T>(response: Response): Promise<T> {
-    if (response.status >= 300 || response.status < 200) {
-      throw new Error(
-        `http error (${
-          response.status
-        }) not a successfull response. ${response.text()}`
-      );
-    }
-    var jsonResponse = await response.json();
-    var standardResponse = jsonResponse as StandardResponse;
-    if (
-      standardResponse?.result === false &&
-      standardResponse?.errorcode != null
-    ) {
-      throw new StandardError(standardResponse);
-    }
-    return jsonResponse as T;
-  }
-
-  getHeaders(extraHeaders?: any): any {
-    var headers = {
-      "Content-type": "application/json",
-      charset: "UTF-8"
-    };
-    if (this.#aptoken != null) {
-      headers["aptoken"] = this.#aptoken;
-    }
-    if (extraHeaders) {
-      return { ...headers, ...extraHeaders };
-    }
-    return headers;
-  }
-
-  getUrlWithSearchParams(endpoint: string, params?: any): string {
-    if (params) {
-      return this.getUrl(endpoint) + "?" + new URLSearchParams(params);
-    }
-    return this.getUrl(endpoint);
-  }
-
-  async authenticate(params: AuthenticateUserRequest): Promise<void> {
-    var response = (await this.requestGet(Endpoint.AUTHENTICATE, {
-      extraHeaders: params
-    })) as AuthenticateUserResponse;
-    this.#aptoken = response.SessionToken;
+    const url = this.getApUrl(endpoint);
+    var response = await this.#requester.request({ url, requestType, params, extraHeaders })
+    return await ApResponseHandler.handle<T2>(response);
   }
 
   async authenticateUser(params: AuthenticateUserRequest): Promise<void> {
-    var response = (await this.requestGet(Endpoint.AUTHENTICATE_USER, {
-      extraHeaders: params
-    })) as AuthenticateUserResponse;
-    this.#aptoken = response.SessionToken;
+    var response = await this.apRequest<any, AuthenticateUserResponse>(
+      Endpoint.AUTHENTICATE_USER, RequestType.GET, null, params);
+    this.#requester.updateSessionToken(response.SessionToken)
   }
 
   subscribe<T>(
@@ -138,7 +76,10 @@ export class HttpClient implements ServiceClient {
     throw new Error("Method not implemented.");
   }
 
-  getUrl(endpoint: string): string {
-    return this.#HOST + endpoint;
+  getApUrl(endpoint: string): string {
+    return this.#host + "/ap/" + endpoint;
+  }
+  getNbUrl(endpoint: string): string {
+    return this.#host + "/api/nb/" + endpoint;
   }
 }

@@ -1,25 +1,25 @@
 import assert from "assert";
 import "mocha";
 
-import { HttpServiceFactory } from "../../lib/services/httpServiceFactory";
-import { OrderTypeInt } from "../../lib/models/common/orderType";
-import { OrderSide } from "../../lib/models/common/orderSide";
+import { OrderSide } from "../../lib/models/enums/orderSide";
+import { OrderTypeInt } from "../../lib/models/enums/orderType";
 import { TimeInForce } from "../../lib/models/enums/timeInForce";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("http trading service", () => {
-  const serviceFactory = new HttpServiceFactory("stgapi.notbank.exchange");
+  const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange")
 
 
   before(async () => {
     // Autenticación previa a todas las pruebas en este bloque, http only
-    await serviceFactory.authenticate({
+    await client.authenticateUser({
       ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
       ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
       UserId: "64",
     });
   });
 
-  const tradingService = serviceFactory.newTradingService();
+  const tradingService = client.getTradingService();
 
   describe("sendOrder", () => {
     it("should send a valid order successfully", async () => {
@@ -63,6 +63,15 @@ describe("http trading service", () => {
           "Error message should indicate missing fields",
         );
       }
+    });
+  });
+
+  describe("getOrderBook", () => {
+    it.only("should throw an error for missing required parameters", async () => {
+      var orderbook = await tradingService.getOrderBook({ Market_Pair: "BTCUSDT", Depth: 5, Level: 2 })
+      assert.ok(orderbook)
+      assert.equal(orderbook.asks.length, 5)
+      assert.equal(orderbook.bids.length, 5)
     });
   });
 });

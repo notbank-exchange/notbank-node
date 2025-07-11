@@ -37,5 +37,3 @@ export interface AccountTrade {
   NotionalValue: number;
   TradeTime: number;
 }
-
-export type GetAccountTradesResponse = AccountTrade[];

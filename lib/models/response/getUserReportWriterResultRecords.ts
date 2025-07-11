@@ -1,6 +1,6 @@
 import { ReportWriterResultStatus } from "../enums/reportWriterResultStatus";
 
-export interface GetUserReportWriterResultRecordsResponse {
+export interface UserReportWriterResultRecords {
   RequestingUser: number;
   urtTicketId: string;
   descriptorId: string;

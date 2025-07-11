@@ -1,3 +1,3 @@
-export interface HealthCheckResponse {
+export interface HealthCheck {
   detail: string;
 }

@@ -1,8 +1,8 @@
-import { InstrumentVerificationLevelConfig } from "../enums/instrumentVerificationLevelConfig";
+import { InstrumentLimits } from "../enums/instrumentVerificationLevelConfig";
 
-export interface GetInstrumentVerificationLevelConfigResponse {
+export interface InstrumentVerificationLevelConfig {
   Level: number; // The verification level number
   LevelName: string | null; // The name of the verification level
   OMSId: number; // The ID of the OMS
-  Instruments: InstrumentVerificationLevelConfig[]; // Array of instrument-specific configs
+  Instruments: InstrumentLimits[]; // Array of instrument-specific configs
 }

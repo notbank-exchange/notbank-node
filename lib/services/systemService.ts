@@ -1,26 +1,32 @@
 import { Endpoint } from "../constants/endpoints";
-import { RequestType, ServiceClient } from "../core/serviceClient";
-import { HealthCheckResponse } from "../models/response/healthCheck";
-import { PingResponse } from "../models/response/ping";
+import { RequestType, ServiceConnection } from "../core/serviceClient";
+import { HealthCheck } from "../models/response/healthCheck";
+import { Pong } from "../models/response/pong";
 
 export class SystemService {
-  #serviceCore: ServiceClient;
+  connection: ServiceConnection;
 
-  constructor(serviceCore: ServiceClient) {
-    this.#serviceCore = serviceCore;
+  constructor(connection: ServiceConnection) {
+    this.connection = connection;
   }
 
-  async ping(): Promise<PingResponse> {
-    return (await this.#serviceCore.request(
+  /**
+   * https://apidoc.notbank.exchange/#ping
+   */
+  ping(): Promise<Pong> {
+    return this.connection.apRequest(
       Endpoint.PING,
       RequestType.POST
-    )) as PingResponse;
+    );
   }
 
-  async healthCheck(): Promise<HealthCheckResponse> {
-    return (await this.#serviceCore.request(
+  /**
+   * https://apidoc.notbank.exchange/#healthcheck
+   */
+  healthCheck(): Promise<HealthCheck> {
+    return this.connection.apRequest(
       Endpoint.HEALTH_CHECK,
       RequestType.POST
-    )) as HealthCheckResponse;
+    );
   }
 }

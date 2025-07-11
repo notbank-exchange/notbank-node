@@ -1,8 +1,8 @@
-import { ChangeReason } from "../common/changeReason";
-import { OrderSide } from "../common/orderSide";
-import { OrderState } from "../common/orderState";
+import { ChangeReason } from "../enums/changeReason";
+import { OrderSide } from "../enums/orderSide";
+import { OrderState } from "../enums/orderState";
 
-export interface GetOrderStatusResponse {
+export interface OrderStatus {
   Side: OrderSide;
   OrderId: number;
   Price: number;

@@ -1,5 +1,5 @@
-import { OrderSide } from "../common/orderSide";
-import { OrderTypeInt } from "../common/orderType";
+import { OrderSide } from "../enums/orderSide";
+import { OrderTypeInt } from "../enums/orderType";
 import { PegPriceType } from "../enums/pegPriceType";
 import { TimeInForce } from "../enums/timeInForce";
 

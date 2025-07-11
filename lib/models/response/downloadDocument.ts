@@ -1,4 +1,4 @@
-export interface DownloadDocumentResponse {
+export interface Document {
   DescriptorId: string;
   DocName: string;
   NumSlices: number;

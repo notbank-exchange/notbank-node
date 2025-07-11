@@ -1,6 +1,6 @@
-import { OrderTypeStr } from "../common";
+import { OrderTypeStr } from "../enums/orderType";
 
-export interface GetAccountFeesResponse {
+export interface AccountFee {
   FeeId: number;
   OMSId: number;
   FeeTier: number;

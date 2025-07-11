@@ -1,22 +1,24 @@
-import { WebsocketClient } from "../core/websocket/websocketClient";
+import { getNonce, sign } from "../core/hmac";
+import { MessageFrame } from "../core/websocket/messageFrame";
+import { WebsocketConnection } from "../core/websocket/websocketClient";
+import { WebsocketHooks } from "../core/websocket/websocketHooks";
 import { AccountService } from "./accountService";
 import { AuthService } from "./authService";
 import { FeeService } from "./feeService";
 import { InstrumentService } from "./instrumentService";
 import { ProductService } from "./productService";
 import { ReportService } from "./reportService";
+import { SubscriptionService } from "./subscriptionService";
 import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
-import { getNonce, sign } from "../core/hmac";
-import { WebsocketHooks } from "../core/websocket/websocketHooks";
-import { MessageFrame } from "../core/websocket/messageFrame";
-import { SubscriptionService } from "./subscriptionService";
+import { WalletService } from "./walletService";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class WebsocketServiceFactory {
-  #websocketClient: WebsocketClient;
+  #websocketConnection: WebsocketConnection;
+  #subcriptionService?: SubscriptionService
 
   constructor(params?: {
     domain?: string;
@@ -25,7 +27,7 @@ export class WebsocketServiceFactory {
   }) {
     const finalDomain = params?.domain || DEFAULT_DOMAIN;
 
-    this.#websocketClient = new WebsocketClient({
+    this.#websocketConnection = new WebsocketConnection({
       domain: finalDomain,
       peekMessageIn: params?.peekMessageIn,
       peekMessageOut: params?.peekMessageOut
@@ -33,27 +35,27 @@ export class WebsocketServiceFactory {
   }
 
   connect(hooks: WebsocketHooks = {}): Promise<void> {
-    return this.#websocketClient.connect(hooks);
+    return this.#websocketConnection.connect(hooks);
   }
 
   close() {
-    this.#websocketClient.close();
+    this.#websocketConnection.close();
   }
 
   get isConnecting(): boolean {
-    return this.#websocketClient.readyState === WebSocket.CONNECTING;
+    return this.#websocketConnection.readyState === WebSocket.CONNECTING;
   }
 
   get isConnected(): boolean {
-    return this.#websocketClient.readyState === WebSocket.OPEN;
+    return this.#websocketConnection.readyState === WebSocket.OPEN;
   }
 
   get isClosing(): boolean {
-    return this.#websocketClient.readyState === WebSocket.CLOSING;
+    return this.#websocketConnection.readyState === WebSocket.CLOSING;
   }
 
   get isClosed(): boolean {
-    return this.#websocketClient.readyState === WebSocket.CLOSED;
+    return this.#websocketConnection.readyState === WebSocket.CLOSED;
   }
 
   async authenticateUser(params: {
@@ -68,8 +70,8 @@ export class WebsocketServiceFactory {
       params.UserId,
       nonce
     );
-    await this.#websocketClient.authenticateUser({
-      ApiKey: params.ApiPublicKey,
+    await this.#websocketConnection.authenticateUser({
+      APIKey: params.ApiPublicKey,
       Signature: signature,
       UserId: params.UserId,
       Nonce: nonce
@@ -77,42 +79,50 @@ export class WebsocketServiceFactory {
   }
 
   newAccountService(): AccountService {
-    return new AccountService(this.#websocketClient);
+    return new AccountService(this.#websocketConnection);
   }
 
   newAuthService(): AuthService {
-    return new AuthService(this.#websocketClient);
+    return new AuthService(this.#websocketConnection);
   }
 
   newFeeService(): FeeService {
-    return new FeeService(this.#websocketClient);
+    return new FeeService(this.#websocketConnection);
   }
 
   newInstrumentService(): InstrumentService {
-    return new InstrumentService(this.#websocketClient);
+    return new InstrumentService(this.#websocketConnection);
   }
 
   newProductService(): ProductService {
-    return new ProductService(this.#websocketClient);
+    return new ProductService(this.#websocketConnection);
   }
 
   newReportService(): ReportService {
-    return new ReportService(this.#websocketClient);
+    return new ReportService(this.#websocketConnection);
   }
 
   newSystemService(): SystemService {
-    return new SystemService(this.#websocketClient);
+    return new SystemService(this.#websocketConnection);
   }
 
-  newSubscriptionService(): SubscriptionService {
-    return new SubscriptionService(this.#websocketClient);
+  getSubscriptionService(): SubscriptionService {
+    if (this.#subcriptionService) {
+      return this.#subcriptionService
+    }
+    this.#subcriptionService = new SubscriptionService(this.#websocketConnection);
+    return this.#subcriptionService
   }
 
   newTradingService(): TradingService {
-    return new TradingService(this.#websocketClient);
+    return new TradingService(this.#websocketConnection);
   }
 
   newUserService(): UserService {
-    return new UserService(this.#websocketClient);
+    return new UserService(this.#websocketConnection);
+  }
+
+  newWalletService(): WalletService {
+    return new WalletService(this.#websocketConnection);
   }
 }

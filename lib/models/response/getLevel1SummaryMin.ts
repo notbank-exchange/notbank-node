@@ -7,5 +7,3 @@ export interface Level1SummaryMin {
   Rolling24HrPxChangePercent: number;
   Rolling24HrVolume: number;
 }
-
-export type GetLevel1SummaryMinResponse = Level1SummaryMin[];

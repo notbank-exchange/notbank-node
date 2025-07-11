@@ -1,18 +1,20 @@
+import { AuthenticateUserRequest } from "../models/request/authenticateUser";
 import { MessageFrame } from "./websocket/messageFrame";
 import { SubscriptionHandler } from "./websocket/subscriptionHandler";
 
-export interface ServiceClient {
-  request<T1, T2>(
+export interface ServiceConnection {
+  apRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
     message?: T1
   ): Promise<T2>;
-  authenticateUser(params: {
-    ApiKey: string;
-    Signature: string;
-    UserId: string;
-    Nonce: string;
-  }): Promise<void>;
+  nbRequest<T1, T2>(
+    endpoint: string,
+    requestType: RequestType,
+    message?: T1,
+    paged?: boolean,
+  ): Promise<T2>;
+  authenticateUser(params: AuthenticateUserRequest): Promise<void>;
   subscribe<T>(
     endpoint: string,
     firstIdentifier: number | null,
@@ -30,7 +32,8 @@ export interface ServiceClient {
 }
 
 export enum RequestType {
-  POST = 0,
-  GET = 1,
-  NONE = 2
+  NONE = "NONE",
+  POST = "POST",
+  GET = "GET",
+  DELETE = "DELETE",
 }

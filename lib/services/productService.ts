@@ -1,51 +1,55 @@
 import { Endpoint } from "../constants/endpoints";
-import { RequestType, ServiceClient } from "../core/serviceClient";
+import { RequestType, ServiceConnection } from "../core/serviceClient";
 import { GetProductRequest } from "../models/request/getProduct";
 import { GetProductsRequest } from "../models/request/getProducts";
 import { GetVerificationLevelConfigRequest } from "../models/request/getVerificationLevelConfig";
-import { GetProductResponse } from "../models/response/getProduct";
-import { GetVerificationLevelConfigResponse } from "../models/response/getVerificationLevelConfig";
+import { Product } from "../models/response/product";
+import { VerificationLevelConfig } from "../models/response/getVerificationLevelConfig";
 import { completeParams } from "../utils/completeParams";
 
 export class ProductService {
-  #serviceCore: ServiceClient;
+  connection: ServiceConnection;
   private readonly OMS_ID = 1;
 
-  constructor(serviceCore: ServiceClient) {
-    this.#serviceCore = serviceCore;
+  constructor(connection: ServiceConnection) {
+    this.connection = connection;
   }
 
-  async getProduct(params: GetProductRequest): Promise<GetProductResponse> {
+  /**
+   * https://apidoc.notbank.exchange/#getproduct
+   */
+  getProduct(params: GetProductRequest): Promise<Product> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    const response = (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_PRODUCT,
       RequestType.POST,
       paramsWithOMSId
-    )) as GetProductResponse;
-
-    return response;
+    )
   }
 
-  async getProducts(params: GetProductsRequest): Promise<GetProductResponse[]> {
+  /**
+   * https://apidoc.notbank.exchange/#getproducts
+   */
+  async getProducts(params: GetProductsRequest): Promise<Product[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_PRODUCTS,
       RequestType.POST,
       paramsWithOMSId
-    )) as GetProductResponse[];
+    )
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getverificationlevelconfig
+   */
   async getVerificationLevelConfig(
     params: GetVerificationLevelConfigRequest
-  ): Promise<GetVerificationLevelConfigResponse> {
+  ): Promise<VerificationLevelConfig> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    // Call the service endpoint
-    const response = await this.#serviceCore.request(
+    return await this.connection.apRequest(
       Endpoint.GET_VERIFICATION_LEVEL_CONFIG,
       RequestType.POST,
       paramsWithOMSId
     );
-
-    return response as GetVerificationLevelConfigResponse;
   }
 }

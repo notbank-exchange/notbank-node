@@ -2,16 +2,16 @@ import WebSocket from "universal-websocket-client";
 import { Endpoint } from "../../constants/endpoints";
 import { MessageFrame, MessageType } from "./messageFrame";
 import { SubscriptionHandler } from "./subscriptionHandler";
-import { RequestType, ServiceClient } from "../serviceClient";
-import { StandardError, StandardResponse } from "../../models";
+import { RequestType, ServiceConnection } from "../serviceClient";
+import { AuthenticateUserRequest, NotbankError, StandardResponse } from "../../models";
 import { WebsocketHooks } from "./websocketHooks";
 import { CallbackManager } from "./callbackManager";
 import ErrorCode from "../../constants/errorCode";
 import { SubscriptionIdentifier } from "./SubscriptionIdentifier";
 
-const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => {};
+const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => { };
 
-export class WebsocketClient implements ServiceClient {
+export class WebsocketConnection implements ServiceConnection {
   #domain: string;
   #callbackManager: CallbackManager;
   #websocket: WebSocket;
@@ -25,17 +25,20 @@ export class WebsocketClient implements ServiceClient {
   }) {
     this.#domain = params.domain;
     this.#callbackManager = new CallbackManager();
-    this.#peekMessageIn = params.peekMessageIn || (_ => {});
-    this.#peekMessageOut = params.peekMessageOut || (_ => {});
+    this.#peekMessageIn = params.peekMessageIn || (_ => { });
+    this.#peekMessageOut = params.peekMessageOut || (_ => { });
   }
-  // TODO: maybe use better names than hook: websockethooks
+
+  nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2> {
+    throw new Error("websocket client does not support nb methods.");
+  }
+
   async connect(hooks: WebsocketHooks = {}) {
     this.#websocket = new WebSocket("wss://" + this.#domain + "/wsgateway");
     this.#websocket.onopen = event => hooks.onOpen?.(event);
     this.#websocket.onclose = event => hooks.onClose?.(event);
     this.#websocket.onerror = event => hooks.onError?.(event);
     this.#websocket.addEventListener("message", event => {
-      // TODO: handle conversion exception
       const messageFrame = JSON.parse(event.data) as MessageFrame;
       this.#handleMessage(messageFrame);
     });
@@ -78,7 +81,7 @@ export class WebsocketClient implements ServiceClient {
     return this.#websocket.readyState;
   }
 
-  request<T1, T2>(
+  apRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
     message?: T1
@@ -113,7 +116,7 @@ export class WebsocketClient implements ServiceClient {
         return;
       }
       if (response.m === MessageType.ERROR) {
-        reject(new StandardError(payload));
+        reject(NotbankError.Factory.createFromApResponse(payload));
         return;
       }
       var standardResponse = payload as StandardResponse;
@@ -121,7 +124,7 @@ export class WebsocketClient implements ServiceClient {
         standardResponse?.result === false &&
         standardResponse?.errormsg != null
       ) {
-        reject(new StandardError(payload));
+        reject(NotbankError.Factory.createFromApResponse(payload));
         return;
       }
       resolve(payload as T);
@@ -188,18 +191,13 @@ export class WebsocketClient implements ServiceClient {
     this.#websocket.socket.close();
   }
 
-  async authenticateUser(params: {
-    ApiKey: string;
-    Signature: string;
-    UserId: string;
-    Nonce: string;
-  }): Promise<void> {
-    await this.request(Endpoint.AUTHENTICATE_USER, RequestType.NONE, params);
+  async authenticateUser(params: AuthenticateUserRequest): Promise<void> {
+    await this.apRequest(Endpoint.AUTHENTICATE_USER, RequestType.NONE, params);
   }
 }
 
 function newStandardErrorFromString(errorStr: string): any {
-  return new StandardError({
+  return NotbankError.Factory.createFromApResponse({
     result: false,
     errormsg: errorStr,
     errorcode: ErrorCode.UNDEFINED,

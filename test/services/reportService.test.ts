@@ -9,12 +9,13 @@ import { GetUserReportTicketsByStatusRequest } from "../../lib/models/request/ge
 import { DownloadDocumentRequest } from "../../lib/models/request/downloadDocument";
 import { DownloadDocumentSliceRequest } from "../../lib/models/request/downloadDocumentSlice";
 import { ReportRequestStatus } from "../../lib/models/enums/reportRequestStatus";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("http report service", () => {
-  const serviceFactory = new HttpServiceFactory("stgapi.notbank.exchange");
+  const client = NotbankClient.Factory.createRestClient();
 
   before(async () => {
-    await serviceFactory.authenticateUser({
+    await client.authenticateUser({
       ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
       ApiSecretKey:
         "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
@@ -22,7 +23,7 @@ describe("http report service", () => {
     });
   });
 
-  const reportService = serviceFactory.newReportService();
+  const reportService = client.getReportService();
 
   const validGenerateRequest = {
     accountIdList: [1, 2, 3],
@@ -44,7 +45,7 @@ describe("http report service", () => {
 
   const invalidGenerateRequestStartTime = {
     accountIdList: [1, 2],
-    startTime: 12345,
+    startTime: "-12345",
     endTime: "2025-06-02T16:00:00.000Z"
   };
 
@@ -57,7 +58,7 @@ describe("http report service", () => {
   const invalidScheduleRequestFrequency = {
     accountIdList: [1],
     beginTime: "2023-03-30T16:00:00.000Z",
-    frequency: true
+    frequency: -123
   };
 
   describe("generateTradeActivityReport", () => {
@@ -84,7 +85,6 @@ describe("http report service", () => {
 
     it("should throw error for invalid startTime in generateTradeActivityReport", async () => {
       try {
-        // @ts-expect-error
         await reportService.generateTradeActivityReport(
           invalidGenerateRequestStartTime
         );
@@ -151,7 +151,6 @@ describe("http report service", () => {
 
     it("should throw error for invalid frequency in scheduleTradeActivityReport", async () => {
       try {
-        // @ts-expect-error
         await reportService.scheduleTradeActivityReport(
           invalidScheduleRequestFrequency
         );
@@ -275,7 +274,7 @@ describe("http report service", () => {
   describe("removeUserReportTicket", () => {
     it("throws error when ticket ID is missing", async () => {
       try {
-        await reportService.removeUserReportTicket("" as string);
+        await reportService.removeUserReportTicket({ UserReportTicketId: "" });
         assert.fail("Should throw error");
       } catch (error: any) {
         assert.match(error.message, /userReportTicketId must be a string/);

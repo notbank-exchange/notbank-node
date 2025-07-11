@@ -1,12 +1,12 @@
-import { ChangeReason } from "../common/changeReason";
-import { OrderTypeInt } from "../common/orderType";
+import { ChangeReason } from "../enums/changeReason";
+import { OrderTypeInt } from "../enums/orderType";
 import { SideType } from "../enums/sideType";
 
 /**
  * OpenOrder:
  * Representa una orden abierta devuelta por el API de GetOpenOrders.
  */
-export interface GetOpenOrdersResponse {
+export interface OpenOrder {
   Side: SideType; // "Buy" o "Sell"
   OrderId: number; // ID de la orden
   Price: number; // Precio limite / stop / etc.

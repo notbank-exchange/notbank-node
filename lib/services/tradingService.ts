@@ -1,7 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
-import { RequestType, ServiceClient } from "../core/serviceClient";
-import { OrderTypeInt } from "../models/common/orderType";
-import { IndexTrade } from "../models/enums/indexTrade";
+import { RequestType, ServiceConnection } from "../core/serviceClient";
+import { TradeSummary } from "../models/enums/indexTrade";
 import { CancelAllOrdersRequest } from "../models/request/cancelAllOrders";
 import { CancelOrderRequest } from "../models/request/cancelOrder";
 import { CancelReplaceOrderRequest } from "../models/request/cancelReplaceOrder";
@@ -27,152 +26,166 @@ import { SendOrderRequest } from "../models/request/sendOrder";
 import { SendOrderListRequest } from "../models/request/sendOrderList";
 import { TradesRequest } from "../models/request/trades";
 import { CancelReplaceOrderResponse } from "../models/response/cancelReplaceOrder";
-import { GetAccountTradesResponse } from "../models/response/getAccountTrades";
-import { GetEnumsResponse } from "../models/response/getEnums";
-import { GetL2SnapshotResponse, L2Snapshot } from "../models/response/getL2Snapshot";
-import { GetLevel1Response } from "../models/response/getLevel1";
-import { GetLevel1SummaryResponse } from "../models/response/getLevel1Summary";
-import { GetLevel1SummaryMinResponse, Level1SummaryMin } from "../models/response/getLevel1SummaryMin";
-import { GetOpenOrdersResponse } from "../models/response/getOpenOrders";
-import { GetOpenTradeReportsResponse } from "../models/response/getOpenTradeReports";
-import { GetOrderHistoryByOrderIdResponse } from "../models/response/getOrderHistoryByOrderId";
-import { GetOrderStatusResponse } from "../models/response/getOrderStatus";
-import { GetTickerHistoryResponse } from "../models/response/getTickerHistory";
+import { AccountTrade } from "../models/response/getAccountTrades";
+import { EnumsResponse } from "../models/response/getEnums";
+import { L2Snapshot } from "../models/response/getL2Snapshot";
+import { Level1 } from "../models/response/getLevel1";
+import { Level1Summary } from "../models/response/getLevel1Summary";
+import { Level1SummaryMin } from "../models/response/getLevel1SummaryMin";
+import { OpenOrder } from "../models/response/getOpenOrders";
+import { OpenTradeReport } from "../models/response/getOpenTradeReports";
+import { OrderSummary } from "../models/response/getOrderHistoryByOrderId";
+import { OrderStatus } from "../models/response/getOrderStatus";
+import { TickerSummary } from "../models/response/getTickerHistory";
 import { Order } from "../models/response/order";
-import { OrderBookResponse } from "../models/response/orderBook";
+import { OrderBook, orderbookFromRaw, OrderBookRaw } from "../models/response/orderBook";
 import { OrderTrade } from "../models/response/orderTrade";
 import { SendOrderResponse } from "../models/response/sendOrder";
-import { SummaryResponse } from "../models/response/summary";
-import { TickerResponse } from "../models/response/ticker";
-import { TradesResponse } from "../models/response/trades";
+import { InstrumentSummary } from "../models/response/summary";
+import { Tickers } from "../models/response/ticker";
+import { Trade } from "../models/response/trades";
 import { completeParams } from "../utils/completeParams";
 import { completeParamsArray } from "../utils/completeParamsArray";
-import { parseIndexTrade } from "../utils/parseIndexTrade";
+import { parseTradeSummary } from "../utils/parseIndexTrade";
 
 export class TradingService {
-  #serviceCore: ServiceClient;
+  connection: ServiceConnection;
   private readonly OMS_ID = 1;
 
-  constructor(serviceCore: ServiceClient) {
-    this.#serviceCore = serviceCore;
+  constructor(connection: ServiceConnection) {
+    this.connection = connection;
   }
 
-  async sendOrderList(params: SendOrderListRequest): Promise<void> {
+  /**
+   * https://apidoc.notbank.exchange/#sendorderlist
+   */
+  sendOrderList(params: SendOrderListRequest): Promise<void> {
     const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.SEND_ORDER_LIST,
       RequestType.POST,
       paramsWithOMSId,
     );
   }
 
-  async sendCancelList(params: SendCancelListRequest): Promise<void> {
+  /**
+   * https://apidoc.notbank.exchange/#sendcancellist
+   */
+  sendCancelList(params: SendCancelListRequest): Promise<void> {
     const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.SEND_CANCEL_LIST,
       RequestType.POST,
       paramsWithOMSId,
     );
   }
 
-  async sendCancelReplaceList(
+  /**
+   * https://apidoc.notbank.exchange/#sendcancelreplacelist
+   */
+  sendCancelReplaceList(
     params: SendCancelReplaceListRequest,
   ): Promise<void> {
     const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.SEND_CANCEL_REPLACE_LIST,
       RequestType.POST,
       paramsWithOMSId,
     );
   }
 
-  async modifyOrder(request: ModifyOrderRequest): Promise<void> {
-    if (
-      !request.OrderId ||
-      !request.InstrumentId ||
-      !request.Quantity ||
-      !request.AccountId
-    ) {
-      throw new Error("All fields are required for modifying an order.");
-    }
+  /**
+   * https://apidoc.notbank.exchange/#modifyorder
+   */
+  modifyOrder(request: ModifyOrderRequest): Promise<void> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    return await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.MODIFY_ORDER,
       RequestType.POST,
       paramsWithOMSId,
     );
   }
 
-  async cancelAllOrders(params: CancelAllOrdersRequest): Promise<void> {
+  /**
+   * https://apidoc.notbank.exchange/#cancelallorders
+   */
+  cancelAllOrders(params: CancelAllOrdersRequest): Promise<void> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.CANCEL_ALL_ORDERS,
       RequestType.POST,
       paramsWithOMSId,
     );
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getorderstatus
+   */
   async getOrderStatus(
     params: GetOrderStatusRequest,
-  ): Promise<GetOrderStatusResponse> {
-    if (!params.AccountId && !params.OrderId) {
-      throw new Error("Either AccountId or OrderId is required.");
-    }
-
+  ): Promise<OrderStatus> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-
-    const response = await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_ORDER_STATUS,
       RequestType.POST,
       paramsWithOMSId,
     );
-
-    return response as GetOrderStatusResponse;
   }
 
-  async getOrdersHistory(params: GetOrdersHistoryRequest): Promise<Order[]> {
+  /**
+   * https://apidoc.notbank.exchange/#getordershistory
+   */
+  getOrdersHistory(params: GetOrdersHistoryRequest): Promise<Order[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_ORDERS_HISTORY,
       RequestType.POST,
       paramsWithOMSId,
-    )) as Order[];
+    );
   }
 
-  async getTradesHistory(
+  /**
+   * https://apidoc.notbank.exchange/#gettradeshistory
+   */
+  getTradesHistory(
     params: GetTradesHistoryRequest,
   ): Promise<OrderTrade[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_TRADES_HISTORY,
       RequestType.POST,
       paramsWithOMSId,
-    )) as OrderTrade[];
+    );
   }
 
-  async getOrderHistoryByOrderId(
+  /**
+   * https://apidoc.notbank.exchange/#getorderhistorybyorderid
+   */
+  getOrderHistoryByOrderId(
     params: GetOrderHistoryByOrderIdRequest,
-  ): Promise<GetOrderHistoryByOrderIdResponse[]> {
+  ): Promise<OrderSummary[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_ORDER_HISTORY_BY_ORDER_ID,
       RequestType.POST,
       paramsWithOMSId,
-    )) as GetOrderHistoryByOrderIdResponse[];
+    );
   }
 
-  public async getTickerHistory(
+  /**
+   * https://apidoc.notbank.exchange/#gettickerhistory
+   */
+  async getTickerHistory(
     params: GetTickerHistoryRequest,
-  ): Promise<GetTickerHistoryResponse[]> {
+  ): Promise<TickerSummary[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    const response = (await this.#serviceCore.request(
+    const response = (await this.connection.apRequest(
       Endpoint.GET_TICKER_HISTORY,
       RequestType.POST,
       paramsWithOMSId,
     )) as number[][];
 
-    return response.map((item): GetTickerHistoryResponse => ({
+    return response.map((item): TickerSummary => ({
       EndDateTime: item[0], // Fecha/hora de cierre en POSIX
       High: item[1], // Precio máximo
       Low: item[2], // Precio mínimo
@@ -186,45 +199,45 @@ export class TradingService {
     }));
   }
 
-  public async getLastTrades(
+  /**
+   * https://apidoc.notbank.exchange/#getlasttrades
+   */
+  async getLastTrades(
     request: GetLastTradesRequest,
-  ): Promise<IndexTrade[]> {
-    // Validate required fields
-    if (!request.InstrumentId)
-      throw new Error("InstrumentId is required for getting last trades.");
-
+  ): Promise<TradeSummary[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    const response = (await this.connection.apRequest(
       Endpoint.GET_LAST_TRADES,
       RequestType.POST,
       paramsWithOMSId,
     )) as number[][];
 
-    return response.map((item) => parseIndexTrade(item));
+    return response.map((item) => parseTradeSummary(item));
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getlevel1summary
+   */
   async getLevel1Summary(
     request: GetLevel1SummaryRequest,
-  ): Promise<GetLevel1SummaryResponse[]> {
+  ): Promise<Level1Summary[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-    // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_LEVEL1_SUMMARY,
       RequestType.POST,
       paramsWithOMSId,
-    )) as string[];
-
-    return response.map((data) => JSON.parse(data) as GetLevel1SummaryResponse);
+    )
   }
 
-  public async getLevel1SummaryMin(
+  /**
+   * https://apidoc.notbank.exchange/#getlevel1summarymin
+   */
+  async getLevel1SummaryMin(
     request: GetLevel1SummaryMinRequest,
-  ): Promise<GetLevel1SummaryMinResponse> {
+  ): Promise<Level1SummaryMin[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
     // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    const response = (await this.connection.apRequest(
       Endpoint.GET_LEVEL1_SUMMARY_MIN,
       RequestType.POST,
       paramsWithOMSId,
@@ -240,214 +253,174 @@ export class TradingService {
     }));
   }
 
-  public async getOpenTradeReports(
+  /**
+   * https://apidoc.notbank.exchange/#getopentradereports
+   */
+  getOpenTradeReports(
     request: GetOpenTradeReportsRequest,
-  ): Promise<GetOpenTradeReportsResponse> {
-    // Validate required fields
-    if (!request.AccountId) {
-      throw new Error(
-        "AccountId is required for retrieving open trade reports.",
-      );
-    }
-
+  ): Promise<OpenTradeReport[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    // Make the HTTP request
-    const response: GetOpenTradeReportsResponse =
-      (await this.#serviceCore.request(
-        Endpoint.GET_OPEN_TRADE_REPORTS,
-        RequestType.POST,
-        paramsWithOMSId,
-      )) as GetOpenTradeReportsResponse;
-
-    return response;
+    return this.connection.apRequest(
+      Endpoint.GET_OPEN_TRADE_REPORTS,
+      RequestType.POST,
+      paramsWithOMSId,
+    )
   }
 
-  public async getOrders(request: GetOrdersRequest): Promise<Order[]> {
-    // Validate required fields
-    if (!request.AccountId) {
-      throw new Error("AccountId is required for retrieving orders.");
-    }
-
+  /**
+   * https://apidoc.notbank.exchange/#getorders
+   */
+  getOrders(request: GetOrdersRequest): Promise<Order[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_ORDERS,
       RequestType.POST,
       paramsWithOMSId,
-    )) as Order[];
-
-    return response;
+    );
   }
 
-  public async getOrderHistory(
+  /**
+   * https://apidoc.notbank.exchange/#getorderhistory
+   */
+  getOrderHistory(
     request: GetOrdersHistoryRequest,
   ): Promise<Order[]> {
-    // Validate required fields
-    if (!request.AccountId) {
-      throw new Error("AccountId is required for retrieving order history.");
-    }
-
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-
-    // Make the HTTP request
-    const response = (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_ORDER_HISTORY,
       RequestType.POST,
       paramsWithOMSId,
-    )) as Order[];
-
-    return response;
+    )
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#sendorder
+   */
   async sendOrder(request: SendOrderRequest): Promise<SendOrderResponse> {
-    if (
-      request.InstrumentId == null ||
-      request.AccountId == null ||
-      request.TimeInForce == null ||
-      request.Side == null ||
-      request.OrderType == null
-    ) {
-      throw new Error(
-        "InstrumentId, AccountId, TimeInForce, Side, and OrderType are required",
-      );
-    }
-    if (request.OrderType === OrderTypeInt.Limit && request.LimitPrice == null) {
-      throw new Error("LimitPrice is required for Limit Orders");
-    }
-    if (
-      request.UseDisplayQuantity &&
-      (request.DisplayQuantity == null || request.DisplayQuantity <= 0)
-    ) {
-      throw new Error(
-        "DisplayQuantity must be greater than 0 when UseDisplayQuantity is true",
-      );
-    }
-
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    const response = await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.SEND_ORDER,
       RequestType.POST,
       paramsWithOMSId,
     );
-
-    return response as SendOrderResponse;
   }
 
-  async cancelReplaceOrder(
+  /**
+   * https://apidoc.notbank.exchange/#cancelreplaceorder
+   */
+  cancelReplaceOrder(
     params: CancelReplaceOrderRequest,
   ): Promise<CancelReplaceOrderResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.CANCEL_REPLACE_ORDER,
       RequestType.POST,
       paramsWithOMSId,
-    )) as CancelReplaceOrderResponse;
+    )
   }
 
-  async cancelOrder(params: CancelOrderRequest): Promise<void> {
+  /**
+   * https://apidoc.notbank.exchange/#cancelorder
+   */
+  cancelOrder(params: CancelOrderRequest): Promise<void> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.CANCEL_ORDER,
       RequestType.POST,
       paramsWithOMSId,
     );
   }
 
-  public async getOpenOrders(
+  /**
+   * https://apidoc.notbank.exchange/#getopenorders
+   */
+  getOpenOrders(
     params: GetOpenOrdersRequest,
-  ): Promise<GetOpenOrdersResponse[]> {
-    if (!params.AccountId) {
-      throw new Error("getOpenOrders requires AccountId.");
-    }
-
+  ): Promise<OpenOrder[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-
-    const response = await this["#serviceCore"].request(
+    return this.connection.apRequest(
       Endpoint.GET_OPEN_ORDERS,
       RequestType.POST,
       paramsWithOMSId,
     );
-
-    return response as GetOpenOrdersResponse[];
   }
 
-  public async getAccountTrades(
+  /**
+   * https://apidoc.notbank.exchange/#getaccounttrades
+   */
+  getAccountTrades(
     request: GetAccountTradesRequest,
-  ): Promise<GetAccountTradesResponse> {
+  ): Promise<AccountTrade[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    // Make the HTTP request
-    const response: GetAccountTradesResponse = (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_ACCOUNT_TRADES,
       RequestType.POST,
       paramsWithOMSId,
-    )) as GetAccountTradesResponse;
-
-    return response;
+    )
   }
 
-  public async getSummary(): Promise<SummaryResponse> {
-    const response = (await this.#serviceCore.request(
+  /**
+   * https://apidoc.notbank.exchange/#summary
+   */
+  getSummary(): Promise<InstrumentSummary[]> {
+    return this.connection.apRequest(
       Endpoint.SUMMARY,
       RequestType.POST,
-    )) as SummaryResponse;
-
-    return response;
+    )
   }
 
-  public async getTicker(): Promise<TickerResponse> {
-    const response = (await this.#serviceCore.request(
+  /**
+   * https://apidoc.notbank.exchange/#ticker
+   */
+  getTicker(): Promise<Tickers> {
+    return this.connection.apRequest(
       Endpoint.TICKER,
       RequestType.POST,
-    )) as TickerResponse;
-
-    return response;
+    )
   }
 
-  public async getOrderBook(
+  /**
+   * https://apidoc.notbank.exchange/#orderbook
+   */
+  async getOrderBook(
     request: OrderBookRequest,
-  ): Promise<OrderBookResponse> {
-    if (!request.Market_Pair) {
-      throw new Error("Market_Pair is required.");
-    }
-
-    const response = await this.#serviceCore.request(
+  ): Promise<OrderBook> {
+    const orderbookRaw = await this.connection.apRequest<OrderBookRequest, OrderBookRaw>(
       Endpoint.ORDER_BOOK,
       RequestType.POST,
       request,
     );
-
-    return response as OrderBookResponse;
+    return orderbookFromRaw(orderbookRaw)
   }
 
-  public async getTrades(params: TradesRequest): Promise<TradesResponse[]> {
-    const response = (await this.#serviceCore.request(
+  getOrderBookRaw(
+    request: OrderBookRequest,
+  ): Promise<OrderBookRaw> {
+    return this.connection.apRequest(
+      Endpoint.ORDER_BOOK,
+      RequestType.POST,
+      request,
+    );
+  }
+
+  /**
+   * https://apidoc.notbank.exchange/#trades
+   */
+  getTrades(params: TradesRequest): Promise<Trade[]> {
+    return this.connection.apRequest(
       Endpoint.TRADES,
       RequestType.POST,
       params,
-    )) as TradesResponse[];
-
-    return response;
+    )
   }
 
-  public async getL2Snapshot(
-    request: GetL2SnapshotRequest,
-  ): Promise<GetL2SnapshotResponse> {
-    // Validate required fields
-    if (!request.InstrumentId)
-      throw new Error(
-        "InstrumentId is required for retrieving Level 2 snapshot.",
-      );
-    if (request.Depth <= 0) throw new Error("Depth must be greater than 0.");
-
+  /**
+   * https://apidoc.notbank.exchange/#getl2snapshot
+   */
+  async getL2Snapshot(request: GetL2SnapshotRequest): Promise<L2Snapshot[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
-    // Make the HTTP request
-    const response: number[][] = (await this.#serviceCore.request(
+    const response: number[][] = (await this.connection.apRequest(
       Endpoint.GET_L2_SNAPSHOT,
       RequestType.POST,
       paramsWithOMSId,
@@ -467,34 +440,25 @@ export class TradingService {
     }));
   }
 
-  public async getLevel1(
-    request: GetLevel1Request,
-  ): Promise<GetLevel1Response> {
-    // Validate required fields
-    if (!request.InstrumentId)
-      throw new Error(
-        "InstrumentId is required for retrieving Level 1 snapshot.",
-      );
-
+  /**
+   * https://apidoc.notbank.exchange/#getlevel1
+   */
+  getLevel1(request: GetLevel1Request): Promise<Level1> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    // Make the HTTP request
-    const response: GetLevel1Response = (await this.#serviceCore.request(
+    return this.connection.apRequest(
       Endpoint.GET_LEVEL1,
       RequestType.POST,
       paramsWithOMSId,
-    )) as GetLevel1Response;
-
-    return response;
+    )
   }
 
-  public async getEnums(): Promise<GetEnumsResponse> {
-    // Make the HTTP request
-    const response: GetEnumsResponse = (await this.#serviceCore.request(
+  /**
+   * https://apidoc.notbank.exchange/#getenums
+   */
+  getEnums(): Promise<EnumsResponse> {
+    return this.connection.apRequest(
       Endpoint.GET_ENUMS,
       RequestType.POST,
-    )) as GetEnumsResponse;
-
-    return response;
+    )
   }
 }

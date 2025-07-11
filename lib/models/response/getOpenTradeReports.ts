@@ -41,5 +41,3 @@ export interface OpenTradeReport {
   IpAddress: string;
   OMSId: number;
 }
-
-export type GetOpenTradeReportsResponse = OpenTradeReport[];

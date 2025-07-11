@@ -1,4 +1,4 @@
-export interface DownloadDocumentSliceResponse {
+export interface DocumentSlice {
   DescriptorId: string;
   base64Bytes: string;
   statusCode: string;

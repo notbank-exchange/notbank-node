@@ -1,4 +1,5 @@
-import { UserService } from "./userService";
+import { getNonce, sign } from "../core/hmac";
+import { HttpConnection } from "../core/http/httpClient";
 import { AccountService } from "./accountService";
 import { AuthService } from "./authService";
 import { FeeService } from "./feeService";
@@ -7,20 +8,20 @@ import { ProductService } from "./productService";
 import { ReportService } from "./reportService";
 import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
-import { getNonce, sign } from "../core/hmac";
-import { HttpClient } from "../core/http/httpClient";
+import { UserService } from "./userService";
+import { WalletService } from "./walletService";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class HttpServiceFactory {
-  #httpCore: HttpClient;
+  #httpConnection: HttpConnection;
 
   constructor(domain?: string) {
     const finalDomain = domain || DEFAULT_DOMAIN;
-    this.#httpCore = new HttpClient(finalDomain);
+    this.#httpConnection = new HttpConnection(finalDomain);
   }
 
-  async authenticate(params: {
+  authenticateUser(params: {
     ApiPublicKey: string;
     ApiSecretKey: string;
     UserId: string;
@@ -32,28 +33,8 @@ export class HttpServiceFactory {
       params.UserId,
       nonce
     );
-    await this.#httpCore.authenticate({
-      ApiKey: params.ApiPublicKey,
-      Signature: signature,
-      UserId: params.UserId,
-      Nonce: nonce
-    });
-  }
-
-  async authenticateUser(params: {
-    ApiPublicKey: string;
-    ApiSecretKey: string;
-    UserId: string;
-  }): Promise<void> {
-    var nonce = getNonce();
-    var signature = sign(
-      params.ApiPublicKey,
-      params.ApiSecretKey,
-      params.UserId,
-      nonce
-    );
-    await this.#httpCore.authenticateUser({
-      ApiKey: params.ApiPublicKey,
+    return this.#httpConnection.authenticateUser({
+      APIKey: params.ApiPublicKey,
       Signature: signature,
       UserId: params.UserId,
       Nonce: nonce
@@ -61,38 +42,42 @@ export class HttpServiceFactory {
   }
 
   newAccountService(): AccountService {
-    return new AccountService(this.#httpCore);
+    return new AccountService(this.#httpConnection);
   }
 
   newAuthService(): AuthService {
-    return new AuthService(this.#httpCore);
+    return new AuthService(this.#httpConnection);
   }
 
   newFeeService(): FeeService {
-    return new FeeService(this.#httpCore);
+    return new FeeService(this.#httpConnection);
   }
 
   newInstrumentService(): InstrumentService {
-    return new InstrumentService(this.#httpCore);
+    return new InstrumentService(this.#httpConnection);
   }
 
   newProductService(): ProductService {
-    return new ProductService(this.#httpCore);
+    return new ProductService(this.#httpConnection);
   }
 
   newReportService(): ReportService {
-    return new ReportService(this.#httpCore);
+    return new ReportService(this.#httpConnection);
   }
 
   newSystemService(): SystemService {
-    return new SystemService(this.#httpCore);
+    return new SystemService(this.#httpConnection);
   }
 
   newTradingService(): TradingService {
-    return new TradingService(this.#httpCore);
+    return new TradingService(this.#httpConnection);
   }
 
   newUserService(): UserService {
-    return new UserService(this.#httpCore);
+    return new UserService(this.#httpConnection);
+  }
+
+  newWalletService(): WalletService {
+    return new WalletService(this.#httpConnection)
   }
 }
