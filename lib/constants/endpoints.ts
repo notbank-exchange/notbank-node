@@ -95,8 +95,6 @@ export enum Endpoint {
   WHITELIST_ADDRESSES = "wallet/crypto/whitelist-addresses",
   UPDATE_ONE_STEP_WITHDRAW = "wallet/crypto/whitelist-addresses/one-step/status",
   CREATE_CRYPTO_WITHDRAW = "wallet/crypto/withdrawal"
-
-
 }
 
 export enum WebSocketEndpoint {

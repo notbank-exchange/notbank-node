@@ -1,7 +1,6 @@
 import assert from "assert";
 import "mocha";
 
-import { GetAccountTransactionsRequest } from "../../lib/models/request/getAccountTransactions";
 import { NotbankClient } from "../../lib/services/NotbankClient";
 
 describe("wallet service", () => {
@@ -33,14 +32,22 @@ describe("wallet service", () => {
         number: "111",
         kind: "kind"
       });
-      console.log("account:", account);
+      assert.ok(account)
     });
   });
 
   describe("getBankAccount", () => {
-    it.only("should return a bank account", async () => {
+    it("should return a bank account", async () => {
       const account = await service.getBankAccount({ bankAccountId: "ef90e5be-f376-445e-adee-257591183b98" });
-      console.log("account:", account);
+      assert.ok(account)
+    });
+  });
+
+  describe("getNetworksTemplates", () => {
+    it.only("should return a bank account", async () => {
+      const networks = await service.getNetworksTemplates({currency:"USDT"});
+      assert.ok(networks)
+      console.log(networks)
     });
   });
 

@@ -1,4 +1,4 @@
 export interface GetNetworksTemplatesRequest {
-  currency?: string
+  currency: string
   network?: string
 }
