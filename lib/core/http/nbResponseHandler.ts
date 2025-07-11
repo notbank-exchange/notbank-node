@@ -9,7 +9,7 @@ export class NbResponseHandler {
       throw new NotbankError("http error. (status=" + response.status + ")", -1)
     }
     var nbResponse = jsonResponse as NbResponse;
-    if (nbResponse.status === 'success') {
+    if (nbResponse?.status === 'success') {
       return paged ? jsonResponse as T : nbResponse.data as T
     }
     throw NotbankError.Factory.createFromNbResponse(nbResponse);

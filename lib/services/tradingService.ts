@@ -29,8 +29,8 @@ import { TradesRequest } from "../models/request/trades";
 import { CancelReplaceOrderResponse } from "../models/response/cancelReplaceOrder";
 import { GetAccountTradesResponse } from "../models/response/getAccountTrades";
 import { GetEnumsResponse } from "../models/response/getEnums";
-import { GetL2SnapshotResponse, L2Snapshot } from "../models/response/getL2Snapshot";
-import { GetLevel1Response } from "../models/response/getLevel1";
+import { L2Snapshot } from "../models/response/getL2Snapshot";
+import { Level1 } from "../models/response/getLevel1";
 import { GetLevel1SummaryResponse } from "../models/response/getLevel1Summary";
 import { GetLevel1SummaryMinResponse, Level1SummaryMin } from "../models/response/getLevel1SummaryMin";
 import { GetOpenOrdersResponse } from "../models/response/getOpenOrders";
@@ -411,42 +411,24 @@ export class TradingService {
   public async getOrderBook(
     request: OrderBookRequest,
   ): Promise<OrderBookResponse> {
-    if (!request.Market_Pair) {
-      throw new Error("Market_Pair is required.");
-    }
-
-    const response = await this.connection.apRequest(
+    return this.connection.apRequest(
       Endpoint.ORDER_BOOK,
       RequestType.POST,
       request,
     );
-
-    return response as OrderBookResponse;
   }
 
   public async getTrades(params: TradesRequest): Promise<TradesResponse[]> {
-    const response = (await this.connection.apRequest(
+    return this.connection.apRequest(
       Endpoint.TRADES,
       RequestType.POST,
       params,
-    )) as TradesResponse[];
-
-    return response;
+    )
   }
 
-  public async getL2Snapshot(
-    request: GetL2SnapshotRequest,
-  ): Promise<GetL2SnapshotResponse> {
-    // Validate required fields
-    if (!request.InstrumentId)
-      throw new Error(
-        "InstrumentId is required for retrieving Level 2 snapshot.",
-      );
-    if (request.Depth <= 0) throw new Error("Depth must be greater than 0.");
-
+  public async getL2Snapshot(request: GetL2SnapshotRequest): Promise<L2Snapshot[]> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
 
-    // Make the HTTP request
     const response: number[][] = (await this.connection.apRequest(
       Endpoint.GET_L2_SNAPSHOT,
       RequestType.POST,
@@ -467,34 +449,19 @@ export class TradingService {
     }));
   }
 
-  public async getLevel1(
-    request: GetLevel1Request,
-  ): Promise<GetLevel1Response> {
-    // Validate required fields
-    if (!request.InstrumentId)
-      throw new Error(
-        "InstrumentId is required for retrieving Level 1 snapshot.",
-      );
-
+  getLevel1(request: GetLevel1Request): Promise<Level1> {
     const paramsWithOMSId = completeParams(request, this.OMS_ID);
-
-    // Make the HTTP request
-    const response: GetLevel1Response = (await this.connection.apRequest(
+    return this.connection.apRequest(
       Endpoint.GET_LEVEL1,
       RequestType.POST,
       paramsWithOMSId,
-    )) as GetLevel1Response;
-
-    return response;
+    )
   }
 
-  public async getEnums(): Promise<GetEnumsResponse> {
-    // Make the HTTP request
-    const response: GetEnumsResponse = (await this.connection.apRequest(
+  getEnums(): Promise<GetEnumsResponse> {
+    return this.connection.apRequest(
       Endpoint.GET_ENUMS,
       RequestType.POST,
-    )) as GetEnumsResponse;
-
-    return response;
+    )
   }
 }

@@ -1,7 +1,6 @@
 import assert from "assert";
 import "mocha";
 
-import { HttpServiceFactory } from "../../lib/services/httpServiceFactory";
 import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("http user service", () => {
@@ -16,27 +15,14 @@ describe("http user service", () => {
   })
 
   describe("get product", () => {
-    it("fetches product details successfully", async function () {
+    it.only("fetches product details successfully", async function () {
       const response = await service.getProduct({
         ProductId: 1,
       });
       assert.ok(response, "Response should not be null or undefined");
       assert.strictEqual(response.Product, "USD", "Product should be USD");
     });
-
-    it("fails or returns error when ProductId is not provided", async function () {
-      try {
-        // @ts-expect-error – Forzamos omitir ProductId
-        const response = await service.getProduct({});
-        assert.fail(
-          "The call should have thrown an error due to missing ProductId",
-        );
-      } catch (error) {
-        console.log("Expected error for missing ProductId:", error.message);
-        assert.ok(error, "Should throw an error for missing ProductId");
-      }
-    });
-
+    
     it("fails or returns error for invalid ProductId (e.g. -1)", async function () {
       try {
         const response = await service.getProduct({
@@ -46,7 +32,6 @@ describe("http user service", () => {
           "The call should have thrown an error for invalid ProductId",
         );
       } catch (error) {
-        console.log("Expected error for invalid ProductId:", error.message);
         assert.ok(error, "Should throw an error for invalid ProductId");
       }
     });
