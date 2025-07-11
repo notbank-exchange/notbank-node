@@ -4,6 +4,6 @@ export interface AddWhitelistedAddressRequest {
   network: string
   address: string
   label: string
-  memo_or_tag: string
+  memo_or_tag?: string
   otp: string
 }
