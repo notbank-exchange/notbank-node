@@ -10,7 +10,6 @@ export * from "./depositTemplate";
 export * from "./depositTemplateInfo";
 export * from "./direction";
 export * from "./feeProductType";
-export * from "./index";
 export * from "./indexTrade";
 export * from "./instrumentType";
 export * from "./instrumentVerificationLevelConfig";

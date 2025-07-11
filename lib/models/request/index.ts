@@ -43,7 +43,6 @@ export * from "./getUserReportTicketsByStatus";
 export * from "./getUserReportWriterResultRecords";
 export * from "./getVerificationLevelConfig";
 export * from "./getWithdrawFee";
-export * from "./index";
 export * from "./modifyOrder";
 export * from "./orderBook";
 export * from "./scheduleActivityReport";
