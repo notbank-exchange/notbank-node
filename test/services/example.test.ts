@@ -1,6 +1,7 @@
 import "mocha";
 
 import { NotbankClient } from "../../lib/services/notbankClient";
+import { OrderSide, OrderTypeInt, TimeInForce } from "../../lib/models";
 
 describe("wallet service", () => {
   describe("getBanks", () => {
@@ -33,6 +34,46 @@ describe("wallet service", () => {
       var marketPair = "BTCUSDT";
 
       // define orderPrice (around market top)
+      var btcUsdtOrderbook = await client.getTradingService()
+        .getOrderBook({ Market_Pair: marketPair, Depth: 5, Level: 2 })
+      var randomSmallFraction = ((Math.random() * 90) + 10) / 1000
+      var topBid = btcUsdtOrderbook.bids[0];
+      var orderPrice = topBid.price + randomSmallFraction;
+      // TODO: handle tick size
+      var orderQuantity = quantityToSpend / orderPrice;
+
+
+      // send order
+      var instruments = await client.getInstrumentService().getInstruments();
+      var btcUsdtInstrument = instruments.filter(pair => pair.Symbol === marketPair)[0]
+      var orderResult = await client.getTradingService().sendOrder({
+        InstrumentId: btcUsdtInstrument.InstrumentId,
+        AccountId: accountId,
+        TimeInForce: TimeInForce.GTC,
+        Side: OrderSide.Buy,
+        OrderType: OrderTypeInt.Limit,
+        Quantity: orderQuantity,
+        LimitPrice: orderPrice,
+      });
+
+
+      // handle order result
+      if (orderResult.Status === "Rejected") {
+        // order was rejected
+        console.log("order rejected");
+        console.log(orderResult.Message);
+        return
+      }
+      // order was accepted
+      console.log("orderId,", orderResult.OrderId);
+
+      // cancel order
+      await client.getTradingService()
+        .cancelOrder({
+          AccountId: accountId,
+          OrderId: orderResult.OrderId
+        })
+      return orderResult.OrderId
     });
   });
 });

@@ -33,14 +33,12 @@ export class WebsocketConnection implements ServiceConnection {
     throw new Error("websocket client does not support nb methods.");
   }
 
-  // TODO: maybe use better names than hook: websockethooks
   async connect(hooks: WebsocketHooks = {}) {
     this.#websocket = new WebSocket("wss://" + this.#domain + "/wsgateway");
     this.#websocket.onopen = event => hooks.onOpen?.(event);
     this.#websocket.onclose = event => hooks.onClose?.(event);
     this.#websocket.onerror = event => hooks.onError?.(event);
     this.#websocket.addEventListener("message", event => {
-      // TODO: handle conversion exception
       const messageFrame = JSON.parse(event.data) as MessageFrame;
       this.#handleMessage(messageFrame);
     });

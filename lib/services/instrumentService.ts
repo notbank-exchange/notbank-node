@@ -19,7 +19,7 @@ export class InstrumentService {
    * https://apidoc.notbank.exchange/#getinstruments
    */
   getInstruments(
-    params: GetInstrumentsRequest
+    params: GetInstrumentsRequest={}
   ): Promise<Instrument[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return this.connection.apRequest(

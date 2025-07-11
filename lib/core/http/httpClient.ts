@@ -43,7 +43,8 @@ export class HttpConnection implements ServiceConnection {
   }
 
   async authenticateUser(params: AuthenticateUserRequest): Promise<void> {
-    var response = (await this.apRequest(Endpoint.AUTHENTICATE_USER, RequestType.GET, null, params)) as AuthenticateUserResponse;
+    var response = await this.apRequest<any, AuthenticateUserResponse>(
+      Endpoint.AUTHENTICATE_USER, RequestType.GET, null, params);
     console.log("auth response", response)
     this.#requester.updateSessionToken(response.SessionToken)
   }
