@@ -7,20 +7,17 @@ import { NotbankClient } from "../../lib/services/NotbankClient";
 describe("http user service", () => {
   const client = NotbankClient.Factory.createRestClient();
 
-  before(async () => {
-    // Autenticación previa a todas las pruebas en este bloque, http only
-    await client.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
-    });
-  });
-
-  const productService = client.getProductService();
+  const service = client.getProductService();
+  describe("get products", () => {
+    it("fetches all products successfully", async function () {
+      const response = await service.getProducts({})
+      assert.ok(response, "esponse should be defined")
+    })
+  })
 
   describe("get product", () => {
     it("fetches product details successfully", async function () {
-      const response = await productService.getProduct({
+      const response = await service.getProduct({
         ProductId: 1,
       });
       assert.ok(response, "Response should not be null or undefined");
@@ -30,7 +27,7 @@ describe("http user service", () => {
     it("fails or returns error when ProductId is not provided", async function () {
       try {
         // @ts-expect-error – Forzamos omitir ProductId
-        const response = await productService.getProduct({});
+        const response = await service.getProduct({});
         assert.fail(
           "The call should have thrown an error due to missing ProductId",
         );
@@ -42,7 +39,7 @@ describe("http user service", () => {
 
     it("fails or returns error for invalid ProductId (e.g. -1)", async function () {
       try {
-        const response = await productService.getProduct({
+        const response = await service.getProduct({
           ProductId: -1,
         });
         assert.fail(

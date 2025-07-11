@@ -45,7 +45,7 @@ describe("http report service", () => {
 
   const invalidGenerateRequestStartTime = {
     accountIdList: [1, 2],
-    startTime: 12345,
+    startTime: "-12345",
     endTime: "2025-06-02T16:00:00.000Z"
   };
 
@@ -58,7 +58,7 @@ describe("http report service", () => {
   const invalidScheduleRequestFrequency = {
     accountIdList: [1],
     beginTime: "2023-03-30T16:00:00.000Z",
-    frequency: true
+    frequency: -123
   };
 
   describe("generateTradeActivityReport", () => {
@@ -85,7 +85,6 @@ describe("http report service", () => {
 
     it("should throw error for invalid startTime in generateTradeActivityReport", async () => {
       try {
-        // @ts-expect-error
         await reportService.generateTradeActivityReport(
           invalidGenerateRequestStartTime
         );
@@ -152,7 +151,6 @@ describe("http report service", () => {
 
     it("should throw error for invalid frequency in scheduleTradeActivityReport", async () => {
       try {
-        // @ts-expect-error
         await reportService.scheduleTradeActivityReport(
           invalidScheduleRequestFrequency
         );

@@ -17,7 +17,7 @@ export class ApResponseHandler {
       standardResponse?.result === false &&
       standardResponse?.errorcode != null
     ) {
-      throw NotbankError.create(standardResponse);
+      throw NotbankError.Factory.createFromApResponse(standardResponse);
     }
     return jsonResponse as T;
   }

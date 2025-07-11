@@ -71,7 +71,7 @@ export class WebsocketServiceFactory {
       nonce
     );
     await this.#websocketConnection.authenticateUser({
-      ApiKey: params.ApiPublicKey,
+      APIKey: params.ApiPublicKey,
       Signature: signature,
       UserId: params.UserId,
       Nonce: nonce

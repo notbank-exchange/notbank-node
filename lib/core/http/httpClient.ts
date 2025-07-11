@@ -13,45 +13,37 @@ import { Requester } from "./requester";
 
 export class HttpConnection implements ServiceConnection {
   #requester: Requester
-  #HOST: string;
+  #host: string;
 
   constructor(domain: string) {
     this.#requester = new Requester();
-    this.#HOST = "https://" + domain;
+    this.#host = "https://" + domain;
   }
 
-  async nbRequest<T1, T2>(endpoint: string, requestType: RequestType, params?: T1, paged: boolean = false): Promise<T2> {
-    var response = await this.#requester.request(endpoint, requestType, params)
+  async nbRequest<T1, T2>(
+    endpoint: string,
+    requestType: RequestType,
+    params?: T1,
+    paged: boolean = false
+  ): Promise<T2> {
+    const url = this.getNbUrl(endpoint);
+    var response = await this.#requester.request({ url, requestType, params })
     return await NbResponseHandler.handle<T2>(response, paged);
   }
 
   async apRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
-    params?: T1
+    params?: T1,
+    extraHeaders?: any
   ): Promise<T2> {
-    var response = await this.#requester.request(endpoint, requestType, params)
+    const url = this.getApUrl(endpoint);
+    var response = await this.#requester.request({ url, requestType, params, extraHeaders })
     return await ApResponseHandler.handle<T2>(response);
   }
 
-  getUrlWithSearchParams(endpoint: string, params?: any): string {
-    if (params) {
-      return endpoint + "?" + new URLSearchParams(params);
-    }
-    return endpoint;
-  }
-
-  async authenticate(params: AuthenticateUserRequest): Promise<void> {
-    var response = (await this.apRequest(Endpoint.AUTHENTICATE, RequestType.GET, {
-      extraHeaders: params
-    })) as AuthenticateUserResponse;
-    this.#requester.updateSessionToken(response.SessionToken)
-  }
-
   async authenticateUser(params: AuthenticateUserRequest): Promise<void> {
-    var response = (await this.apRequest(Endpoint.AUTHENTICATE_USER, RequestType.GET, {
-      extraHeaders: params
-    })) as AuthenticateUserResponse;
+    var response = (await this.apRequest(Endpoint.AUTHENTICATE_USER, RequestType.GET, null, params)) as AuthenticateUserResponse;
     this.#requester.updateSessionToken(response.SessionToken)
   }
 
@@ -84,9 +76,9 @@ export class HttpConnection implements ServiceConnection {
   }
 
   getApUrl(endpoint: string): string {
-    return this.#HOST + "/ap/" + endpoint;
+    return this.#host + "/ap/" + endpoint;
   }
   getNbUrl(endpoint: string): string {
-    return this.#HOST + "/api/nb/" + endpoint;
+    return this.#host + "/api/nb/" + endpoint;
   }
 }

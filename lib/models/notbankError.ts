@@ -1,26 +1,49 @@
+import { NbResponse } from "./nbResponse";
 import { StandardResponse as StandardApResponse } from "./standardResponse";
 
 export class NotbankError extends Error {
-  errormsg: string;
-  errorcode: number;
-  detail: string;
+  code: number;
 
-  constructor(message: string, errorcode: number, detail: string) {
-    super(message)
+  constructor(message: string, code: number) {
+    super("Notbank Error. " + message)
+    this.code = code
   }
 
-  static create(standardResponse: StandardApResponse) {
-    var errMsg = `Notbank Error (code=${standardResponse.errorcode})`;
-    if (standardResponse.errormsg) {
-      errMsg += ". " + standardResponse.errormsg;
+  static Factory = class Factory {
+    static createFromApResponse(standardResponse: StandardApResponse): NotbankError {
+      var errMsg = ""
+      if (standardResponse.errorcode) {
+        errMsg += `(code=${standardResponse.errorcode})`;
+      }
+      if (standardResponse.errormsg) {
+        errMsg += " " + standardResponse.errormsg + ".";
+      }
+      if (standardResponse.detail) {
+        errMsg += " " + standardResponse.detail + ".";
+      }
+      return new NotbankError(
+        errMsg,
+        standardResponse.errorcode || standardResponse.statusCode
+      )
     }
-    if (standardResponse.detail) {
-      errMsg += ". " + standardResponse.detail;
+
+    static createFromNbResponse(standardResponse: NbResponse): NotbankError {
+      var errMsg = "";
+      if (standardResponse.message) {
+        errMsg += standardResponse.message;
+        if (!standardResponse.message.endsWith(".")) {
+          errMsg += ".";
+        }
+      }
+      if (standardResponse.detail) {
+        errMsg += " " + standardResponse.detail
+        if (!standardResponse.detail.endsWith(".")) {
+          errMsg += ".";
+        }
+      }
+
+      return new NotbankError(errMsg, -1,
+      )
     }
-    return new NotbankError(
-      standardResponse.errormsg,
-      standardResponse.errorcode || standardResponse.statusCode,
-      standardResponse.detail,
-    )
   }
 }

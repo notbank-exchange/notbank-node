@@ -9,7 +9,6 @@ describe("http account service", () => {
 
 
   before(async () => {
-    // Autenticación previa a todas las pruebas en este bloque, http only
     await client.authenticateUser({
       ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
       ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",

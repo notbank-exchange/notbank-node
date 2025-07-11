@@ -3,7 +3,7 @@ import { Endpoint } from "../../constants/endpoints";
 import { MessageFrame, MessageType } from "./messageFrame";
 import { SubscriptionHandler } from "./subscriptionHandler";
 import { RequestType, ServiceConnection } from "../serviceClient";
-import { NotbankError, StandardResponse } from "../../models";
+import { AuthenticateUserRequest, NotbankError, StandardResponse } from "../../models";
 import { WebsocketHooks } from "./websocketHooks";
 import { CallbackManager } from "./callbackManager";
 import ErrorCode from "../../constants/errorCode";
@@ -118,7 +118,7 @@ export class WebsocketConnection implements ServiceConnection {
         return;
       }
       if (response.m === MessageType.ERROR) {
-        reject(NotbankError.create(payload));
+        reject(NotbankError.Factory.createFromApResponse(payload));
         return;
       }
       var standardResponse = payload as StandardResponse;
@@ -126,7 +126,7 @@ export class WebsocketConnection implements ServiceConnection {
         standardResponse?.result === false &&
         standardResponse?.errormsg != null
       ) {
-        reject(NotbankError.create(payload));
+        reject(NotbankError.Factory.createFromApResponse(payload));
         return;
       }
       resolve(payload as T);
@@ -193,18 +193,13 @@ export class WebsocketConnection implements ServiceConnection {
     this.#websocket.socket.close();
   }
 
-  async authenticateUser(params: {
-    ApiKey: string;
-    Signature: string;
-    UserId: string;
-    Nonce: string;
-  }): Promise<void> {
+  async authenticateUser(params: AuthenticateUserRequest): Promise<void> {
     await this.apRequest(Endpoint.AUTHENTICATE_USER, RequestType.NONE, params);
   }
 }
 
 function newStandardErrorFromString(errorStr: string): any {
-  return NotbankError.create({
+  return NotbankError.Factory.createFromApResponse({
     result: false,
     errormsg: errorStr,
     errorcode: ErrorCode.UNDEFINED,

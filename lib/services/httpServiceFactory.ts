@@ -1,4 +1,5 @@
-import { UserService } from "./userService";
+import { getNonce, sign } from "../core/hmac";
+import { HttpConnection } from "../core/http/httpClient";
 import { AccountService } from "./accountService";
 import { AuthService } from "./authService";
 import { FeeService } from "./feeService";
@@ -7,11 +8,8 @@ import { ProductService } from "./productService";
 import { ReportService } from "./reportService";
 import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
-import { getNonce, sign } from "../core/hmac";
-import { HttpConnection } from "../core/http/httpClient";
+import { UserService } from "./userService";
 import { WalletService } from "./walletService";
-import { SubscriptionService } from "./subscriptionService";
-import { NotbankError } from "../models/notbankError";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
@@ -23,7 +21,7 @@ export class HttpServiceFactory {
     this.#httpConnection = new HttpConnection(finalDomain);
   }
 
-  async authenticate(params: {
+  authenticateUser(params: {
     ApiPublicKey: string;
     ApiSecretKey: string;
     UserId: string;
@@ -35,28 +33,8 @@ export class HttpServiceFactory {
       params.UserId,
       nonce
     );
-    await this.#httpConnection.authenticate({
-      ApiKey: params.ApiPublicKey,
-      Signature: signature,
-      UserId: params.UserId,
-      Nonce: nonce
-    });
-  }
-
-  async authenticateUser(params: {
-    ApiPublicKey: string;
-    ApiSecretKey: string;
-    UserId: string;
-  }): Promise<void> {
-    var nonce = getNonce();
-    var signature = sign(
-      params.ApiPublicKey,
-      params.ApiSecretKey,
-      params.UserId,
-      nonce
-    );
-    await this.#httpConnection.authenticateUser({
-      ApiKey: params.ApiPublicKey,
+    return this.#httpConnection.authenticateUser({
+      APIKey: params.ApiPublicKey,
       Signature: signature,
       UserId: params.UserId,
       Nonce: nonce

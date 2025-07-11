@@ -11,40 +11,23 @@ export class Requester {
     this.#aptoken = aptoken;
   }
 
-  async request<T1>(
-    endpoint: string,
+  request<T1>(config: {
+    url: string,
     requestType: RequestType,
-    params?: T1
-  ): Promise<Response> {
-    if (requestType === RequestType.GET) {
-      return await this.requestByMethod(endpoint, "GET", { params: params });
-    }
-    if (requestType === RequestType.POST) {
-      return await this.requestPost(endpoint, params);
-    }
-    if (requestType === RequestType.DELETE) {
-      return await this.requestByMethod(endpoint, "DELETE", { params: params });
-    }
-    throw new Error(`Request type not implemented. ${requestType}`);
+    params?: T1;
+    extraHeaders?: any
   }
-
-  async requestPost<T1>(endpoint: string, message?: T1): Promise<Response> {
-    return await fetch(endpoint, {
-      method: "POST",
-      body: message ? JSON.stringify(message) : null,
-      headers: this.getHeaders()
-    });
-  }
-
-  async requestByMethod<T1>(
-    endpoint: string,
-    method: string,
-    config: { params?: T1; extraHeaders?: any } = {}
   ): Promise<Response> {
-    return await fetch(
-      this.getUrlWithSearchParams(endpoint, config.params),
+    var url = config.requestType === RequestType.POST
+      ? config.url
+      : this.getUrlWithSearchParams(config.url, config.params);
+    var body = config.requestType === RequestType.POST
+      ? config.params :
+      null;
+    return fetch(url,
       {
-        method: method,
+        method: config.requestType,
+        body: body ? JSON.stringify(body) : null,
         headers: this.getHeaders(config.extraHeaders)
       }
     );
@@ -65,9 +48,6 @@ export class Requester {
   }
 
   getUrlWithSearchParams(endpoint: string, params?: any): string {
-    if (params) {
-      return endpoint + "?" + new URLSearchParams(params);
-    }
-    return endpoint;
+    return params ? endpoint + "?" + new URLSearchParams(params) : endpoint;
   }
 }

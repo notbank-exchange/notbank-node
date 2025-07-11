@@ -28,7 +28,7 @@ export class NotbankClient {
   #tradingService: TradingService
   #userService: UserService
   #walletService: WalletService
-  #authenticate: (params: {
+  #authenticateUser: (params: {
     ApiPublicKey: string,
     ApiSecretKey: string,
     UserId: string,
@@ -49,12 +49,12 @@ export class NotbankClient {
       tradingService: TradingService,
       userService: UserService,
       walletService: WalletService,
-      authenticate: (params: {
+      authenticate: (authParams: {
         ApiPublicKey: string,
         ApiSecretKey: string,
         UserId: string,
       }) => Promise<void>,
-      connect: (hooks: WebsocketHooks) => void,
+      connect: (hooks: WebsocketHooks) => Promise<void>,
       close: () => void,
     }
   ) {
@@ -69,7 +69,7 @@ export class NotbankClient {
     this.#tradingService = params.tradingService
     this.#userService = params.userService
     this.#walletService = params.walletService
-    this.#authenticate = params.authenticate
+    this.#authenticateUser = params.authenticate
     this.#connect = params.connect
     this.#close = params.close
   }
@@ -86,14 +86,14 @@ export class NotbankClient {
           instrumentService: factory.newInstrumentService(),
           productService: factory.newProductService(),
           reportService: factory.newReportService(),
-          getSubscriptionService: () => { throw new NotbankError("subcription service only exists for websocket connection", 0, "") },
+          getSubscriptionService: () => { throw new NotbankError("NotbankError. subcription service only exists for websocket connection", -1) },
           systemService: factory.newSystemService(),
           tradingService: factory.newTradingService(),
           userService: factory.newUserService(),
           walletService: factory.newWalletService(),
-          authenticate: factory.authenticateUser,
-          connect: _ => { },
-          close: () => { }
+          authenticate: params => factory.authenticateUser(params),
+          connect: () => null,
+          close: () => null
         }
       )
     }
@@ -112,20 +112,20 @@ export class NotbankClient {
           tradingService: factory.newTradingService(),
           userService: factory.newUserService(),
           walletService: factory.newWalletService(),
-          authenticate: factory.authenticateUser,
-          connect: factory.connect,
-          close: factory.close
+          authenticate: params => factory.authenticateUser(params),
+          connect: () => factory.connect(),
+          close: () => factory.close()
         }
       )
     }
   }
 
-  async authenticateUser(params: {
+  authenticateUser(params: {
     ApiPublicKey: string;
     ApiSecretKey: string;
     UserId: string;
   }): Promise<void> {
-    this.#authenticate(params)
+    return this.#authenticateUser(params)
   }
 
   getAccountService(): AccountService {

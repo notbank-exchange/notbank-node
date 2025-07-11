@@ -30,8 +30,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#getbanks
    */
-  async getBanks(request: GetBankRequest): Promise<Banks> {
-    return await this.connection.nbRequest(
+  getBanks(request: GetBankRequest): Promise<Banks> {
+    return this.connection.nbRequest(
       Endpoint.BANKS,
       RequestType.GET,
       request,
@@ -42,8 +42,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#createbankaccount
    */
-  async createBankAccount(request: CreateBankAccountRequest): Promise<BankAccount> {
-    return await this.connection.nbRequest(
+  createBankAccount(request: CreateBankAccountRequest): Promise<BankAccount> {
+    return this.connection.nbRequest(
       Endpoint.BANK_ACCOUNTS,
       RequestType.POST,
       request
@@ -53,8 +53,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#getbankaccount
    */
-  async getBankAccount(request: GetBankAccountRequest): Promise<BankAccount> {
-    return await this.connection.nbRequest(
+  getBankAccount(request: GetBankAccountRequest): Promise<BankAccount> {
+    return this.connection.nbRequest(
       Endpoint.BANK_ACCOUNTS + "/" + request.bankAccountId,
       RequestType.GET,
     );
@@ -63,8 +63,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#getbankaccounts
    */
-  async getBankAccounts(request: GetBankAccountsRequest): Promise<BankAccounts> {
-    return await this.connection.nbRequest(
+  getBankAccounts(request: GetBankAccountsRequest): Promise<BankAccounts> {
+    return this.connection.nbRequest(
       Endpoint.BANK_ACCOUNTS,
       RequestType.GET,
       request,
@@ -76,8 +76,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#deletebankaccount
    */
-  async deleteBankAccount(request: DeleteBankAccountRequest): Promise<void> {
-    return await this.connection.nbRequest(
+  deleteBankAccount(request: DeleteBankAccountRequest): Promise<void> {
+    return this.connection.nbRequest(
       Endpoint.BANK_ACCOUNTS + "/" + request.bankAccountId,
       RequestType.DELETE
     );
@@ -86,8 +86,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#getnetworkstemplates
    */
-  async getNetworksTemplates(request: GetNetworksTemplatesRequest): Promise<CurrencyNetworkTemplates[]> {
-    return await this.connection.nbRequest(
+  getNetworksTemplates(request: GetNetworksTemplatesRequest): Promise<CurrencyNetworkTemplates[]> {
+    return this.connection.nbRequest(
       Endpoint.GET_NETWORKS_TEMPLATES,
       RequestType.GET,
       request
@@ -97,8 +97,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#getdepositaddresses
    */
-  async getDepositAddresses(request: GetDepositAddressesRequest): Promise<string[]> {
-    return await this.connection.nbRequest(
+  getDepositAddresses(request: GetDepositAddressesRequest): Promise<string[]> {
+    return this.connection.nbRequest(
       Endpoint.BANK_ACCOUNTS,
       RequestType.GET,
       request
@@ -115,7 +115,7 @@ export class WalletService {
       request
     );
     if (addressList.length < 1) {
-      throw new NotbankError("no deposit address in the response", 0, "")
+      throw new NotbankError("NotbankError. no deposit address in the response", -1)
     }
     return addressList[0];
   }
@@ -123,8 +123,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#getwhitelistedaddresses
    */
-  async getWhitelistedAddresses(request: GetWhitelistedAddressesRequest): Promise<WhiteListedAddress[]> {
-    return await this.connection.nbRequest(
+  getWhitelistedAddresses(request: GetWhitelistedAddressesRequest): Promise<WhiteListedAddress[]> {
+    return this.connection.nbRequest(
       Endpoint.WHITELIST_ADDRESSES,
       RequestType.GET,
       request
@@ -134,8 +134,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#addwhitelistedaddress
    */
-  async addWhitelistedAddress(request: AddWhitelistedAddressRequest): Promise<string> {
-    return await this.connection.nbRequest(
+  addWhitelistedAddress(request: AddWhitelistedAddressRequest): Promise<string> {
+    return this.connection.nbRequest(
       Endpoint.WHITELIST_ADDRESSES,
       RequestType.POST,
       request
@@ -144,8 +144,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#confirmwhitelistedaddress
    */
-  async confirmWhitelistedAddress(request: ConfirmWhitelistedAddressRequest): Promise<void> {
-    return await this.connection.nbRequest(
+  confirmWhitelistedAddress(request: ConfirmWhitelistedAddressRequest): Promise<void> {
+    return this.connection.nbRequest(
       Endpoint.WHITELIST_ADDRESSES + "/" + request.whitelistedAddressId,
       RequestType.POST,
       { "code": request.code }
@@ -155,8 +155,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#deletewhitelistedaddress
    */
-  async deleteWhitelistedAddress(request: DeleteWhitelistedAddressRequest): Promise<void> {
-    return await this.connection.nbRequest(
+  deleteWhitelistedAddress(request: DeleteWhitelistedAddressRequest): Promise<void> {
+    return this.connection.nbRequest(
       Endpoint.WHITELIST_ADDRESSES + "/" + request.whitelistedAddressId,
       RequestType.DELETE,
       {
@@ -169,8 +169,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#updateonestepwithdraw
    */
-  async updateOneStepWithdraw(request: UpdateOneStepWithdrawRequest): Promise<void> {
-    return await this.connection.nbRequest(
+  updateOneStepWithdraw(request: UpdateOneStepWithdrawRequest): Promise<void> {
+    return this.connection.nbRequest(
       Endpoint.UPDATE_ONE_STEP_WITHDRAW,
       RequestType.POST,
       request
@@ -180,8 +180,8 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#createcryptowithdraw
    */
-  async createCryptoWithdraw(request: CreateCryptoWithdrawRequest): Promise<string> {
-    return await this.connection.nbRequest(
+  createCryptoWithdraw(request: CreateCryptoWithdrawRequest): Promise<string> {
+    return this.connection.nbRequest(
       Endpoint.CREATE_CRYPTO_WITHDRAW,
       RequestType.POST,
       request

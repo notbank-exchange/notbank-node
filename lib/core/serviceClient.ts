@@ -1,3 +1,4 @@
+import { AuthenticateUserRequest } from "../models/request/authenticateUser";
 import { MessageFrame } from "./websocket/messageFrame";
 import { SubscriptionHandler } from "./websocket/subscriptionHandler";
 
@@ -13,12 +14,7 @@ export interface ServiceConnection {
     message?: T1,
     paged?: boolean,
   ): Promise<T2>;
-  authenticateUser(params: {
-    ApiKey: string;
-    Signature: string;
-    UserId: string;
-    Nonce: string;
-  }): Promise<void>;
+  authenticateUser(params: AuthenticateUserRequest): Promise<void>;
   subscribe<T>(
     endpoint: string,
     firstIdentifier: number | null,
@@ -36,8 +32,8 @@ export interface ServiceConnection {
 }
 
 export enum RequestType {
-  NONE = 0,
-  POST = 1,
-  GET = 2,
-  DELETE = 3,
+  NONE = "NONE",
+  POST = "POST",
+  GET = "GET",
+  DELETE = "DELETE",
 }
