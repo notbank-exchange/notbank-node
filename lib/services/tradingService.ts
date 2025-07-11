@@ -393,6 +393,19 @@ export class TradingService {
     return orderbookFromRaw(orderbookRaw)
   }
 
+
+  getOrderBookRaw(
+    request: OrderBookRequest,
+  ): Promise<OrderBookRaw> {
+    return this.connection.apRequest(
+      Endpoint.ORDER_BOOK,
+      RequestType.POST,
+      request,
+    );
+  }
+
+
+
   /**
    * https://apidoc.notbank.exchange/#trades
    */
