@@ -3,8 +3,8 @@ import { RequestType, ServiceConnection } from "../core/serviceClient";
 import { GetInstrumentRequest } from "../models/request/getInstrument";
 import { GetInstrumentsRequest } from "../models/request/getInstruments";
 import { GetInstrumentVerificationLevelConfigRequest } from "../models/request/getInstrumentVerificationLevelConfig";
-import { GetInstrumentVerificationLevelConfigResponse } from "../models/response/getInstrumentVerificationLevelConfig";
-import { InstrumentResponse } from "../models/response/instrument";
+import { InstrumentVerificationLevelConfig } from "../models/response/getInstrumentVerificationLevelConfig";
+import { Instrument } from "../models/response/instrument";
 import { completeParams } from "../utils/completeParams";
 
 export class InstrumentService {
@@ -15,9 +15,12 @@ export class InstrumentService {
     this.connection = connection;
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getinstruments
+   */
   getInstruments(
     params: GetInstrumentsRequest
-  ): Promise<InstrumentResponse[]> {
+  ): Promise<Instrument[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return this.connection.apRequest(
       Endpoint.GET_INSTRUMENTS,
@@ -26,9 +29,12 @@ export class InstrumentService {
     );
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getinstrument
+   */
   getInstrument(
     params: GetInstrumentRequest
-  ): Promise<InstrumentResponse> {
+  ): Promise<Instrument> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return this.connection.apRequest(
       Endpoint.GET_INSTRUMENT,
@@ -37,9 +43,12 @@ export class InstrumentService {
     );
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getinstrumentverificationlevelconfig
+   */
   async getInstrumentVerificationLevelConfigs(
     params: GetInstrumentVerificationLevelConfigRequest
-  ): Promise<GetInstrumentVerificationLevelConfigResponse[]> {
+  ): Promise<InstrumentVerificationLevelConfig[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return this.connection.apRequest(
       Endpoint.GET_INSTRUMENT_VERIFICATION_LEVEL_CONFIG,

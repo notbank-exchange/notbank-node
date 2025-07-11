@@ -1,4 +1,4 @@
-export interface GetTickerHistoryResponse {
+export interface TickerSummary {
   EndDateTime: number; // Fecha/hora de cierre en POSIX
   High: number; // Precio máximo
   Low: number; // Precio mínimo

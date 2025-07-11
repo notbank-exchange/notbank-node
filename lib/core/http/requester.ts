@@ -24,6 +24,9 @@ export class Requester {
     var body = config.requestType === RequestType.POST
       ? config.params :
       null;
+    console.log("url", url)
+    console.log("body", body)
+    console.log("requesttype", config.requestType === "POST")
     return fetch(url,
       {
         method: config.requestType,
@@ -38,12 +41,14 @@ export class Requester {
       "Content-type": "application/json",
       charset: "UTF-8"
     };
-    if (this.#aptoken != null) {
+    if (this.#aptoken) {
       headers["aptoken"] = this.#aptoken;
     }
     if (extraHeaders) {
+      console.log("headeres", { ...headers, ...extraHeaders })
       return { ...headers, ...extraHeaders };
     }
+    console.log("headers", headers)
     return headers;
   }
 

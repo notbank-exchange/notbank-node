@@ -4,10 +4,8 @@ import { GetUserAccountsRequest } from "../models/request/getUserAccounts";
 import { GetUserDevicesRequest } from "../models/request/getUserDevices";
 import { GetUserInfoRequest } from "../models/request/getUserInfo";
 import { GetUserPermissionsRequest } from "../models/request/getUserPermissions";
-import { GetUserAccountsResponse } from "../models/response/getUserAccounts";
-import { GetUserDevicesResponse } from "../models/response/getUserDevices";
-import { GetUserInfoResponse } from "../models/response/getUserInfo";
-import { GetUserPermissionsResponse } from "../models/response/getUserPermissions";
+import { UserDevice } from "../models/response/getUserDevices";
+import { UserInfo } from "../models/response/getUserInfo";
 import { completeParams } from "../utils/completeParams";
 
 export class UserService {
@@ -18,72 +16,56 @@ export class UserService {
     this.connection = connection;
   }
 
-  public async getUserAccounts(
+  /**
+   * https://apidoc.notbank.exchange/#getuseraccounts
+   */
+  getUserAccounts(
     request: GetUserAccountsRequest
-  ): Promise<GetUserAccountsResponse> {
-    // Validate optional fields
-    if (request.UserId && typeof request.UserId !== "number")
-      throw new Error("UserId must be a number.");
-
+  ): Promise<number[]> {
     const params = completeParams(request, this.OMS_ID);
-
-    // Make the HTTP request
-    const response: GetUserAccountsResponse = (await this.connection.apRequest(
+    return this.connection.apRequest(
       Endpoint.GET_USER_ACCOUNTS,
       RequestType.POST,
       params
-    )) as GetUserAccountsResponse;
-
-    return response;
+    );
   }
 
-  public async getUserDevices(
+  /**
+   * https://apidoc.notbank.exchange/#getuserdevices
+   */
+  getUserDevices(
     request: GetUserDevicesRequest
-  ): Promise<GetUserDevicesResponse> {
-    // Validate optional fields
-    if (request.UserId && typeof request.UserId !== "number")
-      throw new Error("UserId must be a number.");
-
-    // Make the HTTP request
-    const response: GetUserDevicesResponse = (await this.connection.apRequest(
+  ): Promise<UserDevice[]> {
+    return this.connection.apRequest(
       Endpoint.GET_USER_DEVICES,
       RequestType.POST,
       request
-    )) as GetUserDevicesResponse;
-
-    return response;
+    )
   }
 
-  public async getUserInfo(
+  /**
+   * https://apidoc.notbank.exchange/#getuserinfo
+   */
+  getUserInfo(
     request: GetUserInfoRequest
-  ): Promise<GetUserInfoResponse> {
-    // Validate optional fields
-    if (request.UserId && typeof request.UserId !== "number")
-      throw new Error("UserId must be a number.");
-
-    // Make the HTTP request
-    const response: GetUserInfoResponse = (await this.connection.apRequest(
+  ): Promise<UserInfo> {
+    return this.connection.apRequest(
       Endpoint.GET_USER_INFO,
       RequestType.POST,
       request
-    )) as GetUserInfoResponse;
-
-    return response;
+    )
   }
 
-  public async getUserPermissions(
+  /**
+   * https://apidoc.notbank.exchange/#getuserpermissions
+   */
+  getUserPermissions(
     request: GetUserPermissionsRequest
-  ): Promise<GetUserPermissionsResponse> {
-    if (request.UserId == null || typeof request.UserId !== "number")
-      throw new Error("UserId is required and must be a number.");
-
-    const response: GetUserPermissionsResponse =
-      (await this.connection.apRequest(
-        Endpoint.GET_USER_PERMISSIONS,
-        RequestType.POST,
-        request
-      )) as GetUserPermissionsResponse;
-
-    return response;
+  ): Promise<string[]> {
+    return this.connection.apRequest(
+      Endpoint.GET_USER_PERMISSIONS,
+      RequestType.POST,
+      request
+    )
   }
 }

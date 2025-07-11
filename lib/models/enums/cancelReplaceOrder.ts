@@ -1,5 +1,5 @@
-import { OrderSide } from "../common/orderSide";
-import { OrderTypeInt } from "../common/orderType";
+import { OrderSide } from "./orderSide";
+import { OrderTypeInt } from "./orderType";
 import { PegPriceType } from "./pegPriceType";
 import { TimeInForce } from "./timeInForce";
 

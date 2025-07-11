@@ -1,4 +1,4 @@
-export interface VerificationLevelProductConfig {
+export interface ProductLimits {
   ProductId: number; // The ID of the product
   ProductName: string; // The name of the product
   AutoWithdrawThreshold: number; // The maximum withdraw amount which can be auto-accepted

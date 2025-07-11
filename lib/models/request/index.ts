@@ -10,7 +10,6 @@ export * from "./getAccountFees";
 export * from "./getAccountInfo";
 export * from "./getAccountInstrumentStatistics";
 export * from "./getAccountPositions";
-export * from "./getAccountSettlementPositions";
 export * from "./getAccountTrades";
 export * from "./getAccountTransactions";
 export * from "./getDepositFee";

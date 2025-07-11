@@ -1,10 +1,10 @@
 import assert from "assert";
 import "mocha";
 
-import { NotbankClient } from "../../lib/services/notbankClient"
-import { OrderTypeInt } from "../../lib/models/common/orderType";
-import { OrderSide } from "../../lib/models/common/orderSide";
+import { OrderSide } from "../../lib/models/enums/orderSide";
+import { OrderTypeInt } from "../../lib/models/enums/orderType";
 import { TimeInForce } from "../../lib/models/enums/timeInForce";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("http trading service", () => {
   const client = NotbankClient.Factory.createRestClient()

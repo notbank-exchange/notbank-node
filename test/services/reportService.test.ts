@@ -274,7 +274,7 @@ describe("http report service", () => {
   describe("removeUserReportTicket", () => {
     it("throws error when ticket ID is missing", async () => {
       try {
-        await reportService.removeUserReportTicket("" as string);
+        await reportService.removeUserReportTicket({ UserReportTicketId: "" });
         assert.fail("Should throw error");
       } catch (error: any) {
         assert.match(error.message, /userReportTicketId must be a string/);

@@ -8,5 +8,3 @@ export interface UserDevice {
   IsTrusted: boolean; // If true, the device is trusted
   ExpirationTime: number; // Expiration time in ticks format
 }
-
-export type GetUserDevicesResponse = UserDevice[];

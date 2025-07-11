@@ -1,7 +1,7 @@
-import { ChangeReason } from "../common/changeReason";
-import { OrderState } from "../common/orderState";
-import { OrderTypeInt } from "../common/orderType";
-import { OrderSide } from "../common/orderSide";
+import { ChangeReason } from "../enums/changeReason";
+import { OrderState } from "../enums/orderState";
+import { OrderTypeInt } from "../enums/orderType";
+import { OrderSide } from "../enums/orderSide";
 
 export interface Order {
   OMSId: number;

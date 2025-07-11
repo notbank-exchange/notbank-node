@@ -1,4 +1,4 @@
-export interface SummaryItem {
+export interface InstrumentSummary {
   trading_pairs: string;
   last_price: number;
   lowest_ask: number;
@@ -9,5 +9,3 @@ export interface SummaryItem {
   highest_price_24h: number;
   lowest_price_24h: number;
 }
-
-export type SummaryResponse = SummaryItem[];

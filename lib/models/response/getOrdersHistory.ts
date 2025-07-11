@@ -1,7 +1,7 @@
-import { ChangeReason } from "../common/changeReason";
-import { OrderState } from "../common/orderState";
-import { OrderTypeStr } from "../common/orderType";
-import { OrderSide } from "../common/orderSide";
+import { ChangeReason } from "../enums/changeReason";
+import { OrderState } from "../enums/orderState";
+import { OrderTypeStr } from "../enums/orderType";
+import { OrderSide } from "../enums/orderSide";
 
 export interface GetOrdersHistoryResponse {
   Side: OrderSide; // Lado de la orden (Buy/Sell)

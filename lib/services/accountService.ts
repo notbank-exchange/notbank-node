@@ -3,12 +3,10 @@ import { RequestType, ServiceConnection } from "../core/serviceClient";
 import { GetAccountInfoRequest } from "../models/request/getAccountInfo";
 import { GetAccountInstrumentStatisticsRequest } from "../models/request/getAccountInstrumentStatistics";
 import { GetAccountPositionRequest } from "../models/request/getAccountPositions";
-import { GetAccountSettlementPositionsRequest } from "../models/request/getAccountSettlementPositions";
 import { GetAccountTransactionsRequest } from "../models/request/getAccountTransactions";
 import { AccountInfo } from "../models/response/accountInfo";
 import { AccountPosition } from "../models/response/accountPositions";
 import { AccountInstrumentStatistics } from "../models/response/getAccountInstrumentStatistics";
-import { AccountSettlementPositions } from "../models/response/getAccountSettlementPositions";
 import { AccountTransaction } from "../models/response/getAccountTransactions";
 import { completeParams } from "../utils/completeParams";
 
@@ -20,6 +18,9 @@ export class AccountService {
     this.connection = connection;
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getaccounttransactions
+   */
   getAccountTransactions(
     request: GetAccountTransactionsRequest
   ): Promise<AccountTransaction[]> {
@@ -31,6 +32,9 @@ export class AccountService {
     )
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getaccountpositions
+   */
   getAccountPositions(
     params: GetAccountPositionRequest
   ): Promise<AccountPosition[]> {
@@ -42,6 +46,9 @@ export class AccountService {
     )
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#getaccountinstrumentstatistics
+   */
   getAccountInstrumentStatistics(
     params: GetAccountInstrumentStatisticsRequest
   ): Promise<AccountInstrumentStatistics[]> {
@@ -53,17 +60,9 @@ export class AccountService {
     )
   }
 
-  public async getAccountSettlementPositions(
-    params: GetAccountSettlementPositionsRequest
-  ): Promise<AccountSettlementPositions> {
-    const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return this.connection.apRequest(
-      Endpoint.GET_ACCOUNT_SETTLEMENT_POSITIONS,
-      RequestType.POST,
-      paramsWithOMSId
-    )
-  }
-
+  /**
+   * https://apidoc.notbank.exchange/#getaccountinfo
+   */
   public async getAccountInfo(
     params: GetAccountInfoRequest
   ): Promise<AccountInfo> {

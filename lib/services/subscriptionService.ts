@@ -5,7 +5,7 @@ import {
   CancelOrderRejectEvent,
   DepositEvent
 } from "../models/enums/accountEvent";
-import { IndexTrade } from "../models/enums/indexTrade";
+import { TradeSummary } from "../models/enums/indexTrade";
 import { Level2Ticker } from "../models/enums/level2Item";
 import { Ticker } from "../models/enums/ticker";
 import { SubscribeAccountEventsRequest } from "../models/request/subscribeAccountEvents";
@@ -29,7 +29,7 @@ import { Level1Ticker } from "../models/response/subscribeLevel1";
 import { Transaction } from "../models/response/transaction";
 import { WithdrawTicket } from "../models/response/withdrawTicket";
 import { completeParams } from "../utils/completeParams";
-import { parseIndexTrade } from "../utils/parseIndexTrade";
+import { parseTradeSummary } from "../utils/parseIndexTrade";
 import {
   newHandler,
   newMaybeHandler
@@ -43,17 +43,16 @@ export class SubscriptionService {
     this.connection = connection;
   }
 
-  async subscribeLevel1(
+  /**
+   * https://apidoc.notbank.exchange/#subscribelevel1
+   */
+  subscribeLevel1(
     request: SubscribeLevel1Request,
     snapshotHandler: (ticker: Level1Ticker) => void,
     updateHandler: (ticker: Level1Ticker) => void
   ): Promise<void> {
-    if (!request.InstrumentId && !request.Symbol)
-      throw new Error(
-        "Either InstrumentId or Symbol must be specified for Level1 subscription."
-      );
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-    return await this.connection.subscribe(
+    return this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_LEVEL1,
       request.InstrumentId || null,
       null,
@@ -65,14 +64,11 @@ export class SubscriptionService {
     );
   }
 
+  /**
+   * https://apidoc.notbank.exchange/#unsubscribelevel1
+   */
   async unsubscribeLevel1(request: UnsubscribeLevel1Request): Promise<void> {
-    if (!request.InstrumentId && !request.Symbol)
-      throw new Error(
-        "Either InstrumentId or Symbol must be specified for Level1 unsubscription."
-      );
-
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
     await this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_LEVEL1,
       request.InstrumentId || null,
@@ -82,17 +78,16 @@ export class SubscriptionService {
     );
   }
 
-  async subscribeLevel2(
+  /**
+   * https://apidoc.notbank.exchange/#subscribelevel2
+   */
+  subscribeLevel2(
     request: SubscribeLevel2Request,
     snapshotHandler: (ticker: Level2Ticker) => void,
     updateHandler: (ticker: Level2Ticker) => void
   ): Promise<void> {
-    if (!request.InstrumentId && !request.Symbol)
-      throw new Error(
-        "Either InstrumentId or Symbol must be specified for Level2 subscription."
-      );
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-    return await this.connection.subscribe(
+    return this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_LEVEL2,
       request.InstrumentId,
       null,
@@ -105,22 +100,11 @@ export class SubscriptionService {
   }
 
   /**
-   * This TypeScript function unsubscribes from Level2 data using WebSocket communication.
-   * @param {UnsubscribeLevel2Request} request - The `unsubscribeLevel2` function takes a
-   * `UnsubscribeLevel2Request` object as a parameter. This object should contain the following
-   * properties:
-   * @returns The `unsubscribeLevel2` method is returning a Promise that resolves to a
-   * `void` object.
+   * https://apidoc.notbank.exchange/#unsubscribelevel2
    */
-  async unsubscribeLevel2(request: UnsubscribeLevel2Request): Promise<void> {
-    if (!request.InstrumentId && !request.Symbol)
-      throw new Error(
-        "Either InstrumentId or Symbol must be specified for Level2 unsubscription."
-      );
-
+  unsubscribeLevel2(request: UnsubscribeLevel2Request): Promise<void> {
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    await this.connection.unsubscribe(
+    return this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_LEVEL2,
       request.InstrumentId || null,
       null,
@@ -135,24 +119,14 @@ export class SubscriptionService {
   }
 
   /**
-   * Suscribe a eventos de trades para un instrumento específico.
-   * @param request Parámetros de la suscripción.
-   * @param eventHandlers Manejadores de eventos para procesar los trades.
+   * https://apidoc.notbank.exchange/#subscribetrades
    */
-  async subscribeTrades(
+  subscribeTrades(
     request: SubscribeTradesRequest,
-    subcriptionHandler: (trade: IndexTrade) => void
+    subcriptionHandler: (trade: TradeSummary) => void
   ): Promise<void> {
-    if (!request.InstrumentId) {
-      throw new Error("InstrumentId is required for subscribing to trades.");
-    }
-    if (!request.IncludeLastCount || request.IncludeLastCount < 0) {
-      throw new Error("IncludeLastCount must be a non-negative number.");
-    }
-
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    return await this.connection.subscribe(
+    return this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_TRADES,
       request.InstrumentId,
       null,
@@ -160,27 +134,18 @@ export class SubscriptionService {
       [
         newHandler<{ [key: number]: number }>(
           WebSocketEndpoint.SUBSCRIBE_TRADES,
-          mapTrade => subcriptionHandler(parseIndexTrade(mapTrade))
+          mapTrade => subcriptionHandler(parseTradeSummary(mapTrade))
         )
       ]
     );
   }
 
   /**
-   * Desuscribe de eventos de trades para un instrumento específico.
-   * @param request Parámetros de la desuscripción.
-   * @returns Respuesta de la desuscripción.
+   * https://apidoc.notbank.exchange/#unsubscribetrades
    */
-  async unsubscribeTrades(request: UnsubscribeTradesRequest): Promise<void> {
-    if (!request.InstrumentId) {
-      throw new Error(
-        "InstrumentId is required for unsubscribing from trades."
-      );
-    }
-
+  unsubscribeTrades(request: UnsubscribeTradesRequest): Promise<void> {
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    await this.connection.unsubscribe(
+    return this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_TRADES,
       request.InstrumentId,
       null,
@@ -189,26 +154,16 @@ export class SubscriptionService {
     );
   }
 
-  async subscribeTicker(
+  /**
+   * https://apidoc.notbank.exchange/#subscribeticker
+   */
+  subscribeTicker(
     request: SubscribeTickerRequest,
     snapshotHandler: (tickers: Ticker[]) => void,
     updateHandler: (tickers: Ticker[]) => void
   ): Promise<void> {
-    if (!request.InstrumentId) {
-      throw new Error("InstrumentId is required for subscribing from ticker.");
-    }
-    if (!request.Interval) {
-      throw new Error("Interval is required for subscribing from ticker.");
-    }
-    if (!request.IncludeLastCount) {
-      throw new Error(
-        "IncludeLastCount is required for subscribing from ticker."
-      );
-    }
-
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    return await this.connection.subscribe(
+    return this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_TICKER,
       request.InstrumentId || null,
       null,
@@ -224,20 +179,11 @@ export class SubscriptionService {
   }
 
   /**
-   * Desuscribe del feed de datos de mercado de un ticker específico.
-   * @param request Parámetros de la desuscripción.
-   * @returns Respuesta de la desuscripción.
+   * https://apidoc.notbank.exchange/#unsubscribeticker
    */
-  async unsubscribeTicker(request: UnsubscribeTickerRequest): Promise<void> {
-    if (!request.InstrumentId) {
-      throw new Error(
-        "InstrumentId is required for unsubscribing from ticker."
-      );
-    }
-
+  unsubscribeTicker(request: UnsubscribeTickerRequest): Promise<void> {
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    await this.connection.unsubscribe(
+    return this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_TICKER,
       request.InstrumentId || null,
       null,
@@ -246,7 +192,10 @@ export class SubscriptionService {
     );
   }
 
-  async subscribeAccountEvents(
+  /**
+   * https://apidoc.notbank.exchange/#subscribeaccountevents
+   */
+  subscribeAccountEvents(
     request: SubscribeAccountEventsRequest,
     eventHandlers: {
       withdrawTicketUpdateEventHandler?: (event: WithdrawTicket) => void;
@@ -260,14 +209,8 @@ export class SubscriptionService {
       transactionEventHandler?: (event: Transaction) => void;
     }
   ): Promise<void> {
-    if (!request.AccountId)
-      throw new Error(
-        "AccountId is required for subscribing to account events."
-      );
-
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    return await this.connection.subscribe(
+    return this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_ACCOUNT_EVENTS,
       request.AccountId,
       null,
@@ -314,22 +257,13 @@ export class SubscriptionService {
   }
 
   /**
-   * Desuscribe de eventos de cuenta para un instrumento específico.
-   * @param request Parámetros de la desuscripción.
-   * @returns Respuesta de la desuscripción.
+   * https://apidoc.notbank.exchange/#unsubscribeaccountevents
    */
   async unsubscribeAccountEvents(
     request: UnsubscribeAccountEventsRequest
   ): Promise<void> {
-    if (!request.AccountId) {
-      throw new Error(
-        "AccountId is required for unsubscribing from account events."
-      );
-    }
-
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    await this.connection.unsubscribe(
+    return this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_ACCOUNT_EVENTS,
       request.AccountId,
       null,
@@ -348,19 +282,15 @@ export class SubscriptionService {
     );
   }
 
-  async subscribeOrderStateEvents(
+  /**
+   * https://apidoc.notbank.exchange/#subscribeorderstateevents
+   */
+  subscribeOrderStateEvents(
     request: SubscribeOrderStateEventsRequest,
     subscriptionHandler: (event: Order) => void
   ): Promise<void> {
-    if (!request.AccountId) {
-      throw new Error(
-        "AccountId is required for subscribing to order state events."
-      );
-    }
-
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    return await this.connection.subscribe(
+    return this.connection.subscribe(
       WebSocketEndpoint.SUBSCRIBE_ORDER_STATE_EVENTS,
       request.AccountId,
       request.InstrumentId || null,
@@ -375,22 +305,13 @@ export class SubscriptionService {
   }
 
   /**
-   * Desuscribe de eventos de estado de órdenes para una cuenta específica.
-   * @param request Parámetros de la desuscripción.
-   * @returns Respuesta de la desuscripción.
+   * https://apidoc.notbank.exchange/#unsubscribeorderstateevents
    */
-  async unsubscribeOrderStateEvents(
+  unsubscribeOrderStateEvents(
     request: UnsubscribeOrderStateEventsRequest
   ): Promise<void> {
-    if (!request.AccountId) {
-      throw new Error(
-        "AccountId is required for unsubscribing from order state events."
-      );
-    }
-
     const requestWithOMSId = completeParams(request, this.OMS_ID);
-
-    await this.connection.unsubscribe(
+    return this.connection.unsubscribe(
       WebSocketEndpoint.UNSUBSCRIBE_ORDER_STATE_EVENTS,
       request.AccountId,
       request.InstrumentId || null,

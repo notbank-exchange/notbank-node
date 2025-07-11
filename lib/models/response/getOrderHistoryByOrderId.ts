@@ -1,10 +1,10 @@
-import { ChangeReason } from "../common/changeReason";
-import { OrderState } from "../common/orderState";
-import { OrderTypeInt } from "../common/orderType";
+import { ChangeReason } from "../enums/changeReason";
+import { OrderState } from "../enums/orderState";
+import { OrderTypeInt } from "../enums/orderType";
 import { OrderFlag } from "../enums/orderFlag";
 import { TradeSide } from "../enums/tradeSide";
 
-export interface GetOrderHistoryByOrderIdResponse {
+export interface OrderSummary {
   Side: TradeSide; // Lado de la orden (Buy, Sell, etc.)
   OrderId: number; // ID de la orden
   Price: number; // Precio al que se colocó la orden

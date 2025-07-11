@@ -15,7 +15,7 @@ describe("http user service", () => {
   })
 
   describe("get product", () => {
-    it.only("fetches product details successfully", async function () {
+    it("fetches product details successfully", async function () {
       const response = await service.getProduct({
         ProductId: 1,
       });

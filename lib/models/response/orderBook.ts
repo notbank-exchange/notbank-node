@@ -1,10 +1,24 @@
-export interface OrderBookResponse {
-  timestamp: number; // Unix timestamp (in milliseconds).
-  bids: number[][]; // Array of [quantity, price] for buy orders.
-  asks: number[][]; // Array of [quantity, price] for sell orders.
+export interface OrderBookRaw {
+  timestamp: number;
+  bids: number[][];
+  asks: number[][];
 }
 
 export interface Level {
   quantity: number
   price: number
+}
+
+export interface OrderBook {
+  timestamp: number;
+  bids: Level[];
+  asks: Level[];
+}
+
+export function orderbookFromRaw(raw: OrderBookRaw): OrderBook {
+  return {
+    timestamp: raw.timestamp,
+    bids: raw.bids.map(level => { return { quantity: level[0], price: level[1] } }),
+    asks: raw.asks.map(level => { return { quantity: level[0], price: level[1] } })
+  }
 }

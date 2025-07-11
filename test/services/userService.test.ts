@@ -1,17 +1,13 @@
 import assert from "assert";
 import "mocha";
 
-import { HttpServiceFactory } from "../../lib/services/httpServiceFactory";
-import { WebsocketServiceFactory } from "../../lib/services/websocketServicesFactory";
 import { GetUserAccountsRequest } from "../../lib/models/request/getUserAccounts";
-import { GetUserAccountsResponse } from "../../lib/models/response/getUserAccounts";
 import { GetUserDevicesRequest } from "../../lib/models/request/getUserDevices";
-import { GetUserDevicesResponse } from "../../lib/models/response/getUserDevices";
-import { GetUserPermissionsRequest } from "../../lib/models/request/getUserPermissions";
-import { GetUserPermissionsResponse } from "../../lib/models/response/getUserPermissions";
 import { GetUserInfoRequest } from "../../lib/models/request/getUserInfo";
-import { GetUserInfoResponse } from "../../lib/models/response/getUserInfo";
+import { GetUserPermissionsRequest } from "../../lib/models/request/getUserPermissions";
+import { HttpServiceFactory } from "../../lib/services/httpServiceFactory";
 import { NotbankClient } from "../../lib/services/notbankClient";
+import { WebsocketServiceFactory } from "../../lib/services/websocketServicesFactory";
 
 describe("http user service 1", () => {
   const client = NotbankClient.Factory.createRestClient();
@@ -52,8 +48,7 @@ describe("http user service 2", () => {
         UserId: 9,
       };
 
-      const response: GetUserAccountsResponse =
-        await userService.getUserAccounts(params);
+      const response = await userService.getUserAccounts(params);
 
       console.log("Response for GetUserAccounts:", response);
 
@@ -76,8 +71,7 @@ describe("http user service 2", () => {
       const params: GetUserAccountsRequest = {
       };
 
-      const response: GetUserAccountsResponse =
-        await userService.getUserAccounts(params);
+      const response = await userService.getUserAccounts(params);
 
       console.log("Response for GetUserAccounts:", response);
 
@@ -123,8 +117,7 @@ describe("http user service 2", () => {
         UserId: 6,
       };
 
-      const response: GetUserDevicesResponse =
-        await userService.getUserDevices(params);
+      const response = await userService.getUserDevices(params);
 
       console.log("Response for GetUserDevices:", response);
 
@@ -170,8 +163,7 @@ describe("http user service 2", () => {
     });
 
     it("should handle missing parameters", async function () {
-      const response: GetUserDevicesResponse =
-        await userService.getUserDevices({});
+      const response = await userService.getUserDevices({});
 
       console.log("Response for GetUserDevices without params:", response);
 
@@ -237,8 +229,7 @@ describe("http user service 2", () => {
   describe("getUserInfo", () => {
     it("should return user info for a valid UserId", async function () {
       const params: GetUserInfoRequest = { UserId: 64 };
-
-      const response: GetUserInfoResponse = await userService.getUserInfo(params);
+      const response = await userService.getUserInfo(params);
       console.log("Response for getUserInfo:", response);
 
       assert.strictEqual(typeof response.UserId, "number", "UserId should be a number");
@@ -249,7 +240,7 @@ describe("http user service 2", () => {
     });
 
     it("should allow call without UserId (use default from session)", async function () {
-      const response: GetUserInfoResponse = await userService.getUserInfo({});
+      const response = await userService.getUserInfo({});
       console.log("Response for getUserInfo without UserId:", response);
 
       assert.strictEqual(typeof response.UserId, "number", "UserId should be a number");
@@ -271,7 +262,7 @@ describe("http user service 2", () => {
     it("should return permissions for a valid UserId", async function () {
       const params: GetUserPermissionsRequest = { UserId: 64 };
 
-      const response: GetUserPermissionsResponse = await userService.getUserPermissions(params);
+      const response = await userService.getUserPermissions(params);
       console.log("Response for getUserPermissions:", response);
 
       assert.ok(Array.isArray(response), "Permissions response should be an array");

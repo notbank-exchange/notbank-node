@@ -1,8 +1,8 @@
-import { VerificationLevelProductConfig } from "../enums/verificationLevelProductConfig";
+import { ProductLimits } from "../enums/verificationLevelProductConfig";
 
-export interface GetVerificationLevelConfigResponse {
+export interface VerificationLevelConfig {
   Level: number; // The verification level number
   LevelName: string | null; // The name of the verification level
   OMSId: number; // The ID of the OMS
-  Products: VerificationLevelProductConfig[]; // Array of product-specific configs
+  Products: ProductLimits[]; // Array of product-specific configs
 }

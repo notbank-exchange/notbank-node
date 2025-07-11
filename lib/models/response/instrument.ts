@@ -1,6 +1,6 @@
 import { SessionStatus } from "../enums/sessionStatus";
 
-export interface InstrumentResponse {
+export interface Instrument {
   OMSId: number;
   InstrumentId: number;
   Symbol: string;

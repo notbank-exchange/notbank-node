@@ -5,7 +5,7 @@ export interface EnumValue {
   Number: number; // Numeric value of the enum
 }
 
-export interface GetEnumsResponse {
+export interface EnumsResponse {
   Class: string; // The class name
   Property: string; // The property name
   Enums: EnumValue[]; // The array of enum values

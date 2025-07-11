@@ -1,4 +1,4 @@
-export interface TickerItem {
+export interface Ticker {
   base_id: number;
   quote_id: number;
   last_price: number;
@@ -6,6 +6,6 @@ export interface TickerItem {
   quote_volume: number;
 }
 
-export interface TickerResponse {
-  [pairName: string]: TickerItem;
+export interface Tickers {
+  [pairName: string]: Ticker;
 }

@@ -1,8 +1,8 @@
-import { IndexTrade } from "../models/enums/indexTrade";
+import { TradeSummary } from "../models/enums/indexTrade";
 
-export function parseIndexTrade(
+export function parseTradeSummary(
   jsonTrade: number[] | { [key: number]: number }
-): IndexTrade {
+): TradeSummary {
   return {
     TradeId: jsonTrade[0],
     InstrumentId: jsonTrade[1],

@@ -1,4 +1,4 @@
-export interface GetOMSWithdrawFeesResponse {
+export interface OMSWithdrawFee {
   OMSId: number; // ID of the OMS
   AccountId: number; // ID of the account
   AccountProviderId: number; // ID of the account provider

@@ -1,4 +1,4 @@
-export interface InstrumentVerificationLevelConfig {
+export interface InstrumentLimits {
   VerificationLevel: number; // The verification level number
   VerificationLevelName: string | null; // The name of the verification level
   OMSId: number; // The ID of the OMS

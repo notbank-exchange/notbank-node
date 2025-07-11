@@ -1,3 +1,3 @@
-import { TradesResponse } from "./trades";
+import { Trade } from "./trades";
 
-export type SubscribeTradesResponse = TradesResponse[];
+export type SubscribeTradesResponse = Trade[];

@@ -1,4 +1,4 @@
-import { OrderState } from "../common/orderState";
+import { OrderState } from "../enums/orderState";
 
 export interface GetOrdersHistoryRequest {
   AccountId: number; // ID de cuenta

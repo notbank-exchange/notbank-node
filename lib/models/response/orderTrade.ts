@@ -1,5 +1,5 @@
-import { MakerTaker } from "../common/makerTaker";
-import { OrderTypeInt } from "../common/orderType";
+import { MakerTaker } from "../enums/makerTaker";
+import { OrderTypeInt } from "../enums/orderType";
 import { TradeDirection } from "../enums/tradeDirection";
 import { TradeSide } from "../enums/tradeSide";
 

@@ -9,10 +9,10 @@ export class ApResponseHandler {
     if (response.status >= 400 || response.status < 200) {
       throw new Error(
         `http error (${response.status
-        }) not a successfull response. ${response.text()}`
+        }) not a successfull response. ${await ApResponseHandler.#getTextData(response)}`
       );
     }
-    var jsonResponse = await ApResponseHandler.#getData(response)
+    var jsonResponse = await ApResponseHandler.#getJsonData(response)
     if (!jsonResponse) {
       throw new NotbankError("http error. (status=" + response.status + ")", -1)
     }
@@ -26,9 +26,17 @@ export class ApResponseHandler {
     return jsonResponse as T;
   }
 
-  static async #getData(response: Response): Promise<any> {
+  static async #getJsonData(response: Response): Promise<any> {
     try {
       return await response.json();
+    } catch (err) {
+      return null;
+    }
+  }
+
+  static async #getTextData(response: Response): Promise<any> {
+    try {
+      return await response.text();
     } catch (err) {
       return null;
     }

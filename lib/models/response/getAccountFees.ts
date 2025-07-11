@@ -1,6 +1,6 @@
 import { OrderTypeStr } from "../common";
 
-export interface GetAccountFeesResponse {
+export interface AccountFee {
   FeeId: number;
   OMSId: number;
   FeeTier: number;
