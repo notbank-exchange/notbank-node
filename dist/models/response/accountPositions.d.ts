@@ -1,4 +1,4 @@
-export interface AccountPositions {
+export interface AccountPosition {
     OMSId: number;
     AccountId: number;
     ProductSymbol: string;

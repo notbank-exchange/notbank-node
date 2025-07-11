@@ -7,98 +7,89 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _TradingService_serviceCore;
 import { Endpoint } from "../constants/endpoints.js";
 import { RequestType } from "../core/serviceClient.js";
-import { OrderTypeInt } from "../models/common/orderType.js";
+import { orderbookFromRaw } from "../models/response/orderBook.js";
 import { completeParams } from "../utils/completeParams.js";
 import { completeParamsArray } from "../utils/completeParamsArray.js";
-import { parseIndexTrade } from "../utils/parseIndexTrade.js";
+import { parseTradeSummary } from "../utils/parseIndexTrade.js";
 export class TradingService {
-    constructor(serviceCore) {
-        _TradingService_serviceCore.set(this, void 0);
+    constructor(connection) {
         this.OMS_ID = 1;
-        __classPrivateFieldSet(this, _TradingService_serviceCore, serviceCore, "f");
+        this.connection = connection;
     }
+    /**
+     * https://apidoc.notbank.exchange/#sendorderlist
+     */
     sendOrderList(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-            return yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.SEND_ORDER_LIST, RequestType.POST, paramsWithOMSId);
-        });
+        const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.SEND_ORDER_LIST, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#sendcancellist
+     */
     sendCancelList(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-            return yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.SEND_CANCEL_LIST, RequestType.POST, paramsWithOMSId);
-        });
+        const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.SEND_CANCEL_LIST, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#sendcancelreplacelist
+     */
     sendCancelReplaceList(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
-            return yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.SEND_CANCEL_REPLACE_LIST, RequestType.POST, paramsWithOMSId);
-        });
+        const paramsWithOMSId = completeParamsArray(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.SEND_CANCEL_REPLACE_LIST, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#modifyorder
+     */
     modifyOrder(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!request.OrderId ||
-                !request.InstrumentId ||
-                !request.Quantity ||
-                !request.AccountId) {
-                throw new Error("All fields are required for modifying an order.");
-            }
-            const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            return yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.MODIFY_ORDER, RequestType.POST, paramsWithOMSId);
-        });
+        const paramsWithOMSId = completeParams(request, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.MODIFY_ORDER, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#cancelallorders
+     */
     cancelAllOrders(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.CANCEL_ALL_ORDERS, RequestType.POST, paramsWithOMSId);
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.CANCEL_ALL_ORDERS, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getorderstatus
+     */
     getOrderStatus(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!params.AccountId && !params.OrderId) {
-                throw new Error("Either AccountId or OrderId is required.");
-            }
             const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            const response = yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_ORDER_STATUS, RequestType.POST, paramsWithOMSId);
-            return response;
+            return this.connection.apRequest(Endpoint.GET_ORDER_STATUS, RequestType.POST, paramsWithOMSId);
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getordershistory
+     */
     getOrdersHistory(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_ORDERS_HISTORY, RequestType.POST, paramsWithOMSId));
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_ORDERS_HISTORY, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#gettradeshistory
+     */
     getTradesHistory(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_TRADES_HISTORY, RequestType.POST, paramsWithOMSId));
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_TRADES_HISTORY, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getorderhistorybyorderid
+     */
     getOrderHistoryByOrderId(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_ORDER_HISTORY_BY_ORDER_ID, RequestType.POST, paramsWithOMSId));
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_ORDER_HISTORY_BY_ORDER_ID, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#gettickerhistory
+     */
     getTickerHistory(params) {
         return __awaiter(this, void 0, void 0, function* () {
             const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_TICKER_HISTORY, RequestType.POST, paramsWithOMSId));
+            const response = (yield this.connection.apRequest(Endpoint.GET_TICKER_HISTORY, RequestType.POST, paramsWithOMSId));
             return response.map((item) => ({
                 EndDateTime: item[0], // Fecha/hora de cierre en POSIX
                 High: item[1], // Precio máximo
@@ -113,30 +104,33 @@ export class TradingService {
             }));
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getlasttrades
+     */
     getLastTrades(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Validate required fields
-            if (!request.InstrumentId)
-                throw new Error("InstrumentId is required for getting last trades.");
             const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_LAST_TRADES, RequestType.POST, paramsWithOMSId));
-            return response.map((item) => parseIndexTrade(item));
+            const response = (yield this.connection.apRequest(Endpoint.GET_LAST_TRADES, RequestType.POST, paramsWithOMSId));
+            return response.map((item) => parseTradeSummary(item));
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getlevel1summary
+     */
     getLevel1Summary(request) {
         return __awaiter(this, void 0, void 0, function* () {
             const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_LEVEL1_SUMMARY, RequestType.POST, paramsWithOMSId));
-            return response.map((data) => JSON.parse(data));
+            return this.connection.apRequest(Endpoint.GET_LEVEL1_SUMMARY, RequestType.POST, paramsWithOMSId);
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getlevel1summarymin
+     */
     getLevel1SummaryMin(request) {
         return __awaiter(this, void 0, void 0, function* () {
             const paramsWithOMSId = completeParams(request, this.OMS_ID);
             // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_LEVEL1_SUMMARY_MIN, RequestType.POST, paramsWithOMSId));
+            const response = (yield this.connection.apRequest(Endpoint.GET_LEVEL1_SUMMARY_MIN, RequestType.POST, paramsWithOMSId));
             return response.map((data) => ({
                 InstrumentId: data[0],
                 InstrumentSymbol: data[1].toString(),
@@ -147,130 +141,101 @@ export class TradingService {
             }));
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getopentradereports
+     */
     getOpenTradeReports(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Validate required fields
-            if (!request.AccountId) {
-                throw new Error("AccountId is required for retrieving open trade reports.");
-            }
-            const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_OPEN_TRADE_REPORTS, RequestType.POST, paramsWithOMSId));
-            return response;
-        });
+        const paramsWithOMSId = completeParams(request, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_OPEN_TRADE_REPORTS, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getorders
+     */
     getOrders(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Validate required fields
-            if (!request.AccountId) {
-                throw new Error("AccountId is required for retrieving orders.");
-            }
-            const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_ORDERS, RequestType.POST, paramsWithOMSId));
-            return response;
-        });
+        const paramsWithOMSId = completeParams(request, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_ORDERS, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getorderhistory
+     */
     getOrderHistory(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Validate required fields
-            if (!request.AccountId) {
-                throw new Error("AccountId is required for retrieving order history.");
-            }
-            const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_ORDER_HISTORY, RequestType.POST, paramsWithOMSId));
-            return response;
-        });
+        const paramsWithOMSId = completeParams(request, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_ORDER_HISTORY, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#sendorder
+     */
     sendOrder(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (request.InstrumentId == null ||
-                request.AccountId == null ||
-                request.TimeInForce == null ||
-                request.Side == null ||
-                request.OrderType == null) {
-                throw new Error("InstrumentId, AccountId, TimeInForce, Side, and OrderType are required");
-            }
-            if (request.OrderType === OrderTypeInt.Limit && request.LimitPrice == null) {
-                throw new Error("LimitPrice is required for Limit Orders");
-            }
-            if (request.UseDisplayQuantity &&
-                (request.DisplayQuantity == null || request.DisplayQuantity <= 0)) {
-                throw new Error("DisplayQuantity must be greater than 0 when UseDisplayQuantity is true");
-            }
             const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            const response = yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.SEND_ORDER, RequestType.POST, paramsWithOMSId);
-            return response;
+            return this.connection.apRequest(Endpoint.SEND_ORDER, RequestType.POST, paramsWithOMSId);
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#cancelreplaceorder
+     */
     cancelReplaceOrder(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.CANCEL_REPLACE_ORDER, RequestType.POST, paramsWithOMSId));
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.CANCEL_REPLACE_ORDER, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#cancelorder
+     */
     cancelOrder(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.CANCEL_ORDER, RequestType.POST, paramsWithOMSId);
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.CANCEL_ORDER, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getopenorders
+     */
     getOpenOrders(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!params.AccountId) {
-                throw new Error("getOpenOrders requires AccountId.");
-            }
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            const response = yield this["#serviceCore"].request(Endpoint.GET_OPEN_ORDERS, RequestType.POST, paramsWithOMSId);
-            return response;
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_OPEN_ORDERS, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getaccounttrades
+     */
     getAccountTrades(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_ACCOUNT_TRADES, RequestType.POST, paramsWithOMSId));
-            return response;
-        });
+        const paramsWithOMSId = completeParams(request, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_ACCOUNT_TRADES, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#summary
+     */
     getSummary() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.SUMMARY, RequestType.POST));
-            return response;
-        });
+        return this.connection.apRequest(Endpoint.SUMMARY, RequestType.POST);
     }
+    /**
+     * https://apidoc.notbank.exchange/#ticker
+     */
     getTicker() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.TICKER, RequestType.POST));
-            return response;
-        });
+        return this.connection.apRequest(Endpoint.TICKER, RequestType.POST);
     }
+    /**
+     * https://apidoc.notbank.exchange/#orderbook
+     */
     getOrderBook(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!request.Market_Pair) {
-                throw new Error("Market_Pair is required.");
-            }
-            const response = yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.ORDER_BOOK, RequestType.POST, request);
-            return response;
+            const orderbookRaw = yield this.connection.apRequest(Endpoint.ORDER_BOOK, RequestType.POST, request);
+            return orderbookFromRaw(orderbookRaw);
         });
     }
+    getOrderBookRaw(request) {
+        return this.connection.apRequest(Endpoint.ORDER_BOOK, RequestType.POST, request);
+    }
+    /**
+     * https://apidoc.notbank.exchange/#trades
+     */
     getTrades(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.TRADES, RequestType.POST, params));
-            return response;
-        });
+        return this.connection.apRequest(Endpoint.TRADES, RequestType.POST, params);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getl2snapshot
+     */
     getL2Snapshot(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Validate required fields
-            if (!request.InstrumentId)
-                throw new Error("InstrumentId is required for retrieving Level 2 snapshot.");
-            if (request.Depth <= 0)
-                throw new Error("Depth must be greater than 0.");
             const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_L2_SNAPSHOT, RequestType.POST, paramsWithOMSId));
+            const response = (yield this.connection.apRequest(Endpoint.GET_L2_SNAPSHOT, RequestType.POST, paramsWithOMSId));
             return response.map((snapshot) => ({
                 MDUpdateID: snapshot[0],
                 NumberOfUniqueAccounts: snapshot[1],
@@ -285,23 +250,17 @@ export class TradingService {
             }));
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getlevel1
+     */
     getLevel1(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Validate required fields
-            if (!request.InstrumentId)
-                throw new Error("InstrumentId is required for retrieving Level 1 snapshot.");
-            const paramsWithOMSId = completeParams(request, this.OMS_ID);
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_LEVEL1, RequestType.POST, paramsWithOMSId));
-            return response;
-        });
+        const paramsWithOMSId = completeParams(request, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_LEVEL1, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getenums
+     */
     getEnums() {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Make the HTTP request
-            const response = (yield __classPrivateFieldGet(this, _TradingService_serviceCore, "f").request(Endpoint.GET_ENUMS, RequestType.POST));
-            return response;
-        });
+        return this.connection.apRequest(Endpoint.GET_ENUMS, RequestType.POST);
     }
 }
-_TradingService_serviceCore = new WeakMap();

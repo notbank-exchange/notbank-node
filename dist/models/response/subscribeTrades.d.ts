@@ -1,2 +1,2 @@
-import { TradesResponse } from "./trades.js";
-export type SubscribeTradesResponse = TradesResponse[];
+import { Trade } from "./trades.js";
+export type SubscribeTradesResponse = Trade[];

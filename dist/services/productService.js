@@ -7,47 +7,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _ProductService_serviceCore;
 import { Endpoint } from "../constants/endpoints.js";
 import { RequestType } from "../core/serviceClient.js";
 import { completeParams } from "../utils/completeParams.js";
 export class ProductService {
-    constructor(serviceCore) {
-        _ProductService_serviceCore.set(this, void 0);
+    constructor(connection) {
         this.OMS_ID = 1;
-        __classPrivateFieldSet(this, _ProductService_serviceCore, serviceCore, "f");
+        this.connection = connection;
     }
+    /**
+     * https://apidoc.notbank.exchange/#getproduct
+     */
     getProduct(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            const response = (yield __classPrivateFieldGet(this, _ProductService_serviceCore, "f").request(Endpoint.GET_PRODUCT, RequestType.POST, paramsWithOMSId));
-            return response;
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_PRODUCT, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getproducts
+     */
     getProducts(params) {
         return __awaiter(this, void 0, void 0, function* () {
             const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return (yield __classPrivateFieldGet(this, _ProductService_serviceCore, "f").request(Endpoint.GET_PRODUCTS, RequestType.POST, paramsWithOMSId));
+            return this.connection.apRequest(Endpoint.GET_PRODUCTS, RequestType.POST, paramsWithOMSId);
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getverificationlevelconfig
+     */
     getVerificationLevelConfig(params) {
         return __awaiter(this, void 0, void 0, function* () {
             const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            // Call the service endpoint
-            const response = yield __classPrivateFieldGet(this, _ProductService_serviceCore, "f").request(Endpoint.GET_VERIFICATION_LEVEL_CONFIG, RequestType.POST, paramsWithOMSId);
-            return response;
+            return yield this.connection.apRequest(Endpoint.GET_VERIFICATION_LEVEL_CONFIG, RequestType.POST, paramsWithOMSId);
         });
     }
 }
-_ProductService_serviceCore = new WeakMap();

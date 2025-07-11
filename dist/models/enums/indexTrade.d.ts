@@ -1,4 +1,4 @@
-export interface IndexTrade {
+export interface TradeSummary {
     TradeId: number;
     InstrumentId: number;
     Quantity: number;

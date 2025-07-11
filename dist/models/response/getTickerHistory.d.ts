@@ -1,4 +1,4 @@
-export interface GetTickerHistoryResponse {
+export interface TickerSummary {
     EndDateTime: number;
     High: number;
     Low: number;

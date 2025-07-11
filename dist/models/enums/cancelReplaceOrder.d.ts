@@ -1,5 +1,5 @@
-import { OrderSide } from "../common/orderSide.js";
-import { OrderTypeInt } from "../common/orderType.js";
+import { OrderSide } from "./orderSide.js";
+import { OrderTypeInt } from "./orderType.js";
 import { PegPriceType } from "./pegPriceType.js";
 import { TimeInForce } from "./timeInForce.js";
 export interface CancelReplaceOrder {

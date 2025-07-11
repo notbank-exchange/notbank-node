@@ -1,7 +1,7 @@
 import { TransactionReferenceTypes } from "../enums/transactionReferenceTypes.js";
 import { TransactionTypes } from "../enums/transactionTypes.js";
 export interface GetAccountTransactionsRequest {
-    AccountId?: number;
+    AccountId: number;
     Depth?: number;
     ProductId?: number;
     TransactionId?: number;

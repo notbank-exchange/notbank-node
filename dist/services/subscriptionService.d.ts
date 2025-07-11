@@ -1,8 +1,8 @@
-import { ServiceClient } from "../core/serviceClient.js";
+import { ServiceConnection } from "../core/serviceClient.js";
 import { CancelOrderRejectEvent, DepositEvent } from "../models/enums/accountEvent.js";
-import { IndexTrade } from "../models/enums/indexTrade.js";
+import { TradeSummary } from "../models/enums/indexTrade.js";
 import { Level2Ticker } from "../models/enums/level2Item.js";
-import { Ticker } from "../models/enums/ticker.js";
+import { TickerFeed } from "../models/enums/ticker.js";
 import { SubscribeAccountEventsRequest } from "../models/request/subscribeAccountEvents.js";
 import { SubscribeLevel1Request } from "../models/request/subscribeLevel1.js";
 import { SubscribeLevel2Request } from "../models/request/subscribeLevel2.js";
@@ -16,7 +16,7 @@ import { UnsubscribeOrderStateEventsRequest } from "../models/request/unsubscrib
 import { UnsubscribeTickerRequest } from "../models/request/unsubscribeTicker.js";
 import { UnsubscribeTradesRequest } from "../models/request/unsubscribeTrades.js";
 import { AccountInfo } from "../models/response/accountInfo.js";
-import { AccountPositions } from "../models/response/accountPositions.js";
+import { AccountPosition } from "../models/response/accountPositions.js";
 import { DepositTicket } from "../models/response/depositTicket.js";
 import { Order } from "../models/response/order.js";
 import { OrderTrade } from "../models/response/orderTrade.js";
@@ -24,62 +24,65 @@ import { Level1Ticker } from "../models/response/subscribeLevel1.js";
 import { Transaction } from "../models/response/transaction.js";
 import { WithdrawTicket } from "../models/response/withdrawTicket.js";
 export declare class SubscriptionService {
-    #private;
+    connection: ServiceConnection;
     private readonly OMS_ID;
-    constructor(serviceCore: ServiceClient);
+    constructor(connection: ServiceConnection);
+    /**
+     * https://apidoc.notbank.exchange/#subscribelevel1
+     */
     subscribeLevel1(request: SubscribeLevel1Request, snapshotHandler: (ticker: Level1Ticker) => void, updateHandler: (ticker: Level1Ticker) => void): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#unsubscribelevel1
+     */
     unsubscribeLevel1(request: UnsubscribeLevel1Request): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#subscribelevel2
+     */
     subscribeLevel2(request: SubscribeLevel2Request, snapshotHandler: (ticker: Level2Ticker) => void, updateHandler: (ticker: Level2Ticker) => void): Promise<void>;
     /**
-     * This TypeScript function unsubscribes from Level2 data using WebSocket communication.
-     * @param {UnsubscribeLevel2Request} request - The `unsubscribeLevel2` function takes a
-     * `UnsubscribeLevel2Request` object as a parameter. This object should contain the following
-     * properties:
-     * @returns The `unsubscribeLevel2` method is returning a Promise that resolves to a
-     * `void` object.
+     * https://apidoc.notbank.exchange/#unsubscribelevel2
      */
     unsubscribeLevel2(request: UnsubscribeLevel2Request): Promise<void>;
     /**
-     * Suscribe a eventos de trades para un instrumento específico.
-     * @param request Parámetros de la suscripción.
-     * @param eventHandlers Manejadores de eventos para procesar los trades.
+     * https://apidoc.notbank.exchange/#subscribetrades
      */
-    subscribeTrades(request: SubscribeTradesRequest, subcriptionHandler: (trade: IndexTrade) => void): Promise<void>;
+    subscribeTrades(request: SubscribeTradesRequest, subcriptionHandler: (trade: TradeSummary) => void): Promise<void>;
     /**
-     * Desuscribe de eventos de trades para un instrumento específico.
-     * @param request Parámetros de la desuscripción.
-     * @returns Respuesta de la desuscripción.
+     * https://apidoc.notbank.exchange/#unsubscribetrades
      */
     unsubscribeTrades(request: UnsubscribeTradesRequest): Promise<void>;
-    subscribeTicker(request: SubscribeTickerRequest, snapshotHandler: (tickers: Ticker[]) => void, updateHandler: (tickers: Ticker[]) => void): Promise<void>;
     /**
-     * Desuscribe del feed de datos de mercado de un ticker específico.
-     * @param request Parámetros de la desuscripción.
-     * @returns Respuesta de la desuscripción.
+     * https://apidoc.notbank.exchange/#subscribeticker
+     */
+    subscribeTicker(request: SubscribeTickerRequest, snapshotHandler: (tickers: TickerFeed[]) => void, updateHandler: (tickers: TickerFeed[]) => void): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#unsubscribeticker
      */
     unsubscribeTicker(request: UnsubscribeTickerRequest): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#subscribeaccountevents
+     */
     subscribeAccountEvents(request: SubscribeAccountEventsRequest, eventHandlers: {
         withdrawTicketUpdateEventHandler?: (event: WithdrawTicket) => void;
         orderTradeEventHandler?: (event: OrderTrade) => void;
         orderStateEventHandler?: (event: Order) => void;
         depositTicketUpdateEventHandler?: (event: DepositTicket) => void;
-        accountPositionEventHandler?: (event: AccountPositions) => void;
+        accountPositionEventHandler?: (event: AccountPosition) => void;
         accountInfoUpdateEventHandler?: (event: AccountInfo) => void;
         cancelOrderRejectEventHandler?: (event: CancelOrderRejectEvent) => void;
         depositEventHandler?: (event: DepositEvent) => void;
         transactionEventHandler?: (event: Transaction) => void;
     }): Promise<void>;
     /**
-     * Desuscribe de eventos de cuenta para un instrumento específico.
-     * @param request Parámetros de la desuscripción.
-     * @returns Respuesta de la desuscripción.
+     * https://apidoc.notbank.exchange/#unsubscribeaccountevents
      */
     unsubscribeAccountEvents(request: UnsubscribeAccountEventsRequest): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#subscribeorderstateevents
+     */
     subscribeOrderStateEvents(request: SubscribeOrderStateEventsRequest, subscriptionHandler: (event: Order) => void): Promise<void>;
     /**
-     * Desuscribe de eventos de estado de órdenes para una cuenta específica.
-     * @param request Parámetros de la desuscripción.
-     * @returns Respuesta de la desuscripción.
+     * https://apidoc.notbank.exchange/#unsubscribeorderstateevents
      */
     unsubscribeOrderStateEvents(request: UnsubscribeOrderStateEventsRequest): Promise<void>;
 }

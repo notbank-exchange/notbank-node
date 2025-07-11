@@ -1,5 +1,5 @@
-import { MakerTaker } from "../common/makerTaker.js";
-import { OrderTypeInt } from "../common/orderType.js";
+import { MakerTaker } from "../enums/makerTaker.js";
+import { OrderTypeInt } from "../enums/orderType.js";
 import { TradeDirection } from "../enums/tradeDirection.js";
 import { TradeSide } from "../enums/tradeSide.js";
 export interface OrderTrade {

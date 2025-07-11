@@ -1,4 +1,4 @@
-export type Ticker = [
+export type TickerFeed = [
     EndDateTime: number,
     High: number,
     Low: number,

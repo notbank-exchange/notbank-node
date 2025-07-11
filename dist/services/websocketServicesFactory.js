@@ -18,54 +18,56 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _WebsocketServiceFactory_websocketClient;
-import { WebsocketClient } from "../core/websocket/websocketClient.js";
+var _WebsocketServiceFactory_websocketConnection, _WebsocketServiceFactory_subcriptionService;
+import { getNonce, sign } from "../core/hmac.js";
+import { WebsocketConnection } from "../core/websocket/websocketClient.js";
 import { AccountService } from "./accountService.js";
 import { AuthService } from "./authService.js";
 import { FeeService } from "./feeService.js";
 import { InstrumentService } from "./instrumentService.js";
 import { ProductService } from "./productService.js";
 import { ReportService } from "./reportService.js";
+import { SubscriptionService } from "./subscriptionService.js";
 import { SystemService } from "./systemService.js";
 import { TradingService } from "./tradingService.js";
 import { UserService } from "./userService.js";
-import { getNonce, sign } from "../core/hmac.js";
-import { SubscriptionService } from "./subscriptionService.js";
+import { WalletService } from "./walletService.js";
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 export class WebsocketServiceFactory {
     constructor(params) {
-        _WebsocketServiceFactory_websocketClient.set(this, void 0);
+        _WebsocketServiceFactory_websocketConnection.set(this, void 0);
+        _WebsocketServiceFactory_subcriptionService.set(this, void 0);
         const finalDomain = (params === null || params === void 0 ? void 0 : params.domain) || DEFAULT_DOMAIN;
-        __classPrivateFieldSet(this, _WebsocketServiceFactory_websocketClient, new WebsocketClient({
+        __classPrivateFieldSet(this, _WebsocketServiceFactory_websocketConnection, new WebsocketConnection({
             domain: finalDomain,
             peekMessageIn: params === null || params === void 0 ? void 0 : params.peekMessageIn,
             peekMessageOut: params === null || params === void 0 ? void 0 : params.peekMessageOut
         }), "f");
     }
     connect(hooks = {}) {
-        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f").connect(hooks);
+        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f").connect(hooks);
     }
     close() {
-        __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f").close();
+        __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f").close();
     }
     get isConnecting() {
-        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f").readyState === WebSocket.CONNECTING;
+        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f").readyState === WebSocket.CONNECTING;
     }
     get isConnected() {
-        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f").readyState === WebSocket.OPEN;
+        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f").readyState === WebSocket.OPEN;
     }
     get isClosing() {
-        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f").readyState === WebSocket.CLOSING;
+        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f").readyState === WebSocket.CLOSING;
     }
     get isClosed() {
-        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f").readyState === WebSocket.CLOSED;
+        return __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f").readyState === WebSocket.CLOSED;
     }
     authenticateUser(params) {
         return __awaiter(this, void 0, void 0, function* () {
             var nonce = getNonce();
             var signature = sign(params.ApiPublicKey, params.ApiSecretKey, params.UserId, nonce);
-            yield __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f").authenticateUser({
-                ApiKey: params.ApiPublicKey,
+            yield __classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f").authenticateUser({
+                APIKey: params.ApiPublicKey,
                 Signature: signature,
                 UserId: params.UserId,
                 Nonce: nonce
@@ -73,34 +75,41 @@ export class WebsocketServiceFactory {
         });
     }
     newAccountService() {
-        return new AccountService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new AccountService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
     newAuthService() {
-        return new AuthService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new AuthService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
     newFeeService() {
-        return new FeeService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new FeeService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
     newInstrumentService() {
-        return new InstrumentService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new InstrumentService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
     newProductService() {
-        return new ProductService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new ProductService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
     newReportService() {
-        return new ReportService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new ReportService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
     newSystemService() {
-        return new SystemService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new SystemService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
-    newSubscriptionService() {
-        return new SubscriptionService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+    getSubscriptionService() {
+        if (__classPrivateFieldGet(this, _WebsocketServiceFactory_subcriptionService, "f")) {
+            return __classPrivateFieldGet(this, _WebsocketServiceFactory_subcriptionService, "f");
+        }
+        __classPrivateFieldSet(this, _WebsocketServiceFactory_subcriptionService, new SubscriptionService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f")), "f");
+        return __classPrivateFieldGet(this, _WebsocketServiceFactory_subcriptionService, "f");
     }
     newTradingService() {
-        return new TradingService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new TradingService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
     newUserService() {
-        return new UserService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketClient, "f"));
+        return new UserService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
+    }
+    newWalletService() {
+        return new WalletService(__classPrivateFieldGet(this, _WebsocketServiceFactory_websocketConnection, "f"));
     }
 }
-_WebsocketServiceFactory_websocketClient = new WeakMap();
+_WebsocketServiceFactory_websocketConnection = new WeakMap(), _WebsocketServiceFactory_subcriptionService = new WeakMap();

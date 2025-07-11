@@ -1,4 +1,4 @@
-export interface GetOrderFeeResponse {
+export interface OrderFee {
     OrderFee: number;
     ProductId: number;
 }

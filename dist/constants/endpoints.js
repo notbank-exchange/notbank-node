@@ -1,32 +1,32 @@
 export var Endpoint;
 (function (Endpoint) {
-    //Account
+    // Account
     Endpoint["GET_ACCOUNT_TRANSACTIONS"] = "GetAccountTransactions";
     Endpoint["GET_ACCOUNT_POSITIONS"] = "GetAccountPositions";
     Endpoint["GET_ACCOUNT_INSTRUMENT_STATISTICS"] = "GetAccountInstrumentStatistics";
     Endpoint["GET_ACCOUNT_SETTLEMENT_POSITIONS"] = "GetAccountSettlementPositions";
     Endpoint["GET_ACCOUNT_INFO"] = "GetAccountInfo";
-    //Authentication
+    // Authentication
     Endpoint["AUTHENTICATE"] = "Authenticate";
     Endpoint["AUTHENTICATE_USER"] = "AuthenticateUser";
     Endpoint["WEB_AUTHENTICATE_USER"] = "WebAuthenticateUser";
     Endpoint["LOGOUT"] = "LogOut";
-    //FEE
+    // FEE
     Endpoint["GET_WITHDRAW_FEE"] = "GetWithdrawFee";
     Endpoint["GET_DEPOSIT_FEE"] = "GetDepositFee";
     Endpoint["GET_OMS_WITHDRAW_FEES"] = "GetOMSWithdrawFees";
     Endpoint["GET_OMS_DEPOSIT_FEES"] = "GetOMSDepositFees";
     Endpoint["GET_ACCOUNT_FEES"] = "GetAccountFees";
     Endpoint["GET_ORDER_FEE"] = "GetOrderFee";
-    //Instrument
+    // Instrument
     Endpoint["GET_INSTRUMENT"] = "GetInstrument";
     Endpoint["GET_INSTRUMENTS"] = "GetInstruments";
     Endpoint["GET_INSTRUMENT_VERIFICATION_LEVEL_CONFIG"] = "GetInstrumentVerificationLevelConfig";
-    //Product
+    // Product
     Endpoint["GET_PRODUCT"] = "GetProduct";
     Endpoint["GET_PRODUCTS"] = "GetProducts";
     Endpoint["GET_VERIFICATION_LEVEL_CONFIG"] = "GetVerificationLevelConfig";
-    //Report (Faltan todos)
+    // Report (Faltan todos)
     Endpoint["GENERATE_TRADE_ACTIVITY_REPORT"] = "GenerateTradeActivityReport";
     Endpoint["GENERATE_TRANSACTION_ACTIVITY_REPORT"] = "GenerateTransactionActivityReport";
     Endpoint["GENERATE_PRODUCT_DELTA_ACTIVITY_REPORT"] = "GenerateProductDeltaActivityReport";
@@ -39,13 +39,13 @@ export var Endpoint;
     Endpoint["GET_USER_REPORT_WRITER_RESULT_RECORDS"] = "GetUserReportWriterResultRecords";
     Endpoint["GET_USER_REPORT_TICKETS"] = "GetUserReportTickets";
     Endpoint["REMOVE_USER_REPORT_TICKET"] = "RemoveUserReportTicket";
-    Endpoint["GET_USERT_REPORT_TICKETS_BY_STATUS"] = "GetUserReportTicketsByStatus";
+    Endpoint["GET_USER_REPORT_TICKETS_BY_STATUS"] = "GetUserReportTicketsByStatus";
     Endpoint["DOWNLOAD_DOCUMENT"] = "DownloadDocument";
     Endpoint["DOWNLOAD_DOCUMENT_SLICE"] = "DownloadDocumentSlice";
-    //System
+    // System
     Endpoint["PING"] = "Ping";
     Endpoint["HEALTH_CHECK"] = "HealthCheck";
-    //Trading
+    // Trading
     Endpoint["SEND_ORDER_LIST"] = "SendOrderList";
     Endpoint["SEND_CANCEL_LIST"] = "SendCancelList";
     Endpoint["SEND_CANCEL_REPLACE_LIST"] = "SendCancelReplaceList";
@@ -74,11 +74,19 @@ export var Endpoint;
     Endpoint["GET_L2_SNAPSHOT"] = "GetL2Snapshot";
     Endpoint["GET_LEVEL1"] = "GetLevel1";
     Endpoint["GET_ENUMS"] = "GetEnums";
-    //User
+    // User
     Endpoint["GET_USER_ACCOUNTS"] = "GetUserAccounts";
     Endpoint["GET_USER_DEVICES"] = "GetUserDevices";
     Endpoint["GET_USER_INFO"] = "GetUserInfo";
     Endpoint["GET_USER_PERMISSIONS"] = "GetUserPermissions";
+    // Wallet
+    Endpoint["BANKS"] = "banks";
+    Endpoint["BANK_ACCOUNTS"] = "bank-accounts";
+    Endpoint["GET_NETWORKS_TEMPLATES"] = "wallet/crypto/withdrawal/templates";
+    Endpoint["DEPOSIT_ADDRESS"] = "wallet/crypto";
+    Endpoint["WHITELIST_ADDRESSES"] = "wallet/crypto/whitelist-addresses";
+    Endpoint["UPDATE_ONE_STEP_WITHDRAW"] = "wallet/crypto/whitelist-addresses/one-step/status";
+    Endpoint["CREATE_CRYPTO_WITHDRAW"] = "wallet/crypto/withdrawal";
 })(Endpoint || (Endpoint = {}));
 export var WebSocketEndpoint;
 (function (WebSocketEndpoint) {

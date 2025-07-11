@@ -14,4 +14,3 @@ export interface Product {
     IsDisabled: boolean;
     MarginEnabled: boolean;
 }
-export type GetProductResponse = Product;

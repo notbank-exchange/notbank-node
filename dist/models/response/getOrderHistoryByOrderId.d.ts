@@ -1,9 +1,9 @@
-import { ChangeReason } from "../common/changeReason.js";
-import { OrderState } from "../common/orderState.js";
-import { OrderTypeInt } from "../common/orderType.js";
+import { ChangeReason } from "../enums/changeReason.js";
+import { OrderState } from "../enums/orderState.js";
+import { OrderTypeInt } from "../enums/orderType.js";
 import { OrderFlag } from "../enums/orderFlag.js";
 import { TradeSide } from "../enums/tradeSide.js";
-export interface GetOrderHistoryByOrderIdResponse {
+export interface OrderSummary {
     Side: TradeSide;
     OrderId: number;
     Price: number;
