@@ -1,4 +1,4 @@
-export interface GetAccountInstrumentStatisticsResponse {
+export interface AccountInstrumentStatistics {
   OMSId: number;
   AccountId: number;
   InstrumentId: number;

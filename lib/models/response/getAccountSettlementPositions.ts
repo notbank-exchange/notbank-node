@@ -1,4 +1,4 @@
-export interface AccountSettlementPositionsResponse {
+export interface AccountSettlementPositions {
   OMSId: number;
   AccountId: number;
   AccountName: string;

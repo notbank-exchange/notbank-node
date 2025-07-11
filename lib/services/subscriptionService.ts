@@ -21,7 +21,7 @@ import { UnsubscribeOrderStateEventsRequest } from "../models/request/unsubscrib
 import { UnsubscribeTickerRequest } from "../models/request/unsubscribeTicker";
 import { UnsubscribeTradesRequest } from "../models/request/unsubscribeTrades";
 import { AccountInfo } from "../models/response/accountInfo";
-import { AccountPositions } from "../models/response/accountPositions";
+import { AccountPosition } from "../models/response/accountPositions";
 import { DepositTicket } from "../models/response/depositTicket";
 import { Order } from "../models/response/order";
 import { OrderTrade } from "../models/response/orderTrade";
@@ -253,7 +253,7 @@ export class SubscriptionService {
       orderTradeEventHandler?: (event: OrderTrade) => void;
       orderStateEventHandler?: (event: Order) => void;
       depositTicketUpdateEventHandler?: (event: DepositTicket) => void;
-      accountPositionEventHandler?: (event: AccountPositions) => void;
+      accountPositionEventHandler?: (event: AccountPosition) => void;
       accountInfoUpdateEventHandler?: (event: AccountInfo) => void;
       cancelOrderRejectEventHandler?: (event: CancelOrderRejectEvent) => void;
       depositEventHandler?: (event: DepositEvent) => void;
