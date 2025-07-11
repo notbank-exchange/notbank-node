@@ -7,7 +7,7 @@ import { TimeInForce } from "../../lib/models/enums/timeInForce";
 import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("http trading service", () => {
-  const client = NotbankClient.Factory.createRestClient()
+  const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange")
 
 
   before(async () => {
@@ -63,6 +63,15 @@ describe("http trading service", () => {
           "Error message should indicate missing fields",
         );
       }
+    });
+  });
+
+  describe("getOrderBook", () => {
+    it.only("should throw an error for missing required parameters", async () => {
+      var orderbook = await tradingService.getOrderBook({ Market_Pair: "BTCUSDT", Depth: 5, Level: 2 })
+      assert.ok(orderbook)
+      assert.equal(orderbook.asks.length, 5)
+      assert.equal(orderbook.bids.length, 5)
     });
   });
 });
