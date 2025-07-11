@@ -15,47 +15,36 @@ export class InstrumentService {
     this.connection = connection;
   }
 
-  async getInstruments(
+  getInstruments(
     params: GetInstrumentsRequest
   ): Promise<InstrumentResponse[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    return (await this.connection.apRequest(
+    return this.connection.apRequest(
       Endpoint.GET_INSTRUMENTS,
       RequestType.POST,
       paramsWithOMSId
-    )) as InstrumentResponse[];
+    );
   }
 
-  public async getInstrument(
+  getInstrument(
     params: GetInstrumentRequest
   ): Promise<InstrumentResponse> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-    const response = (await this.connection.apRequest(
+    return this.connection.apRequest(
       Endpoint.GET_INSTRUMENT,
       RequestType.POST,
       paramsWithOMSId
-    )) as InstrumentResponse;
-
-    return response;
+    );
   }
 
   async getInstrumentVerificationLevelConfigs(
     params: GetInstrumentVerificationLevelConfigRequest
   ): Promise<GetInstrumentVerificationLevelConfigResponse[]> {
-    // Validate required parameters
-    if (!params.AccountId) {
-      throw new Error("AccountId is required.");
-    }
-
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
-
-    // Call the service endpoint
-    const response = await this.connection.apRequest(
+    return this.connection.apRequest(
       Endpoint.GET_INSTRUMENT_VERIFICATION_LEVEL_CONFIG,
       RequestType.POST,
       paramsWithOMSId
     );
-
-    return response as GetInstrumentVerificationLevelConfigResponse[];
   }
 }

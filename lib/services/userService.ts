@@ -1,18 +1,14 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { completeParams } from "../utils/completeParams";
-
-// *************************************REQUEST*************************************
 import { GetUserAccountsRequest } from "../models/request/getUserAccounts";
 import { GetUserDevicesRequest } from "../models/request/getUserDevices";
 import { GetUserInfoRequest } from "../models/request/getUserInfo";
 import { GetUserPermissionsRequest } from "../models/request/getUserPermissions";
-
-// *************************************RESPONSE*************************************
-import { GetUserDevicesResponse } from "../models/response/getUserDevices";
 import { GetUserAccountsResponse } from "../models/response/getUserAccounts";
+import { GetUserDevicesResponse } from "../models/response/getUserDevices";
 import { GetUserInfoResponse } from "../models/response/getUserInfo";
 import { GetUserPermissionsResponse } from "../models/response/getUserPermissions";
+import { completeParams } from "../utils/completeParams";
 
 export class UserService {
   connection: ServiceConnection;

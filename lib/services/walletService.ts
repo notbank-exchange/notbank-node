@@ -1,6 +1,5 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { NotbankError } from "../models";
 import { AddWhitelistedAddressRequest } from "../models/request/addWhitelistedAddress";
 import { ConfirmWhitelistedAddressRequest } from "../models/request/confirmWhitelistedAddress";
 import { CreateBankAccountRequest } from "../models/request/createBankAccount";

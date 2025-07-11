@@ -18,7 +18,6 @@ import { GetUserReportTicketsByStatusResponse } from "../models/response/getUser
 import { GetUserReportWriterResultRecordsResponse } from "../models/response/getUserReportWriterResultRecords";
 import { RemoveUserReportTicketResponse } from "../models/response/removeUserReportTicket";
 import { ScheduleActivityReportResponse } from "../models/response/scheduleActivityReport";
-
 import { completeParams } from "../utils/completeParams";
 
 export class ReportService {

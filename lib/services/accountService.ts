@@ -1,20 +1,16 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { completeParams } from "../utils/completeParams";
-
-// *************************************REQUEST*************************************
-import { GetAccountPositionRequest } from "../models/request/getAccountPositions";
-import { GetAccountSettlementPositionsRequest } from "../models/request/getAccountSettlementPositions";
 import { GetAccountInfoRequest } from "../models/request/getAccountInfo";
 import { GetAccountInstrumentStatisticsRequest } from "../models/request/getAccountInstrumentStatistics";
-
-// *************************************RESPONSE*************************************
-import { AccountPositions } from "../models/response/accountPositions";
-import { AccountSettlementPositionsResponse } from "../models/response/getAccountSettlementPositions";
-import { AccountInfo } from "../models/response/accountInfo";
-import { GetAccountInstrumentStatisticsResponse } from "../models/response/getAccountInstrumentStatistics";
+import { GetAccountPositionRequest } from "../models/request/getAccountPositions";
+import { GetAccountSettlementPositionsRequest } from "../models/request/getAccountSettlementPositions";
 import { GetAccountTransactionsRequest } from "../models/request/getAccountTransactions";
+import { AccountInfo } from "../models/response/accountInfo";
+import { AccountPositions } from "../models/response/accountPositions";
+import { GetAccountInstrumentStatisticsResponse } from "../models/response/getAccountInstrumentStatistics";
+import { AccountSettlementPositionsResponse } from "../models/response/getAccountSettlementPositions";
 import { GetAccountTransactionsResponse } from "../models/response/getAccountTransactions";
+import { completeParams } from "../utils/completeParams";
 
 export class AccountService {
   connection: ServiceConnection;
