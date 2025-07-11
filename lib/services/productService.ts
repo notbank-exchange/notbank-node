@@ -3,7 +3,7 @@ import { RequestType, ServiceConnection } from "../core/serviceClient";
 import { GetProductRequest } from "../models/request/getProduct";
 import { GetProductsRequest } from "../models/request/getProducts";
 import { GetVerificationLevelConfigRequest } from "../models/request/getVerificationLevelConfig";
-import { Product } from "../models/response/getProduct";
+import { Product } from "../models/response/product";
 import { VerificationLevelConfig } from "../models/response/getVerificationLevelConfig";
 import { completeParams } from "../utils/completeParams";
 

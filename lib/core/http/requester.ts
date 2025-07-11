@@ -24,16 +24,14 @@ export class Requester {
     var body = config.requestType === RequestType.POST
       ? config.params :
       null;
-    console.log("url", url)
-    console.log("body", body)
-    console.log("requesttype", config.requestType === "POST")
-    return fetch(url,
-      {
-        method: config.requestType,
-        body: body ? JSON.stringify(body) : null,
-        headers: this.getHeaders(config.extraHeaders)
-      }
-    );
+    var requestData: RequestInit = {
+      method: config.requestType,
+      headers: this.getHeaders(config.extraHeaders)
+    }
+    if (body) {
+      requestData.body = JSON.stringify(body)
+    } 
+    return fetch(url, requestData);
   }
 
   getHeaders(extraHeaders?: any): any {
@@ -45,10 +43,8 @@ export class Requester {
       headers["aptoken"] = this.#aptoken;
     }
     if (extraHeaders) {
-      console.log("headeres", { ...headers, ...extraHeaders })
       return { ...headers, ...extraHeaders };
     }
-    console.log("headers", headers)
     return headers;
   }
 

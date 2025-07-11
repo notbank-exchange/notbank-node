@@ -33,7 +33,7 @@ export class NotbankClient {
     ApiSecretKey: string,
     UserId: string,
   }) => Promise<void>
-  #connect: (hooks: WebsocketHooks) => void
+  #connect: (hooks: WebsocketHooks) => Promise<void>
   #close: () => void
 
   constructor(
@@ -172,8 +172,8 @@ export class NotbankClient {
     return this.#walletService
   }
 
-  connect(hooks: WebsocketHooks = {}) {
-    this.#connect(hooks)
+  connect(hooks: WebsocketHooks = {}): Promise<void> {
+    return this.#connect(hooks)
   }
 
   close() {

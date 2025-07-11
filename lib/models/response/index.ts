@@ -26,7 +26,7 @@ export * from "./getOrderFee";
 export * from "./getOrderHistoryByOrderId";
 export * from "./getOrdersHistory";
 export * from "./getOrderStatus";
-export * from "./getProduct";
+export * from "./product";
 export * from "./getTickerHistory";
 export * from "./getUserDevices";
 export * from "./getUserInfo";

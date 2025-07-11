@@ -4,10 +4,10 @@ import "mocha";
 import { NotbankClient } from "../../lib/services/notbankClient";
 import { GetAccountTransactionsRequest } from "../../lib/models/request/getAccountTransactions";
 
-describe("http account service", () => {
-  const client = NotbankClient.Factory.createRestClient();
-
-
+describe("account service", () => {
+  const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
+  
+  
   before(async () => {
     await client.authenticateUser({
       ApiPublicKey: "aada11a919d9102f61fc1ca5a97ea578",
@@ -31,7 +31,7 @@ describe("http account service", () => {
   });
 
   describe("get account positions", () => {
-    it.only("fetches positions successfully (IncludePending = true)", async function () {
+    it("fetches positions successfully (IncludePending = true)", async function () {
       const response = await accountService.getAccountPositions({
         AccountId: 13,
         IncludePending: true,

@@ -19,6 +19,7 @@ describe("http user service", () => {
       const response = await service.getProduct({
         ProductId: 1,
       });
+      console.log(typeof response.TickSize)
       assert.ok(response, "Response should not be null or undefined");
       assert.strictEqual(response.Product, "USD", "Product should be USD");
     });
