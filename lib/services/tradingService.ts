@@ -393,7 +393,6 @@ export class TradingService {
     return orderbookFromRaw(orderbookRaw)
   }
 
-
   getOrderBookRaw(
     request: OrderBookRequest,
   ): Promise<OrderBookRaw> {
@@ -403,8 +402,6 @@ export class TradingService {
       request,
     );
   }
-
-
 
   /**
    * https://apidoc.notbank.exchange/#trades
