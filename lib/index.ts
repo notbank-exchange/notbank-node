@@ -1,5 +1,5 @@
 import * as models from "./models";
-import { NotbankClient } from "./services/NotbankClient";
+import { NotbankClient } from "./services/notbankClient";
 
 export default {
   NotbankClient,
