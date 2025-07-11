@@ -44,12 +44,36 @@ describe("wallet service", () => {
   });
 
   describe("getNetworksTemplates", () => {
-    it.only("should return a bank account", async () => {
-      const networks = await service.getNetworksTemplates({currency:"USDT"});
+    it("should return a bank account", async () => {
+      const networks = await service.getNetworksTemplates({ currency: "USDT" });
+      assert.ok(networks)
+    });
+  });
+
+
+  describe("get", () => {
+    it("should return a bank account", async () => {
+      const networks = await service.getDepositAddresses({
+        account_id: 235,
+        currency: "USDT",
+        network: "USDT_BSC_TEST"
+      });
       assert.ok(networks)
       console.log(networks)
     });
   });
 
 
+  describe("get", () => {
+    it.only("should return a bank account", async () => {
+      const alreadyExistingDeposit = await service.createDepositAddress({
+        account_id: 235,
+        currency: "USDT",
+        network: "USDT_BSC_TEST"
+      });
+      assert.ok(alreadyExistingDeposit)
+      assert.equal(alreadyExistingDeposit, "0xD9aF4Be918e2AE1302f37C11939bE3b41A88F23c")
+      console.log(alreadyExistingDeposit)
+    });
+  });
 });

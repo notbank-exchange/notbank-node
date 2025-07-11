@@ -108,16 +108,12 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#createdepositaddress
    */
-  async createDepositAddress(request: CreateDepositAddressesRequest): Promise<string> {
-    var addressList = await this.connection.nbRequest<CreateDepositAddressesRequest, string[]>(
+  createDepositAddress(request: CreateDepositAddressesRequest): Promise<string> {
+    return this.connection.nbRequest(
       Endpoint.DEPOSIT_ADDRESS,
       RequestType.POST,
       request
     );
-    if (addressList.length < 1) {
-      throw new NotbankError("NotbankError. no deposit address in the response", -1)
-    }
-    return addressList[0];
   }
 
   /**
