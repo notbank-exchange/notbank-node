@@ -44,7 +44,6 @@ try {
   const error = err as NotbankError
   // handle error
 }
-}
 ```
 
 ### Put order at the top of book example
