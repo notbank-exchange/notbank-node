@@ -21,255 +21,103 @@ This sdk makes use of the [api](https://apidoc.notbank.exchange) of Notbank.
 ### Rest client
 
 ```typescript
-const publicKey = "...";
-const secretKey = "...";
-const userId = "...";
-
-// rest client
-const serviceFactory = new HttpServiceFactory();
+// client
+const client = NotbankClient.Factory.createRestClient();
 
 // authentication
-//Use authenticate or autenthicateUser
-await serviceFactory.authenticateUser({
-  ApiPublicKey: publicKey,
-  ApiSecretKey: secretKey,
-  UserId: userId
+await client.authenticateUser({
+  ApiPublicKey: "my-public-key",
+  ApiSecretKey: "my-secret-key",
+  UserId: 112233
 });
 ```
 
-Sample Success Response:
-
-```json
-{
-  "Authenticated": true,
-  "SessionToken": "b7b5aad9-6b2d-0127-dc01-a81e4326822b",
-  "User": {
-    "UserId": "yourUserid",
-    "UserName": "yourName",
-    "Email": "yourEmail",
-    "EmailVerified": true,
-    "AccountId": "yourAccountId",
-    "OMSId": 1,
-    "Use2FA": false
-  },
-  "Locked": false,
-  "Requires2FA": false,
-  "EnforceEnable2FA": false,
-  "TwoFAType": null,
-  "TwoFAToken": null,
-  "errormsg": null
-}
-```
-
-Sample Bad Response:
-
-```json
-{
-  "Authenticated": false,
-  "Locked": false,
-  "errormsg": "Invalid username or password"
-}
-```
-
-#### Get your balances
-
+### handling errors
 ```typescript
-const accountService = serviceFactory.newAccountService();
-const accountId = 55 //Use desire accountId
-const includePending = false //Optional, default = false
-
-accountService.getAccountPositions({
-  AccountId: accountId;
-  IncludePending: includePending;
-})
-```
-
-Success Response Example (a list of balance objects), on this case USDT balance:
-
-```json
-[
-  {
-    "OMSId": 1,
-    "AccountId": 55,
-    "ProductSymbol": "USDT",
-    "ProductId": 5,
-    "Amount": 100,
-    "Hold": 0,
-    "MarginLiability": 0,
-    "MarginLend": 0,
-    "PendingDeposits": 0,
-    "PendingWithdraws": 0,
-    "TotalDayDeposits": 0,
-    "TotalMonthDeposits": 0,
-    "TotalYearDeposits": 0,
-    "TotalDayDepositNotional": 0,
-    "TotalMonthDepositNotional": 0,
-    "TotalYearDepositNotional": 0,
-    "TotalDayWithdraws": 0,
-    "TotalMonthWithdraws": 0,
-    "TotalYearWithdraws": 0,
-    "TotalDayWithdrawNotional": 0,
-    "TotalMonthWithdrawNotional": 0,
-    "TotalYearWithdrawNotional": 0,
-    "NotionalProductId": 1,
-    "NotionalProductSymbol": "USD",
-    "NotionalValue": 100,
-    "NotionalHoldAmount": 0,
-    "NotionalRate": 1,
-    "TotalDayTransferNotional": 0,
-    "TotalDayInflowsAndOutflowsNotional": 100,
-    "StartOfDayBalanceNotional": 0,
-    "AvailableBalance": 100,
-    "AvailableBalanceNotional": 100,
-    "PendingDepositsNotional": 0
-  },
-  {
-    ....
-  },
-  ....
-]
-```
-
-Bad Response example:
-
-```json
-{
-  "result": false,
-  "errormsg": "Invalid Request",
-  "errorcode": 100,
-  "detail": "OMSId and AccountId must be Integers"
+try {
+  const response = await accountService.getAccountPositions({
+    AccountId: 13,
+    IncludePending: true,
+  });
+} catch (err) {
+  const error = err as NotbankError
+  // handle error
+}
 }
 ```
-
-#### Open a Buy Order Limit on BTCUSDT market of 0.00045
-
+### Put order at the top of book example
 ```typescript
-const tradingService = serviceFactory.newTradingService();
+const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
+await client.authenticateUser({
+  ApiPublicKey: "aada11a919d9102f61fc1ca5a97ea578",
+  ApiSecretKey: "f2647a3c19fd8431be971d1d7b2101f9",
+  UserId: "9",
+});
+var accountId = 235;
 
-const params = {
-  InstrumentId: 154, //BTCUSDT
-  AccountId: 55, //Use desire account with balance
-  TimeInForce: 1 //TimeInForce.GTC
-  Side: 0 //OrderSide.Buy
-  OrderType: 2 //OrderTypeInt.Limit
-  Quantity: 0.00045,
-  LimitPrice: 104100,
-};
-
-await tradingService.sendOrder(params)
-```
-
-Success Response Example
-
-```json
-{
-  "status": "Accepted",
-  "errormsg": "",
-  "OrderId": 193
+// get USDT user balance (also known as position)
+var positions = await client.getAccountService().getAccountPositions({ AccountId: accountId });
+var productSymbol = "USDT";
+var usdtPosition = positions
+  .filter(position => position.ProductSymbol === productSymbol)
+  .pop()
+if (!usdtPosition) {
+  throw new Error("no usdt position")
 }
-```
 
-Bad Response Example:
+// define quantityToSpend (between all usdt_balance and half usdt_balance)
+var myUsdtBalance = usdtPosition.Amount;
+var randomFraction = Math.random()
+var halfMyBalance = myUsdtBalance / 2
+var atLeastHalfMyBalance = myUsdtBalance - (randomFraction * halfMyBalance);
+var quantityToSpend = atLeastHalfMyBalance;
 
-```json
-{
-  "status": "Rejected",
-  "errormsg": "Not_Enough_Funds",
-  "errorcode": 101
+var marketPair = "BTCUSDT";
+
+// define orderPrice (around market top)
+var btcUsdtOrderbook = await client.getTradingService()
+  .getOrderBook({ Market_Pair: marketPair, Depth: 5, Level: 2 })
+var randomSmallFraction = ((Math.random() * 90) + 10) / 1000
+var topBid = btcUsdtOrderbook.bids[0];
+var orderPrice = topBid.price + randomSmallFraction;
+// TODO: handle tick size
+var orderQuantity = quantityToSpend / orderPrice;
+
+
+// send order
+var instruments = await client.getInstrumentService().getInstruments();
+var btcUsdtInstrument = instruments.filter(pair => pair.Symbol === marketPair)[0]
+var orderResult = await client.getTradingService().sendOrder({
+  InstrumentId: btcUsdtInstrument.InstrumentId,
+  AccountId: accountId,
+  TimeInForce: TimeInForce.GTC,
+  Side: OrderSide.Buy,
+  OrderType: OrderTypeInt.Limit,
+  Quantity: orderQuantity,
+  LimitPrice: orderPrice,
+});
+
+
+// handle order result
+if (orderResult.Status === "Rejected") {
+  // order was rejected
+  console.log("order rejected");
+  console.log(orderResult.Message);
+  return
 }
+// order was accepted
+console.log("orderId,", orderResult.OrderId);
+
+// cancel order
+await client.getTradingService()
+  .cancelOrder({
+    AccountId: accountId,
+    OrderId: orderResult.OrderId
+  })
+return orderResult.OrderId
+
 ```
 
-#### Get your balance again
-
-```typescript
-const accountService = serviceFactory.newAccountService();
-const accountId = 55 //Use desire accountId
-
-accountService.getAccountPositions({
-  AccountId: accountId;
-})
-```
-
-Success Response Example for USDT balance:
-
-```json
-[
-  {
-        "OMSId": 1,
-        "AccountId": 99,
-        "ProductSymbol": "USDT",
-        "ProductId": 5,
-        "Amount": 100,
-        "Hold": 46.84500,
-        "MarginLiability": 0,
-        "MarginLend": 0,
-        "PendingDeposits": 0,
-        "PendingWithdraws": 0,
-        "TotalDayDeposits": 0,
-        "TotalMonthDeposits": 0,
-        "TotalYearDeposits": 0,
-        "TotalDayDepositNotional": 0,
-        "TotalMonthDepositNotional": 0,
-        "TotalYearDepositNotional": 0,
-        "TotalDayWithdraws": 0,
-        "TotalMonthWithdraws": 0,
-        "TotalYearWithdraws": 0,
-        "TotalDayWithdrawNotional": 0,
-        "TotalMonthWithdrawNotional": 0,
-        "TotalYearWithdrawNotional": 0,
-        "NotionalProductId": 1,
-        "NotionalProductSymbol": "USD",
-        "NotionalValue": 100,
-        "NotionalHoldAmount": 46.84500,
-        "NotionalRate": 1,
-        "TotalDayTransferNotional": 0,
-        "TotalDayInflowsAndOutflowsNotional": 0,
-        "StartOfDayBalanceNotional": 100,
-        "AvailableBalance": 53.15500,
-        "AvailableBalanceNotional": 53.15500,
-        "PendingDepositsNotional": 0
-    },
-  {
-    ....
-  },
-  ....
-]
-```
-
-#### Cancel previous order for 0.00045 BTCUSDT
-
-```typescript
-const tradingService = serviceFactory.newTradingService();
-
-const params = {
-  AccountId: 55, //Use desire account with balance
-  OrderId: 193 //Previous open order ID
-};
-
-await tradingService.cancelOrder(params);
-```
-
-Good Response Example:
-
-```json
-{
-  "result": true,
-  "errormsg": null,
-  "errorcode": 0,
-  "detail": null
-}
-```
-
-Bad Response Example (Incorrect OrderId):
-
-```json
-{
-  "result": false,
-  "errormsg": "Resource Not Found",
-  "errorcode": 104,
-  "detail": null
-}
-```
 
 ## DevOps
 
