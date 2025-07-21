@@ -64,7 +64,7 @@ export class WebsocketServiceFactory {
     UserId: string;
   }): Promise<void> {
     var nonce = getNonce();
-    var signature = sign(
+    var signature = await sign(
       params.ApiPublicKey,
       params.ApiSecretKey,
       params.UserId,
