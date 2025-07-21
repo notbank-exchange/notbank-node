@@ -21,13 +21,13 @@ export class HttpServiceFactory {
     this.#httpConnection = new HttpConnection(finalDomain);
   }
 
-  authenticateUser(params: {
+  async authenticateUser(params: {
     ApiPublicKey: string;
     ApiSecretKey: string;
     UserId: string;
   }): Promise<void> {
     var nonce = getNonce();
-    var signature = sign(
+    var signature = await sign(
       params.ApiPublicKey,
       params.ApiSecretKey,
       params.UserId,
