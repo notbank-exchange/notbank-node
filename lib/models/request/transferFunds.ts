@@ -2,7 +2,7 @@ export interface TransferFundsRequest {
   sender_account_id: number
   receiver_account_id: number
   currency_name: string
-  amount: number
+  amount: string
   notes?: string
 
 }

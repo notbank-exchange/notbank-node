@@ -246,7 +246,7 @@ export class WalletService {
   /**
    * https://apidoc.notbank.exchange/#transferfunds
    */
-  transferFunds(request: TransferFundsRequest): Promise<string | null> {
+  transferFunds(request: TransferFundsRequest): Promise<string | undefined> {
     return this.connection.nbRequest(
       Endpoint.TRANSFER_FUNDS,
       RequestType.POST,

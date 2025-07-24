@@ -74,4 +74,158 @@ describe("wallet service", () => {
       assert.equal(alreadyExistingDeposit, "0xD9aF4Be918e2AE1302f37C11939bE3b41A88F23c")
     });
   });
+
+
+  describe("getWhitelistedAddresses", () => {
+    it("should work", async () => {
+      const response = await service.getWhitelistedAddresses({
+        account_id: 235,
+      });
+      assert.ok(response);
+    });
+  });
+
+  describe("addWhitelistedAddress", () => {
+    it("should work", async () => {
+      const response = await service.addWhitelistedAddress({
+        account_id: 235,
+        currency: "USDT",
+        network: "USDT_BSC_TEST",
+        address: "0xD9aF4Be918e2AE1302f37C11939bE3b41A88F23c",
+        label: "labeling label",
+        otp: "121342"
+      });
+      assert.ok(response);
+    });
+  });
+
+  describe("deleteWhitelistedAddress", () => {
+    it("should work", async () => {
+      const response = await service.deleteWhitelistedAddress({
+        account_id: 235,
+        whitelistedAddressId: "",
+        otp: ""
+      });
+      assert.ok(response);
+    });
+  });
+
+
+  describe("updateOneStepWithdraw", () => {
+    it("should work", async () => {
+      const response = await service.updateOneStepWithdraw({
+        action: "",
+        otp: "",
+      });
+      assert.ok(response);
+    });
+  });
+
+  describe("createCryptoWithdraw", () => {
+    it("should work", async () => {
+      const response = await service.createCryptoWithdraw({
+        account_id: 235,
+        currency: "",
+        network: "",
+        address: "",
+        amount: "",
+        otp: "",
+      });
+      assert.ok(response);
+    });
+  });
+
+  describe("createFiatDeposit", () => {
+    it("should work", async () => {
+      const response = await service.createFiatDeposit({
+        account_id: 235,
+        payment_method: 1,
+        currency: "",
+        amount: 12,
+        bank_account_id: "",
+        voucher: ""
+      });
+      assert.ok(response);
+    });
+  });
+
+  describe("getOwnersFiatWithdraw", () => {
+    it("should work", async () => {
+      const response = await service.getOwnersFiatWithdraw({
+        cbu: ""
+      });
+      assert.ok(response);
+    });
+  });
+
+  describe("createFiatWithdraw", () => {
+    it("should work", async () => {
+      const response = await service.createFiatWithdraw({
+        account_id: 123,
+        payment_method: 1,
+        currency: "CLP",
+        amount: "12.2",
+        bank_account_id: "",
+        cbu: "",
+        person_type: "",
+        cuit: "",
+        name: "",
+      });
+      assert.ok(response);
+    });
+  });
+
+
+  describe("createFiatWithdraw", () => {
+    it("should work", async () => {
+      const response = await service.createFiatWithdraw({
+        account_id: 123,
+        payment_method: 1,
+        currency: "CLP",
+        amount: "12.2",
+        bank_account_id: "",
+        cbu: "",
+        person_type: "",
+        cuit: "",
+        name: "",
+      });
+      assert.ok(response);
+    });
+  });
+
+
+
+  describe("confirmFiatWithdraw", () => {
+    it("should work", async () => {
+      const response = await service.confirmFiatWithdraw({
+        withdrawal_id: "",
+        attempt_code: "",
+      });
+      assert.ok(response);
+    });
+  });
+
+
+
+  describe("transferFunds", () => {
+    it("should work", async () => {
+      const response = await service.transferFunds({
+        sender_account_id: 12,
+        receiver_account_id: 12,
+        currency_name: "CLP",
+        amount: "12",
+      });
+      assert.ok(response);
+    });
+  });
+
+
+  describe("getTransactions", () => {
+    it("should work", async () => {
+      const response = await service.getTransactions({
+        page: 2
+      });
+      assert.ok(response);
+    });
+  });
 });

@@ -1,8 +1,8 @@
 export interface CreateFiatWithdrawRequest {
-  account_id: string
+  account_id: number
   payment_method: number
-  currency: number
-  amount: number
+  currency: string
+  amount: string
   bank_account_id?: string
   cbu?: string
   person_type?: string
