@@ -141,7 +141,7 @@ describe("wallet service", () => {
         account_id: 235,
         payment_method: 1,
         currency: "",
-        amount: 12,
+        amount: "1212",
         bank_account_id: "",
         voucher: ""
       });

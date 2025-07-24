@@ -2,7 +2,7 @@ export interface CreateFiatDepositRequest {
   account_id: number
   payment_method: number
   currency: string
-  amount: number
+  amount: string
   bank_account_id?: string
   voucher?: string
 }
