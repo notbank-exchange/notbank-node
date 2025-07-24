@@ -13,6 +13,7 @@ import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
 import { WalletService } from "./walletService";
+import { QuoteService } from "./quoteService";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
@@ -124,5 +125,9 @@ export class WebsocketServiceFactory {
 
   newWalletService(): WalletService {
     return new WalletService(this.#websocketConnection);
+  }
+
+  newQuoteService(): QuoteService {
+    return new QuoteService(this.#websocketConnection);
   }
 }

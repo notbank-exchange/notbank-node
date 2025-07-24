@@ -26,7 +26,7 @@ import { DepositTicket } from "../models/response/depositTicket";
 import { Order } from "../models/response/order";
 import { OrderTrade } from "../models/response/orderTrade";
 import { Level1Ticker } from "../models/response/subscribeLevel1";
-import { Transaction } from "../models/response/transaction";
+import { TransactionEvent } from "../models/response/transactionEvent";
 import { WithdrawTicket } from "../models/response/withdrawTicket";
 import { completeParams } from "../utils/completeParams";
 import { parseTradeSummary } from "../utils/parseIndexTrade";
@@ -206,7 +206,7 @@ export class SubscriptionService {
       accountInfoUpdateEventHandler?: (event: AccountInfo) => void;
       cancelOrderRejectEventHandler?: (event: CancelOrderRejectEvent) => void;
       depositEventHandler?: (event: DepositEvent) => void;
-      transactionEventHandler?: (event: Transaction) => void;
+      transactionEventHandler?: (event: TransactionEvent) => void;
     }
   ): Promise<void> {
     const requestWithOMSId = completeParams(request, this.OMS_ID);

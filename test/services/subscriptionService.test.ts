@@ -410,7 +410,7 @@ describe("subscriptionService - UnsubscribeOrderStateEvents", () => {
   });
 });
 
-describe("SubscribeTicker", () => {
+describe.only("SubscribeTicker", () => {
   const wsServiceFactory = new WebsocketServiceFactory({
     domain: "stgapi.notbank.exchange",
   });

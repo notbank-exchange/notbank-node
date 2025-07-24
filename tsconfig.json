@@ -2,15 +2,22 @@
   "compilerOptions": {
     "target": "ES6",
     "esModuleInterop": true,
-    "module": "ES6",
+    "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
     "outDir": "./dist",
-    "lib": ["ES6", "DOM"],
+    "lib": [
+      "ES6",
+      "DOM"
+    ],
     "forceConsistentCasingInFileNames": true,
   },
-  "include": ["lib"],
-  "exclude": ["node_modules"],
+  "include": [
+    "lib"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "tsc-alias": {
     "resolveFullPaths": true,
     "verbose": false

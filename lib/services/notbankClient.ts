@@ -12,6 +12,7 @@ import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
 import { WalletService } from "./walletService";
+import { QuoteService } from "./quoteService";
 import { WebsocketServiceFactory } from "./websocketServicesFactory";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
@@ -28,6 +29,7 @@ export class NotbankClient {
   #tradingService: TradingService
   #userService: UserService
   #walletService: WalletService
+  #quoteService: QuoteService
   #authenticateUser: (params: {
     ApiPublicKey: string,
     ApiSecretKey: string,
@@ -49,6 +51,7 @@ export class NotbankClient {
       tradingService: TradingService,
       userService: UserService,
       walletService: WalletService,
+      quoteService: QuoteService,
       authenticate: (authParams: {
         ApiPublicKey: string,
         ApiSecretKey: string,
@@ -69,6 +72,7 @@ export class NotbankClient {
     this.#tradingService = params.tradingService
     this.#userService = params.userService
     this.#walletService = params.walletService
+    this.#quoteService = params.quoteService
     this.#authenticateUser = params.authenticate
     this.#connect = params.connect
     this.#close = params.close
@@ -91,6 +95,7 @@ export class NotbankClient {
           tradingService: factory.newTradingService(),
           userService: factory.newUserService(),
           walletService: factory.newWalletService(),
+          quoteService: factory.newQuoteService(),
           authenticate: params => factory.authenticateUser(params),
           connect: () => null,
           close: () => null
@@ -112,6 +117,7 @@ export class NotbankClient {
           tradingService: factory.newTradingService(),
           userService: factory.newUserService(),
           walletService: factory.newWalletService(),
+          quoteService: factory.newQuoteService(),
           authenticate: params => factory.authenticateUser(params),
           connect: () => factory.connect(),
           close: () => factory.close()
@@ -170,6 +176,10 @@ export class NotbankClient {
 
   getWalletService(): WalletService {
     return this.#walletService
+  }
+
+  getQuoteService(): QuoteService {
+    return this.#quoteService
   }
 
   connect(hooks: WebsocketHooks = {}): Promise<void> {
