@@ -8,42 +8,42 @@ import { WebsocketHooks } from "./websocketHooks";
 import { CallbackManager } from "./callbackManager";
 import ErrorCode from "../../constants/errorCode";
 import { SubscriptionIdentifier } from "./SubscriptionIdentifier";
+import { WebsocketConnectionConfiguration } from "./websocketConnectionConfiguration";
 
 const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => { };
+const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class WebsocketConnection implements ServiceConnection {
   #domain: string;
   #callbackManager: CallbackManager;
   #websocket: WebSocket;
+  #hooks: WebsocketHooks;
   #peekMessageIn: (message: MessageFrame) => void;
   #peekMessageOut: (message: MessageFrame) => void;
 
-  constructor(params: {
-    domain: string;
-    peekMessageIn?: (message: MessageFrame) => void;
-    peekMessageOut?: (message: MessageFrame) => void;
-  }) {
-    this.#domain = params.domain;
+  constructor(configuration: WebsocketConnectionConfiguration) {
+    this.#domain = configuration?.domain || DEFAULT_DOMAIN;
     this.#callbackManager = new CallbackManager();
-    this.#peekMessageIn = params.peekMessageIn || (_ => { });
-    this.#peekMessageOut = params.peekMessageOut || (_ => { });
+    this.#hooks = configuration.websocketHooks || {};
+    this.#peekMessageIn = configuration.peekMessageIn || (_ => { });
+    this.#peekMessageOut = configuration.peekMessageOut || (_ => { });
   }
 
   nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2> {
     throw new Error("websocket client does not support nb methods.");
   }
 
-  async connect(hooks: WebsocketHooks = {}) {
+  async connect(): Promise<void> {
     this.#websocket = new WebSocket("wss://" + this.#domain + "/wsgateway");
-    this.#websocket.onopen = event => hooks.onOpen?.(event);
-    this.#websocket.onclose = event => hooks.onClose?.(event);
-    this.#websocket.onerror = event => hooks.onError?.(event);
+    this.#websocket.onopen = event => this.#hooks.onOpen?.(event);
+    this.#websocket.onclose = event => this.#hooks.onClose?.(event);
+    this.#websocket.onerror = event => this.#hooks.onError?.(event);
     this.#websocket.addEventListener("message", event => {
       const messageFrame = JSON.parse(event.data) as MessageFrame;
       this.#handleMessage(messageFrame);
     });
     this.#websocket.addEventListener("message", event =>
-      hooks.onMessage?.(event)
+      this.#hooks.onMessage?.(event)
     );
     return new Promise<void>((resolve, _) =>
       this.#websocket.addEventListener("open", _ => resolve())
@@ -73,8 +73,8 @@ export class WebsocketConnection implements ServiceConnection {
     }
   }
 
-  close(): void {
-    this.#websocket.close();
+  close(): Promise<void> {
+    return this.#websocket.close();
   }
 
   get readyState(): number {

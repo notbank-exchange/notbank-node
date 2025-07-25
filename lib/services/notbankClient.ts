@@ -13,7 +13,8 @@ import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
 import { WalletService } from "./walletService";
 import { QuoteService } from "./quoteService";
-import { WebsocketServiceFactory } from "./websocketServicesFactory";
+import { WebsocketServiceFactory } from "./websocketServiceFactory";
+import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
@@ -102,8 +103,8 @@ export class NotbankClient {
         }
       )
     }
-    static createWebsocketClient(domain: string = DEFAULT_DOMAIN) {
-      var factory = new WebsocketServiceFactory({ domain })
+    static createWebsocketClient(configuration?: WebsocketConnectionConfiguration) {
+      var factory = new WebsocketServiceFactory(configuration)
       return new NotbankClient(
         {
           accountService: factory.newAccountService(),
