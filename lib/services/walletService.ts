@@ -113,7 +113,7 @@ export class WalletService {
    */
   getDepositAddresses(request: GetDepositAddressesRequest): Promise<string[]> {
     return this.connection.nbRequest(
-      Endpoint.BANK_ACCOUNTS,
+      Endpoint.DEPOSIT_ADDRESS,
       RequestType.GET,
       request
     );
