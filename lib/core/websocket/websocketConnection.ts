@@ -14,19 +14,19 @@ const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => { };
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class WebsocketConnection implements ServiceConnection {
-  #domain: string;
-  #callbackManager: CallbackManager;
-  #websocket: WebSocket;
-  #hooks: WebsocketHooks;
-  #peekMessageIn: (message: MessageFrame) => void;
-  #peekMessageOut: (message: MessageFrame) => void;
+  private domain: string;
+  private callbackManager: CallbackManager;
+  private websocket: WebSocket;
+  private hooks: WebsocketHooks;
+  private peekMessageIn: (message: MessageFrame) => void;
+  private peekMessageOut: (message: MessageFrame) => void;
 
   constructor(configuration: WebsocketConnectionConfiguration) {
-    this.#domain = configuration?.domain || DEFAULT_DOMAIN;
-    this.#callbackManager = new CallbackManager();
-    this.#hooks = configuration.websocketHooks || {};
-    this.#peekMessageIn = configuration.peekMessageIn || (_ => { });
-    this.#peekMessageOut = configuration.peekMessageOut || (_ => { });
+    this.domain = configuration?.domain || DEFAULT_DOMAIN;
+    this.callbackManager = new CallbackManager();
+    this.hooks = configuration?.websocketHooks || {};
+    this.peekMessageIn = configuration?.peekMessageIn || (_ => { });
+    this.peekMessageOut = configuration?.peekMessageOut || (_ => { });
   }
 
   nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2> {
@@ -34,19 +34,19 @@ export class WebsocketConnection implements ServiceConnection {
   }
 
   async connect(): Promise<void> {
-    this.#websocket = new WebSocket("wss://" + this.#domain + "/wsgateway");
-    this.#websocket.onopen = event => this.#hooks.onOpen?.(event);
-    this.#websocket.onclose = event => this.#hooks.onClose?.(event);
-    this.#websocket.onerror = event => this.#hooks.onError?.(event);
-    this.#websocket.addEventListener("message", event => {
+    this.websocket = new WebSocket("wss://" + this.domain + "/wsgateway");
+    this.websocket.onopen = event => this.hooks.onOpen?.(event);
+    this.websocket.onclose = event => this.hooks.onClose?.(event);
+    this.websocket.onerror = event => this.hooks.onError?.(event);
+    this.websocket.addEventListener("message", event => {
       const messageFrame = JSON.parse(event.data) as MessageFrame;
       this.#handleMessage(messageFrame);
     });
-    this.#websocket.addEventListener("message", event =>
-      this.#hooks.onMessage?.(event)
+    this.websocket.addEventListener("message", event =>
+      this.hooks.onMessage?.(event)
     );
     return new Promise<void>((resolve, _) =>
-      this.#websocket.addEventListener("open", _ => resolve())
+      this.websocket.addEventListener("open", _ => resolve())
     );
   }
 
@@ -55,8 +55,8 @@ export class WebsocketConnection implements ServiceConnection {
   }
 
   #handleMessage(message: MessageFrame) {
-    this.#peekMessageIn(message);
-    const callback = this.#callbackManager.popCallback(message.i);
+    this.peekMessageIn(message);
+    const callback = this.callbackManager.popCallback(message.i);
     if (callback != null) {
       callback(message);
       if (isErrorMessage(message)) {
@@ -65,7 +65,7 @@ export class WebsocketConnection implements ServiceConnection {
     }
     const callbackId = this.#getSubscriptionCallbackId(message);
     const subscriptionCallback =
-      this.#callbackManager.getSubscriptionCallback(callbackId);
+      this.callbackManager.getSubscriptionCallback(callbackId);
 
     if (subscriptionCallback != null) {
       subscriptionCallback(message);
@@ -74,11 +74,11 @@ export class WebsocketConnection implements ServiceConnection {
   }
 
   close(): Promise<void> {
-    return this.#websocket.close();
+    return this.websocket.close();
   }
 
   get readyState(): number {
-    return this.#websocket.readyState;
+    return this.websocket.readyState;
   }
 
   apRequest<T1, T2>(
@@ -139,7 +139,7 @@ export class WebsocketConnection implements ServiceConnection {
     subscriptionCallbacks: SubscriptionHandler<MessageFrame>[]
   ): Promise<void> {
     subscriptionCallbacks.map(handler =>
-      this.#callbackManager.addSubscriptionCallback(
+      this.callbackManager.addSubscriptionCallback(
         SubscriptionIdentifier.get(
           handler.eventName,
           firstIdentifier,
@@ -158,7 +158,7 @@ export class WebsocketConnection implements ServiceConnection {
     message: T,
     callbackIds: string[]
   ): Promise<void> {
-    this.#callbackManager.removeSubscriptionCallback(
+    this.callbackManager.removeSubscriptionCallback(
       callbackIds.map(callbackId =>
         SubscriptionIdentifier.get(
           callbackId,
@@ -176,19 +176,19 @@ export class WebsocketConnection implements ServiceConnection {
     messageType: MessageType,
     callback = emptyFn
   ) {
-    const sequenceNumber = this.#callbackManager.putCallback(callback);
+    const sequenceNumber = this.callbackManager.putCallback(callback);
     const frame = {
       m: messageType,
       i: sequenceNumber,
       n: endpoint,
       o: message
     };
-    this.#peekMessageOut(frame);
-    this.#websocket.send(JSON.stringify(frame));
+    this.peekMessageOut(frame);
+    this.websocket.send(JSON.stringify(frame));
   }
 
   closeConnection() {
-    this.#websocket.socket.close();
+    this.websocket.socket.close();
   }
 
   async authenticateUser(params: AuthenticateUserRequest): Promise<void> {

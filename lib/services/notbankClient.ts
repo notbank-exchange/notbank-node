@@ -19,25 +19,25 @@ import { WebsocketConnectionConfiguration } from "../core/websocket/websocketCon
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class NotbankClient {
-  #accountService: AccountService
-  #authService: AuthService
-  #feeService: FeeService
-  #instrumentService: InstrumentService
-  #productService: ProductService
-  #reportService: ReportService
-  #getSubscriptionService: () => SubscriptionService
-  #systemService: SystemService
-  #tradingService: TradingService
-  #userService: UserService
-  #walletService: WalletService
-  #quoteService: QuoteService
-  #authenticateUser: (params: {
+  accountService: AccountService
+  authService: AuthService
+  feeService: FeeService
+  instrumentService: InstrumentService
+  productService: ProductService
+  reportService: ReportService
+  getSubscriptionService: () => SubscriptionService
+  systemService: SystemService
+  tradingService: TradingService
+  userService: UserService
+  walletService: WalletService
+  quoteService: QuoteService
+  authenticateUser: (params: {
     ApiPublicKey: string,
     ApiSecretKey: string,
     UserId: string,
   }) => Promise<void>
-  #connect: (hooks: WebsocketHooks) => Promise<void>
-  #close: () => void
+  connect: (hooks?: WebsocketHooks) => Promise<void>
+  close: () => void
 
   constructor(
     params: {
@@ -62,46 +62,44 @@ export class NotbankClient {
       close: () => void,
     }
   ) {
-    this.#accountService = params.accountService
-    this.#authService = params.authService
-    this.#feeService = params.feeService
-    this.#instrumentService = params.instrumentService
-    this.#productService = params.productService
-    this.#reportService = params.reportService
-    this.#getSubscriptionService = params.getSubscriptionService
-    this.#systemService = params.systemService
-    this.#tradingService = params.tradingService
-    this.#userService = params.userService
-    this.#walletService = params.walletService
-    this.#quoteService = params.quoteService
-    this.#authenticateUser = params.authenticate
-    this.#connect = params.connect
-    this.#close = params.close
+    this.accountService = params.accountService
+    this.authService = params.authService
+    this.feeService = params.feeService
+    this.instrumentService = params.instrumentService
+    this.productService = params.productService
+    this.reportService = params.reportService
+    this.getSubscriptionService = () => params.getSubscriptionService()
+    this.systemService = params.systemService
+    this.tradingService = params.tradingService
+    this.userService = params.userService
+    this.walletService = params.walletService
+    this.quoteService = params.quoteService
+    this.authenticateUser = params.authenticate
+    this.connect = params.connect
+    this.close = params.close
   }
 
 
   static Factory = class Factory {
     static createRestClient(domain: string = DEFAULT_DOMAIN) {
       var factory = new HttpServiceFactory(domain)
-      return new NotbankClient(
-        {
-          accountService: factory.newAccountService(),
-          authService: factory.newAuthService(),
-          feeService: factory.newFeeService(),
-          instrumentService: factory.newInstrumentService(),
-          productService: factory.newProductService(),
-          reportService: factory.newReportService(),
-          getSubscriptionService: () => { throw new NotbankError("NotbankError. subcription service only exists for websocket connection", -1) },
-          systemService: factory.newSystemService(),
-          tradingService: factory.newTradingService(),
-          userService: factory.newUserService(),
-          walletService: factory.newWalletService(),
-          quoteService: factory.newQuoteService(),
-          authenticate: params => factory.authenticateUser(params),
-          connect: () => null,
-          close: () => null
-        }
-      )
+      return new NotbankClient({
+        accountService: factory.newAccountService(),
+        authService: factory.newAuthService(),
+        feeService: factory.newFeeService(),
+        instrumentService: factory.newInstrumentService(),
+        productService: factory.newProductService(),
+        reportService: factory.newReportService(),
+        getSubscriptionService: () => { throw new NotbankError("NotbankError. subcription service only exists for websocket connection", -1) },
+        systemService: factory.newSystemService(),
+        tradingService: factory.newTradingService(),
+        userService: factory.newUserService(),
+        walletService: factory.newWalletService(),
+        quoteService: factory.newQuoteService(),
+        authenticate: params => factory.authenticateUser(params),
+        connect: () => null,
+        close: () => null
+      })
     }
     static createWebsocketClient(configuration?: WebsocketConnectionConfiguration) {
       var factory = new WebsocketServiceFactory(configuration)
@@ -113,7 +111,7 @@ export class NotbankClient {
           instrumentService: factory.newInstrumentService(),
           productService: factory.newProductService(),
           reportService: factory.newReportService(),
-          getSubscriptionService: factory.getSubscriptionService,
+          getSubscriptionService: ()=>factory.getSubscriptionService(),
           systemService: factory.newSystemService(),
           tradingService: factory.newTradingService(),
           userService: factory.newUserService(),
@@ -127,67 +125,48 @@ export class NotbankClient {
     }
   }
 
-  authenticateUser(params: {
-    ApiPublicKey: string;
-    ApiSecretKey: string;
-    UserId: string;
-  }): Promise<void> {
-    return this.#authenticateUser(params)
-  }
-
   getAccountService(): AccountService {
-    return this.#accountService
+    return this.accountService
   }
 
   getAuthService(): AuthService {
-    return this.#authService
+    return this.authService
   }
 
   getFeeService(): FeeService {
-    return this.#feeService
+    return this.feeService
   }
 
   getInstrumentService(): InstrumentService {
-    return this.#instrumentService
+    return this.instrumentService
   }
 
   getProductService(): ProductService {
-    return this.#productService
+    return this.productService
   }
 
   getReportService(): ReportService {
-    return this.#reportService
+    return this.reportService
   }
 
-  getSubscriptionService(): SubscriptionService {
-    return this.#getSubscriptionService()
-  }
 
   getSystemService(): SystemService {
-    return this.#systemService
+    return this.systemService
   }
 
   getTradingService(): TradingService {
-    return this.#tradingService
+    return this.tradingService
   }
 
   getUserService(): UserService {
-    return this.#userService
+    return this.userService
   }
 
   getWalletService(): WalletService {
-    return this.#walletService
+    return this.walletService
   }
 
   getQuoteService(): QuoteService {
-    return this.#quoteService
-  }
-
-  connect(hooks: WebsocketHooks = {}): Promise<void> {
-    return this.#connect(hooks)
-  }
-
-  close() {
-    this.#close()
+    return this.quoteService
   }
 }

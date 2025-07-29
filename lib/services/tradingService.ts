@@ -1,6 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { TradeSummary } from "../models/enums/indexTrade";
+import { TradeSummary } from "../models/response/tradeSummary";
 import { CancelAllOrdersRequest } from "../models/request/cancelAllOrders";
 import { CancelOrderRequest } from "../models/request/cancelOrder";
 import { CancelReplaceOrderRequest } from "../models/request/cancelReplaceOrder";

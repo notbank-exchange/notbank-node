@@ -11,10 +11,10 @@ import { UnsubscribeLevel1Request } from "../../lib/models/request/unSubscribeLe
 import { UnsubscribeOrderStateEventsRequest } from "../../lib/models/request/unsubscribeOrderStateEvents";
 import { UnsubscribeTickerRequest } from "../../lib/models/request/unsubscribeTicker";
 import { UnsubscribeTradesRequest } from "../../lib/models/request/unsubscribeTrades";
-import { WebsocketServiceFactory } from "../../lib/services/websocketServicesFactory";
 import { SubscribeTickerRequest } from "../../lib/models/request/subscribeTicker";
 import { SubscriptionService } from "../../lib/services/subscriptionService";
 import { NotbankClient } from "../../lib/services/notbankClient";
+import { WebsocketServiceFactory } from "../../lib/services/websocketServiceFactory";
 
 describe("Subscription Service websocket", () => {
   const client = NotbankClient.Factory.createWebsocketClient();
@@ -410,7 +410,7 @@ describe("subscriptionService - UnsubscribeOrderStateEvents", () => {
   });
 });
 
-describe.only("SubscribeTicker", () => {
+describe("SubscribeTicker", () => {
   const wsServiceFactory = new WebsocketServiceFactory({
     domain: "stgapi.notbank.exchange",
   });

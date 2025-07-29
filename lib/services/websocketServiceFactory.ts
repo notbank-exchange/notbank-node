@@ -19,48 +19,41 @@ import { WalletService } from "./walletService";
 
 
 export class WebsocketServiceFactory {
-  #serviceConnection: ServiceConnection;
-  #getReadyState: () => number
-  #subcriptionService?: SubscriptionService
+  private serviceConnection: ServiceConnection;
+  private getReadyState: () => number
 
   constructor(configuration?: WebsocketConnectionConfiguration) {
-    if (configuration.reconect) {
-      var restartingWebsocketConnection = new RestartingWebsocketConnection({
+    var connection = configuration?.reconect
+      ? new WebsocketConnection(configuration)
+      : new RestartingWebsocketConnection({
         restarter: new Restarter({ connectionConfiguration: configuration || {} })
-      })
-      this.#serviceConnection = restartingWebsocketConnection
-      this.#getReadyState = restartingWebsocketConnection.getReadyState
-
-    } else {
-      var websocketConnection = new WebsocketConnection(configuration);
-      this.#serviceConnection = websocketConnection
-      this.#getReadyState = () => websocketConnection.readyState
-
-    }
+      });
+    this.serviceConnection = connection
+    this.getReadyState = () => connection.readyState
   }
 
   connect(): Promise<void> {
-    return this.#serviceConnection.connect();
+    return this.serviceConnection.connect();
   }
 
   close(): Promise<void> {
-    return this.#serviceConnection.close();
+    return this.serviceConnection.close();
   }
 
   get isConnecting(): boolean {
-    return this.#getReadyState() === WebSocket.CONNECTING;
+    return this.getReadyState() === WebSocket.CONNECTING;
   }
 
   get isConnected(): boolean {
-    return this.#getReadyState() === WebSocket.OPEN;
+    return this.getReadyState() === WebSocket.OPEN;
   }
 
   get isClosing(): boolean {
-    return this.#getReadyState() === WebSocket.CLOSING;
+    return this.getReadyState() === WebSocket.CLOSING;
   }
 
   get isClosed(): boolean {
-    return this.#getReadyState() === WebSocket.CLOSED;
+    return this.getReadyState() === WebSocket.CLOSED;
   }
 
   async authenticateUser(params: {
@@ -75,7 +68,7 @@ export class WebsocketServiceFactory {
       params.UserId,
       nonce
     );
-    await this.#serviceConnection.authenticateUser({
+    await this.serviceConnection.authenticateUser({
       APIKey: params.ApiPublicKey,
       Signature: signature,
       UserId: params.UserId,
@@ -84,54 +77,50 @@ export class WebsocketServiceFactory {
   }
 
   newAccountService(): AccountService {
-    return new AccountService(this.#serviceConnection);
+    return new AccountService(this.serviceConnection);
   }
 
   newAuthService(): AuthService {
-    return new AuthService(this.#serviceConnection);
+    return new AuthService(this.serviceConnection);
   }
 
   newFeeService(): FeeService {
-    return new FeeService(this.#serviceConnection);
+    return new FeeService(this.serviceConnection);
   }
 
   newInstrumentService(): InstrumentService {
-    return new InstrumentService(this.#serviceConnection);
+    return new InstrumentService(this.serviceConnection);
   }
 
   newProductService(): ProductService {
-    return new ProductService(this.#serviceConnection);
+    return new ProductService(this.serviceConnection);
   }
 
   newReportService(): ReportService {
-    return new ReportService(this.#serviceConnection);
+    return new ReportService(this.serviceConnection);
   }
 
   newSystemService(): SystemService {
-    return new SystemService(this.#serviceConnection);
+    return new SystemService(this.serviceConnection);
   }
 
   getSubscriptionService(): SubscriptionService {
-    if (this.#subcriptionService) {
-      return this.#subcriptionService
-    }
-    this.#subcriptionService = new SubscriptionService(this.#serviceConnection);
-    return this.#subcriptionService
+    return new SubscriptionService(this.serviceConnection);
   }
 
   newTradingService(): TradingService {
-    return new TradingService(this.#serviceConnection);
+    return new TradingService(this.serviceConnection);
   }
 
   newUserService(): UserService {
-    return new UserService(this.#serviceConnection);
+    return new UserService(this.serviceConnection);
   }
 
   newWalletService(): WalletService {
-    return new WalletService(this.#serviceConnection);
+    return new WalletService(this.serviceConnection);
   }
 
   newQuoteService(): QuoteService {
-    return new QuoteService(this.#serviceConnection);
+    return new QuoteService(this.serviceConnection);
   }
 }

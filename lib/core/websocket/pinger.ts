@@ -3,11 +3,11 @@ import { RequestType } from "../serviceClient";
 import { WebsocketConnection } from "./websocketConnection";
 
 export class Pinger {
-  #interval?: NodeJS.Timeout
+  private interval?: NodeJS.Timeout
 
   startPing(connection: WebsocketConnection, reconnect: () => Promise<void>) {
     this.stop()
-    this.#interval = setInterval(async () => {
+    this.interval = setInterval(async () => {
       try {
         await Promise.race([
           connection.apRequest(Endpoint.PING, RequestType.NONE),
@@ -17,11 +17,11 @@ export class Pinger {
         await reconnect()
       }
     }, 10_000)
-    this.#interval.unref()
+    this.interval.unref()
   }
 
   stop() {
-    if (!this.#interval) { return }
-    clearTimeout(this.#interval)
+    if (!this.interval) { return }
+    clearTimeout(this.interval)
   }
 }

@@ -20,7 +20,6 @@ export class HttpConnection implements ServiceConnection {
     this.#host = "https://" + domain;
   }
 
-
   async nbRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
@@ -83,5 +82,11 @@ export class HttpConnection implements ServiceConnection {
   getNbUrl(endpoint: string): string {
     return this.#host + "/api/nb/" + endpoint;
   }
-  connect(): void { }
+  connect(): Promise<void> {
+    return Promise.resolve()
+  }
+  close(): Promise<void> {
+    return Promise.resolve()
+  }
+
 }

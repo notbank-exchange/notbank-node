@@ -1,10 +1,9 @@
-import { ActionType } from "./actionType";
-import { SideType } from "./sideType";
+import { ActionType, SideType } from "../enums";
 
 /**
  * Interface que mapea cada elemento del snapshot Level 2.
  */
-export interface Level2Ticker {
+export interface Level2Feed {
   MDUpdateId: number; // index 0
   NumberOfAccounts: number; // index 1
   ActionDateTime: number; // index 2 (POSIX x 1000)
