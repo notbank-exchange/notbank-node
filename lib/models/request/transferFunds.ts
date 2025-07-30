@@ -4,5 +4,6 @@ export interface TransferFundsRequest {
   currency_name: string
   amount: string
   notes?: string
+  otp?: string
 
 }
