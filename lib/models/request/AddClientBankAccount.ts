@@ -1,4 +1,4 @@
-export interface CreateBankAccountRequest {
+export interface AddClientBankAccountRequest {
   country: string
   bank: string
   number: string
