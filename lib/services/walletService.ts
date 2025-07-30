@@ -3,18 +3,18 @@ import { RequestType, ServiceConnection } from "../core/serviceClient";
 import { AddWhitelistedAddressRequest } from "../models/request/addWhitelistedAddress";
 import { ConfirmFiatWithdrawRequest } from "../models/request/confirmFiatWithdraw";
 import { ConfirmWhitelistedAddressRequest } from "../models/request/confirmWhitelistedAddress";
-import { CreateBankAccountRequest } from "../models/request/createBankAccount";
+import { AddClientBankAccountRequest } from "../models/request/AddClientBankAccount";
 import { CreateCryptoWithdrawRequest } from "../models/request/createCryptoWithdraw";
 import { CreateDepositAddressesRequest } from "../models/request/CreateDepositAddress";
 import { CreateFiatDepositRequest } from "../models/request/createFiatDeposit";
 import { CreateFiatWithdrawRequest } from "../models/request/createFiatWithdraw";
-import { DeleteBankAccountRequest } from "../models/request/deleteBankAccount";
+import { DeleteClientBankAccountRequest } from "../models/request/deleteClientBankAccount";
 import { DeleteWhitelistedAddressRequest } from "../models/request/deleteWhitelistedAddress";
-import { GetBankAccountRequest } from "../models/request/getBankAccount";
-import { GetBankAccountsRequest } from "../models/request/getBankAccounts";
+import { GetClientBankAccountRequest } from "../models/request/getClientBankAccount";
+import { GetClientBankAccountsRequest } from "../models/request/getClientBankAccounts";
 import { GetBankRequest } from "../models/request/getBanks";
 import { GetNetworksTemplatesRequest } from "../models/request/getCurrencyNetworkTemplates";
-import { GetDepositAddressesRequest } from "../models/request/GetDepositAddresses";
+import { GetDepositAddressesRequest } from "../models/request/getDepositAddresses";
 import { GetOwnersFiatWithdrawRequest } from "../models/request/getOwnersFiatWithdraw";
 import { GetTransactionsRequest } from "../models/request/getTransactions";
 import { GetWhitelistedAddressesRequest } from "../models/request/getWhitelistedAddresses";
@@ -55,9 +55,9 @@ export class WalletService {
   }
 
   /**
-   * https://apidoc.notbank.exchange/#createbankaccount
+   * https://apidoc.notbank.exchange/#addclientbankaccount
    */
-  createBankAccount(request: CreateBankAccountRequest): Promise<BankAccount> {
+  AddClientBankAccount(request: AddClientBankAccountRequest): Promise<BankAccount> {
     return this.connection.nbRequest(
       Endpoint.BANK_ACCOUNTS,
       RequestType.POST,
@@ -66,9 +66,9 @@ export class WalletService {
   }
 
   /**
-   * https://apidoc.notbank.exchange/#getbankaccount
+   * https://apidoc.notbank.exchange/#getclientbankaccount
    */
-  getBankAccount(request: GetBankAccountRequest): Promise<BankAccount> {
+  getClientBankAccount(request: GetClientBankAccountRequest): Promise<BankAccount> {
     return this.connection.nbRequest(
       Endpoint.BANK_ACCOUNTS + "/" + request.bankAccountId,
       RequestType.GET,
@@ -76,9 +76,9 @@ export class WalletService {
   }
 
   /**
-   * https://apidoc.notbank.exchange/#getbankaccounts
+   * https://apidoc.notbank.exchange/#getclientbankaccounts
    */
-  getBankAccounts(request: GetBankAccountsRequest): Promise<BankAccounts> {
+  getClientBankAccounts(request: GetClientBankAccountsRequest): Promise<BankAccounts> {
     return this.#nbPagedRequest(
       Endpoint.BANK_ACCOUNTS,
       RequestType.GET,
@@ -88,9 +88,9 @@ export class WalletService {
 
 
   /**
-   * https://apidoc.notbank.exchange/#deletebankaccount
+   * https://apidoc.notbank.exchange/#deleteclientbankaccount
    */
-  deleteBankAccount(request: DeleteBankAccountRequest): Promise<void> {
+  deleteClientBankAccount(request: DeleteClientBankAccountRequest): Promise<void> {
     return this.connection.nbRequest(
       Endpoint.BANK_ACCOUNTS + "/" + request.bankAccountId,
       RequestType.DELETE
@@ -203,11 +203,12 @@ export class WalletService {
    * https://apidoc.notbank.exchange/#createfiatdeposit
    */
   async createFiatDeposit(request: CreateFiatDepositRequest): Promise<string | undefined> {
-    return await (this.connection.nbRequest(
+    const result = await this.connection.nbRequest<CreateFiatDepositRequest, { url?: string }>(
       Endpoint.FIAT_DEPOSIT,
       RequestType.POST,
       request
-    ) as { url?: string })?.url;
+    );
+    return result?.url;
   }
 
   /**
@@ -225,11 +226,12 @@ export class WalletService {
    * https://apidoc.notbank.exchange/#getownersfiatwithdraw
    */
   async createFiatWithdraw(request: CreateFiatWithdrawRequest): Promise<string | undefined> {
-    return await (this.connection.nbRequest(
+    const result = await this.connection.nbRequest<CreateFiatWithdrawRequest, { withdrawal_id?: string }>(
       Endpoint.FIAT_WITHDRAW,
       RequestType.POST,
       request
-    ) as { withdrawal_id?: string })?.withdrawal_id;
+    );
+    return result?.withdrawal_id;
   }
 
   /**
@@ -259,8 +261,8 @@ export class WalletService {
    */
   getTransactions(request: GetTransactionsRequest): Promise<Transactions> {
     return this.#nbPagedRequest(
-      Endpoint.TRANSFER_FUNDS,
-      RequestType.POST,
+      Endpoint.GET_TRANSACTIONS,
+      RequestType.GET,
       request
     );
   }
