@@ -583,7 +583,7 @@ var NotbankSdk = (() => {
   };
 
   // lib/core/hmac.ts
-  var import_crypto = __toESM(__require("crypto"));
+  var import_crypto = __toESM(__require("crypto"), 1);
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
@@ -1873,7 +1873,7 @@ var NotbankSdk = (() => {
   _httpConnection = new WeakMap();
 
   // lib/core/websocket/websocketClient.ts
-  var import_universal_websocket_client = __toESM(require_browser());
+  var import_universal_websocket_client = __toESM(require_browser(), 1);
 
   // lib/core/websocket/callbackManager.ts
   var _subscriptionCallbacks, _callbacks, _sequenceNumber;
