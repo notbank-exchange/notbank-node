@@ -99,6 +99,7 @@ export enum Endpoint {
   GET_OWNERS_FIAT_WITHDRAW = "wallet/fiat/withdrawal/owners",
   FIAT_WITHDRAW = "wallet/fiat/withdrawal",
   TRANSFER_FUNDS = "wallet/transfer-funds",
+  GET_TRANSACTIONS = "wallet/transactions",
 
   // quote
   QUOTES = "quotes",
