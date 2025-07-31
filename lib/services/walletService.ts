@@ -26,6 +26,7 @@ import { CbuOwner } from "../models/response/cbuOwner";
 import { CurrencyNetworkTemplates } from "../models/response/networkTemplates";
 import { Transactions } from "../models/response/transaction";
 import { WhiteListedAddress } from "../models/response/whiteListedAddress";
+import { ResendVerificationCodeWhitelistedAddressRequest } from "../models/request/resendVerificationCodeWhitelistedAddress";
 
 export class WalletService {
   connection: ServiceConnection;
@@ -156,9 +157,17 @@ export class WalletService {
    */
   confirmWhitelistedAddress(request: ConfirmWhitelistedAddressRequest): Promise<void> {
     return this.connection.nbRequest(
-      Endpoint.WHITELIST_ADDRESSES + "/" + request.whitelistedAddressId,
+      Endpoint.WHITELIST_ADDRESSES + "/" + request.whitelistedAddressId + "/verification",
       RequestType.POST,
-      { code: request.code }
+      { sms_code: request.sms_code, account_id: request.account_id }
+    );
+  }
+
+  resendVerificationCodeWhitelistedAddress(request: ResendVerificationCodeWhitelistedAddressRequest): Promise<void> {
+    return this.connection.nbRequest(
+      Endpoint.WHITELIST_ADDRESSES + "/" + request.whitelistedAddressId + "/verification",
+      RequestType.GET,
+      { account_id: request.account_id }
     );
   }
 
