@@ -6,5 +6,5 @@ export interface WhiteListedAddress {
   address:string
   memo?: string | null,
   verified: boolean
-  providerId?: number | null,
+  provider_id?: number | null,
 }

@@ -70,6 +70,7 @@ export * from "./index";
 export * from "./modifyOrder";
 export * from "./orderBook";
 export * from "./removeUserReportTicket";
+export * from "./resendVerificationCodeWhitelistedAddress";
 export * from "./scheduleActivityReport";
 export * from "./sendCancelList";
 export * from "./sendCancelReplaceList";
