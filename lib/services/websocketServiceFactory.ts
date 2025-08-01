@@ -23,11 +23,11 @@ export class WebsocketServiceFactory {
   private getReadyState: () => number
 
   constructor(configuration?: WebsocketConnectionConfiguration) {
-    var connection = configuration?.reconect
-      ? new WebsocketConnection(configuration)
-      : new RestartingWebsocketConnection({
+    var connection = configuration?.withoutReconect
+      ? new RestartingWebsocketConnection({
         restarter: new Restarter({ connectionConfiguration: configuration || {} })
-      });
+      })
+      : new WebsocketConnection(configuration);
     this.serviceConnection = connection
     this.getReadyState = () => connection.readyState
   }

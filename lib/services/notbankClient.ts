@@ -16,7 +16,7 @@ import { QuoteService } from "./quoteService";
 import { WebsocketServiceFactory } from "./websocketServiceFactory";
 import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration";
 
-const DEFAULT_DOMAIN = "api.notbank.exchange";
+const DEFAULT_DOMAIN = "stgapi.notbank.exchange";
 
 export class NotbankClient {
   accountService: AccountService
@@ -36,8 +36,8 @@ export class NotbankClient {
     ApiSecretKey: string,
     UserId: string,
   }) => Promise<void>
-  connect: (hooks?: WebsocketHooks) => Promise<void>
-  close: () => void
+  connect: () => Promise<void>
+  close: () => Promise<void>
 
   constructor(
     params: {
@@ -58,8 +58,8 @@ export class NotbankClient {
         ApiSecretKey: string,
         UserId: string,
       }) => Promise<void>,
-      connect: (hooks: WebsocketHooks) => Promise<void>,
-      close: () => void,
+      connect: () => Promise<void>,
+      close: () => Promise<void>,
     }
   ) {
     this.accountService = params.accountService
@@ -97,8 +97,8 @@ export class NotbankClient {
         walletService: factory.newWalletService(),
         quoteService: factory.newQuoteService(),
         authenticate: params => factory.authenticateUser(params),
-        connect: () => null,
-        close: () => null
+        connect: () => Promise.resolve(null),
+        close: () => Promise.resolve(null)
       })
     }
     static createWebsocketClient(configuration?: WebsocketConnectionConfiguration) {
@@ -111,7 +111,7 @@ export class NotbankClient {
           instrumentService: factory.newInstrumentService(),
           productService: factory.newProductService(),
           reportService: factory.newReportService(),
-          getSubscriptionService: ()=>factory.getSubscriptionService(),
+          getSubscriptionService: () => factory.getSubscriptionService(),
           systemService: factory.newSystemService(),
           tradingService: factory.newTradingService(),
           userService: factory.newUserService(),

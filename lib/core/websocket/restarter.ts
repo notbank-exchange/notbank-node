@@ -40,15 +40,24 @@ export class Restarter {
   }
 
   async reconnect(): Promise<void> {
+    console.log("reconnection requested")
+    try {
+      console.log("reconnecting?:   " + this.reconnecting)
+      console.log("closeRequested?: " + this.closeRequested)
+    } catch (e) {
+      console.log(e)
+    }
     if (this.reconnecting || this.closeRequested) { return }
+    console.log("reconnecting")
     this.reconnecting = true
     this.closeCurrentConnection()
     this.connection = this.#newConnection()
     await this.#connect();
     this.reauther.makeAuthentication(this.connection)
     this.resubscriber.makeSubscriptions(this.connection)
-    this.pinger.startPing(this.connection, this.reconnect)
+    this.pinger.startPing(this.connection, this)
     this.reconnecting = false
+    console.log("reconnection done")
   }
 
   async #connect() {
@@ -60,6 +69,7 @@ export class Restarter {
         ]);
         return
       } catch (e) {
+        console.log("unable to reconnect, retrying")
         // try again
       }
     }
@@ -75,11 +85,11 @@ export class Restarter {
         onOpen: this.connectionConfiguration.websocketHooks?.onOpen,
         onError: (event) => {
           if (this.reconnecting) { return }
-          this.connectionConfiguration.websocketHooks?.onError(event)
+          this.connectionConfiguration.websocketHooks?.onError?.(event)
         },
         onClose: (event) => {
           if (this.reconnecting || !this.closeRequested) { return }
-          this.connectionConfiguration.websocketHooks?.onClose(event)
+          this.connectionConfiguration.websocketHooks?.onClose?.(event)
         },
       }
     })

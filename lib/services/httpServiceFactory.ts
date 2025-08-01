@@ -12,7 +12,7 @@ import { UserService } from "./userService";
 import { WalletService } from "./walletService";
 import { QuoteService } from "./quoteService";
 
-const DEFAULT_DOMAIN = "api.notbank.exchange";
+const DEFAULT_DOMAIN = "stgapi.notbank.exchange";
 
 export class HttpServiceFactory {
   #httpConnection: HttpConnection;
