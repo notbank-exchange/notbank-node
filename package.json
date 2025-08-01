@@ -4,6 +4,7 @@
   "description": "The Notbank for Node.js",
   "homepage": "https://notbank.exchange",
   "main": "dist/index.js",
+  "type": "module",
   "engines": {
     "node": ">=14.21.3"
   },
