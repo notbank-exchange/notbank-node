@@ -11,7 +11,7 @@ import { SubscriptionIdentifier } from "./SubscriptionIdentifier";
 import { WebsocketConnectionConfiguration } from "./websocketConnectionConfiguration";
 
 const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => { };
-const DEFAULT_DOMAIN = "stgapi.notbank.exchange";
+const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class WebsocketConnection implements ServiceConnection {
   private domain: string;

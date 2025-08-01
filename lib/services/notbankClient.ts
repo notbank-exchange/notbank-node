@@ -16,7 +16,7 @@ import { QuoteService } from "./quoteService";
 import { WebsocketServiceFactory } from "./websocketServiceFactory";
 import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration";
 
-const DEFAULT_DOMAIN = "stgapi.notbank.exchange";
+const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class NotbankClient {
   accountService: AccountService
