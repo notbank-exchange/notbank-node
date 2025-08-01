@@ -1,4 +1,4 @@
-export interface VerificationLevelProductConfig {
+export interface ProductLimits {
     ProductId: number;
     ProductName: string;
     AutoWithdrawThreshold: number;

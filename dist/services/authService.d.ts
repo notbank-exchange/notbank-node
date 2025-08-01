@@ -1,9 +1,9 @@
-import { ServiceClient } from "../core/serviceClient.js";
+import { ServiceConnection } from "../core/serviceClient.js";
 import { WebAuthenticateUserRequest } from "../models/request/webAuthenticateUser.js";
 import { WebAuthenticateUserResponse } from "../models/response/webAuthenticateUser.js";
 export declare class AuthService {
-    #private;
-    constructor(serviceCore: ServiceClient);
+    connection: ServiceConnection;
+    constructor(connection: ServiceConnection);
     /**
      * https://apidoc.notbank.exchange/?http#webauthenticateuser
      */

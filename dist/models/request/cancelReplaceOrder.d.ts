@@ -1,5 +1,5 @@
-import { OrderSide } from "../common/orderSide.js";
-import { OrderTypeInt } from "../common/orderType.js";
+import { OrderSide } from "../enums/orderSide.js";
+import { OrderTypeInt } from "../enums/orderType.js";
 import { PegPriceType } from "../enums/pegPriceType.js";
 import { TimeInForce } from "../enums/timeInForce.js";
 export interface CancelReplaceOrderRequest {

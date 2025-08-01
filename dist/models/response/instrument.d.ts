@@ -1,5 +1,5 @@
 import { SessionStatus } from "../enums/sessionStatus.js";
-export interface InstrumentResponse {
+export interface Instrument {
     OMSId: number;
     InstrumentId: number;
     Symbol: string;

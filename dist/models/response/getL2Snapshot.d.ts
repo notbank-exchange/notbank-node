@@ -10,4 +10,3 @@ export interface L2Snapshot {
     Quantity: number;
     Side: number;
 }
-export type GetL2SnapshotResponse = L2Snapshot[];

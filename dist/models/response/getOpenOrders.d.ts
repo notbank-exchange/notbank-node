@@ -1,11 +1,11 @@
-import { ChangeReason } from "../common/changeReason.js";
-import { OrderTypeInt } from "../common/orderType.js";
+import { ChangeReason } from "../enums/changeReason.js";
+import { OrderTypeInt } from "../enums/orderType.js";
 import { SideType } from "../enums/sideType.js";
 /**
  * OpenOrder:
  * Representa una orden abierta devuelta por el API de GetOpenOrders.
  */
-export interface GetOpenOrdersResponse {
+export interface OpenOrder {
     Side: SideType;
     OrderId: number;
     Price: number;

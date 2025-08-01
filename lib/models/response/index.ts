@@ -35,7 +35,6 @@ export * from "./getUserReportWriterResultRecords";
 export * from "./getVerificationLevelConfig";
 export * from "./getWithdrawFee";
 export * from "./healthCheck";
-export * from "./index";
 export * from "./instrument";
 export * from "./logOut";
 export * from "./order";

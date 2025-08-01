@@ -1,5 +1,5 @@
 import { DepositFeeMessages } from "../enums/depositFeeMessages.js";
-export interface GetDepositFeeResponse {
+export interface DepositFee {
     FeeAmount: number;
     TicketAmount: number;
     message: DepositFeeMessages;

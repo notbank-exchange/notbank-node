@@ -1,5 +1,5 @@
-import { OrderTypeStr } from "../common/index.js";
-export interface GetAccountFeesResponse {
+import { OrderTypeStr } from "../enums/orderType.js";
+export interface AccountFee {
     FeeId: number;
     OMSId: number;
     FeeTier: number;

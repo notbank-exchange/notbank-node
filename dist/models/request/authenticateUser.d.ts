@@ -1,5 +1,5 @@
 export interface AuthenticateUserRequest {
-    ApiKey: string;
+    APIKey: string;
     Signature: string;
     UserId: string;
     Nonce: string;

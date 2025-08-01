@@ -1,5 +1,5 @@
 import { TradeType } from "../enums/tradeType.js";
-export interface TradesResponse {
+export interface Trade {
     trade_id: number;
     price: number;
     base_volume: number;

@@ -1,4 +1,4 @@
-export interface GetLevel1SummaryResponse {
+export interface Level1Summary {
     OMSId: number;
     InstrumentId: number;
     BestBid: number;

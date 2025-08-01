@@ -1,5 +1,5 @@
 import { WithdrawFeeMessages } from "../enums/withdrawFeeMessages.js";
-export interface GetWithdrawFeeResponse {
+export interface WithdrawFee {
     FeeAmount: number;
     TicketAmount: number;
     message: WithdrawFeeMessages;

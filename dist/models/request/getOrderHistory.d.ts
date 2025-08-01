@@ -1,4 +1,4 @@
-import { OrderState } from "../common/orderState.js";
+import { OrderState } from "../enums/orderState.js";
 export interface GetOrdersHistoryRequest {
     AccountId: number;
     OrderState?: OrderState;

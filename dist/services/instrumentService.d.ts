@@ -1,14 +1,23 @@
-import { ServiceClient } from "../core/serviceClient.js";
+import { ServiceConnection } from "../core/serviceClient.js";
 import { GetInstrumentRequest } from "../models/request/getInstrument.js";
 import { GetInstrumentsRequest } from "../models/request/getInstruments.js";
 import { GetInstrumentVerificationLevelConfigRequest } from "../models/request/getInstrumentVerificationLevelConfig.js";
-import { GetInstrumentVerificationLevelConfigResponse } from "../models/response/getInstrumentVerificationLevelConfig.js";
-import { InstrumentResponse } from "../models/response/instrument.js";
+import { InstrumentVerificationLevelConfig } from "../models/response/getInstrumentVerificationLevelConfig.js";
+import { Instrument } from "../models/response/instrument.js";
 export declare class InstrumentService {
-    #private;
+    connection: ServiceConnection;
     private readonly OMS_ID;
-    constructor(serviceCore: ServiceClient);
-    getInstruments(params: GetInstrumentsRequest): Promise<InstrumentResponse[]>;
-    getInstrument(params: GetInstrumentRequest): Promise<InstrumentResponse>;
-    getInstrumentVerificationLevelConfigs(params: GetInstrumentVerificationLevelConfigRequest): Promise<GetInstrumentVerificationLevelConfigResponse[]>;
+    constructor(connection: ServiceConnection);
+    /**
+     * https://apidoc.notbank.exchange/#getinstruments
+     */
+    getInstruments(params?: GetInstrumentsRequest): Promise<Instrument[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getinstrument
+     */
+    getInstrument(params: GetInstrumentRequest): Promise<Instrument>;
+    /**
+     * https://apidoc.notbank.exchange/#getinstrumentverificationlevelconfig
+     */
+    getInstrumentVerificationLevelConfigs(params: GetInstrumentVerificationLevelConfigRequest): Promise<InstrumentVerificationLevelConfig[]>;
 }

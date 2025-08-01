@@ -7,4 +7,3 @@ export interface UserDevice {
     IsTrusted: boolean;
     ExpirationTime: number;
 }
-export type GetUserDevicesResponse = UserDevice[];

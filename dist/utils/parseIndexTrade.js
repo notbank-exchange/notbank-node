@@ -1,4 +1,4 @@
-export function parseIndexTrade(jsonTrade) {
+export function parseTradeSummary(jsonTrade) {
     return {
         TradeId: jsonTrade[0],
         InstrumentId: jsonTrade[1],

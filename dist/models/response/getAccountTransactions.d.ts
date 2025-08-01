@@ -12,4 +12,3 @@ export interface AccountTransaction {
     Balance: number;
     TimeStamp: number;
 }
-export type GetAccountTransactionsResponse = AccountTransaction[];
