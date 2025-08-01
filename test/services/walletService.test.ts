@@ -13,7 +13,6 @@ describe("wallet service", () => {
     ApiSecretKey: string;
   }
 
-
   before(async () => {
     await client.authenticateUser({
       ApiPublicKey: credentials.ApiPublicKey,
@@ -112,7 +111,6 @@ describe("wallet service", () => {
     });
   });
 
-
   describe("createDepositAddress", () => {
     it("should work", async () => {
       const alreadyExistingDeposit = await service.createDepositAddress({
@@ -124,7 +122,6 @@ describe("wallet service", () => {
       assert.equal(alreadyExistingDeposit, "0xD9aF4Be918e2AE1302f37C11939bE3b41A88F23c")
     });
   });
-
 
   describe("getWhitelistedAddresses", () => {
     it("should work", async () => {
@@ -153,14 +150,17 @@ describe("wallet service", () => {
   });
 
   describe("deleteWhitelistedAddress", () => {
-    it.only("should work", async () => {
-      const response = await service.deleteWhitelistedAddress({
-        account_id: 235,
-        whitelistedAddressId: "6a36bdf4-cf21-42ce-9945-6008b0485969",
-        otp: "849886"
-      });
-      console.log(response)
-      assert.ok(response);
+    it("should not reject", async () => {
+      await assert.doesNotReject(
+        async () => {
+          const response = await service.deleteWhitelistedAddress({
+            account_id: 235,
+            whitelistedAddressId: "6a36bdf4-cf21-42ce-9945-6008b0485969",
+            otp: "849886"
+          });
+          console.log(response);
+        }
+      );
     });
   });
 
@@ -188,7 +188,6 @@ describe("wallet service", () => {
       });
     });
   });
-
 
   describe("updateOneStepWithdraw", () => {
     it("should not reject", async () => {
@@ -289,7 +288,6 @@ describe("wallet service", () => {
       assert.ok(response);
     });
   });
-
 
   describe("getTransactions", () => {
     it("should work", async () => {
