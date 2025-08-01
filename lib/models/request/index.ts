@@ -1,5 +1,5 @@
-export * from "./AddClientBankAccount";
-export * from "./CreateDepositAddress";
+export * from "./addClientBankAccount";
+export * from "./createDepositAddress";
 export * from "./addWhitelistedAddress";
 export * from "./authenticateUser";
 export * from "./cancelAllOrders";
