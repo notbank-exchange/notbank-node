@@ -1,4 +1,3 @@
-import { WebsocketHooks } from "../core/websocket/websocketHooks.js";
 import { AccountService } from "./accountService.js";
 import { AuthService } from "./authService.js";
 import { FeeService } from "./feeService.js";
@@ -10,8 +9,28 @@ import { SystemService } from "./systemService.js";
 import { TradingService } from "./tradingService.js";
 import { UserService } from "./userService.js";
 import { WalletService } from "./walletService.js";
+import { QuoteService } from "./quoteService.js";
+import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration.js";
 export declare class NotbankClient {
-    #private;
+    accountService: AccountService;
+    authService: AuthService;
+    feeService: FeeService;
+    instrumentService: InstrumentService;
+    productService: ProductService;
+    reportService: ReportService;
+    getSubscriptionService: () => SubscriptionService;
+    systemService: SystemService;
+    tradingService: TradingService;
+    userService: UserService;
+    walletService: WalletService;
+    quoteService: QuoteService;
+    authenticateUser: (params: {
+        ApiPublicKey: string;
+        ApiSecretKey: string;
+        UserId: string;
+    }) => Promise<void>;
+    connect: () => Promise<void>;
+    close: () => Promise<void>;
     constructor(params: {
         accountService: AccountService;
         authService: AuthService;
@@ -24,35 +43,29 @@ export declare class NotbankClient {
         tradingService: TradingService;
         userService: UserService;
         walletService: WalletService;
+        quoteService: QuoteService;
         authenticate: (authParams: {
             ApiPublicKey: string;
             ApiSecretKey: string;
             UserId: string;
         }) => Promise<void>;
-        connect: (hooks: WebsocketHooks) => Promise<void>;
-        close: () => void;
+        connect: () => Promise<void>;
+        close: () => Promise<void>;
     });
     static Factory: {
         new (): {};
         createRestClient(domain?: string): NotbankClient;
-        createWebsocketClient(domain?: string): NotbankClient;
+        createWebsocketClient(configuration?: WebsocketConnectionConfiguration): NotbankClient;
     };
-    authenticateUser(params: {
-        ApiPublicKey: string;
-        ApiSecretKey: string;
-        UserId: string;
-    }): Promise<void>;
     getAccountService(): AccountService;
     getAuthService(): AuthService;
     getFeeService(): FeeService;
     getInstrumentService(): InstrumentService;
     getProductService(): ProductService;
     getReportService(): ReportService;
-    getSubscriptionService(): SubscriptionService;
     getSystemService(): SystemService;
     getTradingService(): TradingService;
     getUserService(): UserService;
     getWalletService(): WalletService;
-    connect(hooks?: WebsocketHooks): Promise<void>;
-    close(): void;
+    getQuoteService(): QuoteService;
 }

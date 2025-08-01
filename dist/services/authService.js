@@ -26,7 +26,6 @@ export class AuthService {
      */
     logOut() {
         return __awaiter(this, void 0, void 0, function* () {
-            // Realiza la solicitud al endpoint utilizando el método POST.
             return yield this.connection.apRequest(Endpoint.LOGOUT, RequestType.POST);
         });
     }

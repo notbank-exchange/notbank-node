@@ -87,6 +87,15 @@ export var Endpoint;
     Endpoint["WHITELIST_ADDRESSES"] = "wallet/crypto/whitelist-addresses";
     Endpoint["UPDATE_ONE_STEP_WITHDRAW"] = "wallet/crypto/whitelist-addresses/one-step/status";
     Endpoint["CREATE_CRYPTO_WITHDRAW"] = "wallet/crypto/withdrawal";
+    Endpoint["FIAT_DEPOSIT"] = "wallet/fiat/deposit";
+    Endpoint["GET_OWNERS_FIAT_WITHDRAW"] = "wallet/fiat/withdrawal/owners";
+    Endpoint["FIAT_WITHDRAW"] = "wallet/fiat/withdrawal";
+    Endpoint["TRANSFER_FUNDS"] = "wallet/transfer-funds";
+    Endpoint["GET_TRANSACTIONS"] = "wallet/transactions";
+    // quote
+    Endpoint["QUOTES"] = "quotes";
+    Endpoint["QUOTES_DIRECT"] = "quotes/direct";
+    Endpoint["QUOTES_INVERSE"] = "quotes/inverse";
 })(Endpoint || (Endpoint = {}));
 export var WebSocketEndpoint;
 (function (WebSocketEndpoint) {

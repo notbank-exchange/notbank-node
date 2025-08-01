@@ -49,7 +49,7 @@ export * from "./subscribeTrades.js";
 export * from "./summary.js";
 export * from "./ticker.js";
 export * from "./trades.js";
-export * from "./transaction.js";
+export * from "./transactionEvent.js";
 export * from "./webAuthenticateUser.js";
 export * from "./withdrawTemplate.js";
 export * from "./withdrawTicket.js";

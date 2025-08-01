@@ -2,17 +2,19 @@ import { MessageFrame } from "./messageFrame.js";
 import { SubscriptionHandler } from "./subscriptionHandler.js";
 import { RequestType, ServiceConnection } from "../serviceClient.js";
 import { AuthenticateUserRequest } from "../../models/index.js";
-import { WebsocketHooks } from "./websocketHooks.js";
+import { WebsocketConnectionConfiguration } from "./websocketConnectionConfiguration.js";
 export declare class WebsocketConnection implements ServiceConnection {
     #private;
-    constructor(params: {
-        domain: string;
-        peekMessageIn?: (message: MessageFrame) => void;
-        peekMessageOut?: (message: MessageFrame) => void;
-    });
+    private domain;
+    private callbackManager;
+    private websocket;
+    private hooks;
+    private peekMessageIn;
+    private peekMessageOut;
+    constructor(configuration: WebsocketConnectionConfiguration);
     nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2>;
-    connect(hooks?: WebsocketHooks): Promise<void>;
-    close(): void;
+    connect(): Promise<void>;
+    close(): Promise<void>;
     get readyState(): number;
     apRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2>;
     subscribe<T>(endpoint: string, firstIdentifier: number | null, secondIdentifier: number | null, message: T, subscriptionCallbacks: SubscriptionHandler<MessageFrame>[]): Promise<void>;

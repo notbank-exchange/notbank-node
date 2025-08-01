@@ -1,2 +1,2 @@
-import { CancelReplaceOrder } from "../enums/cancelReplaceOrder.js";
-export type SendCancelReplaceListRequest = CancelReplaceOrder[];
+import { CancelReplaceOrderRequest } from "./cancelReplaceOrder.js";
+export type SendCancelReplaceListRequest = CancelReplaceOrderRequest[];

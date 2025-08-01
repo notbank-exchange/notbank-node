@@ -17,22 +17,29 @@ import { NotbankError } from "../../models/notbankError.js";
 export class NbResponseHandler {
     static handle(response, paged) {
         return __awaiter(this, void 0, void 0, function* () {
-            var jsonResponse = yield __classPrivateFieldGet(_a, _a, "m", _NbResponseHandler_getData).call(_a, response);
-            if (!jsonResponse) {
-                throw new NotbankError("http error. (status=" + response.status + ")", -1);
+            try {
+                var jsonResponse = yield __classPrivateFieldGet(_a, _a, "m", _NbResponseHandler_getData).call(_a, response);
+                if (!jsonResponse) {
+                    throw new NotbankError("http error. (status=" + response.status + ")", -1);
+                }
+                var nbResponse = jsonResponse;
+                if ((nbResponse === null || nbResponse === void 0 ? void 0 : nbResponse.status) === 'success') {
+                    return paged ? jsonResponse : nbResponse.data;
+                }
+                const error = NotbankError.Factory.createFromNbResponse(nbResponse);
+                throw error;
             }
-            var nbResponse = jsonResponse;
-            if ((nbResponse === null || nbResponse === void 0 ? void 0 : nbResponse.status) === 'success') {
-                return paged ? jsonResponse : nbResponse.data;
+            catch (error) {
+                throw error; // Re-lanza el error
             }
-            throw NotbankError.Factory.createFromNbResponse(nbResponse);
         });
     }
 }
 _a = NbResponseHandler, _NbResponseHandler_getData = function _NbResponseHandler_getData(response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            return yield response.json();
+            const data = yield response.json();
+            return data;
         }
         catch (err) {
             return null;
