@@ -6,5 +6,5 @@ export interface WebsocketConnectionConfiguration {
   websocketHooks?: WebsocketHooks;
   peekMessageIn?: (message: MessageFrame) => void;
   peekMessageOut?: (message: MessageFrame) => void;
-  withoutReconect?: boolean
+  withReconnect?: boolean
 }

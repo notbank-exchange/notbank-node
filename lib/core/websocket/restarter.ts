@@ -40,15 +40,7 @@ export class Restarter {
   }
 
   async reconnect(): Promise<void> {
-    console.log("reconnection requested")
-    try {
-      console.log("reconnecting?:   " + this.reconnecting)
-      console.log("closeRequested?: " + this.closeRequested)
-    } catch (e) {
-      console.log(e)
-    }
     if (this.reconnecting || this.closeRequested) { return }
-    console.log("reconnecting")
     this.reconnecting = true
     this.closeCurrentConnection()
     this.connection = this.#newConnection()
@@ -57,7 +49,6 @@ export class Restarter {
     this.resubscriber.makeSubscriptions(this.connection)
     this.pinger.startPing(this.connection, this)
     this.reconnecting = false
-    console.log("reconnection done")
   }
 
   async #connect() {
@@ -69,7 +60,6 @@ export class Restarter {
         ]);
         return
       } catch (e) {
-        console.log("unable to reconnect, retrying")
         // try again
       }
     }
