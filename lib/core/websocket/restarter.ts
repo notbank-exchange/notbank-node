@@ -47,7 +47,7 @@ export class Restarter {
     await this.#connect();
     this.reauther.makeAuthentication(this.connection)
     this.resubscriber.makeSubscriptions(this.connection)
-    this.pinger.startPing(this.connection, this.reconnect)
+    this.pinger.startPing(this.connection, this)
     this.reconnecting = false
   }
 
@@ -75,11 +75,11 @@ export class Restarter {
         onOpen: this.connectionConfiguration.websocketHooks?.onOpen,
         onError: (event) => {
           if (this.reconnecting) { return }
-          this.connectionConfiguration.websocketHooks?.onError(event)
+          this.connectionConfiguration.websocketHooks?.onError?.(event)
         },
         onClose: (event) => {
           if (this.reconnecting || !this.closeRequested) { return }
-          this.connectionConfiguration.websocketHooks?.onClose(event)
+          this.connectionConfiguration.websocketHooks?.onClose?.(event)
         },
       }
     })

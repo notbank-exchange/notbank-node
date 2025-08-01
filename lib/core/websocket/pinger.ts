@@ -1,22 +1,26 @@
 import { Endpoint } from "../../constants/endpoints";
+import { Pong } from "../../models";
 import { RequestType } from "../serviceClient";
+import { Restarter } from "./restarter";
 import { WebsocketConnection } from "./websocketConnection";
 
 export class Pinger {
   private interval?: NodeJS.Timeout
 
-  startPing(connection: WebsocketConnection, reconnect: () => Promise<void>) {
+  startPing(connection: WebsocketConnection, restarter: Restarter) {
     this.stop()
     this.interval = setInterval(async () => {
       try {
         await Promise.race([
-          connection.apRequest(Endpoint.PING, RequestType.NONE),
-          new Promise((resolve, reject) => setTimeout(reject, 10_000))
+          connection.apRequest<void, Pong>(Endpoint.PING, RequestType.NONE),
+          new Promise((resolve, reject) => setTimeout(reject, 5_000))
         ])
+        
       } catch (e) {
-        await reconnect()
+        await restarter.reconnect()
+        return
       }
-    }, 10_000)
+    }, 5_000)
     this.interval.unref()
   }
 
