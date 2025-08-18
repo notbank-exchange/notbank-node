@@ -49,7 +49,6 @@ export class InstrumentService {
   async getInstrumentBySymbol(
     params: { symbol: string }
   ): Promise<Instrument> {
-    const paramsWithOMSId = completeParams(params, this.OMS_ID);
     if (!(params.symbol in this.instrumentCache)) {
       var instruments = await this.getInstruments();
       instruments.map(instrument => this.instrumentCache[instrument.Symbol] = instrument)
