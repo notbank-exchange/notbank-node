@@ -3,17 +3,25 @@ import { NotbankClient } from "../../lib/services/notbankClient";
 import { SubscriptionService } from "../../lib/services/subscriptionService";
 
 describe("websocket restarter", () => {
+
   let client: NotbankClient;
   let subscriptionService: SubscriptionService;
 
   before(async () => {
-    client = NotbankClient.Factory.createWebsocketClient();
-    console.log("restarter test")
+    client = NotbankClient.Factory.createWebsocketClient({
+      domain: "stgapi.notbank.exchange",
+      peekMessageIn: message => { },
+      peekMessageOut: message => { },
+      websocketHooks: {
+        onOpen: o => console.log("open"),
+      },
+      withReconnect: true
+    });
     await client.connect();
     await client.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
+      ApiPublicKey: "59c8ca906c2fceda1ad02e1fab90f6d3",
+      ApiSecretKey: "4ab1fd70807645f9547eaa50fcdbc5b5",
+      UserId: "17",
     });
     subscriptionService = client.getSubscriptionService();
   });
@@ -23,16 +31,17 @@ describe("websocket restarter", () => {
   });
 
   describe("subscribeLevel1", () => {
-    it.only("debería suscribirse correctamente a Level1", async () => {
-      await subscriptionService.subscribeLevel1(
+
+    it("debería reconectarse después de desconexión", async function () {
+      this.timeout(0);
+      await subscriptionService.subscribeOrderStateEvents(
         {
           InstrumentId: 66,
-          Symbol: "BTCUSDT",
+          AccountId: 235
         },
-        snapshot => console.log(snapshot),
-        update => console.log(update)
+        o => { console.log(o) }
       );
-      await sleepSeconds(3)
+      await sleepSeconds(300_000)
     });
   })
 
