@@ -28,7 +28,7 @@ const client = NotbankClient.Factory.createRestClient();
 await client.authenticateUser({
   ApiPublicKey: "my-public-key",
   ApiSecretKey: "my-secret-key",
-  UserId: 112233
+  UserId: "xxxx"
 });
 ```
 
@@ -40,18 +40,17 @@ try {
     IncludePending: true,
   });
 } catch (err) {
-  const error = err as NotbankError
+  const error = err as NotbankError;
   // handle error
-}
 }
 ```
 ### Put order at the top of book example
 ```typescript
 const client = NotbankClient.Factory.createRestClient();
 await client.authenticateUser({
-  ApiPublicKey: "adda11a919d9106f81fc3ca5a97fa578",
-  ApiSecretKey: "h2647g3c19fd8531be971d1d7b2101ab",
-  UserId: "82",
+  ApiPublicKey: "my-public-key",
+  ApiSecretKey: "my-secret-key",
+  UserId: "xxxx"
 });
 var accountId = 235;
 
@@ -127,9 +126,9 @@ client = NotbankClient.Factory.createWebsocketClient({
 });
 await client.connect();
 await client.authenticateUser({
-  ApiPublicKey: "59c8ca906c2fceda1ad02e1fab90f6d5",
-  ApiSecretKey: "4ab1fd70807645f9547eaa50fcdbc5b3",
-  UserId: "11",
+  ApiPublicKey: "my-public-key",
+  ApiSecretKey: "my-secret-key",
+  UserId: "xxxx"
 });
 // ...
 client.close();
