@@ -28,7 +28,7 @@ const client = NotbankClient.Factory.createRestClient();
 await client.authenticateUser({
   ApiPublicKey: "my-public-key",
   ApiSecretKey: "my-secret-key",
-  UserId: 112233
+  UserId: "xxxx"
 });
 ```
 
@@ -51,9 +51,9 @@ try {
 ```typescript
 const client = NotbankClient.Factory.createRestClient();
 await client.authenticateUser({
-  ApiPublicKey: "adda11a919d9106f81fc3ca5a97fa578",
-  ApiSecretKey: "h2647g3c19fd8531be971d1d7b2101ab",
-  UserId: "82",
+  ApiPublicKey: "my-public-key",
+  ApiSecretKey: "my-secret-key",
+  UserId: "xxxx",
 });
 var accountId = 235;
 
