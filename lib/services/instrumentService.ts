@@ -1,5 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
+import { NotbankError } from "../models";
 import { GetInstrumentRequest } from "../models/request/getInstrument";
 import { GetInstrumentsRequest } from "../models/request/getInstruments";
 import { GetInstrumentVerificationLevelConfigRequest } from "../models/request/getInstrumentVerificationLevelConfig";
@@ -10,16 +11,18 @@ import { completeParams } from "../utils/completeParams";
 export class InstrumentService {
   connection: ServiceConnection;
   private readonly OMS_ID = 1;
+  private instrumentCache: { [key: string]: Instrument }
 
   constructor(connection: ServiceConnection) {
     this.connection = connection;
+    this.instrumentCache = {}
   }
 
   /**
    * https://apidoc.notbank.exchange/#getinstruments
    */
   getInstruments(
-    params: GetInstrumentsRequest={}
+    params: GetInstrumentsRequest = {}
   ): Promise<Instrument[]> {
     const paramsWithOMSId = completeParams(params, this.OMS_ID);
     return this.connection.apRequest(
@@ -41,6 +44,21 @@ export class InstrumentService {
       RequestType.POST,
       paramsWithOMSId
     );
+  }
+
+  async getInstrumentBySymbol(
+    params: { symbol: string }
+  ): Promise<Instrument> {
+    const paramsWithOMSId = completeParams(params, this.OMS_ID);
+    if (!(params.symbol in this.instrumentCache)) {
+      var instruments = await this.getInstruments();
+      instruments.map(instrument => this.instrumentCache[instrument.Symbol] = instrument)
+    }
+    if (params.symbol in this.instrumentCache) {
+      return Promise.resolve(this.instrumentCache[params.symbol]);
+    } else {
+      throw new NotbankError("no instrument found for symbol " + params.symbol, -1)
+    }
   }
 
   /**
