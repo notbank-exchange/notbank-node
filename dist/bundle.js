@@ -1034,6 +1034,7 @@ var NotbankSdk = (() => {
     constructor(connection) {
       this.OMS_ID = 1;
       this.connection = connection;
+      this.instrumentCache = {};
     }
     /**
      * https://apidoc.notbank.exchange/#getinstruments
@@ -1057,6 +1058,19 @@ var NotbankSdk = (() => {
         paramsWithOMSId
       );
     }
+    getInstrumentBySymbol(params) {
+      return __async(this, null, function* () {
+        if (!(params.symbol in this.instrumentCache)) {
+          var instruments = yield this.getInstruments();
+          instruments.map((instrument) => this.instrumentCache[instrument.Symbol] = instrument);
+        }
+        if (params.symbol in this.instrumentCache) {
+          return Promise.resolve(this.instrumentCache[params.symbol]);
+        } else {
+          throw new NotbankError("no instrument found for symbol " + params.symbol, -1);
+        }
+      });
+    }
     /**
      * https://apidoc.notbank.exchange/#getinstrumentverificationlevelconfig
      */
@@ -1077,6 +1091,7 @@ var NotbankSdk = (() => {
     constructor(connection) {
       this.OMS_ID = 1;
       this.connection = connection;
+      this.productCache = {};
     }
     /**
      * https://apidoc.notbank.exchange/#getproduct
@@ -1092,14 +1107,27 @@ var NotbankSdk = (() => {
     /**
      * https://apidoc.notbank.exchange/#getproducts
      */
-    getProducts(params) {
-      return __async(this, null, function* () {
+    getProducts() {
+      return __async(this, arguments, function* (params = {}) {
         const paramsWithOMSId = completeParams(params, this.OMS_ID);
         return this.connection.apRequest(
           "GetProducts" /* GET_PRODUCTS */,
           "POST" /* POST */,
           paramsWithOMSId
         );
+      });
+    }
+    getProductBySymbol(params) {
+      return __async(this, null, function* () {
+        if (!(params.symbol in this.productCache)) {
+          var products = yield this.getProducts();
+          products.map((product) => this.productCache[product.Product] = product);
+        }
+        if (params.symbol in this.productCache) {
+          return Promise.resolve(this.productCache[params.symbol]);
+        } else {
+          throw new NotbankError("no product found for symbol " + params.symbol, -1);
+        }
       });
     }
     /**
@@ -2099,19 +2127,23 @@ var NotbankSdk = (() => {
 
   // lib/core/websocket/pinger.ts
   var Pinger = class {
+    constructor(pingIntervalMillis = 1e4, pingTimeoutMillis = 5e3) {
+      this.pingIntervalMillis = pingIntervalMillis;
+      this.pingTimeoutMillis = pingTimeoutMillis;
+    }
     startPing(connection, restarter) {
       this.stop();
       this.interval = setInterval(() => __async(this, null, function* () {
         try {
           yield Promise.race([
             connection.apRequest("Ping" /* PING */, "NONE" /* NONE */),
-            new Promise((resolve, reject) => setTimeout(reject, 5e3))
+            new Promise((resolve, reject) => setTimeout(reject, this.pingTimeoutMillis))
           ]);
         } catch (e) {
           yield restarter.reconnect();
           return;
         }
-      }), 5e3);
+      }), this.pingIntervalMillis);
       this.interval.unref();
     }
     stop() {
@@ -2563,17 +2595,19 @@ var NotbankSdk = (() => {
     closeCurrentConnection() {
       var _a;
       this.pinger.stop();
-      return (_a = this.connection) == null ? void 0 : _a.close();
+      var closed = (_a = this.connection) == null ? void 0 : _a.close();
+      return closed;
     }
     close() {
       this.closeRequested = true;
-      return this.closeCurrentConnection();
+      var closed = this.closeCurrentConnection();
+      return closed;
     }
   };
   _Restarter_instances = new WeakSet();
   connect_fn = function() {
     return __async(this, null, function* () {
-      while (true) {
+      while (!this.closeRequested) {
         try {
           yield Promise.race([
             this.connection.connect(),

@@ -10,20 +10,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { Endpoint } from "../../constants/endpoints.js";
 import { RequestType } from "../serviceClient.js";
 export class Pinger {
+    constructor(pingIntervalMillis = 10000, pingTimeoutMillis = 5000) {
+        this.pingIntervalMillis = pingIntervalMillis;
+        this.pingTimeoutMillis = pingTimeoutMillis;
+    }
     startPing(connection, restarter) {
         this.stop();
         this.interval = setInterval(() => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield Promise.race([
                     connection.apRequest(Endpoint.PING, RequestType.NONE),
-                    new Promise((resolve, reject) => setTimeout(reject, 5000))
+                    new Promise((resolve, reject) => setTimeout(reject, this.pingTimeoutMillis))
                 ]);
             }
             catch (e) {
                 yield restarter.reconnect();
                 return;
             }
-        }), 5000);
+        }), this.pingIntervalMillis);
         this.interval.unref();
     }
     stop() {

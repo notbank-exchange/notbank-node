@@ -59,16 +59,18 @@ export class Restarter {
     closeCurrentConnection() {
         var _a;
         this.pinger.stop();
-        return (_a = this.connection) === null || _a === void 0 ? void 0 : _a.close();
+        var closed = (_a = this.connection) === null || _a === void 0 ? void 0 : _a.close();
+        return closed;
     }
     close() {
         this.closeRequested = true;
-        return this.closeCurrentConnection();
+        var closed = this.closeCurrentConnection();
+        return closed;
     }
 }
 _Restarter_instances = new WeakSet(), _Restarter_connect = function _Restarter_connect() {
     return __awaiter(this, void 0, void 0, function* () {
-        while (true) {
+        while (!this.closeRequested) {
             try {
                 yield Promise.race([
                     this.connection.connect(),

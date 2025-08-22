@@ -7,6 +7,7 @@ import { Instrument } from "../models/response/instrument.js";
 export declare class InstrumentService {
     connection: ServiceConnection;
     private readonly OMS_ID;
+    private instrumentCache;
     constructor(connection: ServiceConnection);
     /**
      * https://apidoc.notbank.exchange/#getinstruments
@@ -16,6 +17,9 @@ export declare class InstrumentService {
      * https://apidoc.notbank.exchange/#getinstrument
      */
     getInstrument(params: GetInstrumentRequest): Promise<Instrument>;
+    getInstrumentBySymbol(params: {
+        symbol: string;
+    }): Promise<Instrument>;
     /**
      * https://apidoc.notbank.exchange/#getinstrumentverificationlevelconfig
      */
