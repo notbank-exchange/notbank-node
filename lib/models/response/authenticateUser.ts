@@ -1,4 +1,4 @@
-import { User } from "../enums/user";
+import { User } from "./user";
 
 export interface AuthenticateUserResponse {
   Authenticated: boolean;

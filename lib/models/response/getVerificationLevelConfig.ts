@@ -1,4 +1,4 @@
-import { ProductLimits } from "../enums/verificationLevelProductConfig";
+import { ProductLimits } from "./verificationLevelProductConfig";
 
 export interface VerificationLevelConfig {
   Level: number; // The verification level number

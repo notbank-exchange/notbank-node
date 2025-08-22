@@ -92,7 +92,8 @@ var NotbankSdk = (() => {
   // lib/index.ts
   var index_exports = {};
   __export(index_exports, {
-    default: () => index_default
+    NotbankClient: () => NotbankClient,
+    models: () => models_exports
   });
 
   // lib/models/index.ts
@@ -100,13 +101,18 @@ var NotbankSdk = (() => {
   __export(models_exports, {
     AccountType: () => AccountType,
     ActionType: () => ActionType,
+    ArgentinaBankAccountKind: () => ArgentinaBankAccountKind,
+    BrazilBankAccountKind: () => BrazilBankAccountKind,
     ChangeReason: () => ChangeReason,
+    ChileBankAccountKind: () => ChileBankAccountKind,
+    ColombiaBankAccountKind: () => ColombiaBankAccountKind,
     DepositFeeMessages: () => DepositFeeMessages,
     DepositStatus: () => DepositStatus,
     Direction: () => Direction,
     FeeCalcType: () => FeeCalcType,
     FeeProductType: () => FeeProductType,
     FeeType: () => FeeType,
+    InstrumentStateArgument: () => InstrumentStateArgument,
     InstrumentType: () => InstrumentType,
     MakerTaker: () => MakerTaker,
     NotbankError: () => NotbankError,
@@ -116,6 +122,8 @@ var NotbankSdk = (() => {
     OrderTypeInt: () => OrderTypeInt,
     OrderTypeStr: () => OrderTypeStr,
     PegPriceType: () => PegPriceType,
+    PeruBankAccountKind: () => PeruBankAccountKind,
+    PixType: () => PixType,
     ProductType: () => ProductType,
     ReferenceType: () => ReferenceType,
     ReportFlavor: () => ReportFlavor,
@@ -126,6 +134,7 @@ var NotbankSdk = (() => {
     SessionStatus: () => SessionStatus,
     SideType: () => SideType,
     SubscriptionResponse: () => SubscriptionResponse,
+    SupportedCountry: () => SupportedCountry,
     TimeInForce: () => TimeInForce,
     TradeDirection: () => TradeDirection,
     TradeSide: () => TradeSide,
@@ -155,6 +164,45 @@ var NotbankSdk = (() => {
     return ActionType2;
   })(ActionType || {});
 
+  // lib/models/enums/bankAccounts.ts
+  var ArgentinaBankAccountKind = /* @__PURE__ */ ((ArgentinaBankAccountKind2) => {
+    ArgentinaBankAccountKind2["CORRIENTE"] = "corriente";
+    ArgentinaBankAccountKind2["VISTA"] = "vista";
+    ArgentinaBankAccountKind2["AHORRO"] = "ahorro";
+    ArgentinaBankAccountKind2["ELECTRONIC_CHECKBOOK"] = "electronic_checkbook";
+    ArgentinaBankAccountKind2["AR_CBU"] = "ar_cbu";
+    ArgentinaBankAccountKind2["AR_CVU"] = "ar_cvu";
+    ArgentinaBankAccountKind2["AR_ALIAS"] = "ar_alias";
+    return ArgentinaBankAccountKind2;
+  })(ArgentinaBankAccountKind || {});
+  var BrazilBankAccountKind = /* @__PURE__ */ ((BrazilBankAccountKind2) => {
+    BrazilBankAccountKind2["BR_CORRIENTE_FISICA"] = "br_corriente_fisica";
+    BrazilBankAccountKind2["BR_SIMPLE_FISICA"] = "br_simple_fisica";
+    BrazilBankAccountKind2["BR_CORRIENTE_JURIDICA"] = "br_corriente_juridica";
+    BrazilBankAccountKind2["BR_POUPANCA_FISICA"] = "br_poupanca_fisica";
+    BrazilBankAccountKind2["BR_POUPANCA_JURIDICA"] = "br_poupanca_juridica";
+    BrazilBankAccountKind2["BR_CAIXA_FACIL"] = "br_caixa_facil";
+    BrazilBankAccountKind2["BR_PIX"] = "br_pix";
+    return BrazilBankAccountKind2;
+  })(BrazilBankAccountKind || {});
+  var ChileBankAccountKind = /* @__PURE__ */ ((ChileBankAccountKind2) => {
+    ChileBankAccountKind2["CORRIENTE"] = "corriente";
+    ChileBankAccountKind2["VISTA"] = "vista";
+    ChileBankAccountKind2["AHORRO"] = "ahorro";
+    ChileBankAccountKind2["ELECTRONIC_CHECKBOOK"] = "electronic_checkbook";
+    return ChileBankAccountKind2;
+  })(ChileBankAccountKind || {});
+  var PeruBankAccountKind = /* @__PURE__ */ ((PeruBankAccountKind2) => {
+    PeruBankAccountKind2["CORRIENTE"] = "corriente";
+    PeruBankAccountKind2["AHORRO"] = "ahorro";
+    return PeruBankAccountKind2;
+  })(PeruBankAccountKind || {});
+  var ColombiaBankAccountKind = /* @__PURE__ */ ((ColombiaBankAccountKind2) => {
+    ColombiaBankAccountKind2["CORRIENTE"] = "corriente";
+    ColombiaBankAccountKind2["AHORRO"] = "ahorro";
+    return ColombiaBankAccountKind2;
+  })(ColombiaBankAccountKind || {});
+
   // lib/models/enums/changeReason.ts
   var ChangeReason = /* @__PURE__ */ ((ChangeReason2) => {
     ChangeReason2["UNKNOWN"] = "Unknown";
@@ -170,6 +218,16 @@ var NotbankSdk = (() => {
     ChangeReason2["USERMODIFIED"] = "UserModified";
     return ChangeReason2;
   })(ChangeReason || {});
+
+  // lib/models/enums/countries.ts
+  var SupportedCountry = /* @__PURE__ */ ((SupportedCountry2) => {
+    SupportedCountry2["AR"] = "AR";
+    SupportedCountry2["BR"] = "BR";
+    SupportedCountry2["CL"] = "CL";
+    SupportedCountry2["PE"] = "PE";
+    SupportedCountry2["CO"] = "CO";
+    return SupportedCountry2;
+  })(SupportedCountry || {});
 
   // lib/models/enums/depositFeeMessages.ts
   var DepositFeeMessages = /* @__PURE__ */ ((DepositFeeMessages2) => {
@@ -202,6 +260,13 @@ var NotbankSdk = (() => {
     FeeProductType2["SINGLE_PRODUCT"] = "SingleProduct";
     return FeeProductType2;
   })(FeeProductType || {});
+
+  // lib/models/enums/instrumentStateArgument.ts
+  var InstrumentStateArgument = /* @__PURE__ */ ((InstrumentStateArgument2) => {
+    InstrumentStateArgument2["BOTH"] = "BOTH";
+    InstrumentStateArgument2["INACTIVE"] = "INACTIVE";
+    return InstrumentStateArgument2;
+  })(InstrumentStateArgument || {});
 
   // lib/models/enums/instrumentType.ts
   var InstrumentType = /* @__PURE__ */ ((InstrumentType2) => {
@@ -279,6 +344,16 @@ var NotbankSdk = (() => {
     PegPriceType2[PegPriceType2["Midpoint"] = 4] = "Midpoint";
     return PegPriceType2;
   })(PegPriceType || {});
+
+  // lib/models/enums/pixType.ts
+  var PixType = /* @__PURE__ */ ((PixType2) => {
+    PixType2["CPF"] = "CPF";
+    PixType2["CNPJ"] = "CNPJ";
+    PixType2["EMAIL"] = "Email";
+    PixType2["PHONE"] = "Phone";
+    PixType2["OTRO"] = "Otro";
+    return PixType2;
+  })(PixType || {});
 
   // lib/models/enums/productType.ts
   var ProductType = /* @__PURE__ */ ((ProductType2) => {
@@ -648,15 +723,20 @@ var NotbankSdk = (() => {
     static handle(response, paged) {
       return __async(this, null, function* () {
         var _a;
-        var jsonResponse = yield __privateMethod(_a = _NbResponseHandler, _NbResponseHandler_static, getData_fn).call(_a, response);
-        if (!jsonResponse) {
-          throw new NotbankError("http error. (status=" + response.status + ")", -1);
+        try {
+          var jsonResponse = yield __privateMethod(_a = _NbResponseHandler, _NbResponseHandler_static, getData_fn).call(_a, response);
+          if (!jsonResponse) {
+            throw new NotbankError("http error. (status=" + response.status + ")", -1);
+          }
+          var nbResponse = jsonResponse;
+          if ((nbResponse == null ? void 0 : nbResponse.status) === "success") {
+            return paged ? jsonResponse : nbResponse.data;
+          }
+          const error = NotbankError.Factory.createFromNbResponse(nbResponse);
+          throw error;
+        } catch (error) {
+          throw error;
         }
-        var nbResponse = jsonResponse;
-        if ((nbResponse == null ? void 0 : nbResponse.status) === "success") {
-          return paged ? jsonResponse : nbResponse.data;
-        }
-        throw NotbankError.Factory.createFromNbResponse(nbResponse);
       });
     }
   };
@@ -664,7 +744,8 @@ var NotbankSdk = (() => {
   getData_fn = function(response) {
     return __async(this, null, function* () {
       try {
-        return yield response.json();
+        const data = yield response.json();
+        return data;
       } catch (err) {
         return null;
       }
@@ -684,8 +765,12 @@ var NotbankSdk = (() => {
       __privateSet(this, _aptoken, aptoken);
     }
     request(config) {
-      var url = config.requestType === "POST" /* POST */ ? config.url : this.getUrlWithSearchParams(config.url, config.params);
-      var body = config.requestType === "POST" /* POST */ ? config.params : null;
+      const isPostOrDeleteRequest = [
+        "POST" /* POST */,
+        "DELETE" /* DELETE */
+      ].includes(config.requestType);
+      var url = isPostOrDeleteRequest ? config.url : this.getUrlWithSearchParams(config.url, config.params);
+      var body = isPostOrDeleteRequest ? config.params : null;
       var requestData = {
         method: config.requestType,
         headers: this.getHeaders(config.extraHeaders)
@@ -765,6 +850,12 @@ var NotbankSdk = (() => {
     }
     getNbUrl(endpoint) {
       return __privateGet(this, _host) + "/api/nb/" + endpoint;
+    }
+    connect() {
+      return Promise.resolve();
+    }
+    close() {
+      return Promise.resolve();
     }
   };
   _requester = new WeakMap();
@@ -943,6 +1034,7 @@ var NotbankSdk = (() => {
     constructor(connection) {
       this.OMS_ID = 1;
       this.connection = connection;
+      this.instrumentCache = {};
     }
     /**
      * https://apidoc.notbank.exchange/#getinstruments
@@ -966,6 +1058,19 @@ var NotbankSdk = (() => {
         paramsWithOMSId
       );
     }
+    getInstrumentBySymbol(params) {
+      return __async(this, null, function* () {
+        if (!(params.symbol in this.instrumentCache)) {
+          var instruments = yield this.getInstruments();
+          instruments.map((instrument) => this.instrumentCache[instrument.Symbol] = instrument);
+        }
+        if (params.symbol in this.instrumentCache) {
+          return Promise.resolve(this.instrumentCache[params.symbol]);
+        } else {
+          throw new NotbankError("no instrument found for symbol " + params.symbol, -1);
+        }
+      });
+    }
     /**
      * https://apidoc.notbank.exchange/#getinstrumentverificationlevelconfig
      */
@@ -986,6 +1091,7 @@ var NotbankSdk = (() => {
     constructor(connection) {
       this.OMS_ID = 1;
       this.connection = connection;
+      this.productCache = {};
     }
     /**
      * https://apidoc.notbank.exchange/#getproduct
@@ -1001,14 +1107,27 @@ var NotbankSdk = (() => {
     /**
      * https://apidoc.notbank.exchange/#getproducts
      */
-    getProducts(params) {
-      return __async(this, null, function* () {
+    getProducts() {
+      return __async(this, arguments, function* (params = {}) {
         const paramsWithOMSId = completeParams(params, this.OMS_ID);
         return this.connection.apRequest(
           "GetProducts" /* GET_PRODUCTS */,
           "POST" /* POST */,
           paramsWithOMSId
         );
+      });
+    }
+    getProductBySymbol(params) {
+      return __async(this, null, function* () {
+        if (!(params.symbol in this.productCache)) {
+          var products = yield this.getProducts();
+          products.map((product) => this.productCache[product.Product] = product);
+        }
+        if (params.symbol in this.productCache) {
+          return Promise.resolve(this.productCache[params.symbol]);
+        } else {
+          throw new NotbankError("no product found for symbol " + params.symbol, -1);
+        }
       });
     }
     /**
@@ -1666,25 +1785,22 @@ var NotbankSdk = (() => {
   };
 
   // lib/services/walletService.ts
+  var _WalletService_instances, nbPagedRequest_fn;
   var WalletService = class {
     constructor(connection) {
+      __privateAdd(this, _WalletService_instances);
       this.connection = connection;
     }
     /**
      * https://apidoc.notbank.exchange/#getbanks
      */
     getBanks(request) {
-      return this.connection.nbRequest(
-        "banks" /* BANKS */,
-        "GET" /* GET */,
-        request,
-        true
-      );
+      return __privateMethod(this, _WalletService_instances, nbPagedRequest_fn).call(this, "banks" /* BANKS */, "GET" /* GET */, request);
     }
     /**
-     * https://apidoc.notbank.exchange/#createbankaccount
+     * https://apidoc.notbank.exchange/#addclientbankaccount
      */
-    createBankAccount(request) {
+    AddClientBankAccount(request) {
       return this.connection.nbRequest(
         "bank-accounts" /* BANK_ACCOUNTS */,
         "POST" /* POST */,
@@ -1692,29 +1808,24 @@ var NotbankSdk = (() => {
       );
     }
     /**
-     * https://apidoc.notbank.exchange/#getbankaccount
+     * https://apidoc.notbank.exchange/#getclientbankaccount
      */
-    getBankAccount(request) {
+    getClientBankAccount(request) {
       return this.connection.nbRequest(
         "bank-accounts" /* BANK_ACCOUNTS */ + "/" + request.bankAccountId,
         "GET" /* GET */
       );
     }
     /**
-     * https://apidoc.notbank.exchange/#getbankaccounts
+     * https://apidoc.notbank.exchange/#getclientbankaccounts
      */
-    getBankAccounts(request) {
-      return this.connection.nbRequest(
-        "bank-accounts" /* BANK_ACCOUNTS */,
-        "GET" /* GET */,
-        request,
-        true
-      );
+    getClientBankAccounts(request) {
+      return __privateMethod(this, _WalletService_instances, nbPagedRequest_fn).call(this, "bank-accounts" /* BANK_ACCOUNTS */, "GET" /* GET */, request);
     }
     /**
-     * https://apidoc.notbank.exchange/#deletebankaccount
+     * https://apidoc.notbank.exchange/#deleteclientbankaccount
      */
-    deleteBankAccount(request) {
+    deleteClientBankAccount(request) {
       return this.connection.nbRequest(
         "bank-accounts" /* BANK_ACCOUNTS */ + "/" + request.bankAccountId,
         "DELETE" /* DELETE */
@@ -1735,7 +1846,7 @@ var NotbankSdk = (() => {
      */
     getDepositAddresses(request) {
       return this.connection.nbRequest(
-        "bank-accounts" /* BANK_ACCOUNTS */,
+        "wallet/crypto" /* DEPOSIT_ADDRESS */,
         "GET" /* GET */,
         request
       );
@@ -1775,9 +1886,16 @@ var NotbankSdk = (() => {
      */
     confirmWhitelistedAddress(request) {
       return this.connection.nbRequest(
-        "wallet/crypto/whitelist-addresses" /* WHITELIST_ADDRESSES */ + "/" + request.whitelistedAddressId,
+        "wallet/crypto/whitelist-addresses" /* WHITELIST_ADDRESSES */ + "/" + request.whitelistedAddressId + "/verification",
         "POST" /* POST */,
-        { "code": request.code }
+        { sms_code: request.sms_code, account_id: request.account_id }
+      );
+    }
+    resendVerificationCodeWhitelistedAddress(request) {
+      return this.connection.nbRequest(
+        "wallet/crypto/whitelist-addresses" /* WHITELIST_ADDRESSES */ + "/" + request.whitelistedAddressId + "/verification",
+        "GET" /* GET */,
+        { account_id: request.account_id }
       );
     }
     /**
@@ -1788,8 +1906,8 @@ var NotbankSdk = (() => {
         "wallet/crypto/whitelist-addresses" /* WHITELIST_ADDRESSES */ + "/" + request.whitelistedAddressId,
         "DELETE" /* DELETE */,
         {
-          "account_id": request.account_id,
-          "otp": request.otp
+          account_id: request.account_id,
+          otp: request.otp
         }
       );
     }
@@ -1809,6 +1927,138 @@ var NotbankSdk = (() => {
     createCryptoWithdraw(request) {
       return this.connection.nbRequest(
         "wallet/crypto/withdrawal" /* CREATE_CRYPTO_WITHDRAW */,
+        "POST" /* POST */,
+        request
+      );
+    }
+    /**
+     * https://apidoc.notbank.exchange/#createfiatdeposit
+     */
+    createFiatDeposit(request) {
+      return __async(this, null, function* () {
+        const result = yield this.connection.nbRequest(
+          "wallet/fiat/deposit" /* FIAT_DEPOSIT */,
+          "POST" /* POST */,
+          request
+        );
+        return result == null ? void 0 : result.url;
+      });
+    }
+    /**
+     * https://apidoc.notbank.exchange/#getownersfiatwithdraw
+     */
+    getOwnersFiatWithdraw(request) {
+      return this.connection.nbRequest(
+        "wallet/fiat/withdrawal/owners" /* GET_OWNERS_FIAT_WITHDRAW */,
+        "GET" /* GET */,
+        request
+      );
+    }
+    /**
+     * https://apidoc.notbank.exchange/#getownersfiatwithdraw
+     */
+    createFiatWithdraw(request) {
+      return __async(this, null, function* () {
+        const result = yield this.connection.nbRequest(
+          "wallet/fiat/withdrawal" /* FIAT_WITHDRAW */,
+          "POST" /* POST */,
+          request
+        );
+        return result == null ? void 0 : result.withdrawal_id;
+      });
+    }
+    /**
+    * https://apidoc.notbank.exchange/#confirmfiatwithdraw
+    */
+    confirmFiatWithdraw(request) {
+      return this.connection.nbRequest(
+        "wallet/fiat/withdrawal" /* FIAT_WITHDRAW */ + "/" + request.withdrawal_id,
+        "POST" /* POST */,
+        { attempt_code: request.attempt_code }
+      );
+    }
+    /**
+     * https://apidoc.notbank.exchange/#transferfunds
+     */
+    transferFunds(request) {
+      return this.connection.nbRequest(
+        "wallet/transfer-funds" /* TRANSFER_FUNDS */,
+        "POST" /* POST */,
+        request
+      );
+    }
+    /**
+     * https://apidoc.notbank.exchange/#gettransactions
+     */
+    getTransactions(request) {
+      return __privateMethod(this, _WalletService_instances, nbPagedRequest_fn).call(this, "wallet/transactions" /* GET_TRANSACTIONS */, "GET" /* GET */, request);
+    }
+  };
+  _WalletService_instances = new WeakSet();
+  nbPagedRequest_fn = function(endpoint, requestType, message) {
+    return this.connection.nbRequest(
+      endpoint,
+      requestType,
+      message,
+      true
+    );
+  };
+
+  // lib/services/quoteService.ts
+  var QuoteService = class {
+    constructor(connection) {
+      this.connection = connection;
+    }
+    /**
+     * https://apidoc.notbank.exchange/#getquotes
+     */
+    getQuotes(request) {
+      return this.connection.nbRequest(
+        "quotes" /* QUOTES */,
+        "GET" /* GET */,
+        request
+      );
+    }
+    /**
+     * https://apidoc.notbank.exchange/#createdirectquote
+     */
+    createDirectQuote(request) {
+      return __async(this, null, function* () {
+        return (yield this.connection.nbRequest(
+          "quotes/direct" /* QUOTES_DIRECT */,
+          "POST" /* POST */,
+          request
+        )).id;
+      });
+    }
+    /**
+     * https://apidoc.notbank.exchange/#createinversequote
+     */
+    createInverseQuote(request) {
+      return __async(this, null, function* () {
+        return (yield this.connection.nbRequest(
+          "quotes/inverse" /* QUOTES_INVERSE */,
+          "POST" /* POST */,
+          request
+        )).id;
+      });
+    }
+    /**
+     * https://apidoc.notbank.exchange/#getquote
+     */
+    getQuote(request) {
+      return this.connection.nbRequest(
+        "quotes" /* QUOTES */ + "/" + request.quote_id,
+        "GET" /* GET */,
+        request
+      );
+    }
+    /**
+     * https://apidoc.notbank.exchange/#executequote
+     */
+    executeQuote(request) {
+      return this.connection.nbRequest(
+        "quotes" /* QUOTES */ + "/" + request.quote_id,
         "POST" /* POST */,
         request
       );
@@ -1869,63 +2119,59 @@ var NotbankSdk = (() => {
     newWalletService() {
       return new WalletService(__privateGet(this, _httpConnection));
     }
+    newQuoteService() {
+      return new QuoteService(__privateGet(this, _httpConnection));
+    }
   };
   _httpConnection = new WeakMap();
 
-  // lib/core/websocket/websocketClient.ts
-  var import_universal_websocket_client = __toESM(require_browser(), 1);
-
-  // lib/core/websocket/callbackManager.ts
-  var _subscriptionCallbacks, _callbacks, _sequenceNumber;
-  var CallbackManager = class {
-    constructor() {
-      __privateAdd(this, _subscriptionCallbacks);
-      __privateAdd(this, _callbacks);
-      __privateAdd(this, _sequenceNumber);
-      __privateSet(this, _subscriptionCallbacks, {});
-      __privateSet(this, _callbacks, {});
-      __privateSet(this, _sequenceNumber, 2);
+  // lib/core/websocket/pinger.ts
+  var Pinger = class {
+    constructor(pingIntervalMillis = 1e4, pingTimeoutMillis = 5e3) {
+      this.pingIntervalMillis = pingIntervalMillis;
+      this.pingTimeoutMillis = pingTimeoutMillis;
     }
-    putCallback(callback) {
-      var sequenceNumber = __privateGet(this, _sequenceNumber);
-      __privateGet(this, _callbacks)[sequenceNumber] = callback;
-      __privateSet(this, _sequenceNumber, __privateGet(this, _sequenceNumber) + 2);
-      return sequenceNumber;
+    startPing(connection, restarter) {
+      this.stop();
+      this.interval = setInterval(() => __async(this, null, function* () {
+        try {
+          yield Promise.race([
+            connection.apRequest("Ping" /* PING */, "NONE" /* NONE */),
+            new Promise((resolve, reject) => setTimeout(reject, this.pingTimeoutMillis))
+          ]);
+        } catch (e) {
+          yield restarter.reconnect();
+          return;
+        }
+      }), this.pingIntervalMillis);
+      this.interval.unref();
     }
-    popCallback(sequenceNumber) {
-      let callback = __privateGet(this, _callbacks)[sequenceNumber];
-      delete __privateGet(this, _callbacks)[sequenceNumber];
-      return callback != null ? callback : (o) => null;
-    }
-    addSubscriptionCallback(callbackId, callback) {
-      __privateGet(this, _subscriptionCallbacks)[callbackId] = callback;
-    }
-    getSubscriptionCallback(callbackIdentifier) {
-      let handler = __privateGet(this, _subscriptionCallbacks)[callbackIdentifier];
-      return handler || null;
-    }
-    removeSubscriptionCallback(callbackIds) {
-      callbackIds.map(
-        (callbackId) => delete __privateGet(this, _subscriptionCallbacks)[callbackId]
-      );
+    stop() {
+      if (!this.interval) {
+        return;
+      }
+      clearTimeout(this.interval);
     }
   };
-  _subscriptionCallbacks = new WeakMap();
-  _callbacks = new WeakMap();
-  _sequenceNumber = new WeakMap();
 
-  // lib/constants/errorCode.ts
-  var ErrorCode = /* @__PURE__ */ ((ErrorCode2) => {
-    ErrorCode2[ErrorCode2["UNDEFINED"] = -1] = "UNDEFINED";
-    ErrorCode2[ErrorCode2["NOT_AN_ERROR"] = 0] = "NOT_AN_ERROR";
-    ErrorCode2[ErrorCode2["NOT_AUTHORIZED"] = 20] = "NOT_AUTHORIZED";
-    ErrorCode2[ErrorCode2["INVALID_RESPONSE"] = 100] = "INVALID_RESPONSE";
-    ErrorCode2[ErrorCode2["OPERATION_FAILED"] = 101] = "OPERATION_FAILED";
-    ErrorCode2[ErrorCode2["SERVER_ERROR"] = 102] = "SERVER_ERROR";
-    ErrorCode2[ErrorCode2["RESOURCE_NOT_FOUND"] = 104] = "RESOURCE_NOT_FOUND";
-    return ErrorCode2;
-  })(ErrorCode || {});
-  var errorCode_default = ErrorCode;
+  // lib/core/websocket/reauther.ts
+  var Reauther = class {
+    constructor() {
+      this.authenticateFn = null;
+    }
+    updateAuthentication(authenticateFn) {
+      this.authenticateFn = authenticateFn;
+    }
+    removeAuthentication() {
+      this.authenticateFn = null;
+    }
+    makeAuthentication(connection) {
+      if (this.authenticateFn === null) {
+        return;
+      }
+      this.authenticateFn(connection);
+    }
+  };
 
   // lib/core/websocket/SubscriptionIdentifier.ts
   var _mapping, _SubscriptionIdentifier_static, getIdPart_fn, getTickerName_fn, getLevel1TickerName_fn, getLevel2TickerName_fn, getSocketTradeName_fn, getAccountEventName_fn, getOrderEventName_fn, getValueFromList_fn, getInstrumentedId_fn, getInstrumentedIdFromInstrument_fn, getAccountId_fn, getAccountIdFromAccount_fn;
@@ -2039,64 +2285,153 @@ var NotbankSdk = (() => {
   });
   var SubscriptionIdentifier = _SubscriptionIdentifier;
 
-  // lib/core/websocket/websocketClient.ts
+  // lib/core/websocket/resubscriber.ts
+  var _Resubscriber_instances, hasCallbackId_fn;
+  var Resubscriber = class {
+    constructor() {
+      __privateAdd(this, _Resubscriber_instances);
+      this.currentSubscriptions = [];
+    }
+    saveSubscription(data) {
+      this.currentSubscriptions.push(data);
+    }
+    removeSubscription(callbackIds) {
+      for (let i = 0; i < callbackIds.length; i++) {
+        for (let j = 0; j < this.currentSubscriptions.length; j++) {
+          var isFromSubscription = __privateMethod(this, _Resubscriber_instances, hasCallbackId_fn).call(this, this.currentSubscriptions[j], callbackIds[i]);
+          if (isFromSubscription) {
+            this.currentSubscriptions.splice(j, 1);
+            return;
+          }
+        }
+      }
+    }
+    makeSubscriptions(connection) {
+      this.currentSubscriptions.forEach((data) => connection.subscribe(
+        data.endpoint,
+        data.firstIdentifier,
+        data.secondIdentifier,
+        data.message,
+        data.subscriptionHandlers
+      ));
+    }
+  };
+  _Resubscriber_instances = new WeakSet();
+  hasCallbackId_fn = function(data, callbackId) {
+    var subscriptionCallbackId = SubscriptionIdentifier.get(data.endpoint, data.firstIdentifier, data.secondIdentifier);
+    return subscriptionCallbackId === callbackId;
+  };
+
+  // lib/core/websocket/websocketConnection.ts
+  var import_universal_websocket_client = __toESM(require_browser());
+
+  // lib/core/websocket/callbackManager.ts
+  var _subscriptionCallbacks, _callbacks, _sequenceNumber;
+  var CallbackManager = class {
+    constructor() {
+      __privateAdd(this, _subscriptionCallbacks);
+      __privateAdd(this, _callbacks);
+      __privateAdd(this, _sequenceNumber);
+      __privateSet(this, _subscriptionCallbacks, {});
+      __privateSet(this, _callbacks, {});
+      __privateSet(this, _sequenceNumber, 2);
+    }
+    putCallback(callback) {
+      var sequenceNumber = __privateGet(this, _sequenceNumber);
+      __privateGet(this, _callbacks)[sequenceNumber] = callback;
+      __privateSet(this, _sequenceNumber, __privateGet(this, _sequenceNumber) + 2);
+      return sequenceNumber;
+    }
+    popCallback(sequenceNumber) {
+      let callback = __privateGet(this, _callbacks)[sequenceNumber];
+      delete __privateGet(this, _callbacks)[sequenceNumber];
+      return callback != null ? callback : (o) => null;
+    }
+    addSubscriptionCallback(callbackId, callback) {
+      __privateGet(this, _subscriptionCallbacks)[callbackId] = callback;
+    }
+    getSubscriptionCallback(callbackIdentifier) {
+      let handler = __privateGet(this, _subscriptionCallbacks)[callbackIdentifier];
+      return handler || null;
+    }
+    removeSubscriptionCallback(callbackIds) {
+      callbackIds.map(
+        (callbackId) => delete __privateGet(this, _subscriptionCallbacks)[callbackId]
+      );
+    }
+  };
+  _subscriptionCallbacks = new WeakMap();
+  _callbacks = new WeakMap();
+  _sequenceNumber = new WeakMap();
+
+  // lib/constants/errorCode.ts
+  var ErrorCode = /* @__PURE__ */ ((ErrorCode2) => {
+    ErrorCode2[ErrorCode2["UNDEFINED"] = -1] = "UNDEFINED";
+    ErrorCode2[ErrorCode2["NOT_AN_ERROR"] = 0] = "NOT_AN_ERROR";
+    ErrorCode2[ErrorCode2["NOT_AUTHORIZED"] = 20] = "NOT_AUTHORIZED";
+    ErrorCode2[ErrorCode2["INVALID_RESPONSE"] = 100] = "INVALID_RESPONSE";
+    ErrorCode2[ErrorCode2["OPERATION_FAILED"] = 101] = "OPERATION_FAILED";
+    ErrorCode2[ErrorCode2["SERVER_ERROR"] = 102] = "SERVER_ERROR";
+    ErrorCode2[ErrorCode2["RESOURCE_NOT_FOUND"] = 104] = "RESOURCE_NOT_FOUND";
+    return ErrorCode2;
+  })(ErrorCode || {});
+  var errorCode_default = ErrorCode;
+
+  // lib/core/websocket/websocketConnection.ts
   var emptyFn = (o) => {
   };
-  var _domain, _callbackManager, _websocket, _peekMessageIn, _peekMessageOut, _WebsocketConnection_instances, getSubscriptionCallbackId_fn, handleMessage_fn, request_fn, handleRequestResponse_fn, requestToCallback_fn;
+  var DEFAULT_DOMAIN2 = "api.notbank.exchange";
+  var _WebsocketConnection_instances, getSubscriptionCallbackId_fn, handleMessage_fn, request_fn, handleRequestResponse_fn, requestToCallback_fn;
   var WebsocketConnection = class {
-    constructor(params) {
+    constructor(configuration) {
       __privateAdd(this, _WebsocketConnection_instances);
-      __privateAdd(this, _domain);
-      __privateAdd(this, _callbackManager);
-      __privateAdd(this, _websocket);
-      __privateAdd(this, _peekMessageIn);
-      __privateAdd(this, _peekMessageOut);
-      __privateSet(this, _domain, params.domain);
-      __privateSet(this, _callbackManager, new CallbackManager());
-      __privateSet(this, _peekMessageIn, params.peekMessageIn || ((_) => {
-      }));
-      __privateSet(this, _peekMessageOut, params.peekMessageOut || ((_) => {
-      }));
+      this.domain = (configuration == null ? void 0 : configuration.domain) || DEFAULT_DOMAIN2;
+      this.callbackManager = new CallbackManager();
+      this.hooks = (configuration == null ? void 0 : configuration.websocketHooks) || {};
+      this.peekMessageIn = (configuration == null ? void 0 : configuration.peekMessageIn) || ((_) => {
+      });
+      this.peekMessageOut = (configuration == null ? void 0 : configuration.peekMessageOut) || ((_) => {
+      });
     }
     nbRequest(endpoint, requestType, message) {
       throw new Error("websocket client does not support nb methods.");
     }
     connect() {
-      return __async(this, arguments, function* (hooks = {}) {
-        __privateSet(this, _websocket, new import_universal_websocket_client.default("wss://" + __privateGet(this, _domain) + "/wsgateway"));
-        __privateGet(this, _websocket).onopen = (event) => {
-          var _a;
-          return (_a = hooks.onOpen) == null ? void 0 : _a.call(hooks, event);
+      return __async(this, null, function* () {
+        this.websocket = new import_universal_websocket_client.default("wss://" + this.domain + "/wsgateway");
+        this.websocket.onopen = (event) => {
+          var _a, _b;
+          return (_b = (_a = this.hooks).onOpen) == null ? void 0 : _b.call(_a, event);
         };
-        __privateGet(this, _websocket).onclose = (event) => {
-          var _a;
-          return (_a = hooks.onClose) == null ? void 0 : _a.call(hooks, event);
+        this.websocket.onclose = (event) => {
+          var _a, _b;
+          return (_b = (_a = this.hooks).onClose) == null ? void 0 : _b.call(_a, event);
         };
-        __privateGet(this, _websocket).onerror = (event) => {
-          var _a;
-          return (_a = hooks.onError) == null ? void 0 : _a.call(hooks, event);
+        this.websocket.onerror = (event) => {
+          var _a, _b;
+          return (_b = (_a = this.hooks).onError) == null ? void 0 : _b.call(_a, event);
         };
-        __privateGet(this, _websocket).addEventListener("message", (event) => {
+        this.websocket.addEventListener("message", (event) => {
           const messageFrame = JSON.parse(event.data);
           __privateMethod(this, _WebsocketConnection_instances, handleMessage_fn).call(this, messageFrame);
         });
-        __privateGet(this, _websocket).addEventListener(
+        this.websocket.addEventListener(
           "message",
           (event) => {
-            var _a;
-            return (_a = hooks.onMessage) == null ? void 0 : _a.call(hooks, event);
+            var _a, _b;
+            return (_b = (_a = this.hooks).onMessage) == null ? void 0 : _b.call(_a, event);
           }
         );
         return new Promise(
-          (resolve, _) => __privateGet(this, _websocket).addEventListener("open", (_2) => resolve())
+          (resolve, _) => this.websocket.addEventListener("open", (_2) => resolve())
         );
       });
     }
     close() {
-      __privateGet(this, _websocket).close();
+      return this.websocket.close();
     }
     get readyState() {
-      return __privateGet(this, _websocket).readyState;
+      return this.websocket.readyState;
     }
     apRequest(endpoint, requestType, message) {
       return __privateMethod(this, _WebsocketConnection_instances, request_fn).call(this, endpoint, message, 0 /* REQUEST */);
@@ -2104,7 +2439,7 @@ var NotbankSdk = (() => {
     subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionCallbacks) {
       return __async(this, null, function* () {
         subscriptionCallbacks.map(
-          (handler) => __privateGet(this, _callbackManager).addSubscriptionCallback(
+          (handler) => this.callbackManager.addSubscriptionCallback(
             SubscriptionIdentifier.get(
               handler.eventName,
               firstIdentifier,
@@ -2118,7 +2453,7 @@ var NotbankSdk = (() => {
     }
     unsubscribe(endpoint, firstIdentifier, secondIdentifier, message, callbackIds) {
       return __async(this, null, function* () {
-        __privateGet(this, _callbackManager).removeSubscriptionCallback(
+        this.callbackManager.removeSubscriptionCallback(
           callbackIds.map(
             (callbackId) => SubscriptionIdentifier.get(
               callbackId,
@@ -2131,7 +2466,7 @@ var NotbankSdk = (() => {
       });
     }
     closeConnection() {
-      __privateGet(this, _websocket).socket.close();
+      this.websocket.socket.close();
     }
     authenticateUser(params) {
       return __async(this, null, function* () {
@@ -2139,18 +2474,13 @@ var NotbankSdk = (() => {
       });
     }
   };
-  _domain = new WeakMap();
-  _callbackManager = new WeakMap();
-  _websocket = new WeakMap();
-  _peekMessageIn = new WeakMap();
-  _peekMessageOut = new WeakMap();
   _WebsocketConnection_instances = new WeakSet();
   getSubscriptionCallbackId_fn = function(message) {
     return SubscriptionIdentifier.getFromMessageFrame(message);
   };
   handleMessage_fn = function(message) {
-    __privateGet(this, _peekMessageIn).call(this, message);
-    const callback = __privateGet(this, _callbackManager).popCallback(message.i);
+    this.peekMessageIn(message);
+    const callback = this.callbackManager.popCallback(message.i);
     if (callback != null) {
       callback(message);
       if (isErrorMessage(message)) {
@@ -2158,7 +2488,7 @@ var NotbankSdk = (() => {
       }
     }
     const callbackId = __privateMethod(this, _WebsocketConnection_instances, getSubscriptionCallbackId_fn).call(this, message);
-    const subscriptionCallback = __privateGet(this, _callbackManager).getSubscriptionCallback(callbackId);
+    const subscriptionCallback = this.callbackManager.getSubscriptionCallback(callbackId);
     if (subscriptionCallback != null) {
       subscriptionCallback(message);
       return;
@@ -2190,15 +2520,15 @@ var NotbankSdk = (() => {
     };
   };
   requestToCallback_fn = function(endpoint, message, messageType, callback = emptyFn) {
-    const sequenceNumber = __privateGet(this, _callbackManager).putCallback(callback);
+    const sequenceNumber = this.callbackManager.putCallback(callback);
     const frame = {
       m: messageType,
       i: sequenceNumber,
       n: endpoint,
       o: message
     };
-    __privateGet(this, _peekMessageOut).call(this, frame);
-    __privateGet(this, _websocket).send(JSON.stringify(frame));
+    this.peekMessageOut(frame);
+    this.websocket.send(JSON.stringify(frame));
   };
   function newStandardErrorFromString(errorStr) {
     return NotbankError.Factory.createFromApResponse({
@@ -2221,6 +2551,149 @@ var NotbankSdk = (() => {
       return false;
     }
   }
+
+  // lib/core/websocket/restarter.ts
+  var _Restarter_instances, connect_fn, newConnection_fn;
+  var Restarter = class {
+    constructor(params) {
+      __privateAdd(this, _Restarter_instances);
+      this.closeRequested = false;
+      this.reconnecting = false;
+      this.connectionConfiguration = params.connectionConfiguration;
+      this.pinger = new Pinger();
+      this.resubscriber = new Resubscriber();
+      this.reauther = new Reauther();
+      this.connection = null;
+    }
+    getResubscriber() {
+      return this.resubscriber;
+    }
+    getReauther() {
+      return this.reauther;
+    }
+    getConnection() {
+      if (this.reconnecting) {
+        throw new NotbankError("unable to make notbank request. websocket reconnecting", -1);
+      }
+      return this.connection;
+    }
+    reconnect() {
+      return __async(this, null, function* () {
+        if (this.reconnecting || this.closeRequested) {
+          return;
+        }
+        this.reconnecting = true;
+        this.closeCurrentConnection();
+        this.connection = __privateMethod(this, _Restarter_instances, newConnection_fn).call(this);
+        yield __privateMethod(this, _Restarter_instances, connect_fn).call(this);
+        this.reauther.makeAuthentication(this.connection);
+        this.resubscriber.makeSubscriptions(this.connection);
+        this.pinger.startPing(this.connection, this);
+        this.reconnecting = false;
+      });
+    }
+    closeCurrentConnection() {
+      var _a;
+      this.pinger.stop();
+      var closed = (_a = this.connection) == null ? void 0 : _a.close();
+      return closed;
+    }
+    close() {
+      this.closeRequested = true;
+      var closed = this.closeCurrentConnection();
+      return closed;
+    }
+  };
+  _Restarter_instances = new WeakSet();
+  connect_fn = function() {
+    return __async(this, null, function* () {
+      while (!this.closeRequested) {
+        try {
+          yield Promise.race([
+            this.connection.connect(),
+            new Promise((resolve, reject) => setTimeout(reject, 1e4))
+          ]);
+          return;
+        } catch (e) {
+        }
+      }
+    });
+  };
+  newConnection_fn = function() {
+    var _a, _b;
+    return new WebsocketConnection({
+      domain: this.connectionConfiguration.domain,
+      peekMessageIn: this.connectionConfiguration.peekMessageIn,
+      peekMessageOut: this.connectionConfiguration.peekMessageOut,
+      websocketHooks: {
+        onMessage: (_a = this.connectionConfiguration.websocketHooks) == null ? void 0 : _a.onMessage,
+        onOpen: (_b = this.connectionConfiguration.websocketHooks) == null ? void 0 : _b.onOpen,
+        onError: (event) => {
+          var _a2, _b2;
+          if (this.reconnecting) {
+            return;
+          }
+          (_b2 = (_a2 = this.connectionConfiguration.websocketHooks) == null ? void 0 : _a2.onError) == null ? void 0 : _b2.call(_a2, event);
+        },
+        onClose: (event) => {
+          var _a2, _b2;
+          if (this.reconnecting || !this.closeRequested) {
+            return;
+          }
+          (_b2 = (_a2 = this.connectionConfiguration.websocketHooks) == null ? void 0 : _a2.onClose) == null ? void 0 : _b2.call(_a2, event);
+        }
+      }
+    });
+  };
+
+  // lib/core/websocket/restartingWebsocketConnection.ts
+  var RestartingWebsocketConnection = class {
+    constructor(params) {
+      this.restarter = params.restarter;
+    }
+    apRequest(endpoint, requestType, message) {
+      if (endpoint === "LogOut" /* LOGOUT */) {
+        this.restarter.getReauther().removeAuthentication();
+      }
+      return this.restarter.getConnection().apRequest(endpoint, requestType, message);
+    }
+    nbRequest(endpoint, requestType, message, paged) {
+      throw new Error("websocket client does not support nb methods.");
+    }
+    authenticateUser(params) {
+      return __async(this, null, function* () {
+        yield this.restarter.getConnection().authenticateUser(params);
+        this.restarter.getReauther().updateAuthentication((connection) => connection.authenticateUser(params));
+      });
+    }
+    subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionHandlers) {
+      return __async(this, null, function* () {
+        yield this.restarter.getConnection().subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionHandlers);
+        this.restarter.getResubscriber().saveSubscription({
+          endpoint,
+          firstIdentifier,
+          secondIdentifier,
+          message,
+          subscriptionHandlers
+        });
+      });
+    }
+    unsubscribe(endpoint, firstIdentifier, secondIdentifier, message, callback_ids) {
+      return __async(this, null, function* () {
+        yield this.restarter.getConnection().unsubscribe(endpoint, firstIdentifier, secondIdentifier, message, callback_ids);
+        this.restarter.getResubscriber().removeSubscription(callback_ids);
+      });
+    }
+    get readyState() {
+      return this.restarter.getConnection().readyState;
+    }
+    connect() {
+      return this.restarter.reconnect();
+    }
+    close() {
+      return this.restarter.close();
+    }
+  };
 
   // lib/utils/subscriptionCallbacksHandler.ts
   function newMaybeHandler(eventName, recordHandler) {
@@ -2481,37 +2954,32 @@ var NotbankSdk = (() => {
     }
   };
 
-  // lib/services/websocketServicesFactory.ts
-  var DEFAULT_DOMAIN2 = "api.notbank.exchange";
-  var _websocketConnection, _subcriptionService;
+  // lib/services/websocketServiceFactory.ts
   var WebsocketServiceFactory = class {
-    constructor(params) {
-      __privateAdd(this, _websocketConnection);
-      __privateAdd(this, _subcriptionService);
-      const finalDomain = (params == null ? void 0 : params.domain) || DEFAULT_DOMAIN2;
-      __privateSet(this, _websocketConnection, new WebsocketConnection({
-        domain: finalDomain,
-        peekMessageIn: params == null ? void 0 : params.peekMessageIn,
-        peekMessageOut: params == null ? void 0 : params.peekMessageOut
-      }));
+    constructor(configuration) {
+      var connection = (configuration == null ? void 0 : configuration.withReconnect) ? new RestartingWebsocketConnection({
+        restarter: new Restarter({ connectionConfiguration: configuration || {} })
+      }) : new WebsocketConnection(configuration);
+      this.serviceConnection = connection;
+      this.getReadyState = () => connection.readyState;
     }
-    connect(hooks = {}) {
-      return __privateGet(this, _websocketConnection).connect(hooks);
+    connect() {
+      return this.serviceConnection.connect();
     }
     close() {
-      __privateGet(this, _websocketConnection).close();
+      return this.serviceConnection.close();
     }
     get isConnecting() {
-      return __privateGet(this, _websocketConnection).readyState === WebSocket.CONNECTING;
+      return this.getReadyState() === WebSocket.CONNECTING;
     }
     get isConnected() {
-      return __privateGet(this, _websocketConnection).readyState === WebSocket.OPEN;
+      return this.getReadyState() === WebSocket.OPEN;
     }
     get isClosing() {
-      return __privateGet(this, _websocketConnection).readyState === WebSocket.CLOSING;
+      return this.getReadyState() === WebSocket.CLOSING;
     }
     get isClosed() {
-      return __privateGet(this, _websocketConnection).readyState === WebSocket.CLOSED;
+      return this.getReadyState() === WebSocket.CLOSED;
     }
     authenticateUser(params) {
       return __async(this, null, function* () {
@@ -2522,7 +2990,7 @@ var NotbankSdk = (() => {
           params.UserId,
           nonce
         );
-        yield __privateGet(this, _websocketConnection).authenticateUser({
+        yield this.serviceConnection.authenticateUser({
           APIKey: params.ApiPublicKey,
           Signature: signature,
           UserId: params.UserId,
@@ -2531,163 +2999,122 @@ var NotbankSdk = (() => {
       });
     }
     newAccountService() {
-      return new AccountService(__privateGet(this, _websocketConnection));
+      return new AccountService(this.serviceConnection);
     }
     newAuthService() {
-      return new AuthService(__privateGet(this, _websocketConnection));
+      return new AuthService(this.serviceConnection);
     }
     newFeeService() {
-      return new FeeService(__privateGet(this, _websocketConnection));
+      return new FeeService(this.serviceConnection);
     }
     newInstrumentService() {
-      return new InstrumentService(__privateGet(this, _websocketConnection));
+      return new InstrumentService(this.serviceConnection);
     }
     newProductService() {
-      return new ProductService(__privateGet(this, _websocketConnection));
+      return new ProductService(this.serviceConnection);
     }
     newReportService() {
-      return new ReportService(__privateGet(this, _websocketConnection));
+      return new ReportService(this.serviceConnection);
     }
     newSystemService() {
-      return new SystemService(__privateGet(this, _websocketConnection));
+      return new SystemService(this.serviceConnection);
     }
     getSubscriptionService() {
-      if (__privateGet(this, _subcriptionService)) {
-        return __privateGet(this, _subcriptionService);
-      }
-      __privateSet(this, _subcriptionService, new SubscriptionService(__privateGet(this, _websocketConnection)));
-      return __privateGet(this, _subcriptionService);
+      return new SubscriptionService(this.serviceConnection);
     }
     newTradingService() {
-      return new TradingService(__privateGet(this, _websocketConnection));
+      return new TradingService(this.serviceConnection);
     }
     newUserService() {
-      return new UserService(__privateGet(this, _websocketConnection));
+      return new UserService(this.serviceConnection);
     }
     newWalletService() {
-      return new WalletService(__privateGet(this, _websocketConnection));
+      return new WalletService(this.serviceConnection);
+    }
+    newQuoteService() {
+      return new QuoteService(this.serviceConnection);
     }
   };
-  _websocketConnection = new WeakMap();
-  _subcriptionService = new WeakMap();
 
   // lib/services/notbankClient.ts
   var DEFAULT_DOMAIN3 = "api.notbank.exchange";
-  var _accountService, _authService, _feeService, _instrumentService, _productService, _reportService, _getSubscriptionService, _systemService, _tradingService, _userService, _walletService, _authenticateUser, _connect, _close;
   var _NotbankClient = class _NotbankClient {
     constructor(params) {
-      __privateAdd(this, _accountService);
-      __privateAdd(this, _authService);
-      __privateAdd(this, _feeService);
-      __privateAdd(this, _instrumentService);
-      __privateAdd(this, _productService);
-      __privateAdd(this, _reportService);
-      __privateAdd(this, _getSubscriptionService);
-      __privateAdd(this, _systemService);
-      __privateAdd(this, _tradingService);
-      __privateAdd(this, _userService);
-      __privateAdd(this, _walletService);
-      __privateAdd(this, _authenticateUser);
-      __privateAdd(this, _connect);
-      __privateAdd(this, _close);
-      __privateSet(this, _accountService, params.accountService);
-      __privateSet(this, _authService, params.authService);
-      __privateSet(this, _feeService, params.feeService);
-      __privateSet(this, _instrumentService, params.instrumentService);
-      __privateSet(this, _productService, params.productService);
-      __privateSet(this, _reportService, params.reportService);
-      __privateSet(this, _getSubscriptionService, params.getSubscriptionService);
-      __privateSet(this, _systemService, params.systemService);
-      __privateSet(this, _tradingService, params.tradingService);
-      __privateSet(this, _userService, params.userService);
-      __privateSet(this, _walletService, params.walletService);
-      __privateSet(this, _authenticateUser, params.authenticate);
-      __privateSet(this, _connect, params.connect);
-      __privateSet(this, _close, params.close);
-    }
-    authenticateUser(params) {
-      return __privateGet(this, _authenticateUser).call(this, params);
+      this.accountService = params.accountService;
+      this.authService = params.authService;
+      this.feeService = params.feeService;
+      this.instrumentService = params.instrumentService;
+      this.productService = params.productService;
+      this.reportService = params.reportService;
+      this.getSubscriptionService = () => params.getSubscriptionService();
+      this.systemService = params.systemService;
+      this.tradingService = params.tradingService;
+      this.userService = params.userService;
+      this.walletService = params.walletService;
+      this.quoteService = params.quoteService;
+      this.authenticateUser = params.authenticate;
+      this.connect = params.connect;
+      this.close = params.close;
     }
     getAccountService() {
-      return __privateGet(this, _accountService);
+      return this.accountService;
     }
     getAuthService() {
-      return __privateGet(this, _authService);
+      return this.authService;
     }
     getFeeService() {
-      return __privateGet(this, _feeService);
+      return this.feeService;
     }
     getInstrumentService() {
-      return __privateGet(this, _instrumentService);
+      return this.instrumentService;
     }
     getProductService() {
-      return __privateGet(this, _productService);
+      return this.productService;
     }
     getReportService() {
-      return __privateGet(this, _reportService);
-    }
-    getSubscriptionService() {
-      return __privateGet(this, _getSubscriptionService).call(this);
+      return this.reportService;
     }
     getSystemService() {
-      return __privateGet(this, _systemService);
+      return this.systemService;
     }
     getTradingService() {
-      return __privateGet(this, _tradingService);
+      return this.tradingService;
     }
     getUserService() {
-      return __privateGet(this, _userService);
+      return this.userService;
     }
     getWalletService() {
-      return __privateGet(this, _walletService);
+      return this.walletService;
     }
-    connect(hooks = {}) {
-      return __privateGet(this, _connect).call(this, hooks);
-    }
-    close() {
-      __privateGet(this, _close).call(this);
+    getQuoteService() {
+      return this.quoteService;
     }
   };
-  _accountService = new WeakMap();
-  _authService = new WeakMap();
-  _feeService = new WeakMap();
-  _instrumentService = new WeakMap();
-  _productService = new WeakMap();
-  _reportService = new WeakMap();
-  _getSubscriptionService = new WeakMap();
-  _systemService = new WeakMap();
-  _tradingService = new WeakMap();
-  _userService = new WeakMap();
-  _walletService = new WeakMap();
-  _authenticateUser = new WeakMap();
-  _connect = new WeakMap();
-  _close = new WeakMap();
   _NotbankClient.Factory = class Factory {
     static createRestClient(domain = DEFAULT_DOMAIN3) {
       var factory = new HttpServiceFactory(domain);
-      return new _NotbankClient(
-        {
-          accountService: factory.newAccountService(),
-          authService: factory.newAuthService(),
-          feeService: factory.newFeeService(),
-          instrumentService: factory.newInstrumentService(),
-          productService: factory.newProductService(),
-          reportService: factory.newReportService(),
-          getSubscriptionService: () => {
-            throw new NotbankError("NotbankError. subcription service only exists for websocket connection", -1);
-          },
-          systemService: factory.newSystemService(),
-          tradingService: factory.newTradingService(),
-          userService: factory.newUserService(),
-          walletService: factory.newWalletService(),
-          authenticate: (params) => factory.authenticateUser(params),
-          connect: () => null,
-          close: () => null
-        }
-      );
+      return new _NotbankClient({
+        accountService: factory.newAccountService(),
+        authService: factory.newAuthService(),
+        feeService: factory.newFeeService(),
+        instrumentService: factory.newInstrumentService(),
+        productService: factory.newProductService(),
+        reportService: factory.newReportService(),
+        getSubscriptionService: () => {
+          throw new NotbankError("NotbankError. subcription service only exists for websocket connection", -1);
+        },
+        systemService: factory.newSystemService(),
+        tradingService: factory.newTradingService(),
+        userService: factory.newUserService(),
+        walletService: factory.newWalletService(),
+        quoteService: factory.newQuoteService(),
+        authenticate: (params) => factory.authenticateUser(params),
+        connect: () => Promise.resolve(null),
+        close: () => Promise.resolve(null)
+      });
     }
-    static createWebsocketClient(domain = DEFAULT_DOMAIN3) {
-      var factory = new WebsocketServiceFactory({ domain });
+    static createWebsocketClient(configuration) {
+      var factory = new WebsocketServiceFactory(configuration);
       return new _NotbankClient(
         {
           accountService: factory.newAccountService(),
@@ -2696,11 +3123,12 @@ var NotbankSdk = (() => {
           instrumentService: factory.newInstrumentService(),
           productService: factory.newProductService(),
           reportService: factory.newReportService(),
-          getSubscriptionService: factory.getSubscriptionService,
+          getSubscriptionService: () => factory.getSubscriptionService(),
           systemService: factory.newSystemService(),
           tradingService: factory.newTradingService(),
           userService: factory.newUserService(),
           walletService: factory.newWalletService(),
+          quoteService: factory.newQuoteService(),
           authenticate: (params) => factory.authenticateUser(params),
           connect: () => factory.connect(),
           close: () => factory.close()
@@ -2709,11 +3137,5 @@ var NotbankSdk = (() => {
     }
   };
   var NotbankClient = _NotbankClient;
-
-  // lib/index.ts
-  var index_default = {
-    NotbankClient,
-    models: models_exports
-  };
   return __toCommonJS(index_exports);
 })();

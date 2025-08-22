@@ -1,20 +1,20 @@
+import assert from "assert";
 import "mocha";
-import assert, { fail } from "assert";
 import { SubscriptionHandler } from "../../lib/core/websocket/subscriptionHandler";
 import { SubscribeAccountEventsRequest } from "../../lib/models/request/subscribeAccountEvents";
 import { SubscribeLevel1Request } from "../../lib/models/request/subscribeLevel1";
 import { SubscribeLevel2Request } from "../../lib/models/request/subscribeLevel2";
 import { SubscribeOrderStateEventsRequest } from "../../lib/models/request/subscribeOrderStateEvents";
+import { SubscribeTickerRequest } from "../../lib/models/request/subscribeTicker";
 import { SubscribeTradesRequest } from "../../lib/models/request/subscribeTrades";
 import { UnsubscribeAccountEventsRequest } from "../../lib/models/request/unsubscribeAccountEvents";
 import { UnsubscribeLevel1Request } from "../../lib/models/request/unSubscribeLevel1";
 import { UnsubscribeOrderStateEventsRequest } from "../../lib/models/request/unsubscribeOrderStateEvents";
 import { UnsubscribeTickerRequest } from "../../lib/models/request/unsubscribeTicker";
 import { UnsubscribeTradesRequest } from "../../lib/models/request/unsubscribeTrades";
-import { WebsocketServiceFactory } from "../../lib/services/websocketServicesFactory";
-import { SubscribeTickerRequest } from "../../lib/models/request/subscribeTicker";
-import { SubscriptionService } from "../../lib/services/subscriptionService";
 import { NotbankClient } from "../../lib/services/notbankClient";
+import { SubscriptionService } from "../../lib/services/subscriptionService";
+import { WebsocketServiceFactory } from "../../lib/services/websocketServiceFactory";
 
 describe("Subscription Service websocket", () => {
   const client = NotbankClient.Factory.createWebsocketClient();
@@ -34,21 +34,14 @@ describe("Subscription Service websocket", () => {
     await client.close();
   });
 
-  // Manejador de eventos común para todas las pruebas
-  const mockEventHandler: SubscriptionHandler<any> = {
-    eventName: "mockEvent",
-    eventHandler: (data: any) => {
-      console.log("Evento recibido:", data);
-    },
-  };
 
   const mockCallback = (data: any) => {
     console.log("Evento recibido:", data);
   };
 
-  // Prueba para suscribirse a Level1
   describe("subscribeLevel1", () => {
-    it("debería suscribirse correctamente a Level1", () => {
+    it("debería suscribirse correctamente a Level1", async function() {
+      this.timeout(70_000);
       const request: SubscribeLevel1Request = {
         InstrumentId: 1,
         Symbol: "BTCUSD",

@@ -1,4 +1,4 @@
-import { InstrumentLimits } from "../enums/instrumentVerificationLevelConfig";
+import { InstrumentLimits } from "./instrumentVerificationLevelConfig";
 
 export interface InstrumentVerificationLevelConfig {
   Level: number; // The verification level number

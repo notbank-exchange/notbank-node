@@ -49,7 +49,7 @@ export * from "./subscribeTrades";
 export * from "./summary";
 export * from "./ticker";
 export * from "./trades";
-export * from "./transaction";
+export * from "./transactionEvent";
 export * from "./webAuthenticateUser";
 export * from "./withdrawTemplate";
 export * from "./withdrawTicket";

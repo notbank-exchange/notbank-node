@@ -1,14 +1,20 @@
 export interface Transaction {
-    TransactionId: number;
-    OMSId: number;
-    AccountId: number;
-    CR: number;
-    DR: number;
-    Counterparty: number;
-    TransactionType: string;
-    ReferenceId: number;
-    ReferenceType: string;
-    ProductId: number;
-    Balance: number;
-    TimeStamp: number;
+    id: string;
+    legacy_id: string;
+    currency: string;
+    direction: number;
+    amount: number;
+    fee: string;
+    balance: number;
+    address: string;
+    hash: string;
+    type: number;
+    sub_type: number;
+    status: number;
+    created_at: string;
+    updated_at: string;
+}
+export interface Transactions {
+    total: number;
+    data: Transaction[];
 }

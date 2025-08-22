@@ -5,9 +5,8 @@ import {
   CancelOrderRejectEvent,
   DepositEvent
 } from "../models/enums/accountEvent";
-import { TradeSummary } from "../models/enums/indexTrade";
-import { Level2Ticker } from "../models/enums/level2Item";
-import { TickerFeed } from "../models/enums/ticker";
+import { TradeSummary } from "../models/response/tradeSummary";
+import { TickerFeed } from "../models/response/tickerFeed";
 import { SubscribeAccountEventsRequest } from "../models/request/subscribeAccountEvents";
 import { SubscribeLevel1Request } from "../models/request/subscribeLevel1";
 import { SubscribeLevel2Request } from "../models/request/subscribeLevel2";
@@ -25,8 +24,8 @@ import { AccountPosition } from "../models/response/accountPositions";
 import { DepositTicket } from "../models/response/depositTicket";
 import { Order } from "../models/response/order";
 import { OrderTrade } from "../models/response/orderTrade";
-import { Level1Ticker } from "../models/response/subscribeLevel1";
-import { Transaction } from "../models/response/transaction";
+import { Level1Feed } from "../models/response/subscribeLevel1";
+import { TransactionEvent } from "../models/response/transactionEvent";
 import { WithdrawTicket } from "../models/response/withdrawTicket";
 import { completeParams } from "../utils/completeParams";
 import { parseTradeSummary } from "../utils/parseIndexTrade";
@@ -34,9 +33,10 @@ import {
   newHandler,
   newMaybeHandler
 } from "../utils/subscriptionCallbacksHandler";
+import { Level2Feed } from "../models/response/level2";
 
 export class SubscriptionService {
-  connection: ServiceConnection;
+  private readonly connection: ServiceConnection;
   private readonly OMS_ID = 1;
 
   constructor(connection: ServiceConnection) {
@@ -48,8 +48,8 @@ export class SubscriptionService {
    */
   subscribeLevel1(
     request: SubscribeLevel1Request,
-    snapshotHandler: (ticker: Level1Ticker) => void,
-    updateHandler: (ticker: Level1Ticker) => void
+    snapshotHandler: (ticker: Level1Feed) => void,
+    updateHandler: (ticker: Level1Feed) => void
   ): Promise<void> {
     const requestWithOMSId = completeParams(request, this.OMS_ID);
     return this.connection.subscribe(
@@ -83,8 +83,8 @@ export class SubscriptionService {
    */
   subscribeLevel2(
     request: SubscribeLevel2Request,
-    snapshotHandler: (ticker: Level2Ticker) => void,
-    updateHandler: (ticker: Level2Ticker) => void
+    snapshotHandler: (ticker: Level2Feed) => void,
+    updateHandler: (ticker: Level2Feed) => void
   ): Promise<void> {
     const requestWithOMSId = completeParams(request, this.OMS_ID);
     return this.connection.subscribe(
@@ -206,7 +206,7 @@ export class SubscriptionService {
       accountInfoUpdateEventHandler?: (event: AccountInfo) => void;
       cancelOrderRejectEventHandler?: (event: CancelOrderRejectEvent) => void;
       depositEventHandler?: (event: DepositEvent) => void;
-      transactionEventHandler?: (event: Transaction) => void;
+      transactionEventHandler?: (event: TransactionEvent) => void;
     }
   ): Promise<void> {
     const requestWithOMSId = completeParams(request, this.OMS_ID);

@@ -1,4 +1,4 @@
-import { User } from "../enums/user.js";
+import { User } from "./user.js";
 export interface AuthenticateUserResponse {
     Authenticated: boolean;
     SessionToken: string;

@@ -7,7 +7,7 @@ import { GetUserInfoRequest } from "../../lib/models/request/getUserInfo";
 import { GetUserPermissionsRequest } from "../../lib/models/request/getUserPermissions";
 import { HttpServiceFactory } from "../../lib/services/httpServiceFactory";
 import { NotbankClient } from "../../lib/services/notbankClient";
-import { WebsocketServiceFactory } from "../../lib/services/websocketServicesFactory";
+import { WebsocketServiceFactory } from "../../lib/services/websocketServiceFactory";
 
 describe("http user service 1", () => {
   const client = NotbankClient.Factory.createRestClient();

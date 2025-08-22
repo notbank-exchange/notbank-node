@@ -8,6 +8,7 @@ import { SystemService } from "./systemService.js";
 import { TradingService } from "./tradingService.js";
 import { UserService } from "./userService.js";
 import { WalletService } from "./walletService.js";
+import { QuoteService } from "./quoteService.js";
 export declare class HttpServiceFactory {
     #private;
     constructor(domain?: string);
@@ -26,4 +27,5 @@ export declare class HttpServiceFactory {
     newTradingService(): TradingService;
     newUserService(): UserService;
     newWalletService(): WalletService;
+    newQuoteService(): QuoteService;
 }

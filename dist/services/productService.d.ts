@@ -6,6 +6,7 @@ import { Product } from "../models/response/product.js";
 import { VerificationLevelConfig } from "../models/response/getVerificationLevelConfig.js";
 export declare class ProductService {
     connection: ServiceConnection;
+    private productCache;
     private readonly OMS_ID;
     constructor(connection: ServiceConnection);
     /**
@@ -15,7 +16,10 @@ export declare class ProductService {
     /**
      * https://apidoc.notbank.exchange/#getproducts
      */
-    getProducts(params: GetProductsRequest): Promise<Product[]>;
+    getProducts(params?: GetProductsRequest): Promise<Product[]>;
+    getProductBySymbol(params: {
+        symbol: string;
+    }): Promise<Product>;
     /**
      * https://apidoc.notbank.exchange/#getverificationlevelconfig
      */

@@ -15,4 +15,6 @@ export declare class HttpConnection implements ServiceConnection {
     setResponseHandlers<T>(responseHandlers: SubscriptionHandler<T>[]): void;
     getApUrl(endpoint: string): string;
     getNbUrl(endpoint: string): string;
+    connect(): Promise<void>;
+    close(): Promise<void>;
 }
