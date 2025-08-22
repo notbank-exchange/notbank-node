@@ -2323,7 +2323,7 @@ var NotbankSdk = (() => {
   };
 
   // lib/core/websocket/websocketConnection.ts
-  var import_universal_websocket_client = __toESM(require_browser());
+  var import_universal_websocket_client = __toESM(require_browser(), 1);
 
   // lib/core/websocket/callbackManager.ts
   var _subscriptionCallbacks, _callbacks, _sequenceNumber;
