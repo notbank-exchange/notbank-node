@@ -1,7 +1,7 @@
-import { VerificationLevelProductConfig } from "../enums/verificationLevelProductConfig.js";
-export interface GetVerificationLevelConfigResponse {
+import { ProductLimits } from "./verificationLevelProductConfig.js";
+export interface VerificationLevelConfig {
     Level: number;
     LevelName: string | null;
     OMSId: number;
-    Products: VerificationLevelProductConfig[];
+    Products: ProductLimits[];
 }

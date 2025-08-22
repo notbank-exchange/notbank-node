@@ -33,7 +33,10 @@ function generateBarrelFile(dir: string): void {
     .filter((file: string): boolean => {
       const ext: string = path.extname(file);
       const base: string = path.basename(file);
-      return ext === ".ts" && !base.endsWith(".d.ts");
+      const fileName: string = `${base}.${ext}`;
+      return (
+        ext === ".ts" && !base.endsWith(".d.ts") && fileName != indexFileName
+      );
     })
     .map((file: string): string => {
       const nameWithoutExt: string = "./" + path.basename(file, ".ts");
@@ -54,4 +57,3 @@ function generateBarrelFile(dir: string): void {
 }
 
 generateBarrelFile(targetDir);
-

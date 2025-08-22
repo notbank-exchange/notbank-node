@@ -1,14 +1,23 @@
-import { ServiceClient } from "../core/serviceClient.js";
+import { ServiceConnection } from "../core/serviceClient.js";
 import { GetProductRequest } from "../models/request/getProduct.js";
 import { GetProductsRequest } from "../models/request/getProducts.js";
 import { GetVerificationLevelConfigRequest } from "../models/request/getVerificationLevelConfig.js";
-import { GetProductResponse } from "../models/response/getProduct.js";
-import { GetVerificationLevelConfigResponse } from "../models/response/getVerificationLevelConfig.js";
+import { Product } from "../models/response/product.js";
+import { VerificationLevelConfig } from "../models/response/getVerificationLevelConfig.js";
 export declare class ProductService {
-    #private;
+    connection: ServiceConnection;
     private readonly OMS_ID;
-    constructor(serviceCore: ServiceClient);
-    getProduct(params: GetProductRequest): Promise<GetProductResponse>;
-    getProducts(params: GetProductsRequest): Promise<GetProductResponse[]>;
-    getVerificationLevelConfig(params: GetVerificationLevelConfigRequest): Promise<GetVerificationLevelConfigResponse>;
+    constructor(connection: ServiceConnection);
+    /**
+     * https://apidoc.notbank.exchange/#getproduct
+     */
+    getProduct(params: GetProductRequest): Promise<Product>;
+    /**
+     * https://apidoc.notbank.exchange/#getproducts
+     */
+    getProducts(params: GetProductsRequest): Promise<Product[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getverificationlevelconfig
+     */
+    getVerificationLevelConfig(params: GetVerificationLevelConfigRequest): Promise<VerificationLevelConfig>;
 }

@@ -18,94 +18,37 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _HttpClient_aptoken, _HttpClient_HOST;
+var _HttpConnection_requester, _HttpConnection_host;
 import { Endpoint } from "../../constants/endpoints.js";
-import { StandardError } from "../../models/index.js";
 import { RequestType } from "../serviceClient.js";
-export class HttpClient {
+import { ApResponseHandler } from "./apResponseHandler.js";
+import { NbResponseHandler } from "./nbResponseHandler.js";
+import { Requester } from "./requester.js";
+export class HttpConnection {
     constructor(domain) {
-        _HttpClient_aptoken.set(this, void 0);
-        _HttpClient_HOST.set(this, void 0);
-        __classPrivateFieldSet(this, _HttpClient_aptoken, null, "f");
-        __classPrivateFieldSet(this, _HttpClient_HOST, "https://" + domain + "/ap/", "f");
+        _HttpConnection_requester.set(this, void 0);
+        _HttpConnection_host.set(this, void 0);
+        __classPrivateFieldSet(this, _HttpConnection_requester, new Requester(), "f");
+        __classPrivateFieldSet(this, _HttpConnection_host, "https://" + domain, "f");
     }
-    request(endpoint, requestType, params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (requestType === RequestType.GET) {
-                return this.requestGet(endpoint, { params: params });
-            }
-            if (requestType === RequestType.POST) {
-                return this.requestPost(endpoint, params);
-            }
-            throw new Error(`Request type not implemented. ${requestType}`);
+    nbRequest(endpoint_1, requestType_1, params_1) {
+        return __awaiter(this, arguments, void 0, function* (endpoint, requestType, params, paged = false) {
+            const url = this.getNbUrl(endpoint);
+            var response = yield __classPrivateFieldGet(this, _HttpConnection_requester, "f").request({ url, requestType, params });
+            return yield NbResponseHandler.handle(response, paged);
         });
     }
-    requestPost(endpoint, message) {
+    apRequest(endpoint, requestType, params, extraHeaders) {
         return __awaiter(this, void 0, void 0, function* () {
-            var response = yield fetch(this.getUrl(endpoint), {
-                method: "POST",
-                body: message ? JSON.stringify(message) : null,
-                headers: this.getHeaders()
-            });
-            return this.handleResponse(response);
-        });
-    }
-    requestGet(endpoint_1) {
-        return __awaiter(this, arguments, void 0, function* (endpoint, config = {}) {
-            var response = yield fetch(this.getUrlWithSearchParams(endpoint, config.params), {
-                method: "GET",
-                headers: this.getHeaders(config.extraHeaders)
-            });
-            return yield this.handleResponse(response);
-        });
-    }
-    handleResponse(response) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (response.status >= 300 || response.status < 200) {
-                throw new Error(`http error (${response.status}) not a successfull response. ${response.text()}`);
-            }
-            var jsonResponse = yield response.json();
-            var standardResponse = jsonResponse;
-            if ((standardResponse === null || standardResponse === void 0 ? void 0 : standardResponse.result) === false &&
-                (standardResponse === null || standardResponse === void 0 ? void 0 : standardResponse.errorcode) != null) {
-                throw new StandardError(standardResponse);
-            }
-            return jsonResponse;
-        });
-    }
-    getHeaders(extraHeaders) {
-        var headers = {
-            "Content-type": "application/json",
-            charset: "UTF-8"
-        };
-        if (__classPrivateFieldGet(this, _HttpClient_aptoken, "f") != null) {
-            headers["aptoken"] = __classPrivateFieldGet(this, _HttpClient_aptoken, "f");
-        }
-        if (extraHeaders) {
-            return Object.assign(Object.assign({}, headers), extraHeaders);
-        }
-        return headers;
-    }
-    getUrlWithSearchParams(endpoint, params) {
-        if (params) {
-            return this.getUrl(endpoint) + "?" + new URLSearchParams(params);
-        }
-        return this.getUrl(endpoint);
-    }
-    authenticate(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var response = (yield this.requestGet(Endpoint.AUTHENTICATE, {
-                extraHeaders: params
-            }));
-            __classPrivateFieldSet(this, _HttpClient_aptoken, response.SessionToken, "f");
+            const url = this.getApUrl(endpoint);
+            var response = yield __classPrivateFieldGet(this, _HttpConnection_requester, "f").request({ url, requestType, params, extraHeaders });
+            return yield ApResponseHandler.handle(response);
         });
     }
     authenticateUser(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            var response = (yield this.requestGet(Endpoint.AUTHENTICATE_USER, {
-                extraHeaders: params
-            }));
-            __classPrivateFieldSet(this, _HttpClient_aptoken, response.SessionToken, "f");
+            var response = yield this.apRequest(Endpoint.AUTHENTICATE_USER, RequestType.GET, null, params);
+            __classPrivateFieldGet(this, _HttpConnection_requester, "f").updateSessionToken(response.SessionToken);
         });
     }
     subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionCallbacks) {
@@ -120,8 +63,17 @@ export class HttpClient {
     setResponseHandlers(responseHandlers) {
         throw new Error("Method not implemented.");
     }
-    getUrl(endpoint) {
-        return __classPrivateFieldGet(this, _HttpClient_HOST, "f") + endpoint;
+    getApUrl(endpoint) {
+        return __classPrivateFieldGet(this, _HttpConnection_host, "f") + "/ap/" + endpoint;
+    }
+    getNbUrl(endpoint) {
+        return __classPrivateFieldGet(this, _HttpConnection_host, "f") + "/api/nb/" + endpoint;
+    }
+    connect() {
+        return Promise.resolve();
+    }
+    close() {
+        return Promise.resolve();
     }
 }
-_HttpClient_aptoken = new WeakMap(), _HttpClient_HOST = new WeakMap();
+_HttpConnection_requester = new WeakMap(), _HttpConnection_host = new WeakMap();

@@ -7,72 +7,60 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _FeeService_serviceCore;
 import { Endpoint } from "../constants/endpoints.js";
 import { RequestType } from "../core/serviceClient.js";
 import { completeParams } from "../utils/completeParams.js";
 export class FeeService {
-    constructor(serviceCore) {
-        _FeeService_serviceCore.set(this, void 0);
+    constructor(connection) {
         this.OMS_ID = 1;
-        __classPrivateFieldSet(this, _FeeService_serviceCore, serviceCore, "f");
+        this.connection = connection;
     }
+    /**
+     * https://apidoc.notbank.exchange/#getdepositfee
+     */
     getDepositFee(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return (yield __classPrivateFieldGet(this, _FeeService_serviceCore, "f").request(Endpoint.GET_DEPOSIT_FEE, RequestType.POST, paramsWithOMSId));
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_DEPOSIT_FEE, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getwithdrawfee
+     */
     getWithdrawFee(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return (yield __classPrivateFieldGet(this, _FeeService_serviceCore, "f").request(Endpoint.GET_WITHDRAW_FEE, RequestType.POST, paramsWithOMSId));
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_WITHDRAW_FEE, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getomswithdrawfees
+     */
     getOMSWithdrawFees(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            // Call the service endpoint
-            const response = yield __classPrivateFieldGet(this, _FeeService_serviceCore, "f").request(Endpoint.GET_OMS_WITHDRAW_FEES, RequestType.POST, paramsWithOMSId);
-            return response;
-        });
+        const paramsWithOMSId = completeParams(params, this.OMS_ID);
+        return this.connection.apRequest(Endpoint.GET_OMS_WITHDRAW_FEES, RequestType.POST, paramsWithOMSId);
     }
+    /**
+     * https://apidoc.notbank.exchange/#getomsdepositfees
+     */
     getOMSDepositFees(params) {
         return __awaiter(this, void 0, void 0, function* () {
             const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            // Call the service endpoint
-            const response = yield __classPrivateFieldGet(this, _FeeService_serviceCore, "f").request(Endpoint.GET_OMS_DEPOSIT_FEES, RequestType.POST, paramsWithOMSId);
-            return response;
+            return this.connection.apRequest(Endpoint.GET_OMS_DEPOSIT_FEES, RequestType.POST, paramsWithOMSId);
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getaccountfees
+     */
     getAccountFees(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Validate required parameters
-            if (!params.AccountId) {
-                throw new Error("AccountId is required.");
-            }
             const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            // Call the service endpoint
-            const response = yield __classPrivateFieldGet(this, _FeeService_serviceCore, "f").request(Endpoint.GET_ACCOUNT_FEES, RequestType.POST, paramsWithOMSId);
-            return response;
+            return this.connection.apRequest(Endpoint.GET_ACCOUNT_FEES, RequestType.POST, paramsWithOMSId);
         });
     }
+    /**
+     * https://apidoc.notbank.exchange/#getorderfee
+     */
     getOrderFee(params) {
         return __awaiter(this, void 0, void 0, function* () {
             const paramsWithOMSId = completeParams(params, this.OMS_ID);
-            return (yield __classPrivateFieldGet(this, _FeeService_serviceCore, "f").request(Endpoint.GET_ORDER_FEE, RequestType.POST, paramsWithOMSId));
+            return this.connection.apRequest(Endpoint.GET_ORDER_FEE, RequestType.POST, paramsWithOMSId);
         });
     }
 }
-_FeeService_serviceCore = new WeakMap();

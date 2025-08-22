@@ -1,7 +1,7 @@
-import { ChangeReason } from "../common/changeReason.js";
-import { OrderState } from "../common/orderState.js";
-import { OrderTypeInt } from "../common/orderType.js";
-import { OrderSide } from "../common/orderSide.js";
+import { ChangeReason } from "../enums/changeReason.js";
+import { OrderState } from "../enums/orderState.js";
+import { OrderTypeInt } from "../enums/orderType.js";
+import { OrderSide } from "../enums/orderSide.js";
 export interface Order {
     OMSId: number;
     Side: OrderSide;

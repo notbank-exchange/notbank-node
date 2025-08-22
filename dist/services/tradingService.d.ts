@@ -1,5 +1,5 @@
-import { ServiceClient } from "../core/serviceClient.js";
-import { IndexTrade } from "../models/enums/indexTrade.js";
+import { ServiceConnection } from "../core/serviceClient.js";
+import { TradeSummary } from "../models/response/tradeSummary.js";
 import { CancelAllOrdersRequest } from "../models/request/cancelAllOrders.js";
 import { CancelOrderRequest } from "../models/request/cancelOrder.js";
 import { CancelReplaceOrderRequest } from "../models/request/cancelReplaceOrder.js";
@@ -25,54 +25,139 @@ import { SendOrderRequest } from "../models/request/sendOrder.js";
 import { SendOrderListRequest } from "../models/request/sendOrderList.js";
 import { TradesRequest } from "../models/request/trades.js";
 import { CancelReplaceOrderResponse } from "../models/response/cancelReplaceOrder.js";
-import { GetAccountTradesResponse } from "../models/response/getAccountTrades.js";
-import { GetEnumsResponse } from "../models/response/getEnums.js";
-import { GetL2SnapshotResponse } from "../models/response/getL2Snapshot.js";
-import { GetLevel1Response } from "../models/response/getLevel1.js";
-import { GetLevel1SummaryResponse } from "../models/response/getLevel1Summary.js";
-import { GetLevel1SummaryMinResponse } from "../models/response/getLevel1SummaryMin.js";
-import { GetOpenOrdersResponse } from "../models/response/getOpenOrders.js";
-import { GetOpenTradeReportsResponse } from "../models/response/getOpenTradeReports.js";
-import { GetOrderHistoryByOrderIdResponse } from "../models/response/getOrderHistoryByOrderId.js";
-import { GetOrderStatusResponse } from "../models/response/getOrderStatus.js";
-import { GetTickerHistoryResponse } from "../models/response/getTickerHistory.js";
+import { AccountTrade } from "../models/response/getAccountTrades.js";
+import { EnumsResponse } from "../models/response/getEnums.js";
+import { L2Snapshot } from "../models/response/getL2Snapshot.js";
+import { Level1 } from "../models/response/getLevel1.js";
+import { Level1Summary } from "../models/response/getLevel1Summary.js";
+import { Level1SummaryMin } from "../models/response/getLevel1SummaryMin.js";
+import { OpenOrder } from "../models/response/getOpenOrders.js";
+import { OpenTradeReport } from "../models/response/getOpenTradeReports.js";
+import { OrderSummary } from "../models/response/getOrderHistoryByOrderId.js";
+import { OrderStatus } from "../models/response/getOrderStatus.js";
+import { TickerSummary } from "../models/response/getTickerHistory.js";
 import { Order } from "../models/response/order.js";
-import { OrderBookResponse } from "../models/response/orderBook.js";
+import { OrderBook, OrderBookRaw } from "../models/response/orderBook.js";
 import { OrderTrade } from "../models/response/orderTrade.js";
 import { SendOrderResponse } from "../models/response/sendOrder.js";
-import { SummaryResponse } from "../models/response/summary.js";
-import { TickerResponse } from "../models/response/ticker.js";
-import { TradesResponse } from "../models/response/trades.js";
+import { InstrumentSummary } from "../models/response/summary.js";
+import { Tickers } from "../models/response/ticker.js";
+import { Trade } from "../models/response/trades.js";
 export declare class TradingService {
-    #private;
+    connection: ServiceConnection;
     private readonly OMS_ID;
-    constructor(serviceCore: ServiceClient);
+    constructor(connection: ServiceConnection);
+    /**
+     * https://apidoc.notbank.exchange/#sendorderlist
+     */
     sendOrderList(params: SendOrderListRequest): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#sendcancellist
+     */
     sendCancelList(params: SendCancelListRequest): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#sendcancelreplacelist
+     */
     sendCancelReplaceList(params: SendCancelReplaceListRequest): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#modifyorder
+     */
     modifyOrder(request: ModifyOrderRequest): Promise<void>;
+    /**
+     * https://apidoc.notbank.exchange/#cancelallorders
+     */
     cancelAllOrders(params: CancelAllOrdersRequest): Promise<void>;
-    getOrderStatus(params: GetOrderStatusRequest): Promise<GetOrderStatusResponse>;
+    /**
+     * https://apidoc.notbank.exchange/#getorderstatus
+     */
+    getOrderStatus(params: GetOrderStatusRequest): Promise<OrderStatus>;
+    /**
+     * https://apidoc.notbank.exchange/#getordershistory
+     */
     getOrdersHistory(params: GetOrdersHistoryRequest): Promise<Order[]>;
+    /**
+     * https://apidoc.notbank.exchange/#gettradeshistory
+     */
     getTradesHistory(params: GetTradesHistoryRequest): Promise<OrderTrade[]>;
-    getOrderHistoryByOrderId(params: GetOrderHistoryByOrderIdRequest): Promise<GetOrderHistoryByOrderIdResponse[]>;
-    getTickerHistory(params: GetTickerHistoryRequest): Promise<GetTickerHistoryResponse[]>;
-    getLastTrades(request: GetLastTradesRequest): Promise<IndexTrade[]>;
-    getLevel1Summary(request: GetLevel1SummaryRequest): Promise<GetLevel1SummaryResponse[]>;
-    getLevel1SummaryMin(request: GetLevel1SummaryMinRequest): Promise<GetLevel1SummaryMinResponse>;
-    getOpenTradeReports(request: GetOpenTradeReportsRequest): Promise<GetOpenTradeReportsResponse>;
+    /**
+     * https://apidoc.notbank.exchange/#getorderhistorybyorderid
+     */
+    getOrderHistoryByOrderId(params: GetOrderHistoryByOrderIdRequest): Promise<OrderSummary[]>;
+    /**
+     * https://apidoc.notbank.exchange/#gettickerhistory
+     */
+    getTickerHistory(params: GetTickerHistoryRequest): Promise<TickerSummary[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getlasttrades
+     */
+    getLastTrades(request: GetLastTradesRequest): Promise<TradeSummary[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getlevel1summary
+     */
+    getLevel1Summary(request: GetLevel1SummaryRequest): Promise<Level1Summary[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getlevel1summarymin
+     */
+    getLevel1SummaryMin(request: GetLevel1SummaryMinRequest): Promise<Level1SummaryMin[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getopentradereports
+     */
+    getOpenTradeReports(request: GetOpenTradeReportsRequest): Promise<OpenTradeReport[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getorders
+     */
     getOrders(request: GetOrdersRequest): Promise<Order[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getorderhistory
+     */
     getOrderHistory(request: GetOrdersHistoryRequest): Promise<Order[]>;
+    /**
+     * https://apidoc.notbank.exchange/#sendorder
+     */
     sendOrder(request: SendOrderRequest): Promise<SendOrderResponse>;
+    /**
+     * https://apidoc.notbank.exchange/#cancelreplaceorder
+     */
     cancelReplaceOrder(params: CancelReplaceOrderRequest): Promise<CancelReplaceOrderResponse>;
+    /**
+     * https://apidoc.notbank.exchange/#cancelorder
+     */
     cancelOrder(params: CancelOrderRequest): Promise<void>;
-    getOpenOrders(params: GetOpenOrdersRequest): Promise<GetOpenOrdersResponse[]>;
-    getAccountTrades(request: GetAccountTradesRequest): Promise<GetAccountTradesResponse>;
-    getSummary(): Promise<SummaryResponse>;
-    getTicker(): Promise<TickerResponse>;
-    getOrderBook(request: OrderBookRequest): Promise<OrderBookResponse>;
-    getTrades(params: TradesRequest): Promise<TradesResponse[]>;
-    getL2Snapshot(request: GetL2SnapshotRequest): Promise<GetL2SnapshotResponse>;
-    getLevel1(request: GetLevel1Request): Promise<GetLevel1Response>;
-    getEnums(): Promise<GetEnumsResponse>;
+    /**
+     * https://apidoc.notbank.exchange/#getopenorders
+     */
+    getOpenOrders(params: GetOpenOrdersRequest): Promise<OpenOrder[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getaccounttrades
+     */
+    getAccountTrades(request: GetAccountTradesRequest): Promise<AccountTrade[]>;
+    /**
+     * https://apidoc.notbank.exchange/#summary
+     */
+    getSummary(): Promise<InstrumentSummary[]>;
+    /**
+     * https://apidoc.notbank.exchange/#ticker
+     */
+    getTicker(): Promise<Tickers>;
+    /**
+     * https://apidoc.notbank.exchange/#orderbook
+     */
+    getOrderBook(request: OrderBookRequest): Promise<OrderBook>;
+    getOrderBookRaw(request: OrderBookRequest): Promise<OrderBookRaw>;
+    /**
+     * https://apidoc.notbank.exchange/#trades
+     */
+    getTrades(params: TradesRequest): Promise<Trade[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getl2snapshot
+     */
+    getL2Snapshot(request: GetL2SnapshotRequest): Promise<L2Snapshot[]>;
+    /**
+     * https://apidoc.notbank.exchange/#getlevel1
+     */
+    getLevel1(request: GetLevel1Request): Promise<Level1>;
+    /**
+     * https://apidoc.notbank.exchange/#getenums
+     */
+    getEnums(): Promise<EnumsResponse>;
 }

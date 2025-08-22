@@ -3,7 +3,7 @@ export interface EnumValue {
     Description: string;
     Number: number;
 }
-export interface GetEnumsResponse {
+export interface EnumsResponse {
     Class: string;
     Property: string;
     Enums: EnumValue[];

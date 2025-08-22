@@ -1,4 +1,4 @@
-export interface GetUserInfoResponse {
+export interface UserInfo {
     UserId: number;
     Username: string;
     Email: string;

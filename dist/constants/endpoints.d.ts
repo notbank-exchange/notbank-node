@@ -32,7 +32,7 @@ export declare enum Endpoint {
     GET_USER_REPORT_WRITER_RESULT_RECORDS = "GetUserReportWriterResultRecords",
     GET_USER_REPORT_TICKETS = "GetUserReportTickets",
     REMOVE_USER_REPORT_TICKET = "RemoveUserReportTicket",
-    GET_USERT_REPORT_TICKETS_BY_STATUS = "GetUserReportTicketsByStatus",
+    GET_USER_REPORT_TICKETS_BY_STATUS = "GetUserReportTicketsByStatus",
     DOWNLOAD_DOCUMENT = "DownloadDocument",
     DOWNLOAD_DOCUMENT_SLICE = "DownloadDocumentSlice",
     PING = "Ping",
@@ -68,7 +68,22 @@ export declare enum Endpoint {
     GET_USER_ACCOUNTS = "GetUserAccounts",
     GET_USER_DEVICES = "GetUserDevices",
     GET_USER_INFO = "GetUserInfo",
-    GET_USER_PERMISSIONS = "GetUserPermissions"
+    GET_USER_PERMISSIONS = "GetUserPermissions",
+    BANKS = "banks",
+    BANK_ACCOUNTS = "bank-accounts",
+    GET_NETWORKS_TEMPLATES = "wallet/crypto/withdrawal/templates",
+    DEPOSIT_ADDRESS = "wallet/crypto",
+    WHITELIST_ADDRESSES = "wallet/crypto/whitelist-addresses",
+    UPDATE_ONE_STEP_WITHDRAW = "wallet/crypto/whitelist-addresses/one-step/status",
+    CREATE_CRYPTO_WITHDRAW = "wallet/crypto/withdrawal",
+    FIAT_DEPOSIT = "wallet/fiat/deposit",
+    GET_OWNERS_FIAT_WITHDRAW = "wallet/fiat/withdrawal/owners",
+    FIAT_WITHDRAW = "wallet/fiat/withdrawal",
+    TRANSFER_FUNDS = "wallet/transfer-funds",
+    GET_TRANSACTIONS = "wallet/transactions",
+    QUOTES = "quotes",
+    QUOTES_DIRECT = "quotes/direct",
+    QUOTES_INVERSE = "quotes/inverse"
 }
 export declare enum WebSocketEndpoint {
     SUBSCRIBE_LEVEL1 = "SubscribeLevel1",

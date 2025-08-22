@@ -1,4 +1,4 @@
-import { User } from "../common/user.js";
+import { User } from "./user.js";
 export interface AuthenticateUserResponse {
     Authenticated: boolean;
     SessionToken: string;

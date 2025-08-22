@@ -1,4 +1,4 @@
-export interface GetOMSDepositFeesResponse {
+export interface OMSDepositFee {
     OMSId: number;
     AccountId: number;
     AccountProviderId: number;

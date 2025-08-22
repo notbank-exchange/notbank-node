@@ -66,7 +66,6 @@ export * from "./getUserReportWriterResultRecords";
 export * from "./getVerificationLevelConfig";
 export * from "./getWhitelistedAddresses";
 export * from "./getWithdrawFee";
-export * from "./index";
 export * from "./modifyOrder";
 export * from "./orderBook";
 export * from "./removeUserReportTicket";
