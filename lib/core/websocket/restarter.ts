@@ -52,7 +52,7 @@ export class Restarter {
   }
 
   async #connect() {
-    while (true) {
+    while (!this.closeRequested) {
       try {
         await Promise.race([
           this.connection.connect(),
@@ -87,11 +87,13 @@ export class Restarter {
 
   closeCurrentConnection(): Promise<void> {
     this.pinger.stop()
-    return this.connection?.close()
+    var closed = this.connection?.close()
+    return closed
   }
 
   close(): Promise<void> {
     this.closeRequested = true
-    return this.closeCurrentConnection()
+    var closed = this.closeCurrentConnection()
+    return closed;
   }
 }

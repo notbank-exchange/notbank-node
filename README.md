@@ -41,7 +41,7 @@ try {
     IncludePending: true,
   });
 } catch (err) {
-  const error = err as NotbankError
+  const error = err as NotbankError;
   // handle error
 }
 ```
@@ -119,6 +119,23 @@ await client.getTradingService().cancelOrder({
   OrderId: orderResult.OrderId
 });
 return orderResult.OrderId;
+```
+
+
+### websocket client
+The websocket client can be instanced with auto reconnection active. If done, then the restarting websocket will reconnect forever when the connection goes down unexpectedly, re-authenticating if it was authenticated, and re-subscribing to already stablished subscriptions. While reconnecting, calls to the websocket will throw. For subscriptions, reconnection will call again the snapshot hooks.
+```typescript
+client = NotbankClient.Factory.createWebsocketClient({
+  withReconnect: true
+});
+await client.connect();
+await client.authenticateUser({
+  ApiPublicKey: "my-public-key",
+  ApiSecretKey: "my-secret-key",
+  UserId: "xxxx"
+});
+// ...
+client.close();
 ```
 
 ## DevOps

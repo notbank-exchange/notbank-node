@@ -16,7 +16,9 @@ export class Reauther {
   }
 
   makeAuthentication(connection: WebsocketConnection) {
-    if (this.authenticateFn === null) { return }
+    if (this.authenticateFn === null) {
+      return
+    }
     this.authenticateFn(connection)
   }
 }
