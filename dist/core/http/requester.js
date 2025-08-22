@@ -20,10 +20,13 @@ export class Requester {
         __classPrivateFieldSet(this, _Requester_aptoken, aptoken, "f");
     }
     request(config) {
-        var url = config.requestType === RequestType.POST
+        const isPostOrDeleteRequest = [
+            RequestType.POST, RequestType.DELETE
+        ].includes(config.requestType);
+        var url = isPostOrDeleteRequest
             ? config.url
             : this.getUrlWithSearchParams(config.url, config.params);
-        var body = config.requestType === RequestType.POST
+        var body = isPostOrDeleteRequest
             ? config.params :
             null;
         var requestData = {

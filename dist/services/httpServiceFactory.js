@@ -22,6 +22,7 @@ import { SystemService } from "./systemService.js";
 import { TradingService } from "./tradingService.js";
 import { UserService } from "./userService.js";
 import { WalletService } from "./walletService.js";
+import { QuoteService } from "./quoteService.js";
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 export class HttpServiceFactory {
     constructor(domain) {
@@ -68,6 +69,9 @@ export class HttpServiceFactory {
     }
     newWalletService() {
         return new WalletService(__classPrivateFieldGet(this, _HttpServiceFactory_httpConnection, "f"));
+    }
+    newQuoteService() {
+        return new QuoteService(__classPrivateFieldGet(this, _HttpServiceFactory_httpConnection, "f"));
     }
 }
 _HttpServiceFactory_httpConnection = new WeakMap();

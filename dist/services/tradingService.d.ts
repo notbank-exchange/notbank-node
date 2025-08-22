@@ -1,5 +1,5 @@
 import { ServiceConnection } from "../core/serviceClient.js";
-import { TradeSummary } from "../models/enums/indexTrade.js";
+import { TradeSummary } from "../models/response/tradeSummary.js";
 import { CancelAllOrdersRequest } from "../models/request/cancelAllOrders.js";
 import { CancelOrderRequest } from "../models/request/cancelOrder.js";
 import { CancelReplaceOrderRequest } from "../models/request/cancelReplaceOrder.js";

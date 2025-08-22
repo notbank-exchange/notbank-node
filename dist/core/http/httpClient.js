@@ -69,5 +69,11 @@ export class HttpConnection {
     getNbUrl(endpoint) {
         return __classPrivateFieldGet(this, _HttpConnection_host, "f") + "/api/nb/" + endpoint;
     }
+    connect() {
+        return Promise.resolve();
+    }
+    close() {
+        return Promise.resolve();
+    }
 }
 _HttpConnection_requester = new WeakMap(), _HttpConnection_host = new WeakMap();

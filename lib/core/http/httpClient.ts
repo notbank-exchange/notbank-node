@@ -82,4 +82,11 @@ export class HttpConnection implements ServiceConnection {
   getNbUrl(endpoint: string): string {
     return this.#host + "/api/nb/" + endpoint;
   }
+  connect(): Promise<void> {
+    return Promise.resolve()
+  }
+  close(): Promise<void> {
+    return Promise.resolve()
+  }
+
 }

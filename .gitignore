@@ -62,3 +62,6 @@ tests/baselines/reference/dt
 TEST-results.xml
 .eslintcache
 *v8.log
+
+local-notes.md 
+keys.json*

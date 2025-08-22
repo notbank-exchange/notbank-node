@@ -67,7 +67,7 @@ describe("http trading service", () => {
   });
 
   describe("getOrderBook", () => {
-    it.only("should throw an error for missing required parameters", async () => {
+    it("should throw an error for missing required parameters", async () => {
       var orderbook = await tradingService.getOrderBook({ Market_Pair: "BTCUSDT", Depth: 5, Level: 2 })
       assert.ok(orderbook)
       assert.equal(orderbook.asks.length, 5)

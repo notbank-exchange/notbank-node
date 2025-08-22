@@ -75,7 +75,15 @@ export declare enum Endpoint {
     DEPOSIT_ADDRESS = "wallet/crypto",
     WHITELIST_ADDRESSES = "wallet/crypto/whitelist-addresses",
     UPDATE_ONE_STEP_WITHDRAW = "wallet/crypto/whitelist-addresses/one-step/status",
-    CREATE_CRYPTO_WITHDRAW = "wallet/crypto/withdrawal"
+    CREATE_CRYPTO_WITHDRAW = "wallet/crypto/withdrawal",
+    FIAT_DEPOSIT = "wallet/fiat/deposit",
+    GET_OWNERS_FIAT_WITHDRAW = "wallet/fiat/withdrawal/owners",
+    FIAT_WITHDRAW = "wallet/fiat/withdrawal",
+    TRANSFER_FUNDS = "wallet/transfer-funds",
+    GET_TRANSACTIONS = "wallet/transactions",
+    QUOTES = "quotes",
+    QUOTES_DIRECT = "quotes/direct",
+    QUOTES_INVERSE = "quotes/inverse"
 }
 export declare enum WebSocketEndpoint {
     SUBSCRIBE_LEVEL1 = "SubscribeLevel1",
