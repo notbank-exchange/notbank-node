@@ -28,7 +28,7 @@ const client = NotbankClient.Factory.createRestClient();
 await client.authenticateUser({
   ApiPublicKey: "my-public-key",
   ApiSecretKey: "my-secret-key",
-  UserId: 112233
+  UserId: "xxxx"
 });
 ```
 
@@ -49,13 +49,11 @@ try {
 ### Put order at the top of book example
 
 ```typescript
-const client = NotbankClient.Factory.createRestClient(
-  "stgapi.notbank.exchange"
-);
+const client = NotbankClient.Factory.createRestClient();
 await client.authenticateUser({
-  ApiPublicKey: "aada11a919d9102f61fc1ca5a97ea578",
-  ApiSecretKey: "f2647a3c19fd8431be971d1d7b2101f9",
-  UserId: "9"
+  ApiPublicKey: "my-public-key",
+  ApiSecretKey: "my-secret-key",
+  UserId: "xxxx",
 });
 var accountId = 235;
 

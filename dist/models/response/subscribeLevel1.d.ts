@@ -1,4 +1,4 @@
-export interface Level1Ticker {
+export interface Level1Feed {
     OMSId: number;
     InstrumentId: number;
     BestBid: number;

@@ -1,3 +1,3 @@
-import { SendOrder } from "../enums/sendOrder";
+import { SendOrderRequest } from "./sendOrder";
 
-export type SendOrderListRequest = SendOrder[];
+export type SendOrderListRequest = SendOrderRequest[];

@@ -29,6 +29,8 @@ export interface ServiceConnection {
     message: T,
     callback_ids: string[]
   ): Promise<void>;
+  connect(): Promise<void>;
+  close(): Promise<void>;
 }
 
 export enum RequestType {

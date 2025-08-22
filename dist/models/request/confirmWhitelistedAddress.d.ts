@@ -1,4 +1,5 @@
 export interface ConfirmWhitelistedAddressRequest {
     whitelistedAddressId: string;
-    code: string;
+    account_id: number;
+    sms_code: string;
 }

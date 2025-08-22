@@ -27,7 +27,6 @@ export class AuthService {
    * https://apidoc.notbank.exchange/?http#logout
    */
   async logOut(): Promise<void> {
-    // Realiza la solicitud al endpoint utilizando el método POST.
     return await this.connection.apRequest(Endpoint.LOGOUT, RequestType.POST);
   }
 }

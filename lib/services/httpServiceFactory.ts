@@ -10,6 +10,7 @@ import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
 import { WalletService } from "./walletService";
+import { QuoteService } from "./quoteService";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
@@ -79,5 +80,8 @@ export class HttpServiceFactory {
 
   newWalletService(): WalletService {
     return new WalletService(this.#httpConnection)
+  }
+  newQuoteService(): QuoteService {
+    return new QuoteService(this.#httpConnection)
   }
 }

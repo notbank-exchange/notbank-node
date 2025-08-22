@@ -4,20 +4,26 @@ import { NotbankError } from "../../models/notbankError";
 
 export class NbResponseHandler {
   public static async handle<T>(response: Response, paged: boolean): Promise<T> {
-    var jsonResponse = await NbResponseHandler.#getData(response);
-    if (!jsonResponse) {
-      throw new NotbankError("http error. (status=" + response.status + ")", -1)
+    try {
+      var jsonResponse = await NbResponseHandler.#getData(response);
+      if (!jsonResponse) {
+        throw new NotbankError("http error. (status=" + response.status + ")", -1)
+      }
+      var nbResponse = jsonResponse as NbResponse;
+      if (nbResponse?.status === 'success') {
+        return paged ? jsonResponse as T : nbResponse.data as T
+      }
+      const error = NotbankError.Factory.createFromNbResponse(nbResponse);
+      throw error;
+    } catch (error) {
+      throw error; // Re-lanza el error
     }
-    var nbResponse = jsonResponse as NbResponse;
-    if (nbResponse?.status === 'success') {
-      return paged ? jsonResponse as T : nbResponse.data as T
-    }
-    throw NotbankError.Factory.createFromNbResponse(nbResponse);
   }
 
   static async #getData(response: Response): Promise<any> {
     try {
-      return await response.json();
+      const data = await response.json();
+      return data
     } catch (err) {
       return null;
     }

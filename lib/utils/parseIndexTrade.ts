@@ -1,4 +1,4 @@
-import { TradeSummary } from "../models/enums/indexTrade";
+import { TradeSummary } from "../models/response/tradeSummary";
 
 export function parseTradeSummary(
   jsonTrade: number[] | { [key: number]: number }

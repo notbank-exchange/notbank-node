@@ -1,4 +1,4 @@
-import { CancelReplaceOrder } from "../enums/cancelReplaceOrder";
+import { CancelReplaceOrderRequest } from "./cancelReplaceOrder";
 
 // Arreglo de órdenes para cancelar y reemplazar
-export type SendCancelReplaceListRequest = CancelReplaceOrder[];
+export type SendCancelReplaceListRequest = CancelReplaceOrderRequest[];
