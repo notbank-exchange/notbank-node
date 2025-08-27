@@ -76,6 +76,10 @@ export class WebsocketServiceFactory {
     });
   }
 
+  getConnection(): ServiceConnection {
+    return this.serviceConnection
+  }
+
   newAccountService(): AccountService {
     return new AccountService(this.serviceConnection);
   }
