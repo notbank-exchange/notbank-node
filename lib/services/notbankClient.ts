@@ -15,10 +15,12 @@ import { WalletService } from "./walletService";
 import { QuoteService } from "./quoteService";
 import { WebsocketServiceFactory } from "./websocketServiceFactory";
 import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration";
+import { ServiceConnection } from "../core/serviceClient";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class NotbankClient {
+  connection: ServiceConnection
   accountService: AccountService
   authService: AuthService
   feeService: FeeService
@@ -41,6 +43,7 @@ export class NotbankClient {
 
   constructor(
     params: {
+      connection: ServiceConnection
       accountService: AccountService,
       authService: AuthService,
       feeService: FeeService,
@@ -62,6 +65,7 @@ export class NotbankClient {
       close: () => Promise<void>,
     }
   ) {
+    this.connection = params.connection
     this.accountService = params.accountService
     this.authService = params.authService
     this.feeService = params.feeService
@@ -84,6 +88,7 @@ export class NotbankClient {
     static createRestClient(domain: string = DEFAULT_DOMAIN) {
       var factory = new HttpServiceFactory(domain)
       return new NotbankClient({
+        connection: factory.getConnection(),
         accountService: factory.newAccountService(),
         authService: factory.newAuthService(),
         feeService: factory.newFeeService(),
@@ -105,6 +110,7 @@ export class NotbankClient {
       var factory = new WebsocketServiceFactory(configuration)
       return new NotbankClient(
         {
+          connection: factory.getConnection(),
           accountService: factory.newAccountService(),
           authService: factory.newAuthService(),
           feeService: factory.newFeeService(),
@@ -168,5 +174,9 @@ export class NotbankClient {
 
   getQuoteService(): QuoteService {
     return this.quoteService
+  }
+
+  getConnection(): ServiceConnection {
+    return this.connection
   }
 }

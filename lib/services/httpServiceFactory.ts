@@ -11,6 +11,7 @@ import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
 import { WalletService } from "./walletService";
 import { QuoteService } from "./quoteService";
+import { ServiceConnection } from "../core/serviceClient";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
@@ -40,6 +41,10 @@ export class HttpServiceFactory {
       UserId: params.UserId,
       Nonce: nonce
     });
+  }
+
+  getConnection(): ServiceConnection {
+    return this.#httpConnection
   }
 
   newAccountService(): AccountService {

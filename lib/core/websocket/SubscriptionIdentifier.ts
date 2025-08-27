@@ -5,29 +5,29 @@ export class SubscriptionIdentifier {
   static #mapping: Partial<
     Record<WebSocketEndpoint, (eventName: string, payloadStr: string) => string>
   > = {
-    [WebSocketEndpoint.SUBSCRIBE_LEVEL1]: this.#getLevel1TickerName,
-    [WebSocketEndpoint.UPDATE_LEVEL1]: this.#getLevel1TickerName,
-    [WebSocketEndpoint.SUBSCRIBE_LEVEL2]: this.#getLevel2TickerName,
-    [WebSocketEndpoint.UPDATE_LEVEL2]: this.#getLevel2TickerName,
-    [WebSocketEndpoint.SUBSCRIBE_TICKER]: this.#getTickerName,
-    [WebSocketEndpoint.UPDATE_TICKER]: this.#getTickerName,
-    [WebSocketEndpoint.SUBSCRIBE_TRADES]: this.#getSocketTradeName,
-    [WebSocketEndpoint.SUBSCRIBE_ORDER_STATE_EVENTS]: this.#getOrderEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_TRANSACTION]: this.#getAccountEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_WITHDRAW_TICKET_UPDATE]:
-      this.#getAccountEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_ACCOUNT_POSITION]:
-      this.#getAccountEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_ORDER_TRADE]: this.#getAccountEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_ORDER_STATE]: this.#getAccountEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_DEPOSIT_TICKET_UPDATE]:
-      this.#getAccountEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_ACCOUNT_INFO_UPDATE]:
-      this.#getAccountEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_CANCEL_ORDER_REJECT]:
-      this.#getAccountEventName,
-    [WebSocketEndpoint.ACCOUNT_EVENT_DEPOSIT]: this.#getAccountEventName,
-  };
+      [WebSocketEndpoint.SUBSCRIBE_LEVEL1]: this.#getLevel1TickerName,
+      [WebSocketEndpoint.UPDATE_LEVEL1]: this.#getLevel1TickerName,
+      [WebSocketEndpoint.SUBSCRIBE_LEVEL2]: this.#getLevel2TickerName,
+      [WebSocketEndpoint.UPDATE_LEVEL2]: this.#getLevel2TickerName,
+      [WebSocketEndpoint.SUBSCRIBE_TICKER]: this.#getTickerName,
+      [WebSocketEndpoint.UPDATE_TICKER]: this.#getTickerName,
+      [WebSocketEndpoint.SUBSCRIBE_TRADES]: this.#getSocketTradeName,
+      [WebSocketEndpoint.SUBSCRIBE_ORDER_STATE_EVENTS]: this.#getOrderEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_TRANSACTION]: this.#getAccountEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_WITHDRAW_TICKET_UPDATE]:
+        this.#getAccountEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_ACCOUNT_POSITION]:
+        this.#getAccountEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_ORDER_TRADE]: this.#getAccountEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_ORDER_STATE]: this.#getAccountEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_DEPOSIT_TICKET_UPDATE]:
+        this.#getAccountEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_ACCOUNT_INFO_UPDATE]:
+        this.#getAccountEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_CANCEL_ORDER_REJECT]:
+        this.#getAccountEventName,
+      [WebSocketEndpoint.ACCOUNT_EVENT_DEPOSIT]: this.#getAccountEventName,
+    };
 
   static get(
     eventName: string,
@@ -102,8 +102,9 @@ export class SubscriptionIdentifier {
       JSON.parse(payloadStr);
     let identifier = eventName + "_" + data.AccountId;
     if (data.InstrumentId) {
-      return identifier + "_" + data.InstrumentId;
+      identifier = identifier + "_" + data.InstrumentId;
     }
+    return identifier;
   }
 
   static #getValueFromList(
