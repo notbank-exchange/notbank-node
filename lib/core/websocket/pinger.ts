@@ -30,7 +30,9 @@ export class Pinger {
         return
       }
     }, this.pingIntervalMillis)
-    this.interval.unref()
+    if (typeof this.interval.unref === 'function') {
+      this.interval.unref();
+    }
   }
 
   stop() {
