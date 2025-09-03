@@ -11,7 +11,9 @@ import { UserService } from "./userService.js";
 import { WalletService } from "./walletService.js";
 import { QuoteService } from "./quoteService.js";
 import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration.js";
+import { ServiceConnection } from "../core/serviceClient.js";
 export declare class NotbankClient {
+    connection: ServiceConnection;
     accountService: AccountService;
     authService: AuthService;
     feeService: FeeService;
@@ -32,6 +34,7 @@ export declare class NotbankClient {
     connect: () => Promise<void>;
     close: () => Promise<void>;
     constructor(params: {
+        connection: ServiceConnection;
         accountService: AccountService;
         authService: AuthService;
         feeService: FeeService;
@@ -68,4 +71,5 @@ export declare class NotbankClient {
     getUserService(): UserService;
     getWalletService(): WalletService;
     getQuoteService(): QuoteService;
+    getConnection(): ServiceConnection;
 }

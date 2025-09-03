@@ -40,6 +40,9 @@ export class HttpServiceFactory {
             Nonce: nonce
         });
     }
+    getConnection() {
+        return __classPrivateFieldGet(this, _HttpServiceFactory_httpConnection, "f");
+    }
     newAccountService() {
         return new AccountService(__classPrivateFieldGet(this, _HttpServiceFactory_httpConnection, "f"));
     }

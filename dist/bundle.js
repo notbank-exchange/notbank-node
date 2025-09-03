@@ -2089,6 +2089,9 @@ var NotbankSdk = (() => {
         Nonce: nonce
       });
     }
+    getConnection() {
+      return __privateGet(this, _httpConnection);
+    }
     newAccountService() {
       return new AccountService(__privateGet(this, _httpConnection));
     }
@@ -2144,7 +2147,9 @@ var NotbankSdk = (() => {
           return;
         }
       }), this.pingIntervalMillis);
-      this.interval.unref();
+      if (typeof this.interval.unref === "function") {
+        this.interval.unref();
+      }
     }
     stop() {
       if (!this.interval) {
@@ -2234,8 +2239,9 @@ var NotbankSdk = (() => {
     const data = JSON.parse(payloadStr);
     let identifier = eventName + "_" + data.AccountId;
     if (data.InstrumentId) {
-      return identifier + "_" + data.InstrumentId;
+      identifier = identifier + "_" + data.InstrumentId;
     }
+    return identifier;
   };
   getValueFromList_fn = function(payloadStr, index) {
     const data = JSON.parse(payloadStr);
@@ -2998,6 +3004,9 @@ var NotbankSdk = (() => {
         });
       });
     }
+    getConnection() {
+      return this.serviceConnection;
+    }
     newAccountService() {
       return new AccountService(this.serviceConnection);
     }
@@ -3040,6 +3049,7 @@ var NotbankSdk = (() => {
   var DEFAULT_DOMAIN3 = "api.notbank.exchange";
   var _NotbankClient = class _NotbankClient {
     constructor(params) {
+      this.connection = params.connection;
       this.accountService = params.accountService;
       this.authService = params.authService;
       this.feeService = params.feeService;
@@ -3089,11 +3099,15 @@ var NotbankSdk = (() => {
     getQuoteService() {
       return this.quoteService;
     }
+    getConnection() {
+      return this.connection;
+    }
   };
   _NotbankClient.Factory = class Factory {
     static createRestClient(domain = DEFAULT_DOMAIN3) {
       var factory = new HttpServiceFactory(domain);
       return new _NotbankClient({
+        connection: factory.getConnection(),
         accountService: factory.newAccountService(),
         authService: factory.newAuthService(),
         feeService: factory.newFeeService(),
@@ -3117,6 +3131,7 @@ var NotbankSdk = (() => {
       var factory = new WebsocketServiceFactory(configuration);
       return new _NotbankClient(
         {
+          connection: factory.getConnection(),
           accountService: factory.newAccountService(),
           authService: factory.newAuthService(),
           feeService: factory.newFeeService(),

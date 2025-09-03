@@ -1,3 +1,4 @@
+import { ServiceConnection } from "../core/serviceClient.js";
 import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration.js";
 import { AccountService } from "./accountService.js";
 import { AuthService } from "./authService.js";
@@ -26,6 +27,7 @@ export declare class WebsocketServiceFactory {
         ApiSecretKey: string;
         UserId: string;
     }): Promise<void>;
+    getConnection(): ServiceConnection;
     newAccountService(): AccountService;
     newAuthService(): AuthService;
     newFeeService(): FeeService;

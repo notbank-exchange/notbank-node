@@ -52,8 +52,9 @@ _a = SubscriptionIdentifier, _SubscriptionIdentifier_getIdPart = function _Subsc
     const data = JSON.parse(payloadStr);
     let identifier = eventName + "_" + data.AccountId;
     if (data.InstrumentId) {
-        return identifier + "_" + data.InstrumentId;
+        identifier = identifier + "_" + data.InstrumentId;
     }
+    return identifier;
 }, _SubscriptionIdentifier_getValueFromList = function _SubscriptionIdentifier_getValueFromList(payloadStr, index) {
     const data = JSON.parse(payloadStr);
     if (data.length == 0) {

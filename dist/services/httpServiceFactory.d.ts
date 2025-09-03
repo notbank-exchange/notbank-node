@@ -9,6 +9,7 @@ import { TradingService } from "./tradingService.js";
 import { UserService } from "./userService.js";
 import { WalletService } from "./walletService.js";
 import { QuoteService } from "./quoteService.js";
+import { ServiceConnection } from "../core/serviceClient.js";
 export declare class HttpServiceFactory {
     #private;
     constructor(domain?: string);
@@ -17,6 +18,7 @@ export declare class HttpServiceFactory {
         ApiSecretKey: string;
         UserId: string;
     }): Promise<void>;
+    getConnection(): ServiceConnection;
     newAccountService(): AccountService;
     newAuthService(): AuthService;
     newFeeService(): FeeService;

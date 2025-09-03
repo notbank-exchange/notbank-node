@@ -4,6 +4,7 @@ import { WebsocketServiceFactory } from "./websocketServiceFactory.js";
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 export class NotbankClient {
     constructor(params) {
+        this.connection = params.connection;
         this.accountService = params.accountService;
         this.authService = params.authService;
         this.feeService = params.feeService;
@@ -53,11 +54,15 @@ export class NotbankClient {
     getQuoteService() {
         return this.quoteService;
     }
+    getConnection() {
+        return this.connection;
+    }
 }
 NotbankClient.Factory = class Factory {
     static createRestClient(domain = DEFAULT_DOMAIN) {
         var factory = new HttpServiceFactory(domain);
         return new NotbankClient({
+            connection: factory.getConnection(),
             accountService: factory.newAccountService(),
             authService: factory.newAuthService(),
             feeService: factory.newFeeService(),
@@ -78,6 +83,7 @@ NotbankClient.Factory = class Factory {
     static createWebsocketClient(configuration) {
         var factory = new WebsocketServiceFactory(configuration);
         return new NotbankClient({
+            connection: factory.getConnection(),
             accountService: factory.newAccountService(),
             authService: factory.newAuthService(),
             feeService: factory.newFeeService(),
