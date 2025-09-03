@@ -19,4 +19,5 @@ export interface CancelReplaceOrderRequest {
   TimeInForce: TimeInForce; // Obligatorio: Tiempo de ejecución
   OrderIdOCO?: number; // Opcional: Vinculación para One Cancels the Other
   Quantity: number; // Obligatorio: Cantidad
+  PostOnly?: boolean;
 }
