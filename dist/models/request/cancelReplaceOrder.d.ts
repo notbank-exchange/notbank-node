@@ -18,4 +18,5 @@ export interface CancelReplaceOrderRequest {
     TimeInForce: TimeInForce;
     OrderIdOCO?: number;
     Quantity: number;
+    PostOnly?: boolean;
 }

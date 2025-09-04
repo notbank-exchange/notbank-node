@@ -19,4 +19,5 @@ export interface SendOrderRequest {
     LimitOffset?: number;
     DisplayQuantity?: number;
     Value?: number;
+    PostOnly?: boolean;
 }
