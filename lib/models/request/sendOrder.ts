@@ -20,4 +20,5 @@ export interface SendOrderRequest {
   LimitOffset?: number; // Usado para TrailingStopLimit (opcional si aplica)
   DisplayQuantity?: number; // Cantidad visible en el libro de órdenes
   Value?: number; // Valor de la orden solo para Market Orders (opcional)
+  PostOnly?: boolean;
 }
