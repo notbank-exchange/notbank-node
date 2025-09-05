@@ -98,11 +98,11 @@ export class SubscriptionIdentifier {
   }
 
   static #getOrderEventName(eventName: string, payloadStr: string): string {
-    const data: { InstrumentId?: string; AccountId: number } =
+    const data: { Instrument?: string; AccountId: number } =
       JSON.parse(payloadStr);
     let identifier = eventName + "_" + data.AccountId;
-    if (data.InstrumentId) {
-      identifier = identifier + "_" + data.InstrumentId;
+    if (data.Instrument) {
+      identifier = identifier + "_" + data.Instrument;
     }
     return identifier;
   }
@@ -124,11 +124,6 @@ export class SubscriptionIdentifier {
   static #getInstrumentedId(payloadStr: string): string {
     const data: { InstrumentId: string } = JSON.parse(payloadStr);
     return data.InstrumentId;
-  }
-
-  static #getInstrumentedIdFromInstrument(payloadStr: string): string {
-    const data: { Instrument: string } = JSON.parse(payloadStr);
-    return data.Instrument;
   }
 
   static #getAccountId(payloadStr: string): string {

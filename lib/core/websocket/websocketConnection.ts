@@ -71,6 +71,17 @@ export class WebsocketConnection implements ServiceConnection {
       subscriptionCallback(message);
       return;
     }
+    var lastSuffixStart = callbackId.lastIndexOf("_")
+    if (lastSuffixStart == -1) {
+      return;
+    }
+    const broaderCallbackId = callbackId.substring(0, lastSuffixStart);
+    const broaderSubscriptionCallback =
+      this.callbackManager.getSubscriptionCallback(callbackId);
+    if (broaderSubscriptionCallback != null) {
+      broaderSubscriptionCallback(message);
+      return;
+    }
   }
 
   close(): Promise<void> {
