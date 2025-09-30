@@ -4,6 +4,7 @@
   "description": "The Notbank for Node.js",
   "homepage": "https://notbank.exchange",
   "main": "dist/index.js",
+  "type": "module",
   "engines": {
     "node": ">=14.21.3"
   },
@@ -11,7 +12,7 @@
     "test": "mocha -r ts-node/register 'test/**/*.ts'",
     "build": "npm run build:clean && npm run build:node && npm run build:bundle",
     "build:node": "tsc && tsc-alias",
-    "build:bundle": "node build-bundle.js",
+    "build:bundle": "node build-bundle.cjs",
     "build:clean": "rm -rf ./dist",
     "generate-index": "ts-node lib/scripts/generateIndex.ts"
   },
@@ -39,6 +40,7 @@
   "author": "Ismael Verdugo Zambra - Marcelo De La Barrera",
   "license": "Apache-2.0",
   "dependencies": {
+    "node-fetch": "^2.7.0",
     "universal-websocket-client": "^1.0.2"
   },
   "devDependencies": {

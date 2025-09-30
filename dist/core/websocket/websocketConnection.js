@@ -96,6 +96,16 @@ _WebsocketConnection_instances = new WeakSet(), _WebsocketConnection_getSubscrip
         subscriptionCallback(message);
         return;
     }
+    var lastSuffixStart = callbackId.lastIndexOf("_");
+    if (lastSuffixStart == -1) {
+        return;
+    }
+    const broaderCallbackId = callbackId.substring(0, lastSuffixStart);
+    const broaderSubscriptionCallback = this.callbackManager.getSubscriptionCallback(callbackId);
+    if (broaderSubscriptionCallback != null) {
+        broaderSubscriptionCallback(message);
+        return;
+    }
 }, _WebsocketConnection_request = function _WebsocketConnection_request(endpoint, message, messageType = MessageType.REQUEST) {
     return new Promise((resolve, reject) => {
         __classPrivateFieldGet(this, _WebsocketConnection_instances, "m", _WebsocketConnection_requestToCallback).call(this, endpoint, JSON.stringify(message) || "{}", messageType, __classPrivateFieldGet(this, _WebsocketConnection_instances, "m", _WebsocketConnection_handleRequestResponse).call(this, reject, resolve));

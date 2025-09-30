@@ -81,8 +81,35 @@ var NotbankSdk = (() => {
     });
   };
 
-  // node_modules/universal-websocket-client/browser.js
+  // node_modules/node-fetch/browser.js
   var require_browser = __commonJS({
+    "node_modules/node-fetch/browser.js"(exports, module) {
+      "use strict";
+      var getGlobal = function() {
+        if (typeof self !== "undefined") {
+          return self;
+        }
+        if (typeof window !== "undefined") {
+          return window;
+        }
+        if (typeof global !== "undefined") {
+          return global;
+        }
+        throw new Error("unable to locate global object");
+      };
+      var globalObject = getGlobal();
+      module.exports = exports = globalObject.fetch;
+      if (globalObject.fetch) {
+        exports.default = globalObject.fetch.bind(globalObject);
+      }
+      exports.Headers = globalObject.Headers;
+      exports.Request = globalObject.Request;
+      exports.Response = globalObject.Response;
+    }
+  });
+
+  // node_modules/universal-websocket-client/browser.js
+  var require_browser2 = __commonJS({
     "node_modules/universal-websocket-client/browser.js"(exports, module) {
       "use strict";
       module.exports = WebSocket;
@@ -658,7 +685,7 @@ var NotbankSdk = (() => {
   };
 
   // lib/core/hmac.ts
-  var import_crypto = __toESM(__require("crypto"));
+  var import_crypto = __toESM(__require("crypto"), 1);
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
@@ -755,6 +782,7 @@ var NotbankSdk = (() => {
   var NbResponseHandler = _NbResponseHandler;
 
   // lib/core/http/requester.ts
+  var import_node_fetch = __toESM(require_browser(), 1);
   var _aptoken;
   var Requester = class {
     constructor() {
@@ -778,7 +806,7 @@ var NotbankSdk = (() => {
       if (body) {
         requestData.body = JSON.stringify(body);
       }
-      return fetch(url, requestData);
+      return (0, import_node_fetch.default)(url, requestData);
     }
     getHeaders(extraHeaders) {
       var headers = {
@@ -2179,7 +2207,7 @@ var NotbankSdk = (() => {
   };
 
   // lib/core/websocket/SubscriptionIdentifier.ts
-  var _mapping, _SubscriptionIdentifier_static, getIdPart_fn, getTickerName_fn, getLevel1TickerName_fn, getLevel2TickerName_fn, getSocketTradeName_fn, getAccountEventName_fn, getOrderEventName_fn, getValueFromList_fn, getInstrumentedId_fn, getInstrumentedIdFromInstrument_fn, getAccountId_fn, getAccountIdFromAccount_fn;
+  var _mapping, _SubscriptionIdentifier_static, getIdPart_fn, getTickerName_fn, getLevel1TickerName_fn, getLevel2TickerName_fn, getSocketTradeName_fn, getAccountEventName_fn, getOrderEventName_fn, getValueFromList_fn, getInstrumentedId_fn, getAccountId_fn, getAccountIdFromAccount_fn;
   var _SubscriptionIdentifier = class _SubscriptionIdentifier {
     static get(eventName, firstIdentifier = null, secondIdentifier = null) {
       var _a, _b;
@@ -2238,8 +2266,8 @@ var NotbankSdk = (() => {
   getOrderEventName_fn = function(eventName, payloadStr) {
     const data = JSON.parse(payloadStr);
     let identifier = eventName + "_" + data.AccountId;
-    if (data.InstrumentId) {
-      identifier = identifier + "_" + data.InstrumentId;
+    if (data.Instrument) {
+      identifier = identifier + "_" + data.Instrument;
     }
     return identifier;
   };
@@ -2256,10 +2284,6 @@ var NotbankSdk = (() => {
   getInstrumentedId_fn = function(payloadStr) {
     const data = JSON.parse(payloadStr);
     return data.InstrumentId;
-  };
-  getInstrumentedIdFromInstrument_fn = function(payloadStr) {
-    const data = JSON.parse(payloadStr);
-    return data.Instrument;
   };
   getAccountId_fn = function(payloadStr) {
     const data = JSON.parse(payloadStr);
@@ -2329,7 +2353,7 @@ var NotbankSdk = (() => {
   };
 
   // lib/core/websocket/websocketConnection.ts
-  var import_universal_websocket_client = __toESM(require_browser());
+  var import_universal_websocket_client = __toESM(require_browser2(), 1);
 
   // lib/core/websocket/callbackManager.ts
   var _subscriptionCallbacks, _callbacks, _sequenceNumber;
@@ -2497,6 +2521,16 @@ var NotbankSdk = (() => {
     const subscriptionCallback = this.callbackManager.getSubscriptionCallback(callbackId);
     if (subscriptionCallback != null) {
       subscriptionCallback(message);
+      return;
+    }
+    var lastSuffixStart = callbackId.lastIndexOf("_");
+    if (lastSuffixStart == -1) {
+      return;
+    }
+    const broaderCallbackId = callbackId.substring(0, lastSuffixStart);
+    const broaderSubscriptionCallback = this.callbackManager.getSubscriptionCallback(callbackId);
+    if (broaderSubscriptionCallback != null) {
+      broaderSubscriptionCallback(message);
       return;
     }
   };

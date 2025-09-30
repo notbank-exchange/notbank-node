@@ -1,5 +1,6 @@
 import { NbResponse } from "../../models/nbResponse";
 import { NotbankError } from "../../models/notbankError";
+import { Response } from 'node-fetch';
 
 
 export class NbResponseHandler {

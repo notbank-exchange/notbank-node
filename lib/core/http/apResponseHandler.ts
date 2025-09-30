@@ -2,6 +2,7 @@ import {
   NotbankError,
   StandardResponse
 } from "../../models";
+import { Response } from 'node-fetch';
 
 export class ApResponseHandler {
   public static async handle<T>(response: Response): Promise<T> {

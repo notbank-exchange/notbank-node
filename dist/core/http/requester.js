@@ -11,6 +11,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _Requester_aptoken;
 import { RequestType } from "../serviceClient.js";
+import fetch from 'node-fetch';
 export class Requester {
     constructor() {
         _Requester_aptoken.set(this, void 0);
