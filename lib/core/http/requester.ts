@@ -1,4 +1,5 @@
 import { RequestType } from "../serviceClient";
+import fetch, { RequestInit, Response } from 'node-fetch';
 
 export class Requester {
   #aptoken: string | null;

@@ -3,7 +3,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _a, _SubscriptionIdentifier_mapping, _SubscriptionIdentifier_getIdPart, _SubscriptionIdentifier_getTickerName, _SubscriptionIdentifier_getLevel1TickerName, _SubscriptionIdentifier_getLevel2TickerName, _SubscriptionIdentifier_getSocketTradeName, _SubscriptionIdentifier_getAccountEventName, _SubscriptionIdentifier_getOrderEventName, _SubscriptionIdentifier_getValueFromList, _SubscriptionIdentifier_getInstrumentedId, _SubscriptionIdentifier_getInstrumentedIdFromInstrument, _SubscriptionIdentifier_getAccountId, _SubscriptionIdentifier_getAccountIdFromAccount;
+var _a, _SubscriptionIdentifier_mapping, _SubscriptionIdentifier_getIdPart, _SubscriptionIdentifier_getTickerName, _SubscriptionIdentifier_getLevel1TickerName, _SubscriptionIdentifier_getLevel2TickerName, _SubscriptionIdentifier_getSocketTradeName, _SubscriptionIdentifier_getAccountEventName, _SubscriptionIdentifier_getOrderEventName, _SubscriptionIdentifier_getValueFromList, _SubscriptionIdentifier_getInstrumentedId, _SubscriptionIdentifier_getAccountId, _SubscriptionIdentifier_getAccountIdFromAccount;
 import { WebSocketEndpoint } from "../../constants/endpoints.js";
 export class SubscriptionIdentifier {
     static get(eventName, firstIdentifier = null, secondIdentifier = null) {
@@ -51,8 +51,8 @@ _a = SubscriptionIdentifier, _SubscriptionIdentifier_getIdPart = function _Subsc
 }, _SubscriptionIdentifier_getOrderEventName = function _SubscriptionIdentifier_getOrderEventName(eventName, payloadStr) {
     const data = JSON.parse(payloadStr);
     let identifier = eventName + "_" + data.AccountId;
-    if (data.InstrumentId) {
-        identifier = identifier + "_" + data.InstrumentId;
+    if (data.Instrument) {
+        identifier = identifier + "_" + data.Instrument;
     }
     return identifier;
 }, _SubscriptionIdentifier_getValueFromList = function _SubscriptionIdentifier_getValueFromList(payloadStr, index) {
@@ -67,9 +67,6 @@ _a = SubscriptionIdentifier, _SubscriptionIdentifier_getIdPart = function _Subsc
 }, _SubscriptionIdentifier_getInstrumentedId = function _SubscriptionIdentifier_getInstrumentedId(payloadStr) {
     const data = JSON.parse(payloadStr);
     return data.InstrumentId;
-}, _SubscriptionIdentifier_getInstrumentedIdFromInstrument = function _SubscriptionIdentifier_getInstrumentedIdFromInstrument(payloadStr) {
-    const data = JSON.parse(payloadStr);
-    return data.Instrument;
 }, _SubscriptionIdentifier_getAccountId = function _SubscriptionIdentifier_getAccountId(payloadStr) {
     const data = JSON.parse(payloadStr);
     return data.AccountId;

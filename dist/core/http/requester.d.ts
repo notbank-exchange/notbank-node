@@ -1,4 +1,5 @@
 import { RequestType } from "../serviceClient.js";
+import { Response } from 'node-fetch';
 export declare class Requester {
     #private;
     constructor();
