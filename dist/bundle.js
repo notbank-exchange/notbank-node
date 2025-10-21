@@ -846,9 +846,17 @@ var NotbankSdk = (() => {
     apRequest(endpoint, requestType, params, extraHeaders) {
       return __async(this, null, function* () {
         const url = this.getApUrl(endpoint);
-        var response = yield __privateGet(this, _requester).request({ url, requestType, params, extraHeaders });
+        var response = yield __privateGet(this, _requester).request({
+          url,
+          requestType,
+          params,
+          extraHeaders
+        });
         return yield ApResponseHandler.handle(response);
       });
+    }
+    updateSessionToken(sessionToken) {
+      __privateGet(this, _requester).updateSessionToken(sessionToken);
     }
     authenticateUser(params) {
       return __async(this, null, function* () {
@@ -2117,6 +2125,9 @@ var NotbankSdk = (() => {
         Nonce: nonce
       });
     }
+    updateSessionToken(sessionToken) {
+      this.getConnection().updateSessionToken(sessionToken);
+    }
     getConnection() {
       return __privateGet(this, _httpConnection);
     }
@@ -2423,6 +2434,9 @@ var NotbankSdk = (() => {
       this.peekMessageOut = (configuration == null ? void 0 : configuration.peekMessageOut) || ((_) => {
       });
     }
+    updateSessionToken(sessionToken) {
+      throw new Error("Method not implemented.");
+    }
     nbRequest(endpoint, requestType, message) {
       throw new Error("websocket client does not support nb methods.");
     }
@@ -2691,6 +2705,9 @@ var NotbankSdk = (() => {
     constructor(params) {
       this.restarter = params.restarter;
     }
+    updateSessionToken(sessionToken) {
+      throw new Error("Method not implemented.");
+    }
     apRequest(endpoint, requestType, message) {
       if (endpoint === "LogOut" /* LOGOUT */) {
         this.restarter.getReauther().removeAuthentication();
@@ -2708,7 +2725,13 @@ var NotbankSdk = (() => {
     }
     subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionHandlers) {
       return __async(this, null, function* () {
-        yield this.restarter.getConnection().subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionHandlers);
+        yield this.restarter.getConnection().subscribe(
+          endpoint,
+          firstIdentifier,
+          secondIdentifier,
+          message,
+          subscriptionHandlers
+        );
         this.restarter.getResubscriber().saveSubscription({
           endpoint,
           firstIdentifier,
@@ -2720,7 +2743,13 @@ var NotbankSdk = (() => {
     }
     unsubscribe(endpoint, firstIdentifier, secondIdentifier, message, callback_ids) {
       return __async(this, null, function* () {
-        yield this.restarter.getConnection().unsubscribe(endpoint, firstIdentifier, secondIdentifier, message, callback_ids);
+        yield this.restarter.getConnection().unsubscribe(
+          endpoint,
+          firstIdentifier,
+          secondIdentifier,
+          message,
+          callback_ids
+        );
         this.restarter.getResubscriber().removeSubscription(callback_ids);
       });
     }

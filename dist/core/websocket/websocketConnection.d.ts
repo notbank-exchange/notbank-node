@@ -12,6 +12,7 @@ export declare class WebsocketConnection implements ServiceConnection {
     private peekMessageIn;
     private peekMessageOut;
     constructor(configuration: WebsocketConnectionConfiguration);
+    updateSessionToken(sessionToken: string): void;
     nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2>;
     connect(): Promise<void>;
     close(): Promise<void>;

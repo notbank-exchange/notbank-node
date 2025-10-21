@@ -40,6 +40,9 @@ export class HttpServiceFactory {
             Nonce: nonce
         });
     }
+    updateSessionToken(sessionToken) {
+        this.getConnection().updateSessionToken(sessionToken);
+    }
     getConnection() {
         return __classPrivateFieldGet(this, _HttpServiceFactory_httpConnection, "f");
     }

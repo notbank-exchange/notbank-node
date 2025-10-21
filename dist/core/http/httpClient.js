@@ -41,9 +41,17 @@ export class HttpConnection {
     apRequest(endpoint, requestType, params, extraHeaders) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = this.getApUrl(endpoint);
-            var response = yield __classPrivateFieldGet(this, _HttpConnection_requester, "f").request({ url, requestType, params, extraHeaders });
+            var response = yield __classPrivateFieldGet(this, _HttpConnection_requester, "f").request({
+                url,
+                requestType,
+                params,
+                extraHeaders
+            });
             return yield ApResponseHandler.handle(response);
         });
+    }
+    updateSessionToken(sessionToken) {
+        __classPrivateFieldGet(this, _HttpConnection_requester, "f").updateSessionToken(sessionToken);
     }
     authenticateUser(params) {
         return __awaiter(this, void 0, void 0, function* () {
