@@ -8,6 +8,7 @@ export declare class RestartingWebsocketConnection implements ServiceConnection 
     constructor(params: {
         restarter: Restarter;
     });
+    updateSessionToken(sessionToken: string): void;
     apRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2>;
     nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1, paged?: boolean): Promise<T2>;
     authenticateUser(params: AuthenticateUserRequest): Promise<void>;

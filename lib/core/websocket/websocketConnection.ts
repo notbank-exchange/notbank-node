@@ -3,14 +3,18 @@ import { Endpoint } from "../../constants/endpoints";
 import { MessageFrame, MessageType } from "./messageFrame";
 import { SubscriptionHandler } from "./subscriptionHandler";
 import { RequestType, ServiceConnection } from "../serviceClient";
-import { AuthenticateUserRequest, NotbankError, StandardResponse } from "../../models";
+import {
+  AuthenticateUserRequest,
+  NotbankError,
+  StandardResponse
+} from "../../models";
 import { WebsocketHooks } from "./websocketHooks";
 import { CallbackManager } from "./callbackManager";
 import ErrorCode from "../../constants/errorCode";
 import { SubscriptionIdentifier } from "./SubscriptionIdentifier";
 import { WebsocketConnectionConfiguration } from "./websocketConnectionConfiguration";
 
-const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => { };
+const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => {};
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class WebsocketConnection implements ServiceConnection {
@@ -25,11 +29,19 @@ export class WebsocketConnection implements ServiceConnection {
     this.domain = configuration?.domain || DEFAULT_DOMAIN;
     this.callbackManager = new CallbackManager();
     this.hooks = configuration?.websocketHooks || {};
-    this.peekMessageIn = configuration?.peekMessageIn || (_ => { });
-    this.peekMessageOut = configuration?.peekMessageOut || (_ => { });
+    this.peekMessageIn = configuration?.peekMessageIn || (_ => {});
+    this.peekMessageOut = configuration?.peekMessageOut || (_ => {});
   }
 
-  nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1): Promise<T2> {
+  updateSessionToken(sessionToken: string) {
+    throw new Error("Method not implemented.");
+  }
+
+  nbRequest<T1, T2>(
+    endpoint: string,
+    requestType: RequestType,
+    message?: T1
+  ): Promise<T2> {
     throw new Error("websocket client does not support nb methods.");
   }
 
@@ -71,7 +83,7 @@ export class WebsocketConnection implements ServiceConnection {
       subscriptionCallback(message);
       return;
     }
-    var lastSuffixStart = callbackId.lastIndexOf("_")
+    var lastSuffixStart = callbackId.lastIndexOf("_");
     if (lastSuffixStart == -1) {
       return;
     }

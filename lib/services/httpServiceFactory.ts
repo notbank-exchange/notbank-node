@@ -43,8 +43,12 @@ export class HttpServiceFactory {
     });
   }
 
+  updateSessionToken(sessionToken: string) {
+    this.getConnection().updateSessionToken(sessionToken);
+  }
+
   getConnection(): ServiceConnection {
-    return this.#httpConnection
+    return this.#httpConnection;
   }
 
   newAccountService(): AccountService {
@@ -84,9 +88,9 @@ export class HttpServiceFactory {
   }
 
   newWalletService(): WalletService {
-    return new WalletService(this.#httpConnection)
+    return new WalletService(this.#httpConnection);
   }
   newQuoteService(): QuoteService {
-    return new QuoteService(this.#httpConnection)
+    return new QuoteService(this.#httpConnection);
   }
 }

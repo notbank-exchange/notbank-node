@@ -32,6 +32,9 @@ export class WebsocketConnection {
         this.peekMessageIn = (configuration === null || configuration === void 0 ? void 0 : configuration.peekMessageIn) || (_ => { });
         this.peekMessageOut = (configuration === null || configuration === void 0 ? void 0 : configuration.peekMessageOut) || (_ => { });
     }
+    updateSessionToken(sessionToken) {
+        throw new Error("Method not implemented.");
+    }
     nbRequest(endpoint, requestType, message) {
         throw new Error("websocket client does not support nb methods.");
     }

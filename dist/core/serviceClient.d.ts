@@ -9,6 +9,7 @@ export interface ServiceConnection {
     unsubscribe<T>(endpoint: string, firstIdentifier: number | null, secondIdentifier: number | null, message: T, callback_ids: string[]): Promise<void>;
     connect(): Promise<void>;
     close(): Promise<void>;
+    updateSessionToken(sessionToken: string): any;
 }
 export declare enum RequestType {
     NONE = "NONE",

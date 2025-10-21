@@ -12,11 +12,16 @@ export class RestartingWebsocketConnection {
     constructor(params) {
         this.restarter = params.restarter;
     }
+    updateSessionToken(sessionToken) {
+        throw new Error("Method not implemented.");
+    }
     apRequest(endpoint, requestType, message) {
         if (endpoint === Endpoint.LOGOUT) {
             this.restarter.getReauther().removeAuthentication();
         }
-        return this.restarter.getConnection().apRequest(endpoint, requestType, message);
+        return this.restarter
+            .getConnection()
+            .apRequest(endpoint, requestType, message);
     }
     nbRequest(endpoint, requestType, message, paged) {
         throw new Error("websocket client does not support nb methods.");
@@ -24,20 +29,30 @@ export class RestartingWebsocketConnection {
     authenticateUser(params) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.restarter.getConnection().authenticateUser(params);
-            this.restarter.getReauther().updateAuthentication(connection => connection.authenticateUser(params));
+            this.restarter
+                .getReauther()
+                .updateAuthentication(connection => connection.authenticateUser(params));
         });
     }
     subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionHandlers) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.restarter.getConnection().subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionHandlers);
+            yield this.restarter
+                .getConnection()
+                .subscribe(endpoint, firstIdentifier, secondIdentifier, message, subscriptionHandlers);
             this.restarter.getResubscriber().saveSubscription({
-                endpoint, firstIdentifier, secondIdentifier, message, subscriptionHandlers
+                endpoint,
+                firstIdentifier,
+                secondIdentifier,
+                message,
+                subscriptionHandlers
             });
         });
     }
     unsubscribe(endpoint, firstIdentifier, secondIdentifier, message, callback_ids) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.restarter.getConnection().unsubscribe(endpoint, firstIdentifier, secondIdentifier, message, callback_ids);
+            yield this.restarter
+                .getConnection()
+                .unsubscribe(endpoint, firstIdentifier, secondIdentifier, message, callback_ids);
             this.restarter.getResubscriber().removeSubscription(callback_ids);
         });
     }

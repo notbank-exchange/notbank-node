@@ -18,6 +18,7 @@ export declare class HttpServiceFactory {
         ApiSecretKey: string;
         UserId: string;
     }): Promise<void>;
+    updateSessionToken(sessionToken: string): void;
     getConnection(): ServiceConnection;
     newAccountService(): AccountService;
     newAuthService(): AuthService;

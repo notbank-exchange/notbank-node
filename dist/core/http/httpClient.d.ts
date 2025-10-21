@@ -8,6 +8,7 @@ export declare class HttpConnection implements ServiceConnection {
     constructor(domain: string);
     nbRequest<T1, T2>(endpoint: string, requestType: RequestType, params?: T1, paged?: boolean): Promise<T2>;
     apRequest<T1, T2>(endpoint: string, requestType: RequestType, params?: T1, extraHeaders?: any): Promise<T2>;
+    updateSessionToken(sessionToken: string): void;
     authenticateUser(params: AuthenticateUserRequest): Promise<void>;
     subscribe<T>(endpoint: string, firstIdentifier: number | null, secondIdentifier: number | null, message: T, subscriptionCallbacks: SubscriptionHandler<MessageFrame>[]): Promise<void>;
     unsubscribe<T>(endpoint: string, firstIdentifier: number | null, secondIdentifier: number | null, message: T, callback_ids: string[]): Promise<void>;
