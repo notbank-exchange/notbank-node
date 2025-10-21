@@ -31,6 +31,7 @@ export interface ServiceConnection {
   ): Promise<void>;
   connect(): Promise<void>;
   close(): Promise<void>;
+  updateSessionToken(sessionToken: string);
 }
 
 export enum RequestType {

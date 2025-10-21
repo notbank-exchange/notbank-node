@@ -12,7 +12,7 @@ import { NbResponseHandler } from "./nbResponseHandler";
 import { Requester } from "./requester";
 
 export class HttpConnection implements ServiceConnection {
-  #requester: Requester
+  #requester: Requester;
   #host: string;
 
   constructor(domain: string) {
@@ -27,7 +27,7 @@ export class HttpConnection implements ServiceConnection {
     paged: boolean = false
   ): Promise<T2> {
     const url = this.getNbUrl(endpoint);
-    var response = await this.#requester.request({ url, requestType, params })
+    var response = await this.#requester.request({ url, requestType, params });
     return await NbResponseHandler.handle<T2>(response, paged);
   }
 
@@ -38,14 +38,27 @@ export class HttpConnection implements ServiceConnection {
     extraHeaders?: any
   ): Promise<T2> {
     const url = this.getApUrl(endpoint);
-    var response = await this.#requester.request({ url, requestType, params, extraHeaders })
+    var response = await this.#requester.request({
+      url,
+      requestType,
+      params,
+      extraHeaders
+    });
     return await ApResponseHandler.handle<T2>(response);
+  }
+
+  updateSessionToken(sessionToken: string) {
+    this.#requester.updateSessionToken(sessionToken);
   }
 
   async authenticateUser(params: AuthenticateUserRequest): Promise<void> {
     var response = await this.apRequest<any, AuthenticateUserResponse>(
-      Endpoint.AUTHENTICATE_USER, RequestType.GET, null, params);
-    this.#requester.updateSessionToken(response.SessionToken)
+      Endpoint.AUTHENTICATE_USER,
+      RequestType.GET,
+      null,
+      params
+    );
+    this.#requester.updateSessionToken(response.SessionToken);
   }
 
   subscribe<T>(
@@ -83,10 +96,9 @@ export class HttpConnection implements ServiceConnection {
     return this.#host + "/api/nb/" + endpoint;
   }
   connect(): Promise<void> {
-    return Promise.resolve()
+    return Promise.resolve();
   }
   close(): Promise<void> {
-    return Promise.resolve()
+    return Promise.resolve();
   }
-
 }
