@@ -1,3 +1,4 @@
+import ErrorCode from "../../constants/errorCode";
 import {
   NotbankError,
   StandardResponse
@@ -20,7 +21,7 @@ export class ApResponseHandler {
     var standardResponse = jsonResponse as StandardResponse;
     if (
       standardResponse?.result === false &&
-      standardResponse?.errorcode != null
+      standardResponse?.errorcode != null && !(standardResponse.errorcode == ErrorCode.OPERATION_IN_PROCESS && standardResponse.errormsg === "Operation In Process")
     ) {
       throw NotbankError.Factory.createFromApResponse(standardResponse);
     }
