@@ -699,6 +699,20 @@ var NotbankSdk = (() => {
     return hmac256.digest("hex");
   }
 
+  // lib/constants/errorCode.ts
+  var ErrorCode = /* @__PURE__ */ ((ErrorCode2) => {
+    ErrorCode2[ErrorCode2["UNDEFINED"] = -1] = "UNDEFINED";
+    ErrorCode2[ErrorCode2["NOT_AN_ERROR"] = 0] = "NOT_AN_ERROR";
+    ErrorCode2[ErrorCode2["NOT_AUTHORIZED"] = 20] = "NOT_AUTHORIZED";
+    ErrorCode2[ErrorCode2["INVALID_RESPONSE"] = 100] = "INVALID_RESPONSE";
+    ErrorCode2[ErrorCode2["OPERATION_FAILED"] = 101] = "OPERATION_FAILED";
+    ErrorCode2[ErrorCode2["SERVER_ERROR"] = 102] = "SERVER_ERROR";
+    ErrorCode2[ErrorCode2["RESOURCE_NOT_FOUND"] = 104] = "RESOURCE_NOT_FOUND";
+    ErrorCode2[ErrorCode2["OPERATION_IN_PROCESS"] = 107] = "OPERATION_IN_PROCESS";
+    return ErrorCode2;
+  })(ErrorCode || {});
+  var errorCode_default = ErrorCode;
+
   // lib/core/http/apResponseHandler.ts
   var _ApResponseHandler_static, getJsonData_fn, getTextData_fn;
   var _ApResponseHandler = class _ApResponseHandler {
@@ -715,7 +729,7 @@ var NotbankSdk = (() => {
           throw new NotbankError("http error. (status=" + response.status + ")", -1);
         }
         var standardResponse = jsonResponse;
-        if ((standardResponse == null ? void 0 : standardResponse.result) === false && (standardResponse == null ? void 0 : standardResponse.errorcode) != null) {
+        if ((standardResponse == null ? void 0 : standardResponse.result) === false && (standardResponse == null ? void 0 : standardResponse.errorcode) != null && !(standardResponse.errorcode == errorCode_default.OPERATION_IN_PROCESS && standardResponse.errormsg === "Operation In Process")) {
           throw NotbankError.Factory.createFromApResponse(standardResponse);
         }
         return jsonResponse;
@@ -2404,19 +2418,6 @@ var NotbankSdk = (() => {
   _subscriptionCallbacks = new WeakMap();
   _callbacks = new WeakMap();
   _sequenceNumber = new WeakMap();
-
-  // lib/constants/errorCode.ts
-  var ErrorCode = /* @__PURE__ */ ((ErrorCode2) => {
-    ErrorCode2[ErrorCode2["UNDEFINED"] = -1] = "UNDEFINED";
-    ErrorCode2[ErrorCode2["NOT_AN_ERROR"] = 0] = "NOT_AN_ERROR";
-    ErrorCode2[ErrorCode2["NOT_AUTHORIZED"] = 20] = "NOT_AUTHORIZED";
-    ErrorCode2[ErrorCode2["INVALID_RESPONSE"] = 100] = "INVALID_RESPONSE";
-    ErrorCode2[ErrorCode2["OPERATION_FAILED"] = 101] = "OPERATION_FAILED";
-    ErrorCode2[ErrorCode2["SERVER_ERROR"] = 102] = "SERVER_ERROR";
-    ErrorCode2[ErrorCode2["RESOURCE_NOT_FOUND"] = 104] = "RESOURCE_NOT_FOUND";
-    return ErrorCode2;
-  })(ErrorCode || {});
-  var errorCode_default = ErrorCode;
 
   // lib/core/websocket/websocketConnection.ts
   var emptyFn = (o) => {
