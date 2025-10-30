@@ -13,6 +13,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _a, _ApResponseHandler_getJsonData, _ApResponseHandler_getTextData;
+import ErrorCode from "../../constants/errorCode.js";
 import { NotbankError } from "../../models/index.js";
 export class ApResponseHandler {
     static handle(response) {
@@ -26,7 +27,7 @@ export class ApResponseHandler {
             }
             var standardResponse = jsonResponse;
             if ((standardResponse === null || standardResponse === void 0 ? void 0 : standardResponse.result) === false &&
-                (standardResponse === null || standardResponse === void 0 ? void 0 : standardResponse.errorcode) != null) {
+                (standardResponse === null || standardResponse === void 0 ? void 0 : standardResponse.errorcode) != null && !(standardResponse.errorcode == ErrorCode.OPERATION_IN_PROCESS && standardResponse.errormsg === "Operation In Process")) {
                 throw NotbankError.Factory.createFromApResponse(standardResponse);
             }
             return jsonResponse;
