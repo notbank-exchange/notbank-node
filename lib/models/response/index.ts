@@ -1,6 +1,7 @@
 export * from "./accountInfo";
 export * from "./accountPositions";
 export * from "./authenticateUser";
+export * from "./basicVerificationResponse";
 export * from "./cancelReplaceOrder";
 export * from "./depositTicket";
 export * from "./downloadDocument";
@@ -54,4 +55,3 @@ export * from "./userRegistration";
 export * from "./webAuthenticateUser";
 export * from "./withdrawTemplate";
 export * from "./withdrawTicket";
-

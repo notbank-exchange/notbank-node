@@ -107,7 +107,11 @@ export enum Endpoint {
   QUOTES_INVERSE = "quotes/inverse",
 
   // NB ACCOUNT 
-  REGISTER = "account/register"
+  REGISTER = "account/register",
+  VERIFICATION_BASIC = "account/verification/basic",
+  VERIFICATION_TRADER = "account/verification/trader",
+  VERIFICATION_TRADER_PLUS = "account/verification/trader_plus",
+  VERIFICATION_TRADER_PLUS_SCHEMES = "verification/trader-plus/schemes"
 }
 
 export enum WebSocketEndpoint {

@@ -1,6 +1,7 @@
 export * from "./addClientBankAccount";
 export * from "./addWhitelistedAddress";
 export * from "./authenticateUser";
+export * from "./basicVerification";
 export * from "./cancelAllOrders";
 export * from "./cancelOrder";
 export * from "./cancelReplaceOrder";
@@ -82,6 +83,9 @@ export * from "./subscribeLevel2";
 export * from "./subscribeOrderStateEvents";
 export * from "./subscribeTicker";
 export * from "./subscribeTrades";
+export * from "./traderPlusVerification";
+export * from "./traderPlusVerificationSchema";
+export * from "./traderVerification";
 export * from "./trades";
 export * from "./transferFunds";
 export * from "./unsubscribeAccountEvents";

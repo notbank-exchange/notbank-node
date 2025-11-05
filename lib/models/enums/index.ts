@@ -14,7 +14,9 @@ export * from "./countries";
 export * from "./depositFeeMessages";
 export * from "./depositStatus";
 export * from "./direction";
+export * from "./documentAdressType";
 export * from "./feeProductType";
+export * from "./gender";
 export * from "./index";
 export * from "./instrumentStateArgument";
 export * from "./instrumentType";
@@ -43,6 +45,8 @@ export * from "./transactionReferenceTypes";
 export * from "./transactionTypes";
 export * from "./unsubscribeLevel2ErrorCode";
 export * from "./unsubscribeTradesError";
+export * from "./verificationOrigin";
 export * from "./withdrawErrorCode";
 export * from "./withdrawFeeMessages";
 export * from "./withdrawTemplateType";
+
