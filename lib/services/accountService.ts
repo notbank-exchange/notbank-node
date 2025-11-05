@@ -1,5 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
+import { RegisterNotbankUser, UserRegistration } from "../models";
 import { GetAccountInfoRequest } from "../models/request/getAccountInfo";
 import { GetAccountInstrumentStatisticsRequest } from "../models/request/getAccountInstrumentStatistics";
 import { GetAccountPositionRequest } from "../models/request/getAccountPositions";
@@ -72,5 +73,13 @@ export class AccountService {
       RequestType.POST,
       paramsWithOMSId
     )
+  }
+
+  registerUser(request: RegisterNotbankUser): Promise<UserRegistration> {
+    return this.connection.nbRequest(
+      Endpoint.REGISTER,
+      RequestType.POST,
+      request
+    );
   }
 }

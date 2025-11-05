@@ -105,6 +105,9 @@ export enum Endpoint {
   QUOTES = "quotes",
   QUOTES_DIRECT = "quotes/direct",
   QUOTES_INVERSE = "quotes/inverse",
+
+  // NB ACCOUNT 
+  REGISTER = "account/register"
 }
 
 export enum WebSocketEndpoint {
