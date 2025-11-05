@@ -12,6 +12,8 @@ import { UserService } from "./userService";
 import { WalletService } from "./walletService";
 import { QuoteService } from "./quoteService";
 import { ServiceConnection } from "../core/serviceClient";
+import { VerificationService } from "./verificationService";
+import { RegisterService } from "./registerService";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
@@ -92,5 +94,11 @@ export class HttpServiceFactory {
   }
   newQuoteService(): QuoteService {
     return new QuoteService(this.#httpConnection);
+  }
+  newRegisterService(): RegisterService {
+    return new RegisterService(this.#httpConnection);
+  }
+  newVerificationService(): VerificationService {
+    return new VerificationService(this.#httpConnection);
   }
 }

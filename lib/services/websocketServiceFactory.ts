@@ -10,11 +10,13 @@ import { FeeService } from "./feeService";
 import { InstrumentService } from "./instrumentService";
 import { ProductService } from "./productService";
 import { QuoteService } from "./quoteService";
+import { RegisterService } from "./registerService";
 import { ReportService } from "./reportService";
 import { SubscriptionService } from "./subscriptionService";
 import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
+import { VerificationService } from "./verificationService";
 import { WalletService } from "./walletService";
 
 
@@ -126,5 +128,13 @@ export class WebsocketServiceFactory {
 
   newQuoteService(): QuoteService {
     return new QuoteService(this.serviceConnection);
+  }
+
+  newRegisterService(): RegisterService {
+    return new RegisterService(this.serviceConnection);
+  }
+
+  newVerificationService(): VerificationService {
+    return new VerificationService(this.serviceConnection);
   }
 }

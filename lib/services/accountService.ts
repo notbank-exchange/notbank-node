@@ -1,6 +1,5 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { BasicVerification, BasicVerificationResponse, RegisterNotbankUser, TraderPlusVerification, TraderPlusVerificationSchema, TraderVerification, UserRegistration } from "../models";
 import { GetAccountInfoRequest } from "../models/request/getAccountInfo";
 import { GetAccountInstrumentStatisticsRequest } from "../models/request/getAccountInstrumentStatistics";
 import { GetAccountPositionRequest } from "../models/request/getAccountPositions";
@@ -74,49 +73,4 @@ export class AccountService {
       paramsWithOMSId
     )
   }
-
-  registerUser(request: RegisterNotbankUser): Promise<UserRegistration> {
-    return this.connection.nbRequest(
-      Endpoint.REGISTER,
-      RequestType.POST,
-      request
-    );
-  }
-  // ! #reunion
-  // * new endpoints on account service (joint service of ap y nb, to consider it for api docs)
-  verificateBasic(request: BasicVerification): Promise<BasicVerificationResponse> {
-    return this.connection.nbRequest(
-      Endpoint.VERIFICATION_BASIC,
-      RequestType.POST,
-      request
-    );
-  }
-
-  verificateTrader(request: TraderVerification): Promise<void> {
-    return this.connection.nbRequest(
-      Endpoint.VERIFICATION_TRADER,
-      RequestType.POST,
-      request
-    );
-  }
-
-
-  verificateTraderPlus(request: TraderPlusVerification): Promise<void> {
-    return this.connection.nbRequest(
-      Endpoint.VERIFICATION_TRADER_PLUS,
-      RequestType.POST,
-      request
-    );
-  }
-
-  // ! #reunion (https://cryptomarket.atlassian.net/browse/CMKT-4103)
-  // ? - what is the type or the response, in docs there is only examples, is it any?
-  getTraderPlusVerificationSchema(request: TraderPlusVerificationSchema): Promise<any> {
-    return this.connection.nbRequest(
-      Endpoint.VERIFICATION_TRADER_PLUS_SCHEMES,
-      RequestType.GET,
-      request
-    );
-  }
-
 }
