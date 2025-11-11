@@ -1,4 +1,3 @@
-
 export interface RegisterNotbankUserRequest {
   firstName: string
   lastName: string

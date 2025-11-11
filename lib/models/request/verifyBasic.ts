@@ -1,6 +1,6 @@
 import { Gender, VerificationOrigin } from "../enums"
 
-export interface BasicVerification {
+export interface VerifyBasicRequest {
   origin: VerificationOrigin
   user_id?: string
   is_business: boolean
@@ -9,4 +9,10 @@ export interface BasicVerification {
   city: string
   street: string
   country: string
+  subjectComply?: string
+  province?: string
+  district?: string
+  number?: string
+  state?: string
+  commune?: string
 }

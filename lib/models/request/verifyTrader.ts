@@ -1,6 +1,6 @@
 import { DocumentAdressType } from "../enums/documentAdressType"
 
-export interface TraderVerification {
+export interface VerifyTraderRequest {
   pep: boolean
   subject_comply: boolean
   is_public_servant: boolean

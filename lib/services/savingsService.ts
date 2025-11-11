@@ -9,7 +9,8 @@ export class SavingsService {
     this.connection = connection;
   }
 
-  // ! #reunion: no response?
+  // ! #reunion
+  // ? no response?
   depositToYield(request: DepositToYieldRequest): Promise<void> {
     return this.connection.nbRequest(
       Endpoint.SAVINGS_DEPOSIT,
@@ -18,7 +19,8 @@ export class SavingsService {
     );
   }
 
-  // ! #reunion: no response?
+  // ! #reunion
+  // ? no response?
   withdrawToYield(request: WithdrawFromYieldRequest): Promise<void> {
     return this.connection.nbRequest(
       Endpoint.SAVINGS_WITHDRAW,

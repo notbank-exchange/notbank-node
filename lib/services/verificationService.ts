@@ -1,6 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { BasicVerification, BasicVerificationResponse, GetInstitutionalCompanySchemesRequest, GetInstitutionalMemberSchemesRequest, InstitutionalCompanyVerificationRequest, InstitutionalMember, InstitutionalMemberType, InstitutionalMemberVerificationRequest, TraderPlusVerification, TraderPlusVerificationSchema, TraderVerification, VerificationStatus, VerificationStatusRequest } from "../models";
+import { VerifyBasicRequest, BasicVerificationResponse, GetInstitutionalCompanySchemesRequest, GetInstitutionalMemberSchemesRequest, VerifyInstitutionalCompanyRequest, InstitutionalMember, InstitutionalMemberType, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, TraderPlusVerificationSchema, VerifyTraderRequest, VerificationStatus, VerificationStatusRequest } from "../models";
 
 export class VerificationService {
   connection: ServiceConnection;
@@ -9,7 +9,7 @@ export class VerificationService {
     this.connection = connection;
   }
 
-  verifyBasic(request: BasicVerification): Promise<BasicVerificationResponse> {
+  verifyBasic(request: VerifyBasicRequest): Promise<BasicVerificationResponse> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_BASIC,
       RequestType.POST,
@@ -17,7 +17,7 @@ export class VerificationService {
     );
   }
 
-  verifyTrader(request: TraderVerification): Promise<void> {
+  verifyTrader(request: VerifyTraderRequest): Promise<void> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_TRADER,
       RequestType.POST,
@@ -26,7 +26,7 @@ export class VerificationService {
   }
 
 
-  verifyTraderPlus(request: TraderPlusVerification): Promise<void> {
+  verifyTraderPlus(request: VerifyTraderPlusRequest): Promise<void> {
     let message = { user_id: request.user_id, declaration: request.declaration }
     for (let i = 0; request.files && i < request.files.length; i++) {
       message["file_" + i] = request.files[i]
@@ -46,7 +46,8 @@ export class VerificationService {
     );
   }
 
-  // ! #reunion: does not have an external url, using internal (django-labeled)
+  // ! #reunion
+  // * does not have an external url, using internal (django-labeled)
   getInstitutionalCompanySchemes(request: GetInstitutionalCompanySchemesRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMES,
@@ -56,7 +57,7 @@ export class VerificationService {
   }
 
 
-  verifyInstitutionalCompany(request: InstitutionalCompanyVerificationRequest): Promise<any> {
+  verifyInstitutionalCompany(request: VerifyInstitutionalCompanyRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY,
       RequestType.POST,
@@ -79,7 +80,7 @@ export class VerificationService {
     );
   }
 
-  verifyInstitutionalMember(request: InstitutionalMemberVerificationRequest): Promise<any> {
+  verifyInstitutionalMember(request: VerifyInstitutionalMemberRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS,
       RequestType.POST,
@@ -103,7 +104,7 @@ export class VerificationService {
   }
 
 
-  verifyInstitutionalDocument(request: InstitutionalMemberVerificationRequest): Promise<any> {
+  verifyInstitutionalDocument(request: VerifyInstitutionalMemberRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS,
       RequestType.POST,
@@ -127,7 +128,8 @@ export class VerificationService {
     );
   }
 
-  // ! #reunion: no explicit external url, using django one (https://cryptomarket.atlassian.net/browse/CMKT-4205)
+  // ! #reunion
+  // * no explicit external url, using django one (https://cryptomarket.atlassian.net/browse/CMKT-4205)
   getInstitutionalMemberTypes(): Promise<InstitutionalMemberType[]> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_TYPES,
