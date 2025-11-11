@@ -96,3 +96,9 @@ export * from "./unsubscribeTicker";
 export * from "./unsubscribeTrades";
 export * from "./updateOneStepWithdraw";
 export * from "./webAuthenticateUser";
+export * from "./getInstitutionalCompanySchemes";
+export * from "./institutionalCompanyVerification";
+export * from "./getInstitutionalMemberSchemes";
+export * from "./institutionalMemberVerification";
+export * from "./institutionalDocumentVerification";
+export * from "./verificationStatus"

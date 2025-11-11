@@ -106,12 +106,22 @@ export enum Endpoint {
   QUOTES_DIRECT = "quotes/direct",
   QUOTES_INVERSE = "quotes/inverse",
 
-  // NB ACCOUNT 
+  // register
   REGISTER = "account/register",
+
+  // verification 
   VERIFICATION_BASIC = "account/verification/basic",
   VERIFICATION_TRADER = "account/verification/trader",
   VERIFICATION_TRADER_PLUS = "account/verification/trader-plus",
-  VERIFICATION_TRADER_PLUS_SCHEMES = "account/verification/trader-plus/schemes"
+  VERIFICATION_TRADER_PLUS_SCHEMES = "account/verification/trader-plus/schemes",
+  VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMES = "account/verification/institutional/company/schemes",
+  VERIFICATION_INSTITUTIONAL_COMPANY = "account/verification/institutional/company",
+  VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMES = "account/verification/institutional/members/schemes",
+  VERIFICATION_INSTITUTIONAL_MEMBERS = "account/verification/institutional/members",
+  VERIFICATION_INSTITUTIONAL_DOCUMENTS_SCHEMES = "account/verification/institutional/documents/schemes",
+  VERIFICATION_INSTITUTIONAL_DOCUMENTS = "account/verification/institutional/documents",
+  VERIFICATION_STATUS = "account/verification/status"
+
 }
 
 export enum WebSocketEndpoint {
