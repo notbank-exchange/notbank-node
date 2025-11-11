@@ -102,3 +102,5 @@ export * from "./getInstitutionalMemberSchemes";
 export * from "./institutionalMemberVerification";
 export * from "./institutionalDocumentVerification";
 export * from "./verificationStatus"
+export * from "./depositToYield"
+export * from "./withdrawFromYield"

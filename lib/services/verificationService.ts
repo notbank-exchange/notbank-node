@@ -1,6 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { BasicVerification, BasicVerificationResponse, GetInstitutionalCompanySchemesRequest, GetInstitutionalMemberSchemesRequest, InstitutionalCompanyVerificationRequest, InstitutionalMember, InstitutionalMemberVerificationRequest, TraderPlusVerification, TraderPlusVerificationSchema, TraderVerification, VerificationStatus, VerificationStatusRequest } from "../models";
+import { BasicVerification, BasicVerificationResponse, GetInstitutionalCompanySchemesRequest, GetInstitutionalMemberSchemesRequest, InstitutionalCompanyVerificationRequest, InstitutionalMember, InstitutionalMemberType, InstitutionalMemberVerificationRequest, TraderPlusVerification, TraderPlusVerificationSchema, TraderVerification, VerificationStatus, VerificationStatusRequest } from "../models";
 
 export class VerificationService {
   connection: ServiceConnection;
@@ -64,16 +64,12 @@ export class VerificationService {
     );
   }
 
-
-
   getInstitutionalCompanyVerificationStatus(): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY,
       RequestType.GET
     );
   }
-
-
 
   getInstitutionalMemberSchemes(request: GetInstitutionalMemberSchemesRequest): Promise<any> {
     return this.connection.nbRequest(
@@ -126,6 +122,15 @@ export class VerificationService {
   getVerificationStatus(request: VerificationStatusRequest): Promise<VerificationStatus> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_STATUS,
+      RequestType.GET,
+      request
+    );
+  }
+
+  // ! #reunion: no explicit external url, using django one (https://cryptomarket.atlassian.net/browse/CMKT-4205)
+  getInstitutionalMemberTypes(): Promise<InstitutionalMemberType[]> {
+    return this.connection.nbRequest(
+      Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_TYPES,
       RequestType.GET
     );
   }

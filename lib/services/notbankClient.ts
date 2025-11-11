@@ -1,4 +1,5 @@
-import { WebsocketHooks } from "../core/websocket/websocketHooks";
+import { ServiceConnection } from "../core/serviceClient";
+import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration";
 import { NotbankError } from "../models";
 import { AccountService } from "./accountService";
 import { AuthService } from "./authService";
@@ -6,18 +7,17 @@ import { FeeService } from "./feeService";
 import { HttpServiceFactory } from "./httpServiceFactory";
 import { InstrumentService } from "./instrumentService";
 import { ProductService } from "./productService";
+import { QuoteService } from "./quoteService";
+import { RegisterService } from "./registerService";
 import { ReportService } from "./reportService";
+import { SavingsService } from "./savingsService";
 import { SubscriptionService } from "./subscriptionService";
 import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
-import { WalletService } from "./walletService";
-import { QuoteService } from "./quoteService";
-import { WebsocketServiceFactory } from "./websocketServiceFactory";
-import { WebsocketConnectionConfiguration } from "../core/websocket/websocketConnectionConfiguration";
-import { ServiceConnection } from "../core/serviceClient";
-import { RegisterService } from "./registerService";
 import { VerificationService } from "./verificationService";
+import { WalletService } from "./walletService";
+import { WebsocketServiceFactory } from "./websocketServiceFactory";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
@@ -37,6 +37,7 @@ export class NotbankClient {
   quoteService: QuoteService
   registerService: RegisterService
   verificationService: VerificationService
+  savingsService: SavingsService
   authenticateUser: (params: {
     ApiPublicKey: string,
     ApiSecretKey: string,
@@ -62,6 +63,7 @@ export class NotbankClient {
       quoteService: QuoteService,
       registerService: RegisterService,
       verificationService: VerificationService,
+      savingsService: SavingsService,
       authenticate: (authParams: {
         ApiPublicKey: string,
         ApiSecretKey: string,
@@ -112,6 +114,7 @@ export class NotbankClient {
         registerService: factory.newRegisterService(),
         verificationService: factory.newVerificationService(),
         authenticate: params => factory.authenticateUser(params),
+        savingsService: factory.newSavingsService(),
         connect: () => Promise.resolve(null),
         close: () => Promise.resolve(null)
       })
@@ -136,6 +139,7 @@ export class NotbankClient {
           registerService: factory.newRegisterService(),
           verificationService: factory.newVerificationService(),
           authenticate: params => factory.authenticateUser(params),
+          savingsService: factory.newSavingsService(),
           connect: () => factory.connect(),
           close: () => factory.close()
         }
@@ -196,6 +200,9 @@ export class NotbankClient {
     return this.verificationService
   }
 
+  getSavingsService(): SavingsService {
+    return this.savingsService
+  }
 
   getConnection(): ServiceConnection {
     return this.connection

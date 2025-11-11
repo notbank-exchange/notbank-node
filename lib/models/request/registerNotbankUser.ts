@@ -1,10 +1,9 @@
-import { Language } from "../enums/language";
 
-export interface RegisterNotbankUser {
+export interface RegisterNotbankUserRequest {
   firstName: string
   lastName: string
   phoneNumber?: string
   email?: string
-  language?: Language
+  language?: "en" | "es" | "pt"
   firebaseToken?: string
 }

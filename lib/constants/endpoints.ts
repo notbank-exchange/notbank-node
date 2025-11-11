@@ -120,7 +120,12 @@ export enum Endpoint {
   VERIFICATION_INSTITUTIONAL_MEMBERS = "account/verification/institutional/members",
   VERIFICATION_INSTITUTIONAL_DOCUMENTS_SCHEMES = "account/verification/institutional/documents/schemes",
   VERIFICATION_INSTITUTIONAL_DOCUMENTS = "account/verification/institutional/documents",
-  VERIFICATION_STATUS = "account/verification/status"
+  VERIFICATION_STATUS = "account/verification/status",
+  VERIFICATION_INSTITUTIONAL_MEMBERS_TYPES = "account/verification/institutional/members/types",
+
+  // savings
+  SAVINGS_DEPOSIT = "savings/deposit",
+  SAVINGS_WITHDRAW = "savings/withdraw"
 
 }
 
