@@ -48,4 +48,4 @@ export * from "./verificationOrigin";
 export * from "./withdrawErrorCode";
 export * from "./withdrawFeeMessages";
 export * from "./withdrawTemplateType";
-
+export * from "./yieldProduct"

@@ -1,6 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { VerifyBasicRequest, BasicVerificationResponse, GetInstitutionalCompanySchemesRequest, GetInstitutionalMemberSchemesRequest, VerifyInstitutionalCompanyRequest, InstitutionalMember, InstitutionalMemberType, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, TraderPlusVerificationSchema, VerifyTraderRequest, VerificationStatus, VerificationStatusRequest } from "../models";
+import { VerifyBasicRequest, BasicVerificationResponse, GetInstitutionalCompanySchemesRequest, GetInstitutionalMemberSchemesRequest, VerifyInstitutionalCompanyRequest, InstitutionalMember, EnumType, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, TraderPlusVerificationSchema, VerifyTraderRequest, VerificationStatus, VerificationStatusRequest, VerifyInstitutionalDocumentRequest } from "../models";
 
 export class VerificationService {
   connection: ServiceConnection;
@@ -46,8 +46,6 @@ export class VerificationService {
     );
   }
 
-  // ! #reunion
-  // * does not have an external url, using internal (django-labeled)
   getInstitutionalCompanySchemes(request: GetInstitutionalCompanySchemesRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMES,
@@ -96,7 +94,10 @@ export class VerificationService {
   }
 
 
-  getInsitutionalDocumentSchemes(): Promise<any> {
+  // ! #reunion
+  // https://cryptomarket.atlassian.net/browse/CMKT-4188
+  // * endpoint and method should be named institutional document type, just as insitutional membre types is called (https://cryptomarket.atlassian.net/browse/CMKT-4205)
+  getInstitutionalDocumentSchemes(): Promise<EnumType[]> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS_SCHEMES,
       RequestType.GET
@@ -104,7 +105,7 @@ export class VerificationService {
   }
 
 
-  verifyInstitutionalDocument(request: VerifyInstitutionalMemberRequest): Promise<any> {
+  verifyInstitutionalDocument(request: VerifyInstitutionalDocumentRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS,
       RequestType.POST,
@@ -112,7 +113,7 @@ export class VerificationService {
     );
   }
 
-  getInstitutionalDocumentVerificationStatus(): Promise<InstitutionalMember[]> {
+  getInstitutionalDocumentVerificationStatus(): Promise<any[]> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS,
       RequestType.GET
@@ -128,9 +129,8 @@ export class VerificationService {
     );
   }
 
-  // ! #reunion
-  // * no explicit external url, using django one (https://cryptomarket.atlassian.net/browse/CMKT-4205)
-  getInstitutionalMemberTypes(): Promise<InstitutionalMemberType[]> {
+
+  getInstitutionalMemberTypes(): Promise<EnumType[]> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_TYPES,
       RequestType.GET

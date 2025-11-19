@@ -1,5 +1,6 @@
 import { Gender, VerificationOrigin } from "../enums"
-
+// ! #reunion
+// ? should have origin ? (app or user)
 export interface VerifyBasicRequest {
   origin: VerificationOrigin
   user_id?: string

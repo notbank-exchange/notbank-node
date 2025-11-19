@@ -57,4 +57,4 @@ export * from "./withdrawTemplate";
 export * from "./withdrawTicket";
 export * from "./institutionalMember"
 export * from "./verificationStatus"
-export * from "./institutionalMemberType"
+export * from "./enumType"
