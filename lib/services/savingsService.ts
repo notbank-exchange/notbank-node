@@ -17,7 +17,7 @@ export class SavingsService {
     );
   }
 
-  withdrawToYield(request: WithdrawFromYieldRequest): Promise<number> {
+  withdrawFromYield(request: WithdrawFromYieldRequest): Promise<number> {
     return this.connection.nbRequest(
       Endpoint.SAVINGS_WITHDRAW,
       RequestType.POST,

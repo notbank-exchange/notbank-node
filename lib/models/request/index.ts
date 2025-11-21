@@ -84,7 +84,7 @@ export * from "./subscribeOrderStateEvents";
 export * from "./subscribeTicker";
 export * from "./subscribeTrades";
 export * from "./verifyTraderPlus";
-export * from "./traderPlusVerificationSchema";
+export * from "./traderPlusVerificationSchemesRequest";
 export * from "./verifyTrader";
 export * from "./trades";
 export * from "./transferFunds";
