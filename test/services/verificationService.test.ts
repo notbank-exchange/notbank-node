@@ -46,7 +46,7 @@ describe("account service", () => {
       declaration: {
 
       },
-      files: [image],
+      files: [["an_image", image]],
     });
     console.log("basic user verification:", response);
     assert.ok(response, "Response should not be null");

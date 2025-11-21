@@ -1,10 +1,9 @@
+import fetch, { Response } from 'node-fetch';
 import { RequestType } from "../serviceClient";
-import fetch, { RequestInit, Response } from 'node-fetch';
-// import { FormData, File } from "formdata-node"
 export interface FormDataRequest<T1> {
   url: string,
-  files: File[];
   params?: T1;
+  files: [[string, File]]
   extraHeaders?: any
 }
 
@@ -25,17 +24,15 @@ export class FormDataRequester {
     return fetch(url, requestInit);
   }
 
-  private getRequestInit<T1>(config: FormDataRequest<T1>) {
+  private getRequestInit<T1>(request: FormDataRequest<T1>) {
     var requestInit = {
       method: RequestType.POST,
-      headers: this.getHeaders(config.extraHeaders)
+      headers: this.getHeaders(request.extraHeaders)
     };
     const formData = new FormData();
-    config.files.map((file, index) => {
-      formData.append('file_' + index, file);
-    });
-    Object.keys(config.params).map(key => {
-      formData.append(key, config.params[key])
+    request.files.map(([fileName, file]) => formData.append(fileName, file))
+    Object.keys(request.params).map(key => {
+      formData.append(key, request.params[key])
     });
     requestInit["body"] = formData;
     return requestInit;

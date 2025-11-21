@@ -14,6 +14,11 @@ export interface ServiceConnection {
     message?: T1,
     paged?: boolean,
   ): Promise<T2>;
+  nbFormDataRequest<T1, T2>(
+    endpoint: string,
+    files: [string, File][],
+    message?: T1,
+  ): Promise<T2>;
   authenticateUser(params: AuthenticateUserRequest): Promise<void>;
   subscribe<T>(
     endpoint: string,

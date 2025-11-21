@@ -4,11 +4,12 @@
   "description": "The Notbank for Node.js",
   "homepage": "https://notbank.exchange",
   "main": "dist/index.js",
+  "type": "module",
   "engines": {
     "node": ">=14.21.3"
   },
   "scripts": {
-    "test-mocha": "mocha -r ts-node/register 'test/**/*.ts'",
+    "test:mocha": "mocha --config 'mocharc.cjs' 'test/**/*.ts'",
     "test": "jest",
     "build": "npm run build:clean && npm run build:node && npm run build:bundle",
     "build:node": "tsc && tsc-alias",

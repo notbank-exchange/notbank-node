@@ -8,15 +8,18 @@ import { MessageFrame } from "../websocket/messageFrame";
 import { ResponseHandler } from "../websocket/responseHandler";
 import { SubscriptionHandler } from "../websocket/subscriptionHandler";
 import { ApResponseHandler } from "./apResponseHandler";
+import { FormDataRequester } from "./formDataRequester";
+import { JsonRequester } from "./jsonRequester";
 import { NbResponseHandler } from "./nbResponseHandler";
-import { Requester } from "./requester";
 
 export class HttpConnection implements ServiceConnection {
-  #requester: Requester;
+  #jsonRequester: JsonRequester;
+  #formDataRequester: FormDataRequester;
   #host: string;
 
   constructor(domain: string) {
-    this.#requester = new Requester();
+    this.#jsonRequester = new JsonRequester();
+    this.#formDataRequester = new FormDataRequester();
     this.#host = "https://" + domain;
   }
 
@@ -27,7 +30,18 @@ export class HttpConnection implements ServiceConnection {
     paged: boolean = false
   ): Promise<T2> {
     const url = this.getNbUrl(endpoint);
-    var response = await this.#requester.request({ url, requestType, params });
+    var response = await this.#jsonRequester.request({ url, requestType, params });
+    return await NbResponseHandler.handle<T2>(response, paged);
+  }
+
+
+  async nbFormDataRequest<T1, T2>(
+    endpoint: string,
+    params?: T1,
+    paged: boolean = false
+  ): Promise<T2> {
+    const url = this.getNbUrl(endpoint);
+    var response = await this.#formDataRequester.post({ url, params });
     return await NbResponseHandler.handle<T2>(response, paged);
   }
 
@@ -38,7 +52,7 @@ export class HttpConnection implements ServiceConnection {
     extraHeaders?: any
   ): Promise<T2> {
     const url = this.getApUrl(endpoint);
-    var response = await this.#requester.request({
+    var response = await this.#jsonRequester.request({
       url,
       requestType,
       params,
@@ -48,7 +62,7 @@ export class HttpConnection implements ServiceConnection {
   }
 
   updateSessionToken(sessionToken: string) {
-    this.#requester.updateSessionToken(sessionToken);
+    this.#jsonRequester.updateSessionToken(sessionToken);
   }
 
   async authenticateUser(params: AuthenticateUserRequest): Promise<void> {
@@ -58,7 +72,7 @@ export class HttpConnection implements ServiceConnection {
       null,
       params
     );
-    this.#requester.updateSessionToken(response.SessionToken);
+    this.#jsonRequester.updateSessionToken(response.SessionToken);
   }
 
   subscribe<T>(

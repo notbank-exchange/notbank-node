@@ -3,5 +3,5 @@ export interface VerifyInstitutionalCompanyRequest {
   declaration_template_id: string
   document_type: string
   user_id: string
-  [key: string]: any
+  files: [string, File][]
 }

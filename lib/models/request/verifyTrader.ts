@@ -1,4 +1,4 @@
-import { DocumentAdressType } from "../enums/documentAdressType"
+import { DocumentAdressType } from "../enums/documentAdressType";
 
 export interface VerifyTraderRequest {
   pep: boolean

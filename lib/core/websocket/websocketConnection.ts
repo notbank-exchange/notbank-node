@@ -32,9 +32,12 @@ export class WebsocketConnection implements ServiceConnection {
     this.peekMessageIn = configuration?.peekMessageIn || (_ => {});
     this.peekMessageOut = configuration?.peekMessageOut || (_ => {});
   }
+  nbFormDataRequest<T1, T2>(endpoint: string, message?: T1): Promise<T2> {
+    throw new Error("websocket client does not support nb form data methods.");
+  }
 
   updateSessionToken(sessionToken: string) {
-    throw new Error("Method not implemented.");
+    throw new Error("websocket client does not updating session token.");
   }
 
   nbRequest<T1, T2>(

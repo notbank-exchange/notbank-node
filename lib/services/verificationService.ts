@@ -27,14 +27,11 @@ export class VerificationService {
 
 
   verifyTraderPlus(request: VerifyTraderPlusRequest): Promise<void> {
-    let message = { user_id: request.user_id, declaration: request.declaration }
-    for (let i = 0; request.files && i < request.files.length; i++) {
-      message["file_" + i] = request.files[i]
-    }
-    return this.connection.nbRequest(
+    let { files, ...cleanRequest } = { ...request }
+    return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_TRADER_PLUS,
-      RequestType.POST,
-      message
+      files,
+      cleanRequest
     );
   }
 
@@ -56,10 +53,11 @@ export class VerificationService {
 
 
   verifyInstitutionalCompany(request: VerifyInstitutionalCompanyRequest): Promise<any> {
-    return this.connection.nbRequest(
+    let { files, ...cleanRequest } = { ...request }
+    return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY,
-      RequestType.POST,
-      request
+      files,
+      cleanRequest,
     );
   }
 
@@ -79,10 +77,11 @@ export class VerificationService {
   }
 
   verifyInstitutionalMember(request: VerifyInstitutionalMemberRequest): Promise<any> {
-    return this.connection.nbRequest(
+    let { files, ...cleanRequest } = { ...request }
+    return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS,
-      RequestType.POST,
-      request
+      files,
+      cleanRequest,
     );
   }
 
