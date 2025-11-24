@@ -30,7 +30,7 @@ export enum Endpoint {
   GET_PRODUCTS = "GetProducts",
   GET_VERIFICATION_LEVEL_CONFIG = "GetVerificationLevelConfig",
 
-  // Report (Faltan todos)
+  // Report
   GENERATE_TRADE_ACTIVITY_REPORT = "GenerateTradeActivityReport",
   GENERATE_TRANSACTION_ACTIVITY_REPORT = "GenerateTransactionActivityReport",
   GENERATE_PRODUCT_DELTA_ACTIVITY_REPORT = "GenerateProductDeltaActivityReport",
@@ -107,7 +107,7 @@ export enum Endpoint {
   QUOTES_INVERSE = "quotes/inverse",
 
   // register
-  REGISTER = "account/register",
+  REGISTER = "user/register",
 
   // verification 
   VERIFICATION_BASIC = "account/verification/basic",
@@ -118,7 +118,7 @@ export enum Endpoint {
   VERIFICATION_INSTITUTIONAL_COMPANY = "account/verification/institutional/company",
   VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMES = "account/verification/institutional/members/schemes",
   VERIFICATION_INSTITUTIONAL_MEMBERS = "account/verification/institutional/members",
-  VERIFICATION_INSTITUTIONAL_DOCUMENTS_SCHEMES = "account/verification/institutional/documents/schemes",
+  VERIFICATION_INSTITUTIONAL_DOCUMENTS_TYPES = "account/verification/institutional/documents/types",
   VERIFICATION_INSTITUTIONAL_DOCUMENTS = "account/verification/institutional/documents",
   VERIFICATION_STATUS = "account/verification/status",
   VERIFICATION_INSTITUTIONAL_MEMBERS_TYPES = "account/verification/institutional/members/types",

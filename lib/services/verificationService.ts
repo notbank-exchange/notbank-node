@@ -101,12 +101,10 @@ export class VerificationService {
   }
 
 
-  // ! #reunion
-  // https://cryptomarket.atlassian.net/browse/CMKT-4188
-  // * endpoint and method should be named institutional document type, just as insitutional membre types is called (https://cryptomarket.atlassian.net/browse/CMKT-4205)
-  getInstitutionalDocumentSchemes(): Promise<EnumType[]> {
+  
+  getInstitutionalDocumentTypes(): Promise<EnumType[]> {
     return this.connection.nbRequest(
-      Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS_SCHEMES,
+      Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS_TYPES,
       RequestType.GET
     );
   }

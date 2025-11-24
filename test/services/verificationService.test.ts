@@ -1,9 +1,9 @@
 import assert from "assert";
 import "mocha";
 
-import { NotbankClient } from "../../lib/services/notbankClient";
-import { DocumentAdressType, Gender, VerificationOrigin } from "../../lib/models/enums";
 import { fileFromSync } from 'node-fetch';
+import { DocumentAdressType, Gender } from "../../lib/models/enums";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("verification service", () => {
   const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
@@ -11,7 +11,7 @@ describe("verification service", () => {
   describe("verifyBasic", () => {
     it("should verify an user to basic level", async () => {
       const response = await client.getVerificationService().verifyBasic({
-        origin: VerificationOrigin.USER,
+  
         is_business: false,
         profession: "woodcutter",
         gender: Gender.MAN,
@@ -25,13 +25,13 @@ describe("verification service", () => {
   });
 
   it("should verify an user to trader level", async () => {
+    const image = fileFromSync("./image.png");
     const response = await client.getVerificationService().verifyTrader({
       pep: false,
       subject_comply: false,
       is_public_servant: false,
-      document_address_file: new File([], ""),
+      document_address_file: image,
       document_address_type: DocumentAdressType.CREDIT_CARD_BILL
-
     });
     console.log("trader user verification:", response);
     assert.ok(response, "Response should not be null");
@@ -47,7 +47,7 @@ describe("verification service", () => {
     });
   });
 
-  it("should fetch the schemas for trader plus verification", async () => {
+  it.only("should fetch the schemas for trader plus verification", async () => {
     const response = await client.getVerificationService().getTraderPlusVerificationSchemes({
       user_id: "123abc123bcd",
     });
@@ -112,9 +112,9 @@ describe("verification service", () => {
     assert.ok(response, "Response should not be null");
   });
 
-  it("should fetch the schemas for institutional document schemes", async () => {
-    const response = await client.getVerificationService().getInstitutionalDocumentSchemes();
-    console.log("institutional document schemes:", response);
+  it("should fetch the schemas for institutional document types", async () => {
+    const response = await client.getVerificationService().getInstitutionalDocumentTypes();
+    console.log("institutional document types:", response);
     assert.ok(response, "Response should not be null");
   });
 

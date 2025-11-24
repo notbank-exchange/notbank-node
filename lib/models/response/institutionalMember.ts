@@ -1,5 +1,5 @@
 export class InstitutionalMember {
-  type_id: number
+  id: number
   type: string
   name: string
   createdAt: string

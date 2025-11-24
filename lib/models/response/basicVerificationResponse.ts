@@ -1,8 +1,6 @@
 export interface BasicVerificationResponse {
-  verificationId: string
+  verification_id: string
   identity: string
-  flowId: string
-  // ! #reunion - pending from 11 nov - to be handled after deploy of endpoints, before deploy of documentation
-  // * can we have all camelCase or all snake_case 
+  flow_id: string
   metamap_url: string
 }

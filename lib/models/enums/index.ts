@@ -44,7 +44,6 @@ export * from "./transactionReferenceTypes";
 export * from "./transactionTypes";
 export * from "./unsubscribeLevel2ErrorCode";
 export * from "./unsubscribeTradesError";
-export * from "./verificationOrigin";
 export * from "./withdrawErrorCode";
 export * from "./withdrawFeeMessages";
 export * from "./withdrawTemplateType";
