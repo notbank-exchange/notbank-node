@@ -26,36 +26,36 @@ export class HttpConnection implements ServiceConnection {
   async nbRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
-    params?: T1,
+    message?: T1,
     paged: boolean = false
   ): Promise<T2> {
     const url = this.getNbUrl(endpoint);
-    var response = await this.#jsonRequester.request({ url, requestType, params });
+    var response = await this.#jsonRequester.request({ url, requestType, params: message });
     return await NbResponseHandler.handle<T2>(response, paged);
   }
 
 
   async nbFormDataRequest<T1, T2>(
     endpoint: string,
-    params?: T1,
-    paged: boolean = false
+    files: [string, File][],
+    message?: T1,
   ): Promise<T2> {
     const url = this.getNbUrl(endpoint);
-    var response = await this.#formDataRequester.post({ url, params });
-    return await NbResponseHandler.handle<T2>(response, paged);
+    var response = await this.#formDataRequester.post({ url, files, params: message });
+    return await NbResponseHandler.handle<T2>(response, false);
   }
 
   async apRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,
-    params?: T1,
+    message?: T1,
     extraHeaders?: any
   ): Promise<T2> {
     const url = this.getApUrl(endpoint);
     var response = await this.#jsonRequester.request({
       url,
       requestType,
-      params,
+      params: message,
       extraHeaders
     });
     return await ApResponseHandler.handle<T2>(response);

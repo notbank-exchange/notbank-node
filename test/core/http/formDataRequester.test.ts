@@ -7,7 +7,7 @@ import fetch, {
 
 import "mocha";
 
-describe("account service", () => {
+describe("form data", () => {
   let file = new File(["some text"], "file.txt")
   let file2 = fileFromSync("LICENSE")
 

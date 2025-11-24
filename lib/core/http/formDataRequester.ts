@@ -1,9 +1,10 @@
 import fetch, { Response } from 'node-fetch';
 import { RequestType } from "../serviceClient";
+
 export interface FormDataRequest<T1> {
   url: string,
   params?: T1;
-  files: [[string, File]]
+  files: [string, File][]
   extraHeaders?: any
 }
 
