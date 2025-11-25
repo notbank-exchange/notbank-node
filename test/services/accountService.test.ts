@@ -1,11 +1,12 @@
 import assert from "assert";
 import "mocha";
 
-import { NotbankClient } from "../../lib/services/notbankClient";
 import { GetAccountTransactionsRequest } from "../../lib/models/request/getAccountTransactions";
+import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("account service", () => {
   const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
+  
   
   
   before(async () => {

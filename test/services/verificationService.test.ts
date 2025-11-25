@@ -47,7 +47,7 @@ describe("verification service", () => {
     });
   });
 
-  it.only("should fetch the schemas for trader plus verification", async () => {
+  it("should fetch the schemas for trader plus verification", async () => {
     const response = await client.getVerificationService().getTraderPlusVerificationSchemes({
       user_id: "123abc123bcd",
     });
