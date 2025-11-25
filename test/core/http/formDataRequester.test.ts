@@ -8,15 +8,18 @@ import fetch, {
 import "mocha";
 
 describe.only("form data", () => {
-  let file = new File(["some text"], "file.txt")
-  let file2 = fileFromSync("LICENSE")
+  it ("", () => {
 
-  let formData = new FormData();
-  formData.append("aKey", "a value")
-  formData.append("file[]", file)
-  formData.append("file[]", file2)
-  return fetch("http://localhost:8000", {
-    method: "POST",
-    body: formData
-  });
+    let file = new File(["some text"], "file.txt")
+    let file2 = fileFromSync("LICENSE")
+  
+    let formData = new FormData();
+    formData.append("aKey", "a value")
+    formData.append("file[]", file)
+    formData.append("file[]", file2)
+    return fetch("http://localhost:8000", {
+      method: "POST",
+      body: formData
+    });
+  })
 });
