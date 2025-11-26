@@ -9,7 +9,7 @@
     "node": ">=14.21.3"
   },
   "scripts": {
-    "test": "mocha --config 'mocharc.cjs' 'test/**/*.ts'",
+    "test": "npm run build:node; mocha 'dist/test/**/*.js'",
     "build": "npm run build:clean && npm run build:node && npm run build:bundle",
     "build:node": "tsc && tsc-alias",
     "build:bundle": "node build-bundle.cjs",

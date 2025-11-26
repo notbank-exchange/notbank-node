@@ -107,7 +107,7 @@ export enum Endpoint {
   QUOTES_INVERSE = "quotes/inverse",
 
   // register
-  REGISTER = "user/register",
+  REGISTER = "account/register",
 
   // verification 
   VERIFICATION_BASIC = "account/verification/basic",

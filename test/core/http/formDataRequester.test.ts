@@ -7,12 +7,12 @@ import fetch, {
 
 import "mocha";
 
-describe.only("form data", () => {
-  it ("", () => {
+describe("form data", () => {
+  it.only("", () => {
 
     let file = new File(["some text"], "file.txt")
     let file2 = fileFromSync("LICENSE")
-  
+
     let formData = new FormData();
     formData.append("aKey", "a value")
     formData.append("file[]", file)

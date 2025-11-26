@@ -1,8 +1,8 @@
 export interface RegisterNotbankUserRequest {
-  firstName: string
-  lastName: string
-  phoneNumber?: string
-  email?: string
+  first_name: string
+  last_name: string
+  email: string
+  phone_number?: string
   language?: "en" | "es" | "pt"
-  firebaseToken?: string
+  firebase_token?: string
 }

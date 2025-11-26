@@ -9,8 +9,8 @@ describe("account service", () => {
   describe("registerUser", () => {
     it("should register a new user", async () => {
       const response = await client.getRegisterService().registerUser({
-        firstName: "Juan",
-        lastName: "Herrera",
+        first_name: "Juan",
+        last_name: "Herrera",
         email: "juanherrera@email.com"
       });
 
