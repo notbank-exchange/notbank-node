@@ -97,15 +97,15 @@ export var Endpoint;
     Endpoint["QUOTES_DIRECT"] = "quotes/direct";
     Endpoint["QUOTES_INVERSE"] = "quotes/inverse";
     // register
-    Endpoint["REGISTER"] = "user/register";
+    Endpoint["REGISTER"] = "account/register";
     // verification 
     Endpoint["VERIFICATION_BASIC"] = "account/verification/basic";
     Endpoint["VERIFICATION_TRADER"] = "account/verification/trader";
     Endpoint["VERIFICATION_TRADER_PLUS"] = "account/verification/trader-plus";
-    Endpoint["VERIFICATION_TRADER_PLUS_SCHEMES"] = "account/verification/trader-plus/schemes";
-    Endpoint["VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMES"] = "account/verification/institutional/company/schemes";
+    Endpoint["VERIFICATION_TRADER_PLUS_SCHEMAS"] = "account/verification/trader-plus/schemas";
+    Endpoint["VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMAS"] = "account/verification/institutional/company/schemas";
     Endpoint["VERIFICATION_INSTITUTIONAL_COMPANY"] = "account/verification/institutional/company";
-    Endpoint["VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMES"] = "account/verification/institutional/members/schemes";
+    Endpoint["VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMAS"] = "account/verification/institutional/members/schemas";
     Endpoint["VERIFICATION_INSTITUTIONAL_MEMBERS"] = "account/verification/institutional/members";
     Endpoint["VERIFICATION_INSTITUTIONAL_DOCUMENTS_TYPES"] = "account/verification/institutional/documents/types";
     Endpoint["VERIFICATION_INSTITUTIONAL_DOCUMENTS"] = "account/verification/institutional/documents";

@@ -1,5 +1,5 @@
 import { ServiceConnection } from "../core/serviceClient.js";
-import { BasicVerificationResponse, EnumType, GetInstitutionalCompanySchemesRequest, GetInstitutionalMemberSchemesRequest, InstitutionalMember, TraderPlusVerificationSchemesRequest, VerificationStatus, VerificationStatusRequest, VerifyBasicRequest, VerifyInstitutionalCompanyRequest, VerifyInstitutionalDocumentRequest, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, VerifyTraderRequest } from "../models/index.js";
+import { BasicVerificationResponse, EnumType, GetInstitutionalCompanySchemasRequest, GetInstitutionalMemberSchemesRequest, InstitutionalMember, TraderPlusVerificationSchemesRequest, VerificationStatus, VerificationStatusRequest, VerifyBasicRequest, VerifyInstitutionalCompanyRequest, VerifyInstitutionalDocumentRequest, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, VerifyTraderRequest } from "../models/index.js";
 export declare class VerificationService {
     connection: ServiceConnection;
     constructor(connection: ServiceConnection);
@@ -7,7 +7,7 @@ export declare class VerificationService {
     verifyTrader(request: VerifyTraderRequest): Promise<void>;
     verifyTraderPlus(request: VerifyTraderPlusRequest): Promise<void>;
     getTraderPlusVerificationSchemes(request: TraderPlusVerificationSchemesRequest): Promise<any>;
-    getInstitutionalCompanySchemes(request: GetInstitutionalCompanySchemesRequest): Promise<any>;
+    getInstitutionalCompanySchemes(request: GetInstitutionalCompanySchemasRequest): Promise<any>;
     verifyInstitutionalCompany(request: VerifyInstitutionalCompanyRequest): Promise<any>;
     getInstitutionalCompanyVerificationStatus(): Promise<any>;
     getInstitutionalMemberTypes(): Promise<EnumType[]>;

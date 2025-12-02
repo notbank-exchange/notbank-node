@@ -41,9 +41,10 @@ export class HttpConnection {
             return yield NbResponseHandler.handle(response, paged);
         });
     }
-    nbFormDataRequest(endpoint, files, message) {
+    nbFormDataRequest(endpoint, fields, files, message) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = this.getNbUrl(endpoint);
+            fields.forEach(field => message[field[0]] = field[1]);
             var response = yield __classPrivateFieldGet(this, _HttpConnection_formDataRequester, "f").post({ url, files, params: message });
             return yield NbResponseHandler.handle(response, false);
         });

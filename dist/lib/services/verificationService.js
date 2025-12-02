@@ -20,21 +20,21 @@ export class VerificationService {
     }
     verifyTrader(request) {
         let _a = Object.assign({}, request), { document_address_file } = _a, cleanRequest = __rest(_a, ["document_address_file"]);
-        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_TRADER, [["document_address_file", document_address_file]], cleanRequest);
+        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_TRADER, [], [["document_address_file", document_address_file]], cleanRequest);
     }
     verifyTraderPlus(request) {
-        let _a = Object.assign({}, request), { files } = _a, cleanRequest = __rest(_a, ["files"]);
-        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_TRADER_PLUS, files, cleanRequest);
+        let _a = Object.assign({}, request), { files, fields } = _a, cleanRequest = __rest(_a, ["files", "fields"]);
+        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_TRADER_PLUS, fields, files, cleanRequest);
     }
     getTraderPlusVerificationSchemes(request) {
-        return this.connection.nbRequest(Endpoint.VERIFICATION_TRADER_PLUS_SCHEMES, RequestType.GET, request);
+        return this.connection.nbRequest(Endpoint.VERIFICATION_TRADER_PLUS_SCHEMAS, RequestType.GET, request);
     }
     getInstitutionalCompanySchemes(request) {
-        return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMES, RequestType.GET, request);
+        return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMAS, RequestType.GET, request);
     }
     verifyInstitutionalCompany(request) {
-        let _a = Object.assign({}, request), { files } = _a, cleanRequest = __rest(_a, ["files"]);
-        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY, files, cleanRequest);
+        let _a = Object.assign({}, request), { fields } = _a, cleanRequest = __rest(_a, ["fields"]);
+        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY, fields, [], cleanRequest);
     }
     getInstitutionalCompanyVerificationStatus() {
         return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY, RequestType.GET);
@@ -43,11 +43,11 @@ export class VerificationService {
         return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_TYPES, RequestType.GET);
     }
     getInstitutionalMemberSchemes(request) {
-        return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMES, RequestType.GET, request);
+        return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMAS, RequestType.GET, request);
     }
     verifyInstitutionalMember(request) {
-        let _a = Object.assign({}, request), { files } = _a, cleanRequest = __rest(_a, ["files"]);
-        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS, files, cleanRequest);
+        let _a = Object.assign({}, request), { files, fields } = _a, cleanRequest = __rest(_a, ["files", "fields"]);
+        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS, fields, files, cleanRequest);
     }
     getInstitutionalMemberVerificationStatus() {
         return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS, RequestType.GET);
@@ -57,7 +57,7 @@ export class VerificationService {
     }
     verifyInstitutionalDocument(request) {
         let _a = Object.assign({}, request), { file } = _a, cleanRequest = __rest(_a, ["file"]);
-        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS, [["file", file]], cleanRequest);
+        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS, [], [["file", file]], cleanRequest);
     }
     getInstitutionalDocumentVerificationStatus() {
         return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS, RequestType.GET);

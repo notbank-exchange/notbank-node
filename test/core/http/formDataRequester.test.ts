@@ -8,7 +8,7 @@ import fetch, {
 import "mocha";
 
 describe("form data", () => {
-  it.only("", () => {
+  it("", () => {
 
     let file = new File(["some text"], "file.txt")
     let file2 = fileFromSync("LICENSE")

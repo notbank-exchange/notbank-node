@@ -1,6 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { BasicVerificationResponse, EnumType, GetInstitutionalCompanySchemesRequest, GetInstitutionalMemberSchemesRequest, InstitutionalMember, TraderPlusVerificationSchemesRequest, VerificationStatus, VerificationStatusRequest, VerifyBasicRequest, VerifyInstitutionalCompanyRequest, VerifyInstitutionalDocumentRequest, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, VerifyTraderRequest } from "../models";
+import { BasicVerificationResponse, EnumType, GetInstitutionalCompanySchemasRequest, GetInstitutionalMemberSchemesRequest, InstitutionalMember, TraderPlusVerificationSchemesRequest, VerificationStatus, VerificationStatusRequest, VerifyBasicRequest, VerifyInstitutionalCompanyRequest, VerifyInstitutionalDocumentRequest, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, VerifyTraderRequest } from "../models";
 
 export class VerificationService {
   connection: ServiceConnection;
@@ -21,6 +21,7 @@ export class VerificationService {
     let { document_address_file, ...cleanRequest } = { ...request }
     return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_TRADER,
+      [],
       [["document_address_file", document_address_file]],
       cleanRequest
     );
@@ -28,9 +29,10 @@ export class VerificationService {
 
 
   verifyTraderPlus(request: VerifyTraderPlusRequest): Promise<void> {
-    let { files, ...cleanRequest } = { ...request }
+    let { files, fields, ...cleanRequest } = { ...request }
     return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_TRADER_PLUS,
+      fields,
       files,
       cleanRequest
     );
@@ -38,15 +40,15 @@ export class VerificationService {
 
   getTraderPlusVerificationSchemes(request: TraderPlusVerificationSchemesRequest): Promise<any> {
     return this.connection.nbRequest(
-      Endpoint.VERIFICATION_TRADER_PLUS_SCHEMES,
+      Endpoint.VERIFICATION_TRADER_PLUS_SCHEMAS,
       RequestType.GET,
       request
     );
   }
 
-  getInstitutionalCompanySchemes(request: GetInstitutionalCompanySchemesRequest): Promise<any> {
+  getInstitutionalCompanySchemes(request: GetInstitutionalCompanySchemasRequest): Promise<any> {
     return this.connection.nbRequest(
-      Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMES,
+      Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMAS,
       RequestType.GET,
       request
     );
@@ -54,10 +56,11 @@ export class VerificationService {
 
 
   verifyInstitutionalCompany(request: VerifyInstitutionalCompanyRequest): Promise<any> {
-    let { files, ...cleanRequest } = { ...request }
+    let { fields, ...cleanRequest } = { ...request }
     return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY,
-      files,
+      fields,
+      [],
       cleanRequest,
     );
   }
@@ -78,16 +81,17 @@ export class VerificationService {
 
   getInstitutionalMemberSchemes(request: GetInstitutionalMemberSchemesRequest): Promise<any> {
     return this.connection.nbRequest(
-      Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMES,
+      Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMAS,
       RequestType.GET,
       request
     );
   }
 
   verifyInstitutionalMember(request: VerifyInstitutionalMemberRequest): Promise<any> {
-    let { files, ...cleanRequest } = { ...request }
+    let { files, fields, ...cleanRequest } = { ...request }
     return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS,
+      fields,
       files,
       cleanRequest,
     );
@@ -101,7 +105,7 @@ export class VerificationService {
   }
 
 
-  
+
   getInstitutionalDocumentTypes(): Promise<EnumType[]> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS_TYPES,
@@ -114,6 +118,7 @@ export class VerificationService {
     let { file, ...cleanRequest } = { ...request }
     return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_DOCUMENTS,
+      [],
       [["file", file]],
       cleanRequest
     );

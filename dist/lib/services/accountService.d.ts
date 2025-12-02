@@ -26,5 +26,5 @@ export declare class AccountService {
     /**
      * https://apidoc.notbank.exchange/#getaccountinfo
      */
-    getAccountInfo(params: GetAccountInfoRequest): Promise<AccountInfo>;
+    getAccountInfo(params?: GetAccountInfoRequest): Promise<AccountInfo>;
 }

@@ -1,7 +1,7 @@
 export interface VerifyInstitutionalCompanyRequest {
+  declaration_template_id: number
+  declaration_id: number
   country: string
-  declaration_template_id: string
-  document_type: string
-  user_id: string
-  files: [string, File][]
+  user_id?: string
+  fields: [string, number | boolean | string][]
 }

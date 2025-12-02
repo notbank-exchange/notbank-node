@@ -16,6 +16,9 @@
     "build:clean": "rm -rf ./dist",
     "generate-index": "ts-node lib/scripts/generateIndex.ts"
   },
+  "mocha": {
+    "timeout": "10000"
+  },
   "keywords": [
     "api",
     "notbank",

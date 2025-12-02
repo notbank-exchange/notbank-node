@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import assert from "assert";
 import "mocha";
 import { fileFromSync } from 'node-fetch';
-import { DocumentAdressType, Gender } from "../../lib/models/enums/index.js";
+import { DocumentAdressType, Gender, Profession } from "../../lib/models/enums/index.js";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
 describe("verification service", () => {
     const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
@@ -18,7 +18,7 @@ describe("verification service", () => {
         it("should verify an user to basic level", () => __awaiter(void 0, void 0, void 0, function* () {
             const response = yield client.getVerificationService().verifyBasic({
                 is_business: false,
-                profession: "woodcutter",
+                profession: Profession.ACCOUNTANT,
                 gender: Gender.MAN,
                 city: "Novosibirsk",
                 street: "1",
@@ -41,16 +41,28 @@ describe("verification service", () => {
         assert.ok(response, "Response should not be null");
     }));
     it("should verify an user to trader plus level", () => __awaiter(void 0, void 0, void 0, function* () {
-        const image = fileFromSync("./image.png");
+        const image_1 = fileFromSync("./image_1.png");
+        const image_2 = fileFromSync("./image_2.png");
         yield client.getVerificationService().verifyTraderPlus({
-            user_id: "123abc123bcd",
-            declaration: {},
-            files: [["an_image", image]],
+            country: "AR",
+            declaration_template_id: 95,
+            declaration_id: 98,
+            fields: [
+                ["asset_11_435_amount", 10.000],
+                ["asset_11_435_currency", "ARS"],
+                ["asset_11_435_company_name", "notbank"],
+                ["asset_11_435_work_longevity", "less_than_a_year"]
+            ],
+            files: [
+                ["asset_11_435_file[]", image_1],
+                ["asset_11_435_file[]", image_2]
+            ],
         });
     }));
     it("should fetch the schemas for trader plus verification", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield client.getVerificationService().getTraderPlusVerificationSchemes({
-            user_id: "123abc123bcd",
+            country: "AR",
+            user_id: "5005dec0-31e5-49f5-a441-71bc862210d7",
         });
         console.log("trader plus verification schemas:", response);
         assert.ok(response, "Response should not be null");
@@ -63,13 +75,18 @@ describe("verification service", () => {
         assert.ok(response, "Response should not be null");
     }));
     it("should verify an institutional company", () => __awaiter(void 0, void 0, void 0, function* () {
-        const image = fileFromSync("./image.png");
         const response = yield client.getVerificationService().verifyInstitutionalCompany({
-            country: "123abc123bcd",
-            declaration_template_id: "",
-            document_type: "",
-            user_id: "",
-            files: [["an_image", image]],
+            declaration_template_id: 95,
+            declaration_id: 95,
+            country: "PE",
+            fields: [
+                ["asset_14_456_company_city", "cusco"],
+                ["asset_14_456_company_name", "corceles corsarios"],
+                ["asset_14_456_company_field", "transporte terrestre"],
+                ["asset_14_456_company_address", "Freire 123"],
+                ["asset_14_456_company_identity", "123123"],
+                ["asset_14_456_company_province", "cusco"],
+            ]
         });
         console.log("institutional company verification:", response);
         assert.ok(response, "Response should not be null");
@@ -92,10 +109,31 @@ describe("verification service", () => {
         assert.ok(response, "Response should not be null");
     }));
     it("should verify an institutional member", () => __awaiter(void 0, void 0, void 0, function* () {
-        const image = fileFromSync("./image.png");
+        const image_1 = fileFromSync("./image_1.png");
+        const image_2 = fileFromSync("./image_2.png");
         const response = yield client.getVerificationService().verifyInstitutionalMember({
-            member_template_id: 3,
-            files: [["an_image", image]],
+            member_type: 1,
+            member_template_id: 65,
+            fields: [
+                ["member_type", 1],
+                ["member_template_id", 65],
+                ["member_name", "Almendra"],
+                ["member_lastname", "Jorquera"],
+                ["member_identity", "1231234"],
+                ["member_invoice", "222333"],
+                ["member_country", "PE"],
+                ["member_address", "Freire 123"],
+                ["member_city", "cusco"],
+                ["member_province", "cusco"],
+                ["member_profession", "trader"],
+                ["member_ispep", false],
+                ["member_issubjectcomply", false],
+                ["member_ispublicservant", false],
+            ],
+            files: [
+                ["member_front_documents", image_1],
+                ["member_back_documents", image_2]
+            ],
         });
         console.log("instituional member verification:", response);
         assert.ok(response, "Response should not be null");

@@ -1,16 +1,16 @@
-import { Gender } from "../enums/index.js";
+import { ARProvince, BRState, CLComune, Gender, Profession } from "../enums/index.js";
 export interface VerifyBasicRequest {
     user_id?: string;
     is_business: boolean;
-    profession: string;
+    profession: Profession;
     gender: Gender;
     city: string;
     street: string;
     country: string;
-    subjectComply?: string;
-    province?: string;
+    subject_comply?: boolean;
+    province?: ARProvince;
     district?: string;
     number?: string;
-    state?: string;
-    commune?: string;
+    state?: BRState;
+    commune?: CLComune;
 }

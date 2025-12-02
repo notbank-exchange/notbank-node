@@ -15,8 +15,8 @@ describe("account service", () => {
     describe("registerUser", () => {
         it("should register a new user", () => __awaiter(void 0, void 0, void 0, function* () {
             const response = yield client.getRegisterService().registerUser({
-                firstName: "Juan",
-                lastName: "Herrera",
+                first_name: "Juan",
+                last_name: "Herrera",
                 email: "juanherrera@email.com"
             });
             console.log("user registration:", response);

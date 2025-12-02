@@ -1,3 +1,3 @@
-export interface GetInstitutionalCompanySchemesRequest {
+export interface GetInstitutionalCompanySchemasRequest {
   country: string
 }

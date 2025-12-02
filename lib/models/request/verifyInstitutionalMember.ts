@@ -1,4 +1,6 @@
 export interface VerifyInstitutionalMemberRequest {
-  member_template_id: number,
+  member_type: number
+  member_template_id: number
+  fields: [string, number | boolean | string][]
   files: [string, File][]
 }

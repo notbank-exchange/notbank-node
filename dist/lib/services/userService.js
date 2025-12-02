@@ -9,7 +9,7 @@ export class UserService {
     /**
      * https://apidoc.notbank.exchange/#getuseraccounts
      */
-    getUserAccounts(request) {
+    getUserAccounts(request = {}) {
         const params = completeParams(request, this.OMS_ID);
         return this.connection.apRequest(Endpoint.GET_USER_ACCOUNTS, RequestType.POST, params);
     }

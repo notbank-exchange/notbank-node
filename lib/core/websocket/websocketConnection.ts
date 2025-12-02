@@ -14,7 +14,7 @@ import ErrorCode from "../../constants/errorCode";
 import { SubscriptionIdentifier } from "./SubscriptionIdentifier";
 import { WebsocketConnectionConfiguration } from "./websocketConnectionConfiguration";
 
-const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => {};
+const emptyFn: (o: MessageFrame) => void = (o: MessageFrame) => { };
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
 export class WebsocketConnection implements ServiceConnection {
@@ -29,10 +29,10 @@ export class WebsocketConnection implements ServiceConnection {
     this.domain = configuration?.domain || DEFAULT_DOMAIN;
     this.callbackManager = new CallbackManager();
     this.hooks = configuration?.websocketHooks || {};
-    this.peekMessageIn = configuration?.peekMessageIn || (_ => {});
-    this.peekMessageOut = configuration?.peekMessageOut || (_ => {});
+    this.peekMessageIn = configuration?.peekMessageIn || (_ => { });
+    this.peekMessageOut = configuration?.peekMessageOut || (_ => { });
   }
-  nbFormDataRequest<T1, T2>(endpoint: string, files: [string, File][], message?: T1,): Promise<T2> {
+  nbFormDataRequest<T1, T2>(endpoint: string, fields: [string, string | number | boolean][], files: [string, File][], message?: T1,): Promise<T2> {
     throw new Error("websocket client does not support nb form data methods.");
   }
 

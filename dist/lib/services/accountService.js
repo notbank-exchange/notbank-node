@@ -39,8 +39,8 @@ export class AccountService {
     /**
      * https://apidoc.notbank.exchange/#getaccountinfo
      */
-    getAccountInfo(params) {
-        return __awaiter(this, void 0, void 0, function* () {
+    getAccountInfo() {
+        return __awaiter(this, arguments, void 0, function* (params = {}) {
             const paramsWithOMSId = completeParams(params, this.OMS_ID);
             return this.connection.apRequest(Endpoint.GET_ACCOUNT_INFO, RequestType.POST, paramsWithOMSId);
         });

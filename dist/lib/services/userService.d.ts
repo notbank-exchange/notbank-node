@@ -12,7 +12,7 @@ export declare class UserService {
     /**
      * https://apidoc.notbank.exchange/#getuseraccounts
      */
-    getUserAccounts(request: GetUserAccountsRequest): Promise<number[]>;
+    getUserAccounts(request?: GetUserAccountsRequest): Promise<number[]>;
     /**
      * https://apidoc.notbank.exchange/#getuserdevices
      */

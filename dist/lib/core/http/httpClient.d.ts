@@ -7,7 +7,7 @@ export declare class HttpConnection implements ServiceConnection {
     #private;
     constructor(domain: string);
     nbRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1, paged?: boolean): Promise<T2>;
-    nbFormDataRequest<T1, T2>(endpoint: string, files: [string, File][], message?: T1): Promise<T2>;
+    nbFormDataRequest<T1, T2>(endpoint: string, fields: [string, string | number | boolean][], files: [string, File][], message?: T1): Promise<T2>;
     apRequest<T1, T2>(endpoint: string, requestType: RequestType, message?: T1, extraHeaders?: any): Promise<T2>;
     updateSessionToken(sessionToken: string): void;
     authenticateUser(params: AuthenticateUserRequest): Promise<void>;

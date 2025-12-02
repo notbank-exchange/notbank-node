@@ -16,6 +16,7 @@ export interface ServiceConnection {
   ): Promise<T2>;
   nbFormDataRequest<T1, T2>(
     endpoint: string,
+    fields: [string, string | number | boolean][],
     files: [string, File][],
     message?: T1,
   ): Promise<T2>;

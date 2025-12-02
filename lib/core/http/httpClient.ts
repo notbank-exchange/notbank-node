@@ -37,10 +37,12 @@ export class HttpConnection implements ServiceConnection {
 
   async nbFormDataRequest<T1, T2>(
     endpoint: string,
+    fields: [string, string | number | boolean][],
     files: [string, File][],
     message?: T1,
   ): Promise<T2> {
     const url = this.getNbUrl(endpoint);
+    fields.forEach(field => message[field[0]] = field[1])
     var response = await this.#formDataRequester.post({ url, files, params: message });
     return await NbResponseHandler.handle<T2>(response, false);
   }

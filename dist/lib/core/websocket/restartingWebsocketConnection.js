@@ -12,7 +12,7 @@ export class RestartingWebsocketConnection {
     constructor(params) {
         this.restarter = params.restarter;
     }
-    nbFormDataRequest(endpoint, files, message) {
+    nbFormDataRequest(endpoint, fields, files, message) {
         throw new Error("websocket client does not support nb form data methods.");
     }
     updateSessionToken(sessionToken) {
