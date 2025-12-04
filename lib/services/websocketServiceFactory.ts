@@ -79,6 +79,10 @@ export class WebsocketServiceFactory {
     });
   }
 
+  updateSessionToken(aptoken: string) {
+    return this.serviceConnection.updateSessionToken(aptoken)
+  }
+
   getConnection(): ServiceConnection {
     return this.serviceConnection
   }

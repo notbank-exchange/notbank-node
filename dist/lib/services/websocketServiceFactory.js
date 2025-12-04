@@ -66,6 +66,9 @@ export class WebsocketServiceFactory {
             });
         });
     }
+    updateSessionToken(aptoken) {
+        return this.serviceConnection.updateSessionToken(aptoken);
+    }
     getConnection() {
         return this.serviceConnection;
     }

@@ -12,7 +12,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _a, _NbResponseHandler_getData;
+var _a, _NbResponseHandler_getData, _NbResponseHandler_getTextData;
 import { NotbankError } from "../../models/notbankError.js";
 export class NbResponseHandler {
     static handle(response, paged) {
@@ -26,7 +26,7 @@ export class NbResponseHandler {
                 if ((nbResponse === null || nbResponse === void 0 ? void 0 : nbResponse.status) === 'success') {
                     return paged ? jsonResponse : nbResponse.data;
                 }
-                const error = NotbankError.Factory.createFromNbResponse(nbResponse);
+                const error = NotbankError.Factory.createFromNbResponse(nbResponse, response.status);
                 throw error;
             }
             catch (error) {
@@ -40,6 +40,15 @@ _a = NbResponseHandler, _NbResponseHandler_getData = function _NbResponseHandler
         try {
             const data = yield response.json();
             return data;
+        }
+        catch (err) {
+            return null;
+        }
+    });
+}, _NbResponseHandler_getTextData = function _NbResponseHandler_getTextData(response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            return yield response.text();
         }
         catch (err) {
             return null;

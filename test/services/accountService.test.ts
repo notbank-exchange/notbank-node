@@ -25,8 +25,6 @@ describe("account service", () => {
         AccountId: 99,
       };
       const response = await accountService.getAccountTransactions(params);
-      console.log("Transactions:", response);
-
       assert.ok(Array.isArray(response), "Response should be an array");
     });
   });
@@ -66,7 +64,6 @@ describe("account service", () => {
       const response = await accountService.getAccountInstrumentStatistics({
         AccountId: 99,
       });
-
       console.log("Instrument stats:", response);
       assert.ok(Array.isArray(response), "Response should be an array");
     });

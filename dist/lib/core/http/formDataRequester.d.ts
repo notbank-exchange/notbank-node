@@ -1,16 +1,10 @@
 import { Response } from 'node-fetch';
-export interface FormDataRequest<T1> {
+export interface FormDataRequest {
     url: string;
-    params?: T1;
-    files: [string, File][];
+    formData: FormData;
     extraHeaders?: any;
 }
 export declare class FormDataRequester {
-    #private;
-    constructor();
-    updateSessionToken(aptoken: string): void;
-    post<T1>(config: FormDataRequest<T1>): Promise<Response>;
-    private getRequestInit;
-    getHeaders(extraHeaders?: any): any;
-    getUrlWithSearchParams(endpoint: string, params?: any): string;
+    static post<T1>(config: FormDataRequest): Promise<Response>;
+    private static getHeaders;
 }

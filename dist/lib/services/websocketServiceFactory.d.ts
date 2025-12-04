@@ -30,6 +30,7 @@ export declare class WebsocketServiceFactory {
         ApiSecretKey: string;
         UserId: string;
     }): Promise<void>;
+    updateSessionToken(aptoken: string): any;
     getConnection(): ServiceConnection;
     newAccountService(): AccountService;
     newAuthService(): AuthService;

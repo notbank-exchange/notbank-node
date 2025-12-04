@@ -1,59 +1,30 @@
+
 import fetch, { Response } from 'node-fetch';
 import { RequestType } from "../serviceClient";
 
-export interface FormDataRequest<T1> {
+export interface FormDataRequest {
   url: string,
-  params?: T1;
-  files: [string, File][]
+  formData: FormData
   extraHeaders?: any
 }
 
 export class FormDataRequester {
-  #aptoken: string | null;
-
-  constructor() {
-    this.#aptoken = null;
-  }
-
-  updateSessionToken(aptoken: string) {
-    this.#aptoken = aptoken;
-  }
-
-  post<T1>(config: FormDataRequest<T1>): Promise<Response> {
-    const url = config.url
-    const requestInit = this.getRequestInit(config);
-    return fetch(url, requestInit);
-  }
-
-  private getRequestInit<T1>(request: FormDataRequest<T1>) {
-    var requestInit = {
+  public static post<T1>(config: FormDataRequest): Promise<Response> {
+    const requestData = {
       method: RequestType.POST,
-      headers: this.getHeaders(request.extraHeaders)
+      headers: FormDataRequester.getHeaders(config.extraHeaders),
+      body: config.formData
     };
-    const formData = new FormData();
-    request.files.map(([fileName, file]) => formData.append(fileName, file))
-    Object.keys(request.params).map(key => {
-      formData.append(key, request.params[key])
-    });
-    requestInit["body"] = formData;
-    return requestInit;
+    return fetch(config.url, requestData);
   }
 
-  getHeaders(extraHeaders?: any): any {
+  private static getHeaders(extraHeaders?: any): any {
     var headers = {
-      'Accept': '*/*',
       charset: "UTF-8"
     };
-    if (this.#aptoken) {
-      headers["aptoken"] = this.#aptoken;
-    }
     if (extraHeaders) {
       return { ...headers, ...extraHeaders };
     }
     return headers;
-  }
-
-  getUrlWithSearchParams(endpoint: string, params?: any): string {
-    return params ? endpoint + "?" + new URLSearchParams(params) : endpoint;
   }
 }

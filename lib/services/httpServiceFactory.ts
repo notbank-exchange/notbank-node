@@ -1,5 +1,5 @@
 import { getNonce, sign } from "../core/hmac";
-import { HttpConnection } from "../core/http/httpClient";
+import { HttpConnection } from "../core/http/httpConnection";
 import { AccountService } from "./accountService";
 import { AuthService } from "./authService";
 import { FeeService } from "./feeService";

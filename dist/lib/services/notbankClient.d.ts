@@ -37,6 +37,7 @@ export declare class NotbankClient {
         ApiSecretKey: string;
         UserId: string;
     }) => Promise<void>;
+    updateSessionToken: (string: any) => void;
     connect: () => Promise<void>;
     close: () => Promise<void>;
     constructor(params: {
@@ -61,6 +62,7 @@ export declare class NotbankClient {
             ApiSecretKey: string;
             UserId: string;
         }) => Promise<void>;
+        updateSessionToken: (string: any) => void;
         connect: () => Promise<void>;
         close: () => Promise<void>;
     });

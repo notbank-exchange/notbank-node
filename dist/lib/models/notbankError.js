@@ -18,8 +18,14 @@ NotbankError.Factory = class Factory {
         }
         return new NotbankError(errMsg, standardResponse.errorcode || standardResponse.statusCode);
     }
-    static createFromNbResponse(standardResponse) {
-        var errMsg = "";
+    static createFromNbResponse(standardResponse, httpStatus) {
+        var errMsg = `(http status=${httpStatus}) `;
+        if (standardResponse.status) {
+            errMsg += `(status=${standardResponse.status}) `;
+        }
+        if (standardResponse.code) {
+            errMsg += `(code=${standardResponse.code}) `;
+        }
         if (standardResponse.message) {
             errMsg += standardResponse.message;
             if (!standardResponse.message.endsWith(".")) {

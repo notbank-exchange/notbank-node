@@ -26,15 +26,15 @@ export class VerificationService {
         let _a = Object.assign({}, request), { files, fields } = _a, cleanRequest = __rest(_a, ["files", "fields"]);
         return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_TRADER_PLUS, fields, files, cleanRequest);
     }
-    getTraderPlusVerificationSchemes(request) {
+    getTraderPlusVerificationSchemas(request) {
         return this.connection.nbRequest(Endpoint.VERIFICATION_TRADER_PLUS_SCHEMAS, RequestType.GET, request);
     }
-    getInstitutionalCompanySchemes(request) {
+    getInstitutionalCompanySchemas(request) {
         return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMAS, RequestType.GET, request);
     }
     verifyInstitutionalCompany(request) {
-        let _a = Object.assign({}, request), { fields } = _a, cleanRequest = __rest(_a, ["fields"]);
-        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY, fields, [], cleanRequest);
+        let _a = Object.assign({}, request), { files, fields } = _a, cleanRequest = __rest(_a, ["files", "fields"]);
+        return this.connection.nbFormDataRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY, fields, files || [], cleanRequest);
     }
     getInstitutionalCompanyVerificationStatus() {
         return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY, RequestType.GET);
@@ -42,7 +42,7 @@ export class VerificationService {
     getInstitutionalMemberTypes() {
         return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_TYPES, RequestType.GET);
     }
-    getInstitutionalMemberSchemes(request) {
+    getInstitutionalMemberSchemas(request) {
         return this.connection.nbRequest(Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMAS, RequestType.GET, request);
     }
     verifyInstitutionalMember(request) {

@@ -6,13 +6,16 @@ import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("savings service", () => {
   const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
+  client.updateSessionToken("e613604a-4359-cded-096f-0f343674b9ae")
 
   describe("depositToYield", () => {
     it("should deposit to yield", async () => {
+    
       const response = await client.getSavingsService().depositToYield({
-        amount: 15.3,
-        product_id: 4,
-        type: YieldProduct.STABLE
+        amount: 10,
+        product_id: 5,
+        currency: "USDT",
+        type: YieldProduct.VARIABLE
       })
       console.log("transaction id:", response);
       assert.ok(response, "Response should not be null");
@@ -22,9 +25,10 @@ describe("savings service", () => {
   describe("withdrawFromYield", () => {
     it("should withdraw from yield", async () => {
       const response = await client.getSavingsService().withdrawFromYield({
-        amount: 15.3,
-        product_id: 4,
-        type: YieldProduct.STABLE
+        amount: 10,
+        product_id: 5,
+        currency: "USDT",
+        type: YieldProduct.VARIABLE
       })
       console.log("transaction id:", response);
       assert.ok(response, "Response should not be null");

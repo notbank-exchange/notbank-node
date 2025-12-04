@@ -6,6 +6,6 @@ export declare class NotbankError extends Error {
     static Factory: {
         new (): {};
         createFromApResponse(standardResponse: StandardApResponse): NotbankError;
-        createFromNbResponse(standardResponse: NbResponse): NotbankError;
+        createFromNbResponse(standardResponse: NbResponse, httpStatus: number): NotbankError;
     };
 }

@@ -2,15 +2,6 @@ import { RequestType } from "../serviceClient";
 import fetch, { RequestInit, Response } from 'node-fetch';
 
 export class JsonRequester {
-  #aptoken: string | null;
-
-  constructor() {
-    this.#aptoken = null;
-  }
-
-  updateSessionToken(aptoken: string) {
-    this.#aptoken = aptoken;
-  }
 
   request<T1>(config: {
     url: string,
@@ -29,7 +20,7 @@ export class JsonRequester {
       null;
     var requestData: RequestInit = {
       method: config.requestType,
-      headers: this.getHeaders(config.extraHeaders)
+      headers: this.getHeaders(config.extraHeaders, isPostOrDeleteRequest)
     }
     if (body) {
       requestData.body = JSON.stringify(body)
@@ -37,13 +28,12 @@ export class JsonRequester {
     return fetch(url, requestData);
   }
 
-  getHeaders(extraHeaders?: any): any {
+  getHeaders(extraHeaders?: any, withJsonData: boolean = false): any {
     var headers = {
-      "Content-type": "application/json",
       charset: "UTF-8"
     };
-    if (this.#aptoken) {
-      headers["aptoken"] = this.#aptoken;
+    if (withJsonData) {
+      headers["Content-type"] = "application/json";
     }
     if (extraHeaders) {
       return { ...headers, ...extraHeaders };

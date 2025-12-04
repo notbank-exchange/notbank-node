@@ -20,6 +20,7 @@ export class RestartingWebsocketConnection implements ServiceConnection {
     throw new Error("websocket client does not support updating session token.");
   }
 
+
   apRequest<T1, T2>(
     endpoint: string,
     requestType: RequestType,

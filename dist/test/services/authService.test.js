@@ -11,27 +11,22 @@ import "mocha";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
 describe("auth service", () => {
     const client = NotbankClient.Factory.createWebsocketClient({ domain: "stgapi.notbank.exchange" });
-    describe("registerUser", () => {
+    describe("auth user", () => {
         it("should authenticate the user", () => __awaiter(void 0, void 0, void 0, function* () {
             yield client.connect();
-            const id = "5005dec0-31e5-49f5-a441-71bc862210d7";
-            console.log(yield client.getSystemService().ping());
+            const id = "312487f2-8d56-4a90-ae59-76acd5d1534a";
             const response = yield client.getAuthService().webAuthenticateUser({
-                JWTToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY0NDIxMjQzLCJqdGkiOiJhNGMzMTRkY2Y0YTA0ZjE2YTIxOGFkOWQyZjkyYjIxZCIsInVpZCI6IjUwMDVkZWMwLTMxZTUtNDlmNS1hNDQxLTcxYmM4NjIyMTBkNyIsInNjb3BlIjoiYXBfdXNlcnMiLCJlbWFpbCI6ImlzbWFlbCsxMEBkeXNvcHNpcy5jb20iLCJnaWQiOltdLCJhdWQiOiJjcnlwdG9tYXJrZXQtY2xpZW50LWlkIiwiaXNzIjoiaHR0cHM6Ly93d3cuY3J5cHRvbWt0LmNvbSJ9.SLoBhvKrUoSJA05F4QlEIM-Dl_BDRW2bDoj83h_qoVqaalfhPekWwgPcEHPLoDCzyrYytYnalkaWWgwX45xkfDKuzJ_IgLgCzdwR3Hk_W4HGX9xhLo9mjXtaAiSI2qt6rkfyiRtRmgt0i32osi6L-RDbe6m7NkaVJXg5_epGI5OhOSC4sLRQNz5Ls7euuVR2Ti7mRCXUXqNvJ-pieV5JqVGFMQOgFKgjPZBJIvEDF_DuwFgVD6nxgTVfPm6z_czufg2Ya8mc9DD7is-hEFxsgghGZcvd7o2hGovyftB1TkICkqLEguurMQPL3balpSRwmpKfTApA-SI6neM4rWSSvw"
+                JWTToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY0ODU4MTc4LCJqdGkiOiJiYTgxMzRiNzYyZTY0NTAwOTRkZWFhMGE3YjIwY2M4NCIsInVpZCI6IjMxMjQ4N2YyLThkNTYtNGE5MC1hZTU5LTc2YWNkNWQxNTM0YSIsInNjb3BlIjoiYXBfdXNlcnMiLCJlbWFpbCI6ImlzbWFlbCsxM0BkeXNvcHNpcy5jb20iLCJnaWQiOltdLCJhdWQiOiJjcnlwdG9tYXJrZXQtY2xpZW50LWlkIiwiaXNzIjoiaHR0cHM6Ly93d3cuY3J5cHRvbWt0LmNvbSJ9.CMVkRCp1_zDpsUaMfm2JGqmZ503X2yBbvkUhm2aE88PxyNxxBvkea9IJ-B4ZlqM6Q499-tMuJz_W2zEUFTiJIFpID3LltaUIanTj9KDUKMVM6EC-X63XuGy3qGK19QUS7pogE0pelR8sl-rjYLCWoU1Oy3GCGMI3oTs5WMyuOuVLXTqHKkMgJ5te5k1KYEsQ4j5ucGkN9yWrFLqw8UQLggfPaPwQY6otoWFC76rkTku2nqj131oW2eV-ncwRGshvBXlPce7RE6phNF2JNTo5du4TZ811oeImCKFCaMIFgASJaMJvC4cgWTsw9mmXVCbgSDCvWX-6cSiyJjZWRobbKQ"
             });
             console.log("authentication response:", response);
-            const accounts = yield client.getUserService().getUserAccounts({});
-            console.log("accounts: " + JSON.stringify(accounts));
-            // const positions = await client.getAccountService().getAccountPositions({ AccountId: accounts.AccountId })
-            // console.log("accounts: " + JSON.stringify(positions))
-            // assert.ok(response, "Response should not be null");
-        }));
-        it("should authenticate the user", () => __awaiter(void 0, void 0, void 0, function* () {
-            // await client.connect()
-            // const id = "379b27c6-c62f-464c-a632-3f3059b47578"
-            // const response = await client.getAuthService().webAuthenticateUser({
-            //   JWTToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY0MzM0OTQ0LCJqdGkiOiJjMTUzYzhlZTY1N2I0OTE3ODliMDNhMjhhN2U3ZjM2MyIsInVpZCI6IjM3OWIyN2M2LWM2MmYtNDY0Yy1hNjMyLTNmMzA1OWI0NzU3OCIsInNjb3BlIjoiYXBfdXNlcnMiLCJlbWFpbCI6ImlzbWFlbCs5QGR5c29wc2lzLmNvbSIsImdpZCI6W10sImF1ZCI6ImNyeXB0b21hcmtldC1jbGllbnQtaWQiLCJpc3MiOiJodHRwczovL3d3dy5jcnlwdG9ta3QuY29tIn0.r1juIwq9NdNlIr2ChvBAPGTkAzgh8nT5BN63qrqlLJzKHjspjv_vooNHN-yL_ouzHqUEflHhBiAKkkRL_Ll3UzVNTozwWr59mUiZTiyo51AlUVk9Z3xmAOUqc1bcgjwaT_dnKqbvBuVwPO6C17TMzyZfdIwKf62v9w1IvcxRdYAmV2KWPhSVws3THeNCpbDO9OA_tRh-PPwrgS-EEIU4I01NMcmOS3kHR0dtxLLeK6BkMfH03ie41c-fgWaL8f4v2CrgKcIvLUguiuehBiXNIOMQWEbm_tNfb4z3X9og_DyRPHV_lKg0B9v6ZMYaNF-v9_wBIiETfnKip1Rd4xavyw"
-            // })
+            var defaultAccount = yield client.getAccountService().getAccountInfo();
+            var positions = yield client.getAccountService().getAccountPositions({ AccountId: defaultAccount.AccountId });
+            positions.map(position => {
+                if (position.Amount > 0) {
+                    console.log(position);
+                }
+            });
+            yield client.close();
         }));
     });
 });

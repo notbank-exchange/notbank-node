@@ -11,7 +11,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _HttpServiceFactory_httpConnection;
 import { getNonce, sign } from "../core/hmac.js";
-import { HttpConnection } from "../core/http/httpClient.js";
+import { HttpConnection } from "../core/http/httpConnection.js";
 import { AccountService } from "./accountService.js";
 import { AuthService } from "./authService.js";
 import { FeeService } from "./feeService.js";

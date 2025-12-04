@@ -1,4 +1,4 @@
 export interface GetInstitutionalMemberSchemasRequest {
-    member_type: number;
-    country: string;
+  member_type: number,
+  country:string
 }

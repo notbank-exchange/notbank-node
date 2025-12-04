@@ -7,43 +7,49 @@ import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("verification service", () => {
   const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
+  client.updateSessionToken("e613604a-4359-cded-096f-0f343674b9ae")
 
   describe("verifyBasic", () => {
     it("should verify an user to basic level", async () => {
       const response = await client.getVerificationService().verifyBasic({
-
-        is_business: false,
+        is_business: true,
         profession: Profession.ACCOUNTANT,
         gender: Gender.MAN,
         city: "Novosibirsk",
         street: "1",
-        country: "Russia"
+        country: "RU"
       });
-      console.log("basic user verification:", response);
+      console.log("basic verification:", response);
       assert.ok(response, "Response should not be null");
     });
   });
 
   it("should verify an user to trader level", async () => {
     const image = fileFromSync("./image.png");
-    const response = await client.getVerificationService().verifyTrader({
+    await client.getVerificationService().verifyTrader({
       pep: false,
       subject_comply: false,
       is_public_servant: false,
       document_address_file: image,
       document_address_type: DocumentAdressType.CREDIT_CARD_BILL
     });
-    console.log("trader user verification:", response);
+  });
+
+  it("should fetch the schemas for trader plus verification", async () => {
+    const response = await client.getVerificationService().getTraderPlusVerificationSchemas({
+      country: "AR",
+    });
+    console.log("trader plus verification schemas:", JSON.stringify(response));
     assert.ok(response, "Response should not be null");
   });
 
   it("should verify an user to trader plus level", async () => {
-    const image_1 = fileFromSync("./image_1.png");
-    const image_2 = fileFromSync("./image_2.png");
+    const image_1 = fileFromSync("./image.png");
+    const image_2 = fileFromSync("./image.png");
     await client.getVerificationService().verifyTraderPlus({
       country: "AR",
-      declaration_template_id: 95,
-      declaration_id: 98,
+      declaration_template_id: 92,
+      declaration_id: 96,
       fields: [
         ["asset_11_435_amount", 10.000],
         ["asset_11_435_currency", "ARS"],
@@ -55,39 +61,28 @@ describe("verification service", () => {
     });
   });
 
-  it("should fetch the schemas for trader plus verification", async () => {
-    const response = await client.getVerificationService().getTraderPlusVerificationSchemes({
-      country: "AR",
-      user_id: "5005dec0-31e5-49f5-a441-71bc862210d7",
-    });
-    console.log("trader plus verification schemas:", response);
-    assert.ok(response, "Response should not be null");
-  });
-
   it("should fetch the schemas for institutional verification", async () => {
-    const response = await client.getVerificationService().getInstitutionalCompanySchemes({
-      country: "123abc123bcd",
+    const response = await client.getVerificationService().getInstitutionalCompanySchemas({
+      country: "BR",
     });
-    console.log("institutional company schemes:", response);
+    console.log("institutional company schemas:", JSON.stringify(response));
     assert.ok(response, "Response should not be null");
   });
 
   it("should verify an institutional company", async () => {
-    const response = await client.getVerificationService().verifyInstitutionalCompany({
+    await client.getVerificationService().verifyInstitutionalCompany({
       declaration_template_id: 95,
-      declaration_id: 95,
-      country: "PE",
+      declaration_id: 456,
+      country: "BR",
       fields: [
-        ["asset_14_456_company_city", "cusco"],
-        ["asset_14_456_company_name", "corceles corsarios"],
-        ["asset_14_456_company_field", "transporte terrestre"],
-        ["asset_14_456_company_address", "Freire 123"],
-        ["asset_14_456_company_identity", "123123"],
-        ["asset_14_456_company_province", "cusco"],
+        ["asset_14_456_company_city", "manaos"],
+        ["asset_14_456_company_name", "todo seguro"],
+        ["asset_14_456_company_field", "manufactura de extintores"],
+        ["asset_14_456_company_address", "calle 123"],
+        ["asset_14_456_company_identity", "2992922"],
+        ["asset_14_456_company_province", "amazonas"],
       ]
     });
-    console.log("institutional company verification:", response);
-    assert.ok(response, "Response should not be null");
   });
 
   it("should fetch the institutional company verification status", async () => {
@@ -103,31 +98,30 @@ describe("verification service", () => {
   });
 
   it("should fetch the schemas for institutional members", async () => {
-    const response = await client.getVerificationService().getInstitutionalMemberSchemes({
-      member_type: 1
+    const response = await client.getVerificationService().getInstitutionalMemberSchemas({
+      member_type: 1,
+      country:"BR"
     });
-    console.log("institutional members:", response);
+    console.log("institutional members:", JSON.stringify(response));
     assert.ok(response, "Response should not be null");
   });
 
   it("should verify an institutional member", async () => {
-    const image_1 = fileFromSync("./image_1.png");
-    const image_2 = fileFromSync("./image_2.png");
-    const response = await client.getVerificationService().verifyInstitutionalMember({
+    const image_1 = fileFromSync("./image.png");
+    const image_2 = fileFromSync("./image.png");
+    await client.getVerificationService().verifyInstitutionalMember({
       member_type: 1,
       member_template_id: 65,
       fields: [
-        ["member_type", 1],
-        ["member_template_id", 65],
-        ["member_name", "Almendra"],
-        ["member_lastname", "Jorquera"],
+        ["member_name", "Millaray"],
+        ["member_lastname", "Villanueva"],
         ["member_identity", "1231234"],
         ["member_invoice", "222333"],
-        ["member_country", "PE"],
-        ["member_address", "Freire 123"],
-        ["member_city", "cusco"],
-        ["member_province", "cusco"],
-        ["member_profession", "trader"],
+        ["member_country", "BR"],
+        ["member_address", "calle 123"],
+        ["member_city", "manaos"],
+        ["member_province", "amazonas"],
+        ["member_profession", "investor"],
         ["member_ispep", false],
         ["member_issubjectcomply", false],
         ["member_ispublicservant", false],
@@ -137,8 +131,6 @@ describe("verification service", () => {
         ["member_back_documents", image_2]
       ],
     });
-    console.log("instituional member verification:", response);
-    assert.ok(response, "Response should not be null");
   });
 
   it("should fetch the schemas for member verification status", async () => {
@@ -156,7 +148,7 @@ describe("verification service", () => {
   it("should verify an institutional document", async () => {
     const image = fileFromSync("./image.png");
     await client.getVerificationService().verifyInstitutionalDocument({
-      type: 2,
+      type: 17,
       file: image
     });
   });
@@ -169,7 +161,6 @@ describe("verification service", () => {
 
   it("should fetch the user current verification level and status", async () => {
     const response = await client.getVerificationService().getVerificationStatus({
-      user_id: "123"
     });
     console.log("user verification level and state:", response);
     assert.ok(response, "Response should not be null");

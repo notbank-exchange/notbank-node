@@ -1,7 +1,6 @@
 import { NotbankError } from "../models/index.js";
 import { HttpServiceFactory } from "./httpServiceFactory.js";
 import { WebsocketServiceFactory } from "./websocketServiceFactory.js";
-const DEFAULT_DOMAIN = "api.notbank.exchange";
 export class NotbankClient {
     constructor(params) {
         this.connection = params.connection;
@@ -19,7 +18,9 @@ export class NotbankClient {
         this.quoteService = params.quoteService;
         this.registerService = params.registerService;
         this.verificationService = params.verificationService;
+        this.savingsService = params.savingsService;
         this.authenticateUser = params.authenticate;
+        this.updateSessionToken = params.updateSessionToken;
         this.connect = params.connect;
         this.close = params.close;
     }
@@ -70,7 +71,7 @@ export class NotbankClient {
     }
 }
 NotbankClient.Factory = class Factory {
-    static createRestClient(domain = DEFAULT_DOMAIN) {
+    static createRestClient(domain) {
         var factory = new HttpServiceFactory(domain);
         return new NotbankClient({
             connection: factory.getConnection(),
@@ -88,8 +89,9 @@ NotbankClient.Factory = class Factory {
             quoteService: factory.newQuoteService(),
             registerService: factory.newRegisterService(),
             verificationService: factory.newVerificationService(),
-            authenticate: params => factory.authenticateUser(params),
             savingsService: factory.newSavingsService(),
+            authenticate: params => factory.authenticateUser(params),
+            updateSessionToken: token => factory.updateSessionToken(token),
             connect: () => Promise.resolve(null),
             close: () => Promise.resolve(null)
         });
@@ -113,6 +115,7 @@ NotbankClient.Factory = class Factory {
             registerService: factory.newRegisterService(),
             verificationService: factory.newVerificationService(),
             authenticate: params => factory.authenticateUser(params),
+            updateSessionToken: token => factory.updateSessionToken(token),
             savingsService: factory.newSavingsService(),
             connect: () => factory.connect(),
             close: () => factory.close()

@@ -1,6 +1,6 @@
 import { Endpoint } from "../constants/endpoints";
 import { RequestType, ServiceConnection } from "../core/serviceClient";
-import { BasicVerificationResponse, EnumType, GetInstitutionalCompanySchemasRequest, GetInstitutionalMemberSchemesRequest, InstitutionalMember, TraderPlusVerificationSchemesRequest, VerificationStatus, VerificationStatusRequest, VerifyBasicRequest, VerifyInstitutionalCompanyRequest, VerifyInstitutionalDocumentRequest, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, VerifyTraderRequest } from "../models";
+import { BasicVerificationResponse, EnumType, GetInstitutionalCompanySchemasRequest, GetInstitutionalMemberSchemasRequest, InstitutionalMember, TraderPlusVerificationSchemasRequest, VerificationStatus, VerificationStatusRequest, VerifyBasicRequest, VerifyInstitutionalCompanyRequest, VerifyInstitutionalDocumentRequest, VerifyInstitutionalMemberRequest, VerifyTraderPlusRequest, VerifyTraderRequest } from "../models";
 
 export class VerificationService {
   connection: ServiceConnection;
@@ -38,7 +38,7 @@ export class VerificationService {
     );
   }
 
-  getTraderPlusVerificationSchemes(request: TraderPlusVerificationSchemesRequest): Promise<any> {
+  getTraderPlusVerificationSchemas(request: TraderPlusVerificationSchemasRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_TRADER_PLUS_SCHEMAS,
       RequestType.GET,
@@ -46,7 +46,7 @@ export class VerificationService {
     );
   }
 
-  getInstitutionalCompanySchemes(request: GetInstitutionalCompanySchemasRequest): Promise<any> {
+  getInstitutionalCompanySchemas(request: GetInstitutionalCompanySchemasRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMAS,
       RequestType.GET,
@@ -55,12 +55,12 @@ export class VerificationService {
   }
 
 
-  verifyInstitutionalCompany(request: VerifyInstitutionalCompanyRequest): Promise<any> {
-    let { fields, ...cleanRequest } = { ...request }
+  verifyInstitutionalCompany(request: VerifyInstitutionalCompanyRequest): Promise<void> {
+    let { files, fields, ...cleanRequest } = { ...request }
     return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_COMPANY,
       fields,
-      [],
+      files || [],
       cleanRequest,
     );
   }
@@ -79,7 +79,7 @@ export class VerificationService {
     );
   }
 
-  getInstitutionalMemberSchemes(request: GetInstitutionalMemberSchemesRequest): Promise<any> {
+  getInstitutionalMemberSchemas(request: GetInstitutionalMemberSchemasRequest): Promise<any> {
     return this.connection.nbRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMAS,
       RequestType.GET,
@@ -87,7 +87,7 @@ export class VerificationService {
     );
   }
 
-  verifyInstitutionalMember(request: VerifyInstitutionalMemberRequest): Promise<any> {
+  verifyInstitutionalMember(request: VerifyInstitutionalMemberRequest): Promise<void> {
     let { files, fields, ...cleanRequest } = { ...request }
     return this.connection.nbFormDataRequest(
       Endpoint.VERIFICATION_INSTITUTIONAL_MEMBERS,

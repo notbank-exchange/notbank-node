@@ -1,25 +1,6 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _JsonRequester_aptoken;
 import { RequestType } from "../serviceClient.js";
 import fetch from 'node-fetch';
 export class JsonRequester {
-    constructor() {
-        _JsonRequester_aptoken.set(this, void 0);
-        __classPrivateFieldSet(this, _JsonRequester_aptoken, null, "f");
-    }
-    updateSessionToken(aptoken) {
-        __classPrivateFieldSet(this, _JsonRequester_aptoken, aptoken, "f");
-    }
     request(config) {
         const isPostOrDeleteRequest = [
             RequestType.POST, RequestType.DELETE
@@ -32,20 +13,21 @@ export class JsonRequester {
             null;
         var requestData = {
             method: config.requestType,
-            headers: this.getHeaders(config.extraHeaders)
+            headers: this.getHeaders(config.extraHeaders, isPostOrDeleteRequest)
         };
         if (body) {
             requestData.body = JSON.stringify(body);
         }
+        console.log(url);
+        console.log(requestData);
         return fetch(url, requestData);
     }
-    getHeaders(extraHeaders) {
+    getHeaders(extraHeaders, withJsonData = false) {
         var headers = {
-            "Content-type": "application/json",
             charset: "UTF-8"
         };
-        if (__classPrivateFieldGet(this, _JsonRequester_aptoken, "f")) {
-            headers["aptoken"] = __classPrivateFieldGet(this, _JsonRequester_aptoken, "f");
+        if (withJsonData) {
+            headers["Content-type"] = "application/json";
         }
         if (extraHeaders) {
             return Object.assign(Object.assign({}, headers), extraHeaders);
@@ -56,4 +38,3 @@ export class JsonRequester {
         return params ? endpoint + "?" + new URLSearchParams(params) : endpoint;
     }
 }
-_JsonRequester_aptoken = new WeakMap();

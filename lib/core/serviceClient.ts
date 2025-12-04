@@ -21,6 +21,7 @@ export interface ServiceConnection {
     message?: T1,
   ): Promise<T2>;
   authenticateUser(params: AuthenticateUserRequest): Promise<void>;
+  updateSessionToken(sessionToken: string);
   subscribe<T>(
     endpoint: string,
     firstIdentifier: number | null,
@@ -37,7 +38,7 @@ export interface ServiceConnection {
   ): Promise<void>;
   connect(): Promise<void>;
   close(): Promise<void>;
-  updateSessionToken(sessionToken: string);
+
 }
 
 export enum RequestType {

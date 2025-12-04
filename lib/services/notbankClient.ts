@@ -19,8 +19,6 @@ import { VerificationService } from "./verificationService";
 import { WalletService } from "./walletService";
 import { WebsocketServiceFactory } from "./websocketServiceFactory";
 
-const DEFAULT_DOMAIN = "api.notbank.exchange";
-
 export class NotbankClient {
   connection: ServiceConnection
   accountService: AccountService
@@ -43,6 +41,7 @@ export class NotbankClient {
     ApiSecretKey: string,
     UserId: string,
   }) => Promise<void>
+  updateSessionToken: (string) => void
   connect: () => Promise<void>
   close: () => Promise<void>
 
@@ -69,6 +68,7 @@ export class NotbankClient {
         ApiSecretKey: string,
         UserId: string,
       }) => Promise<void>,
+      updateSessionToken: (string) => void,
       connect: () => Promise<void>,
       close: () => Promise<void>,
     }
@@ -88,14 +88,16 @@ export class NotbankClient {
     this.quoteService = params.quoteService
     this.registerService = params.registerService
     this.verificationService = params.verificationService
+    this.savingsService = params.savingsService;
     this.authenticateUser = params.authenticate
+    this.updateSessionToken = params.updateSessionToken
     this.connect = params.connect
     this.close = params.close
   }
 
 
   static Factory = class Factory {
-    static createRestClient(domain: string = DEFAULT_DOMAIN) {
+    static createRestClient(domain?: string) {
       var factory = new HttpServiceFactory(domain)
       return new NotbankClient({
         connection: factory.getConnection(),
@@ -113,8 +115,9 @@ export class NotbankClient {
         quoteService: factory.newQuoteService(),
         registerService: factory.newRegisterService(),
         verificationService: factory.newVerificationService(),
-        authenticate: params => factory.authenticateUser(params),
         savingsService: factory.newSavingsService(),
+        authenticate: params => factory.authenticateUser(params),
+        updateSessionToken: token => factory.updateSessionToken(token),
         connect: () => Promise.resolve(null),
         close: () => Promise.resolve(null)
       })
@@ -139,6 +142,7 @@ export class NotbankClient {
           registerService: factory.newRegisterService(),
           verificationService: factory.newVerificationService(),
           authenticate: params => factory.authenticateUser(params),
+          updateSessionToken: token => factory.updateSessionToken(token),
           savingsService: factory.newSavingsService(),
           connect: () => factory.connect(),
           close: () => factory.close()
