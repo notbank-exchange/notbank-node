@@ -10,11 +10,14 @@ import { FeeService } from "./feeService";
 import { InstrumentService } from "./instrumentService";
 import { ProductService } from "./productService";
 import { QuoteService } from "./quoteService";
+import { RegisterService } from "./registerService";
 import { ReportService } from "./reportService";
+import { SavingsService } from "./savingsService";
 import { SubscriptionService } from "./subscriptionService";
 import { SystemService } from "./systemService";
 import { TradingService } from "./tradingService";
 import { UserService } from "./userService";
+import { VerificationService } from "./verificationService";
 import { WalletService } from "./walletService";
 
 
@@ -76,6 +79,10 @@ export class WebsocketServiceFactory {
     });
   }
 
+  updateSessionToken(aptoken: string) {
+    return this.serviceConnection.updateSessionToken(aptoken)
+  }
+
   getConnection(): ServiceConnection {
     return this.serviceConnection
   }
@@ -126,5 +133,17 @@ export class WebsocketServiceFactory {
 
   newQuoteService(): QuoteService {
     return new QuoteService(this.serviceConnection);
+  }
+
+  newRegisterService(): RegisterService {
+    return new RegisterService(this.serviceConnection);
+  }
+
+  newVerificationService(): VerificationService {
+    return new VerificationService(this.serviceConnection);
+  }
+
+  newSavingsService(): SavingsService {
+    return new SavingsService(this.serviceConnection);
   }
 }

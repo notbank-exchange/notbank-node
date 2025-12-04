@@ -1,6 +1,5 @@
 import assert from "assert";
 import "mocha";
-import { SubscriptionHandler } from "../../lib/core/websocket/subscriptionHandler";
 import { SubscribeAccountEventsRequest } from "../../lib/models/request/subscribeAccountEvents";
 import { SubscribeLevel1Request } from "../../lib/models/request/subscribeLevel1";
 import { SubscribeLevel2Request } from "../../lib/models/request/subscribeLevel2";
