@@ -1,5 +1,5 @@
 import { RequestType } from "../serviceClient.js";
-import fetch from 'node-fetch';
+import { Requester } from "./Requester.js";
 export class JsonRequester {
     request(config) {
         const isPostOrDeleteRequest = [
@@ -8,19 +8,14 @@ export class JsonRequester {
         var url = isPostOrDeleteRequest
             ? config.url
             : this.getUrlWithSearchParams(config.url, config.params);
-        var body = isPostOrDeleteRequest
+        var data = isPostOrDeleteRequest
             ? config.params :
             null;
         var requestData = {
             method: config.requestType,
             headers: this.getHeaders(config.extraHeaders, isPostOrDeleteRequest)
         };
-        if (body) {
-            requestData.body = JSON.stringify(body);
-        }
-        console.log(url);
-        console.log(requestData);
-        return fetch(url, requestData);
+        return Requester.getFunction(config.requestType)(url, data, requestData);
     }
     getHeaders(extraHeaders, withJsonData = false) {
         var headers = {

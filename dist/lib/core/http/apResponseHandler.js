@@ -12,16 +12,16 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _a, _ApResponseHandler_getJsonData, _ApResponseHandler_getTextData;
+var _a, _ApResponseHandler_getJsonData;
 import ErrorCode from "../../constants/errorCode.js";
 import { NotbankError } from "../../models/index.js";
 export class ApResponseHandler {
     static handle(response) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (response.status >= 400 || response.status < 200) {
-                throw new Error(`http error (${response.status}) not a successfull response. ${yield __classPrivateFieldGet(_a, _a, "m", _ApResponseHandler_getTextData).call(_a, response)}`);
+            if (response.status >= 300 || response.status < 200) {
+                throw new Error(`http error (${response.status}) not a successfull response. ${yield response.data}`);
             }
-            var jsonResponse = yield __classPrivateFieldGet(_a, _a, "m", _ApResponseHandler_getJsonData).call(_a, response);
+            var jsonResponse = __classPrivateFieldGet(_a, _a, "m", _ApResponseHandler_getJsonData).call(_a, response);
             if (!jsonResponse) {
                 throw new NotbankError("http error. (status=" + response.status + ")", -1);
             }
@@ -35,21 +35,10 @@ export class ApResponseHandler {
     }
 }
 _a = ApResponseHandler, _ApResponseHandler_getJsonData = function _ApResponseHandler_getJsonData(response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            return yield response.json();
-        }
-        catch (err) {
-            return null;
-        }
-    });
-}, _ApResponseHandler_getTextData = function _ApResponseHandler_getTextData(response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            return yield response.text();
-        }
-        catch (err) {
-            return null;
-        }
-    });
+    try {
+        return response.data;
+    }
+    catch (err) {
+        return null;
+    }
 };

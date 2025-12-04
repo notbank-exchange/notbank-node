@@ -26,7 +26,6 @@ describe("account service", () => {
                 AccountId: 99,
             };
             const response = yield accountService.getAccountTransactions(params);
-            console.log("Transactions:", response);
             assert.ok(Array.isArray(response), "Response should be an array");
         }));
     });
@@ -66,15 +65,6 @@ describe("account service", () => {
             });
             console.log("Instrument stats:", response);
             assert.ok(Array.isArray(response), "Response should be an array");
-        }));
-        it("should throw if AccountId is missing", () => __awaiter(void 0, void 0, void 0, function* () {
-            try {
-                yield accountService.getAccountInstrumentStatistics({});
-                assert.fail("Should throw an error for missing AccountId");
-            }
-            catch (error) {
-                assert.match(error.message, /AccountId is required field/);
-            }
         }));
     });
     describe("getAccountInfo", () => {

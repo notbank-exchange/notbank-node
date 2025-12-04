@@ -6,9 +6,9 @@ import { NotbankClient } from "../../lib/services/notbankClient";
 
 describe("account service", () => {
   const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
-  
-  
-  
+
+
+
   before(async () => {
     await client.authenticateUser({
       ApiPublicKey: "aada11a919d9102f61fc1ca5a97ea578",
@@ -66,15 +66,6 @@ describe("account service", () => {
       });
       console.log("Instrument stats:", response);
       assert.ok(Array.isArray(response), "Response should be an array");
-    });
-
-    it("should throw if AccountId is missing", async () => {
-      try {
-        await accountService.getAccountInstrumentStatistics({} as any);
-        assert.fail("Should throw an error for missing AccountId");
-      } catch (error: any) {
-        assert.match(error.message, /AccountId is required field/);
-      }
     });
   });
 

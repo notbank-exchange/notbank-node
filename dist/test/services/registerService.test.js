@@ -17,7 +17,7 @@ describe("account service", () => {
             const response = yield client.getRegisterService().registerUser({
                 first_name: "Millaray",
                 last_name: "Villanueva",
-                email: "ismael+13@dysopsis.com"
+                email: "ismael+15@dysopsis.com"
             });
             console.log("user registration:", response);
             assert.ok(response, "Response should not be null");

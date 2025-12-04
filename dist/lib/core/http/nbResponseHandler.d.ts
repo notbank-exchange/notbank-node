@@ -1,5 +1,4 @@
-import { Response } from 'node-fetch';
+import { AxiosResponse } from 'axios';
 export declare class NbResponseHandler {
-    #private;
-    static handle<T>(response: Response, paged: boolean): Promise<T>;
+    static handle<T>(response: AxiosResponse<any>, paged: boolean): Promise<T>;
 }

@@ -40,8 +40,8 @@
   "author": "Ismael Verdugo Zambra - Marcelo De La Barrera",
   "license": "Apache-2.0",
   "dependencies": {
+    "axios": "^1.13.2",
     "formdata-node": "^6.0.3",
-    "node-fetch": "^3.3.2",
     "universal-websocket-client": "^1.0.2"
   },
   "devDependencies": {

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import assert from "assert";
 import "mocha";
-import { fileFromSync } from 'node-fetch';
+import * as fs from 'fs';
 import { DocumentAdressType, Gender, Profession } from "../../lib/models/enums/index.js";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
 describe("verification service", () => {
@@ -30,7 +30,7 @@ describe("verification service", () => {
         }));
     });
     it("should verify an user to trader level", () => __awaiter(void 0, void 0, void 0, function* () {
-        const image = fileFromSync("./image.png");
+        const image = new File([fs.readFileSync("image.png")], "image.png");
         yield client.getVerificationService().verifyTrader({
             pep: false,
             subject_comply: false,
@@ -47,8 +47,8 @@ describe("verification service", () => {
         assert.ok(response, "Response should not be null");
     }));
     it("should verify an user to trader plus level", () => __awaiter(void 0, void 0, void 0, function* () {
-        const image_1 = fileFromSync("./image.png");
-        const image_2 = fileFromSync("./image.png");
+        const image_1 = new File([fs.readFileSync("./image.png")], "");
+        const image_2 = new File([fs.readFileSync("./image.png")], "");
         yield client.getVerificationService().verifyTraderPlus({
             country: "AR",
             declaration_template_id: 92,
@@ -106,8 +106,8 @@ describe("verification service", () => {
         assert.ok(response, "Response should not be null");
     }));
     it("should verify an institutional member", () => __awaiter(void 0, void 0, void 0, function* () {
-        const image_1 = fileFromSync("./image.png");
-        const image_2 = fileFromSync("./image.png");
+        const image_1 = new File([fs.readFileSync("./image.png")], "");
+        const image_2 = new File([fs.readFileSync("./image.png")], "");
         yield client.getVerificationService().verifyInstitutionalMember({
             member_type: 1,
             member_template_id: 65,
@@ -142,7 +142,7 @@ describe("verification service", () => {
         assert.ok(response, "Response should not be null");
     }));
     it("should verify an institutional document", () => __awaiter(void 0, void 0, void 0, function* () {
-        const image = fileFromSync("./image.png");
+        const image = new File([fs.readFileSync("./image.png")], "");
         yield client.getVerificationService().verifyInstitutionalDocument({
             type: 17,
             file: image
@@ -153,7 +153,7 @@ describe("verification service", () => {
         console.log("institutional document verification status list:", response);
         assert.ok(response, "Response should not be null");
     }));
-    it.only("should fetch the user current verification level and status", () => __awaiter(void 0, void 0, void 0, function* () {
+    it("should fetch the user current verification level and status", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield client.getVerificationService().getVerificationStatus({});
         console.log("user verification level and state:", response);
         assert.ok(response, "Response should not be null");
