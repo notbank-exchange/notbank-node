@@ -12,7 +12,6 @@ import { FormDataBuilder } from "./formDataBuilder";
 import { FormDataRequester } from "./formDataRequester";
 import { JsonRequester } from "./jsonRequester";
 import { NbResponseHandler } from "./nbResponseHandler";
-
 export class HttpConnection implements ServiceConnection {
   #jsonRequester: JsonRequester;
   #host: string;

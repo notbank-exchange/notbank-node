@@ -1,7 +1,7 @@
 import assert from "assert";
 import "mocha";
 
-import { fileFromSync } from 'node-fetch';
+import * as fs from 'fs';
 import { DocumentAdressType, Gender, Profession } from "../../lib/models/enums";
 import { NotbankClient } from "../../lib/services/notbankClient";
 
@@ -25,7 +25,7 @@ describe("verification service", () => {
   });
 
   it("should verify an user to trader level", async () => {
-    const image = fileFromSync("./image.png");
+    const image = new File([fs.readFileSync("image.png")], "image.png");
     await client.getVerificationService().verifyTrader({
       pep: false,
       subject_comply: false,
@@ -44,8 +44,8 @@ describe("verification service", () => {
   });
 
   it("should verify an user to trader plus level", async () => {
-    const image_1 = fileFromSync("./image.png");
-    const image_2 = fileFromSync("./image.png");
+    const image_1 = new File([fs.readFileSync("./image.png")], "");
+    const image_2 = new File([fs.readFileSync("./image.png")], "");
     await client.getVerificationService().verifyTraderPlus({
       country: "AR",
       declaration_template_id: 92,
@@ -100,15 +100,15 @@ describe("verification service", () => {
   it("should fetch the schemas for institutional members", async () => {
     const response = await client.getVerificationService().getInstitutionalMemberSchemas({
       member_type: 1,
-      country:"BR"
+      country: "BR"
     });
     console.log("institutional members:", JSON.stringify(response));
     assert.ok(response, "Response should not be null");
   });
 
   it("should verify an institutional member", async () => {
-    const image_1 = fileFromSync("./image.png");
-    const image_2 = fileFromSync("./image.png");
+    const image_1 = new File([fs.readFileSync("./image.png")], "");
+    const image_2 = new File([fs.readFileSync("./image.png")], "");
     await client.getVerificationService().verifyInstitutionalMember({
       member_type: 1,
       member_template_id: 65,
@@ -146,7 +146,7 @@ describe("verification service", () => {
   });
 
   it("should verify an institutional document", async () => {
-    const image = fileFromSync("./image.png");
+    const image = new File([fs.readFileSync("./image.png")], "");
     await client.getVerificationService().verifyInstitutionalDocument({
       type: 17,
       file: image

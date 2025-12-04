@@ -1,18 +1,17 @@
-import fetch from 'node-fetch';
+import axios from "axios";
 import { RequestType } from "../serviceClient.js";
 export class FormDataRequester {
     static post(config) {
         const requestData = {
             method: RequestType.POST,
             headers: FormDataRequester.getHeaders(config.extraHeaders),
-            body: config.formData
         };
-        console.log(requestData);
-        return fetch(config.url, requestData);
+        return axios.post(config.url, config.formData, requestData);
     }
     static getHeaders(extraHeaders) {
         var headers = {
-            charset: "UTF-8"
+            charset: "UTF-8",
+            "Content-Type": "multipart/form-data"
         };
         if (extraHeaders) {
             return Object.assign(Object.assign({}, headers), extraHeaders);

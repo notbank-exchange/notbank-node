@@ -1,12 +1,12 @@
 import { NbResponse } from "../../models/nbResponse";
 import { NotbankError } from "../../models/notbankError";
-import { Response } from 'node-fetch';
+import { AxiosResponse } from 'axios';
 
 
 export class NbResponseHandler {
-  public static async handle<T>(response: Response, paged: boolean): Promise<T> {
+  public static async handle<T>(response: AxiosResponse<any>, paged: boolean): Promise<T> {
     try {
-      var jsonResponse = await NbResponseHandler.#getData(response);
+      var jsonResponse = response.data;
       if (!jsonResponse) {
         throw new NotbankError("http error. (status=" + response.status + ")", -1)
       }
@@ -18,22 +18,6 @@ export class NbResponseHandler {
       throw error;
     } catch (error) {
       throw error; // Re-lanza el error
-    }
-  }
-
-  static async #getData(response: Response): Promise<any> {
-    try {
-      const data = await response.json();
-      return data
-    } catch (err) {
-      return null;
-    }
-  }
-  static async #getTextData(response: Response): Promise<any> {
-    try {
-      return await response.text();
-    } catch (err) {
-      return null;
     }
   }
 }

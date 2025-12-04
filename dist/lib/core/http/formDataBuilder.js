@@ -1,7 +1,6 @@
-import { FormData } from 'node-fetch';
+import { FormData } from 'formdata-node';
 export class FormDataBuilder {
     static build(data) {
-        console.log(data);
         const formData = new FormData();
         data.fields.map(([fieldName, field]) => {
             typeof field === "string"

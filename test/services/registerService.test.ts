@@ -11,7 +11,7 @@ describe("account service", () => {
       const response = await client.getRegisterService().registerUser({
         first_name: "Millaray",
         last_name: "Villanueva",
-        email: "ismael+13@dysopsis.com"
+        email: "ismael+15@dysopsis.com"
       });
 
       console.log("user registration:", response);

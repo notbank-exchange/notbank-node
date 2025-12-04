@@ -1,6 +1,6 @@
+import { AxiosResponse } from "axios";
 import { RequestType } from "../serviceClient";
-import fetch, { RequestInit, Response } from 'node-fetch';
-
+import { Requester } from "./Requester";
 export class JsonRequester {
 
   request<T1>(config: {
@@ -9,23 +9,21 @@ export class JsonRequester {
     params?: T1;
     extraHeaders?: any
   }
-  ): Promise<Response> {
+  ): Promise<AxiosResponse<any>> {
+
     const isPostOrDeleteRequest = [
       RequestType.POST, RequestType.DELETE].includes(config.requestType)
     var url = isPostOrDeleteRequest
       ? config.url
       : this.getUrlWithSearchParams(config.url, config.params);
-    var body = isPostOrDeleteRequest
+    var data = isPostOrDeleteRequest
       ? config.params :
       null;
-    var requestData: RequestInit = {
+    var requestData: any = {
       method: config.requestType,
       headers: this.getHeaders(config.extraHeaders, isPostOrDeleteRequest)
     }
-    if (body) {
-      requestData.body = JSON.stringify(body)
-    }
-    return fetch(url, requestData);
+    return Requester.getFunction(config.requestType)(url, data, requestData);
   }
 
   getHeaders(extraHeaders?: any, withJsonData: boolean = false): any {

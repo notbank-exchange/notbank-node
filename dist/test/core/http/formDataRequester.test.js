@@ -7,16 +7,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { File, fileFromSync } from 'node-fetch';
+import * as fs from 'fs';
 import "mocha";
 import { FormDataBuilder } from '../../../lib/core/http/formDataBuilder.js';
 import { FormDataRequester } from '../../../lib/core/http/formDataRequester.js';
 describe("form data", () => {
     it("", () => __awaiter(void 0, void 0, void 0, function* () {
         let file = new File(["some text"], "file.txt");
-        let file2 = fileFromSync("image.png");
+        let file2 = new File([fs.readFileSync('LICENSE')], "some");
         const formData = FormDataBuilder.build({
-            fields: [["aKey", "a value"]],
+            fields: [["aKey", "a value"], ["a number", 23], ["a boolean", true]],
             files: [["file[]", file], ["file[]", file2]],
             message: { anotherField: false }
         });

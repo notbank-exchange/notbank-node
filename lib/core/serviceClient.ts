@@ -1,7 +1,7 @@
+
 import { AuthenticateUserRequest } from "../models/request/authenticateUser";
 import { MessageFrame } from "./websocket/messageFrame";
 import { SubscriptionHandler } from "./websocket/subscriptionHandler";
-
 export interface ServiceConnection {
   apRequest<T1, T2>(
     endpoint: string,

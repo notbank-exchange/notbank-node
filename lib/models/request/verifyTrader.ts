@@ -1,5 +1,4 @@
 import { DocumentAdressType } from "../enums/documentAdressType";
-
 export interface VerifyTraderRequest {
   pep: boolean
   subject_comply: boolean

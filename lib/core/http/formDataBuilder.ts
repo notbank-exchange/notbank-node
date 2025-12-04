@@ -1,4 +1,4 @@
-import { FormData } from 'node-fetch';
+import { FormData } from 'formdata-node';
 
 export class FormDataBuilder {
   public static build<T1>(data: {
