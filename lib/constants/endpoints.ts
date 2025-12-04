@@ -30,7 +30,7 @@ export enum Endpoint {
   GET_PRODUCTS = "GetProducts",
   GET_VERIFICATION_LEVEL_CONFIG = "GetVerificationLevelConfig",
 
-  // Report (Faltan todos)
+  // Report
   GENERATE_TRADE_ACTIVITY_REPORT = "GenerateTradeActivityReport",
   GENERATE_TRANSACTION_ACTIVITY_REPORT = "GenerateTransactionActivityReport",
   GENERATE_PRODUCT_DELTA_ACTIVITY_REPORT = "GenerateProductDeltaActivityReport",
@@ -105,6 +105,28 @@ export enum Endpoint {
   QUOTES = "quotes",
   QUOTES_DIRECT = "quotes/direct",
   QUOTES_INVERSE = "quotes/inverse",
+
+  // register
+  REGISTER = "account/register",
+
+  // verification 
+  VERIFICATION_BASIC = "account/verification/basic",
+  VERIFICATION_TRADER = "account/verification/trader",
+  VERIFICATION_TRADER_PLUS = "account/verification/trader-plus",
+  VERIFICATION_TRADER_PLUS_SCHEMAS = "account/verification/trader-plus/schemas",
+  VERIFICATION_INSTITUTIONAL_COMPANY_SCHEMAS = "account/verification/institutional/company/schemas",
+  VERIFICATION_INSTITUTIONAL_COMPANY = "account/verification/institutional/company",
+  VERIFICATION_INSTITUTIONAL_MEMBERS_SCHEMAS = "account/verification/institutional/members/schemas",
+  VERIFICATION_INSTITUTIONAL_MEMBERS = "account/verification/institutional/members",
+  VERIFICATION_INSTITUTIONAL_DOCUMENTS_TYPES = "account/verification/institutional/documents/types",
+  VERIFICATION_INSTITUTIONAL_DOCUMENTS = "account/verification/institutional/documents",
+  VERIFICATION_STATUS = "account/verification/status",
+  VERIFICATION_INSTITUTIONAL_MEMBERS_TYPES = "account/verification/institutional/members/types",
+
+  // savings
+  SAVINGS_DEPOSIT = "savings/deposit",
+  SAVINGS_WITHDRAW = "savings/withdraw"
+
 }
 
 export enum WebSocketEndpoint {

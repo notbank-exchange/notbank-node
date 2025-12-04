@@ -1,5 +1,5 @@
 import { getNonce, sign } from "../core/hmac";
-import { HttpConnection } from "../core/http/httpClient";
+import { HttpConnection } from "../core/http/httpConnection";
 import { AccountService } from "./accountService";
 import { AuthService } from "./authService";
 import { FeeService } from "./feeService";
@@ -12,6 +12,9 @@ import { UserService } from "./userService";
 import { WalletService } from "./walletService";
 import { QuoteService } from "./quoteService";
 import { ServiceConnection } from "../core/serviceClient";
+import { VerificationService } from "./verificationService";
+import { RegisterService } from "./registerService";
+import { SavingsService } from "./savingsService";
 
 const DEFAULT_DOMAIN = "api.notbank.exchange";
 
@@ -92,5 +95,14 @@ export class HttpServiceFactory {
   }
   newQuoteService(): QuoteService {
     return new QuoteService(this.#httpConnection);
+  }
+  newRegisterService(): RegisterService {
+    return new RegisterService(this.#httpConnection);
+  }
+  newVerificationService(): VerificationService {
+    return new VerificationService(this.#httpConnection);
+  }
+  newSavingsService(): SavingsService {
+    return new SavingsService(this.#httpConnection);
   }
 }

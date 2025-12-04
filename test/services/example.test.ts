@@ -39,7 +39,6 @@ describe("wallet service", () => {
       var randomSmallFraction = ((Math.random() * 90) + 10) / 1000
       var topBid = btcUsdtOrderbook.bids[0];
       var orderPrice = topBid.price + randomSmallFraction;
-      // TODO: handle tick size
       var orderQuantity = quantityToSpend / orderPrice;
 
 
