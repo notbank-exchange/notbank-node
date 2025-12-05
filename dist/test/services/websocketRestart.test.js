@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import "mocha";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
+import { TestHelper } from "./TestHelper.js";
 describe("websocket restarter", () => {
     let client;
     let subscriptionService;
@@ -23,11 +24,7 @@ describe("websocket restarter", () => {
             withReconnect: true
         });
         yield client.connect();
-        yield client.authenticateUser({
-            ApiPublicKey: "59c8ca906c2fceda1ad02e1fab90f6d3",
-            ApiSecretKey: "4ab1fd70807645f9547eaa50fcdbc5b5",
-            UserId: "17",
-        });
+        yield client.authenticateUser(TestHelper.getCredentials());
         subscriptionService = client.getSubscriptionService();
     }));
     after(() => __awaiter(void 0, void 0, void 0, function* () {

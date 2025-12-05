@@ -3,6 +3,7 @@ import "mocha";
 
 import { GetAccountTransactionsRequest } from "../../lib/models/request/getAccountTransactions";
 import { NotbankClient } from "../../lib/services/notbankClient";
+import { TestHelper } from "./TestHelper";
 
 describe("account service", () => {
   const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
@@ -10,11 +11,7 @@ describe("account service", () => {
 
 
   before(async () => {
-    await client.authenticateUser({
-      ApiPublicKey: "aada11a919d9102f61fc1ca5a97ea578",
-      ApiSecretKey: "f2647a3c19fd8431be971d1d7b2101f9",
-      UserId: "9",
-    });
+    await client.authenticateUser(TestHelper.getCredentials());
   });
 
   const accountService = client.getAccountService();

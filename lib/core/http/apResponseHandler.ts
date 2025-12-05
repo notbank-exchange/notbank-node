@@ -1,14 +1,12 @@
+import { AxiosResponse } from 'axios';
 import ErrorCode from "../../constants/errorCode";
 import {
   NotbankError,
   StandardResponse
 } from "../../models";
-import { AxiosResponse } from 'axios';
-import axios from 'axios';
 
 export class ApResponseHandler {
   public static async handle<T>(response: AxiosResponse<any>): Promise<T> {
-
     if (response.status >= 300 || response.status < 200) {
       throw new Error(
         `http error (${response.status

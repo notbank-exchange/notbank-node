@@ -11,14 +11,11 @@ import assert from "assert";
 import "mocha";
 import { ReportRequestStatus } from "../../lib/models/enums/reportRequestStatus.js";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
+import { TestHelper } from "./TestHelper.js";
 describe("http report service", () => {
     const client = NotbankClient.Factory.createRestClient();
     before(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield client.authenticateUser({
-            ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
-            ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
-            UserId: "64"
-        });
+        yield client.authenticateUser(TestHelper.getCredentials());
     }));
     const reportService = client.getReportService();
     const validGenerateRequest = {

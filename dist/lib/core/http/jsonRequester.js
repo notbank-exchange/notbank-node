@@ -1,23 +1,24 @@
 import { RequestType } from "../serviceClient.js";
 import { Requester } from "./Requester.js";
 export class JsonRequester {
-    request(config) {
+    static request(config) {
         const isPostOrDeleteRequest = [
             RequestType.POST, RequestType.DELETE
         ].includes(config.requestType);
         var url = isPostOrDeleteRequest
             ? config.url
-            : this.getUrlWithSearchParams(config.url, config.params);
+            : JsonRequester.getUrlWithSearchParams(config.url, config.params);
         var data = isPostOrDeleteRequest
             ? config.params :
             null;
-        var requestData = {
+        var requestConfig = {
             method: config.requestType,
-            headers: this.getHeaders(config.extraHeaders, isPostOrDeleteRequest)
+            headers: JsonRequester.getHeaders(config.extraHeaders, isPostOrDeleteRequest),
+            validateStatus: status => true,
         };
-        return Requester.getFunction(config.requestType)(url, data, requestData);
+        return Requester.getFunction(config.requestType)(url, data, requestConfig);
     }
-    getHeaders(extraHeaders, withJsonData = false) {
+    static getHeaders(extraHeaders, withJsonData = false) {
         var headers = {
             charset: "UTF-8"
         };
@@ -29,7 +30,7 @@ export class JsonRequester {
         }
         return headers;
     }
-    getUrlWithSearchParams(endpoint, params) {
+    static getUrlWithSearchParams(endpoint, params) {
         return params ? endpoint + "?" + new URLSearchParams(params) : endpoint;
     }
 }

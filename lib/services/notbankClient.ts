@@ -39,7 +39,7 @@ export class NotbankClient {
   authenticateUser: (params: {
     ApiPublicKey: string,
     ApiSecretKey: string,
-    UserId: string,
+    UserId: number,
   }) => Promise<void>
   updateSessionToken: (string) => void
   connect: () => Promise<void>
@@ -66,7 +66,7 @@ export class NotbankClient {
       authenticate: (authParams: {
         ApiPublicKey: string,
         ApiSecretKey: string,
-        UserId: string,
+        UserId: number,
       }) => Promise<void>,
       updateSessionToken: (string) => void,
       connect: () => Promise<void>,

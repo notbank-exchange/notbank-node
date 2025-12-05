@@ -10,14 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import assert from "assert";
 import "mocha";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
+import { TestHelper } from "./TestHelper.js";
 describe("account service", () => {
     const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
     before(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield client.authenticateUser({
-            ApiPublicKey: "aada11a919d9102f61fc1ca5a97ea578",
-            ApiSecretKey: "f2647a3c19fd8431be971d1d7b2101f9",
-            UserId: "9",
-        });
+        yield client.authenticateUser(TestHelper.getCredentials());
     }));
     const accountService = client.getAccountService();
     describe("getAccountTransactions", () => {

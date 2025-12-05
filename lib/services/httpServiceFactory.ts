@@ -29,7 +29,7 @@ export class HttpServiceFactory {
   authenticateUser(params: {
     ApiPublicKey: string;
     ApiSecretKey: string;
-    UserId: string;
+    UserId: number;
   }): Promise<void> {
     var nonce = getNonce();
     var signature = sign(

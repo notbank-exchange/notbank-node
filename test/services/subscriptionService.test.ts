@@ -14,6 +14,7 @@ import { UnsubscribeTradesRequest } from "../../lib/models/request/unsubscribeTr
 import { NotbankClient } from "../../lib/services/notbankClient";
 import { SubscriptionService } from "../../lib/services/subscriptionService";
 import { WebsocketServiceFactory } from "../../lib/services/websocketServiceFactory";
+import { TestHelper } from "./TestHelper";
 
 describe("Subscription Service websocket", () => {
   const client = NotbankClient.Factory.createWebsocketClient();
@@ -21,11 +22,7 @@ describe("Subscription Service websocket", () => {
 
   before(async () => {
     await client.connect();
-    await client.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
-    });
+    await client.authenticateUser(TestHelper.getCredentials());
     subscriptionService = client.getSubscriptionService();
   });
 
@@ -173,11 +170,7 @@ describe("subscriptionService - SubscribeAccountEvents", () => {
 
   before(async () => {
     await wsServiceFactory.connect();
-    await wsServiceFactory.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
-    });
+    await wsServiceFactory.authenticateUser(TestHelper.getCredentials());
     subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
@@ -228,11 +221,7 @@ describe("subscriptionService - UnsubscribeAccountEvents", () => {
 
   before(async () => {
     await wsServiceFactory.connect();
-    await wsServiceFactory.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
-    });
+    await wsServiceFactory.authenticateUser(TestHelper.getCredentials());
     subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
@@ -279,11 +268,7 @@ describe("SubscriptionService - SubscribeOrderStateEvents", () => {
 
   before(async () => {
     await wsServiceFactory.connect();
-    await wsServiceFactory.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
-    });
+    await wsServiceFactory.authenticateUser(TestHelper.getCredentials());
     subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
@@ -352,11 +337,7 @@ describe("subscriptionService - UnsubscribeOrderStateEvents", () => {
 
   before(async () => {
     await wsServiceFactory.connect();
-    await wsServiceFactory.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
-    });
+    await wsServiceFactory.authenticateUser(TestHelper.getCredentials());
     subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
@@ -410,11 +391,7 @@ describe("SubscribeTicker", () => {
 
   before(async () => {
     await wsServiceFactory.connect();
-    await wsServiceFactory.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
-    });
+    await wsServiceFactory.authenticateUser(TestHelper.getCredentials());
     subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 
@@ -459,11 +436,7 @@ describe("subscriptionService - UnsubscribeTicker", () => {
 
   before(async () => {
     await wsServiceFactory.connect();
-    await wsServiceFactory.authenticateUser({
-      ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-      ApiSecretKey: "507d3d06095d51037b159637e6042561",
-      UserId: "9",
-    });
+    await wsServiceFactory.authenticateUser(TestHelper.getCredentials());
     subscriptionService = wsServiceFactory.getSubscriptionService();
   });
 

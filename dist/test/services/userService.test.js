@@ -12,15 +12,12 @@ import "mocha";
 import { HttpServiceFactory } from "../../lib/services/httpServiceFactory.js";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
 import { WebsocketServiceFactory } from "../../lib/services/websocketServiceFactory.js";
+import { TestHelper } from "./TestHelper.js";
 describe("http user service 1", () => {
     const client = NotbankClient.Factory.createRestClient();
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         // Autenticación previa a todas las pruebas en este bloque, http only
-        yield client.authenticateUser({
-            ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
-            ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
-            UserId: "64",
-        });
+        yield client.authenticateUser(TestHelper.getCredentials());
     }));
     it("should complete authentication setup", () => {
         assert.notEqual(client, null);
@@ -31,11 +28,7 @@ describe("http user service 2", () => {
     const serviceFactory = new HttpServiceFactory("stgapi.notbank.exchange");
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         // Autenticación previa a todas las pruebas en este bloque
-        yield serviceFactory.authenticateUser({
-            ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
-            ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
-            UserId: "64",
-        });
+        yield serviceFactory.authenticateUser(TestHelper.getCredentials());
     }));
     const userService = serviceFactory.newUserService();
     describe("getUserAccounts", () => {
@@ -208,11 +201,7 @@ describe("websocket user service", () => {
     });
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield serviceFactory.connect();
-        yield serviceFactory.authenticateUser({
-            ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
-            ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
-            UserId: "64",
-        });
+        yield serviceFactory.authenticateUser(TestHelper.getCredentials());
     }));
     after(() => {
         serviceFactory.close();

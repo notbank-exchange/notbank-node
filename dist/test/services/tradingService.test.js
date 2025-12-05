@@ -13,15 +13,12 @@ import { OrderSide } from "../../lib/models/enums/orderSide.js";
 import { OrderTypeInt } from "../../lib/models/enums/orderType.js";
 import { TimeInForce } from "../../lib/models/enums/timeInForce.js";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
+import { TestHelper } from "./TestHelper.js";
 describe("http trading service", () => {
     const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         // Autenticación previa a todas las pruebas en este bloque, http only
-        yield client.authenticateUser({
-            ApiPublicKey: "ca1817fd1f2ec412ef3ab8086d5da0d3",
-            ApiSecretKey: "da365b63efebc9deda12ce854dc4846abb71d772e644b3812116dd016e9070e2",
-            UserId: "64",
-        });
+        yield client.authenticateUser(TestHelper.getCredentials());
     }));
     const tradingService = client.getTradingService();
     describe("sendOrder", () => {
