@@ -18,7 +18,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _HttpConnection_jsonRequester, _HttpConnection_host, _HttpConnection_sessionToken;
+var _HttpConnection_host, _HttpConnection_sessionToken;
 import { Endpoint } from "../../constants/endpoints.js";
 import { RequestType } from "../serviceClient.js";
 import { ApResponseHandler } from "./apResponseHandler.js";
@@ -28,17 +28,15 @@ import { JsonRequester } from "./jsonRequester.js";
 import { NbResponseHandler } from "./nbResponseHandler.js";
 export class HttpConnection {
     constructor(domain) {
-        _HttpConnection_jsonRequester.set(this, void 0);
         _HttpConnection_host.set(this, void 0);
         _HttpConnection_sessionToken.set(this, void 0);
-        __classPrivateFieldSet(this, _HttpConnection_jsonRequester, new JsonRequester(), "f");
         __classPrivateFieldSet(this, _HttpConnection_host, "https://" + domain, "f");
     }
     nbRequest(endpoint_1, requestType_1, message_1) {
         return __awaiter(this, arguments, void 0, function* (endpoint, requestType, message, paged = false) {
             const url = this.getNbUrl(endpoint);
             const headers = this.getHeaders();
-            var response = yield __classPrivateFieldGet(this, _HttpConnection_jsonRequester, "f").request({ url, requestType, params: message, extraHeaders: headers });
+            var response = yield JsonRequester.request({ url, requestType, params: message, extraHeaders: headers });
             return yield NbResponseHandler.handle(response, paged);
         });
     }
@@ -55,7 +53,7 @@ export class HttpConnection {
         return __awaiter(this, void 0, void 0, function* () {
             const url = this.getApUrl(endpoint);
             const headers = Object.assign(Object.assign({}, extraHeaders), this.getHeaders());
-            const response = yield __classPrivateFieldGet(this, _HttpConnection_jsonRequester, "f").request({
+            const response = yield JsonRequester.request({
                 url,
                 requestType,
                 params: message,
@@ -104,4 +102,4 @@ export class HttpConnection {
         return {};
     }
 }
-_HttpConnection_jsonRequester = new WeakMap(), _HttpConnection_host = new WeakMap(), _HttpConnection_sessionToken = new WeakMap();
+_HttpConnection_host = new WeakMap(), _HttpConnection_sessionToken = new WeakMap();

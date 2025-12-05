@@ -1,6 +1,4 @@
-
-
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 
 
 import "mocha";
@@ -10,7 +8,7 @@ import { FormDataRequester } from '../../../lib/core/http/formDataRequester';
 describe("form data", () => {
   it("", async () => {
     let file = new File(["some text"], "file.txt")
-    let file2 = new File([fs.readFileSync('LICENSE')], "some");
+    let file2 = new File([readFileSync('LICENSE')], "some");
     const formData = FormDataBuilder.build({
       fields: [["aKey", "a value"], ["a number", 23], ["a boolean", true]],
       files: [["file[]", file], ["file[]", file2]],

@@ -19,7 +19,7 @@ export declare class HttpServiceFactory {
     authenticateUser(params: {
         ApiPublicKey: string;
         ApiSecretKey: string;
-        UserId: string;
+        UserId: number;
     }): Promise<void>;
     updateSessionToken(sessionToken: string): void;
     getConnection(): ServiceConnection;

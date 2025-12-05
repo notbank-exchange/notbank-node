@@ -13,12 +13,10 @@ import { FormDataRequester } from "./formDataRequester";
 import { JsonRequester } from "./jsonRequester";
 import { NbResponseHandler } from "./nbResponseHandler";
 export class HttpConnection implements ServiceConnection {
-  #jsonRequester: JsonRequester;
   #host: string;
   #sessionToken?: string;
 
   constructor(domain: string) {
-    this.#jsonRequester = new JsonRequester();
     this.#host = "https://" + domain;
   }
 
@@ -30,8 +28,10 @@ export class HttpConnection implements ServiceConnection {
   ): Promise<T2> {
     const url = this.getNbUrl(endpoint);
     const headers = this.getHeaders();
-    var response = await this.#jsonRequester.request({ url, requestType, params: message, extraHeaders: headers });
+    var response = await JsonRequester.request({ url, requestType, params: message, extraHeaders: headers });
+    
     return await NbResponseHandler.handle<T2>(response, paged);
+
   }
 
   async nbFormDataRequest<T1, T2>(
@@ -55,7 +55,7 @@ export class HttpConnection implements ServiceConnection {
   ): Promise<T2> {
     const url = this.getApUrl(endpoint);
     const headers = { ...extraHeaders, ...this.getHeaders() }
-    const response = await this.#jsonRequester.request({
+    const response = await JsonRequester.request({
       url,
       requestType,
       params: message,

@@ -11,16 +11,13 @@ import assert from "assert";
 import "mocha";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
 import { WebsocketServiceFactory } from "../../lib/services/websocketServiceFactory.js";
+import { TestHelper } from "./TestHelper.js";
 describe("Subscription Service websocket", () => {
     const client = NotbankClient.Factory.createWebsocketClient();
     let subscriptionService;
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield client.connect();
-        yield client.authenticateUser({
-            ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-            ApiSecretKey: "507d3d06095d51037b159637e6042561",
-            UserId: "9",
-        });
+        yield client.authenticateUser(TestHelper.getCredentials());
         subscriptionService = client.getSubscriptionService();
     }));
     after(() => __awaiter(void 0, void 0, void 0, function* () {
@@ -124,11 +121,7 @@ describe("subscriptionService - SubscribeAccountEvents", () => {
     let subscriptionService;
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield wsServiceFactory.connect();
-        yield wsServiceFactory.authenticateUser({
-            ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-            ApiSecretKey: "507d3d06095d51037b159637e6042561",
-            UserId: "9",
-        });
+        yield wsServiceFactory.authenticateUser(TestHelper.getCredentials());
         subscriptionService = wsServiceFactory.getSubscriptionService();
     }));
     after(() => __awaiter(void 0, void 0, void 0, function* () {
@@ -164,11 +157,7 @@ describe("subscriptionService - UnsubscribeAccountEvents", () => {
     let subscriptionService;
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield wsServiceFactory.connect();
-        yield wsServiceFactory.authenticateUser({
-            ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-            ApiSecretKey: "507d3d06095d51037b159637e6042561",
-            UserId: "9",
-        });
+        yield wsServiceFactory.authenticateUser(TestHelper.getCredentials());
         subscriptionService = wsServiceFactory.getSubscriptionService();
     }));
     after(() => __awaiter(void 0, void 0, void 0, function* () {
@@ -200,11 +189,7 @@ describe("SubscriptionService - SubscribeOrderStateEvents", () => {
     let subscriptionService;
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield wsServiceFactory.connect();
-        yield wsServiceFactory.authenticateUser({
-            ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-            ApiSecretKey: "507d3d06095d51037b159637e6042561",
-            UserId: "9",
-        });
+        yield wsServiceFactory.authenticateUser(TestHelper.getCredentials());
         subscriptionService = wsServiceFactory.getSubscriptionService();
     }));
     after(() => __awaiter(void 0, void 0, void 0, function* () {
@@ -247,11 +232,7 @@ describe("subscriptionService - UnsubscribeOrderStateEvents", () => {
     let subscriptionService;
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield wsServiceFactory.connect();
-        yield wsServiceFactory.authenticateUser({
-            ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-            ApiSecretKey: "507d3d06095d51037b159637e6042561",
-            UserId: "9",
-        });
+        yield wsServiceFactory.authenticateUser(TestHelper.getCredentials());
         subscriptionService = wsServiceFactory.getSubscriptionService();
     }));
     describe("unsubscribeOrderStateEvents", () => {
@@ -287,11 +268,7 @@ describe("SubscribeTicker", () => {
     let subscriptionService;
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield wsServiceFactory.connect();
-        yield wsServiceFactory.authenticateUser({
-            ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-            ApiSecretKey: "507d3d06095d51037b159637e6042561",
-            UserId: "9",
-        });
+        yield wsServiceFactory.authenticateUser(TestHelper.getCredentials());
         subscriptionService = wsServiceFactory.getSubscriptionService();
     }));
     after(() => __awaiter(void 0, void 0, void 0, function* () {
@@ -328,11 +305,7 @@ describe("subscriptionService - UnsubscribeTicker", () => {
     let subscriptionService;
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield wsServiceFactory.connect();
-        yield wsServiceFactory.authenticateUser({
-            ApiPublicKey: "7b4d6a5cf5ac92a9edbbd7629ec8d901",
-            ApiSecretKey: "507d3d06095d51037b159637e6042561",
-            UserId: "9",
-        });
+        yield wsServiceFactory.authenticateUser(TestHelper.getCredentials());
         subscriptionService = wsServiceFactory.getSubscriptionService();
     }));
     describe("unsubscribeTicker", () => {

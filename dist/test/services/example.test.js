@@ -10,15 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import "mocha";
 import { NotbankClient } from "../../lib/services/notbankClient.js";
 import { OrderSide, OrderTypeInt, TimeInForce } from "../../lib/models/index.js";
+import { TestHelper } from "./TestHelper.js";
 describe("wallet service", () => {
     describe("getBanks", () => {
         it("should return a list of banks", () => __awaiter(void 0, void 0, void 0, function* () {
             const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
-            yield client.authenticateUser({
-                ApiPublicKey: "aada11a919d9102f61fc1ca5a97ea578",
-                ApiSecretKey: "f2647a3c19fd8431be971d1d7b2101f9",
-                UserId: "9",
-            });
+            yield client.authenticateUser(TestHelper.getCredentials());
             var accountId = 235;
             // get USDT user balance (also known as position)
             var positions = yield client.getAccountService().getAccountPositions({ AccountId: accountId });

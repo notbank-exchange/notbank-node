@@ -62,7 +62,7 @@ export class WebsocketServiceFactory {
   async authenticateUser(params: {
     ApiPublicKey: string;
     ApiSecretKey: string;
-    UserId: string;
+    UserId: number;
   }): Promise<void> {
     var nonce = getNonce();
     var signature = sign(

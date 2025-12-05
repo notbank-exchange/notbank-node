@@ -28,7 +28,7 @@ export declare class WebsocketServiceFactory {
     authenticateUser(params: {
         ApiPublicKey: string;
         ApiSecretKey: string;
-        UserId: string;
+        UserId: number;
     }): Promise<void>;
     updateSessionToken(aptoken: string): any;
     getConnection(): ServiceConnection;

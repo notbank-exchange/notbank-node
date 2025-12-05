@@ -1257,10 +1257,7 @@ var NotbankSdk = (() => {
           errMsg += ".";
         }
       }
-      return new _NotbankError(
-        errMsg,
-        -1
-      );
+      return new _NotbankError(errMsg, -1);
     }
   };
   var NotbankError = _NotbankError;
@@ -4028,21 +4025,22 @@ var NotbankSdk = (() => {
   var Requester = _Requester;
 
   // lib/core/http/jsonRequester.ts
-  var JsonRequester = class {
-    request(config) {
+  var JsonRequester = class _JsonRequester {
+    static request(config) {
       const isPostOrDeleteRequest = [
         "POST" /* POST */,
         "DELETE" /* DELETE */
       ].includes(config.requestType);
-      var url = isPostOrDeleteRequest ? config.url : this.getUrlWithSearchParams(config.url, config.params);
+      var url = isPostOrDeleteRequest ? config.url : _JsonRequester.getUrlWithSearchParams(config.url, config.params);
       var data = isPostOrDeleteRequest ? config.params : null;
-      var requestData = {
+      var requestConfig = {
         method: config.requestType,
-        headers: this.getHeaders(config.extraHeaders, isPostOrDeleteRequest)
+        headers: _JsonRequester.getHeaders(config.extraHeaders, isPostOrDeleteRequest),
+        validateStatus: (status) => true
       };
-      return Requester.getFunction(config.requestType)(url, data, requestData);
+      return Requester.getFunction(config.requestType)(url, data, requestConfig);
     }
-    getHeaders(extraHeaders, withJsonData = false) {
+    static getHeaders(extraHeaders, withJsonData = false) {
       var headers = {
         charset: "UTF-8"
       };
@@ -4054,7 +4052,7 @@ var NotbankSdk = (() => {
       }
       return headers;
     }
-    getUrlWithSearchParams(endpoint, params) {
+    static getUrlWithSearchParams(endpoint, params) {
       return params ? endpoint + "?" + new URLSearchParams(params) : endpoint;
     }
   };
@@ -4063,39 +4061,32 @@ var NotbankSdk = (() => {
   var NbResponseHandler = class {
     static handle(response, paged) {
       return __async(this, null, function* () {
-        try {
-          var jsonResponse = response.data;
-          if (!jsonResponse) {
-            throw new NotbankError("http error. (status=" + response.status + ")", -1);
-          }
-          var nbResponse = jsonResponse;
-          if ((nbResponse == null ? void 0 : nbResponse.status) === "success") {
-            return paged ? jsonResponse : nbResponse.data;
-          }
-          const error = NotbankError.Factory.createFromNbResponse(nbResponse, response.status);
-          throw error;
-        } catch (error) {
-          throw error;
+        var jsonResponse = response.data;
+        if (!jsonResponse) {
+          throw new NotbankError("http error. (status=" + response.status + ")", -1);
         }
+        var nbResponse = jsonResponse;
+        if ((nbResponse == null ? void 0 : nbResponse.status) === "success") {
+          return paged ? jsonResponse : nbResponse.data;
+        }
+        throw NotbankError.Factory.createFromNbResponse(nbResponse, response.status);
       });
     }
   };
 
   // lib/core/http/httpConnection.ts
-  var _jsonRequester, _host, _sessionToken;
+  var _host, _sessionToken;
   var HttpConnection = class {
     constructor(domain) {
-      __privateAdd(this, _jsonRequester);
       __privateAdd(this, _host);
       __privateAdd(this, _sessionToken);
-      __privateSet(this, _jsonRequester, new JsonRequester());
       __privateSet(this, _host, "https://" + domain);
     }
     nbRequest(endpoint, requestType, message, paged = false) {
       return __async(this, null, function* () {
         const url = this.getNbUrl(endpoint);
         const headers = this.getHeaders();
-        var response = yield __privateGet(this, _jsonRequester).request({ url, requestType, params: message, extraHeaders: headers });
+        var response = yield JsonRequester.request({ url, requestType, params: message, extraHeaders: headers });
         return yield NbResponseHandler.handle(response, paged);
       });
     }
@@ -4112,7 +4103,7 @@ var NotbankSdk = (() => {
       return __async(this, null, function* () {
         const url = this.getApUrl(endpoint);
         const headers = __spreadValues(__spreadValues({}, extraHeaders), this.getHeaders());
-        const response = yield __privateGet(this, _jsonRequester).request({
+        const response = yield JsonRequester.request({
           url,
           requestType,
           params: message,
@@ -4166,7 +4157,6 @@ var NotbankSdk = (() => {
       return {};
     }
   };
-  _jsonRequester = new WeakMap();
   _host = new WeakMap();
   _sessionToken = new WeakMap();
 
