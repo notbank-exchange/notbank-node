@@ -47,9 +47,7 @@ export class NotbankError extends Error {
           errMsg += ".";
         }
       }
-
-      return new NotbankError(errMsg, -1,
-      )
+      return new NotbankError(errMsg, -1)
     }
   }
 }

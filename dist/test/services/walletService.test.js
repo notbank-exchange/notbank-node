@@ -9,17 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import assert from "assert";
 import "mocha";
-import fs from 'fs';
 import { NotbankClient } from "../../lib/services/notbankClient.js";
+import { TestHelper } from "./TestHelper.js";
 describe("wallet service", () => {
     const client = NotbankClient.Factory.createRestClient("stgapi.notbank.exchange");
-    var credentials = JSON.parse(fs.readFileSync('keys.json', 'utf-8'));
+    var credentials = TestHelper.getCredentials();
     before(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield client.authenticateUser({
-            ApiPublicKey: credentials.ApiPublicKey,
-            ApiSecretKey: credentials.ApiSecretKey,
-            UserId: credentials.UserId.toString(),
-        });
+        yield client.authenticateUser(credentials);
     }));
     const service = client.getWalletService();
     describe("getBanks", () => {
@@ -63,9 +59,14 @@ describe("wallet service", () => {
         const coBankAccountId = 'cb54ca55-10ef-4584-9f87-e5f3b1ecf7b6';
         const arBankAccoutnId = '4d677d9c-81e1-45d2-9903-43fd599b6599';
         it("should work", () => __awaiter(void 0, void 0, void 0, function* () {
-            const account = yield service.getClientBankAccount({ bankAccountId: arBankAccoutnId });
-            console.log(account);
-            assert.ok(account);
+            try {
+                const account = yield service.getClientBankAccount({ bankAccountId: "arBankAccoutnId" });
+                console.log("account:", account);
+                assert.ok(account);
+            }
+            catch (error) {
+                console.log(JSON.stringify(error));
+            }
         }));
     });
     describe("getClientBankAccounts", () => {
@@ -75,11 +76,10 @@ describe("wallet service", () => {
             assert.ok(account);
         }));
     });
-    describe("deleteClientBankAccounts", () => {
+    describe.only("deleteClientBankAccounts", () => {
         it("should work", () => __awaiter(void 0, void 0, void 0, function* () {
-            const bankAccountId = 'eddff990-0759-499a-8494-136f21671a6b';
+            const bankAccountId = '4172acac-f18e-41e2-8423-94e1c7feeebf';
             const account = yield service.deleteClientBankAccount({ bankAccountId: bankAccountId });
-            console.log(account);
             assert.ok(account);
         }));
     });

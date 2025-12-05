@@ -11,21 +11,15 @@ import { NotbankError } from "../../models/notbankError.js";
 export class NbResponseHandler {
     static handle(response, paged) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                var jsonResponse = response.data;
-                if (!jsonResponse) {
-                    throw new NotbankError("http error. (status=" + response.status + ")", -1);
-                }
-                var nbResponse = jsonResponse;
-                if ((nbResponse === null || nbResponse === void 0 ? void 0 : nbResponse.status) === 'success') {
-                    return paged ? jsonResponse : nbResponse.data;
-                }
-                const error = NotbankError.Factory.createFromNbResponse(nbResponse, response.status);
-                throw error;
+            var jsonResponse = response.data;
+            if (!jsonResponse) {
+                throw new NotbankError("http error. (status=" + response.status + ")", -1);
             }
-            catch (error) {
-                throw error; // Re-lanza el error
+            var nbResponse = jsonResponse;
+            if ((nbResponse === null || nbResponse === void 0 ? void 0 : nbResponse.status) === 'success') {
+                return paged ? jsonResponse : nbResponse.data;
             }
+            throw NotbankError.Factory.createFromNbResponse(nbResponse, response.status);
         });
     }
 }
